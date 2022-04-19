@@ -1,5 +1,5 @@
 import React from 'react';
-import Bingo from './components/commons/Bingo'
+import Bingo from './components/commons/Bingo/Bingo'
 
 function App() {
   return (
