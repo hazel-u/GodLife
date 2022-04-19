@@ -51,6 +51,9 @@ spring:
       location: C:\Develop\projects\ssafy\upload
       max-file-size: 100MB
       max-request-size: 100MB
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 server:
   # 프로젝트 환경의 포트 설정
