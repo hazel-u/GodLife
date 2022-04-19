@@ -1,4 +1,4 @@
-package com.ovcors.godlife.api.dto.config;
+package com.ovcors.godlife.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

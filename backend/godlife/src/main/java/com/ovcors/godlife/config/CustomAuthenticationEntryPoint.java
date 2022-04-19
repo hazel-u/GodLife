@@ -1,5 +1,6 @@
 package com.ovcors.godlife.config;
 
+import com.ovcors.godlife.api.exception.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,19 +22,18 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         log.error("UnAuthorized error : {}", e.getMessage());
         String exception = (String) request.getAttribute("exception");
 
-        // Todo: errorCode 만들어지면 주석 제거하기
-//        if("token expired".equals(exception)) {
-//            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-//            response.setStatus(ErrorCode.EXPIRED_TOKEN.getHttpStatus().value());
-//            response.getWriter().println("{ \"message\" : \"" + exception
-//                    + "\", \"code\" : \"" + ErrorCode.EXPIRED_TOKEN.getHttpStatus().value()
-//                    + "\", \"status\" : " + ErrorCode.EXPIRED_TOKEN.getDetail()
-//                    + ", \"errors\" : [ ] }");
-//        }
-//        // response에 넣기
-//        else {
-//            setResponse(response, exception);
-//        }
+        if("token expired".equals(exception)) {
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.setStatus(ErrorCode.EXPIRED_TOKEN.getHttpStatus().value());
+            response.getWriter().println("{ \"message\" : \"" + exception
+                    + "\", \"code\" : \"" + ErrorCode.EXPIRED_TOKEN.getHttpStatus().value()
+                    + "\", \"status\" : " + ErrorCode.EXPIRED_TOKEN.getMessage()
+                    + ", \"errors\" : [ ] }");
+        }
+        // response에 넣기
+        else {
+            setResponse(response, exception);
+        }
     }
 
     private void setResponse(HttpServletResponse response, String exception) throws IOException {

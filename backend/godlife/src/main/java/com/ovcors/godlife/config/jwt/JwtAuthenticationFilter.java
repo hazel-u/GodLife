@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ovcors.godlife.api.dto.request.LoginReqDto;
+import com.ovcors.godlife.api.exception.ErrorCode;
 import com.ovcors.godlife.config.auth.PrincipalDetails;
 import com.ovcors.godlife.core.repository.UserRepository;
 import org.springframework.http.MediaType;
@@ -60,13 +61,13 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
     private void sendErrorResponse(HttpServletResponse response, String message) throws IOException {
         System.out.println("잘못된 로그인 정보입니다.");
         // Todo: ErrorCode만들어지면 주석 해제
-//        response.setCharacterEncoding("UTF-8");
-//        response.setStatus(ErrorCode.USER_NOT_FOUND.getHttpStatus().value());
-//        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-//        response.getWriter().println("{ \"message\" : \"" + message
-//                + "\", \"code\" : \"" + ErrorCode.USER_NOT_FOUND.getHttpStatus().value()
-//                + "\", \"status\" : " + ErrorCode.USER_NOT_FOUND.getHttpStatus().name()
-//                + ", \"errors\" : [ ] }");
+        response.setCharacterEncoding("UTF-8");
+        response.setStatus(ErrorCode.USER_NOT_FOUND.getHttpStatus().value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.getWriter().println("{ \"message\" : \"" + message
+                + "\", \"code\" : \"" + ErrorCode.USER_NOT_FOUND.getHttpStatus().value()
+                + "\", \"status\" : " + ErrorCode.USER_NOT_FOUND.getHttpStatus().name()
+                + ", \"errors\" : [ ] }");
     }
 
     @Override
