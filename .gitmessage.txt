@@ -1,0 +1,14 @@
+# -- Type --
+# #jira [Back] FEAT: ✨ 새로운 기능 추가
+# #jira [Back] FIX: 🐛 버그 수정 
+# #jira [Back] DOCS: ✏️ 문서 수정
+# #jira [Back] CHORE: 🤖 그 외 자잘한 작업
+# #jira [Back] TEST: 💍 테스트 코드
+# #jira [Back] BUILD: 🏹 시스템 또는 외부 종속성에 영향을 미치는 변경사항 (npm, gulp, yarn 레벨)
+# #jira [Back] CI: 🎡 CI관련 설정
+# #jira [Back] STYLE: 🎨 코드 의미에 영향을 주지 않는 변경사항 (포맷, 세미콜론 누락, 공백 등)
+# #jira [Back] REFACTOR: 💡 성능 개선
+# #jira [Back] MERGE: 🎉 기능 개발 후 브랜치 병합
+# ---
+
+# <Text> (본문 내용)
