@@ -3,13 +3,15 @@ import { useState } from "react";
 // 3rd party
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import Container from "@mui/material/Container";
+import { Icon } from "@mui/material";
 // Local
 import BingoCell from "./BingoCell";
 
 type BingoProps = {
   title: String;
   size: Number;
-  goals: Array<String>;
+  goals: Array<Object>;
   mode: String;
   date: Date;
   streak: Number;
@@ -41,7 +43,10 @@ export const Bingo = ({
     createdBy: createdBy,
   });
 
-  console.log(state);
+  const editTitle = () => {
+    setState({ ...state, title: "아아아" });
+  };
+
   return (
     <Box
       sx={{
@@ -49,7 +54,15 @@ export const Bingo = ({
         height: 800,
       }}
     >
-      <h1> {state.title} </h1>
+      <Box
+        sx={{
+          flexDirection: "row",
+        }}
+      >
+        <h1 onClick={() => editTitle()}> {state.title} </h1>
+        <Icon>star</Icon>
+      </Box>
+
       <h2>
         {state.createdBy +
           "님 " +
@@ -67,7 +80,6 @@ export const Bingo = ({
         }}
       >
         {goals.map(function (goal, index) {
-          console.log(index);
           return BingoCell(goal);
         })}
       </Grid>

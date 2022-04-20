@@ -1,8 +1,15 @@
+import { useState } from "react";
+// mui
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 
-const BingoCell = (cellText: String) => {
+const BingoCell = (goal: any) => {
+  const [state, setState] = useState({
+    content: goal.content,
+    isCompleted: goal.isCompleted,
+  });
+
   return (
     <Grid
       item
@@ -24,16 +31,16 @@ const BingoCell = (cellText: String) => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          top: 2,
-          left: 2,
-          right: 2,
-          bottom: 2,
-
-          borderRadius: 4,
+          top: 5,
+          left: 5,
+          right: 5,
+          bottom: 5,
           padding: 1,
         }}
       >
-        <Typography align="center">{cellText}</Typography>
+        <Typography align="center" variant="h3">
+          {state.content}
+        </Typography>
       </Paper>
     </Grid>
   );
