@@ -1,10 +1,11 @@
 // react
 import { useState } from "react";
-// 3rd party
+// MUI
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
-import { Icon } from "@mui/material";
+
+import EditIcon from "@mui/icons-material/Edit";
+import Typography from "@mui/material/Typography";
 // Local
 import BingoCell from "./BingoCell";
 
@@ -54,14 +55,21 @@ export const Bingo = ({
         height: 800,
       }}
     >
-      <Box
-        sx={{
-          flexDirection: "row",
-        }}
+      <Grid
+        container
+        sx={{ justifyContent: "space-bewtween", bgcolor: "primary.dark" }}
       >
-        <h1 onClick={() => editTitle()}> {state.title} </h1>
-        <Icon>star</Icon>
-      </Box>
+        <Grid item xs>
+          <Typography variant="h3" onClick={() => editTitle()}>
+            {state.title}
+          </Typography>
+        </Grid>
+        <Grid item xs={1} sx={{ justifyContent: "flex-end" }}>
+          <Typography>
+            <EditIcon />
+          </Typography>
+        </Grid>
+      </Grid>
 
       <h2>
         {state.createdBy +
