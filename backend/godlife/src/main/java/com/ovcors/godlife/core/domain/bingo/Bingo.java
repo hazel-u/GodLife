@@ -1,5 +1,6 @@
 package com.ovcors.godlife.core.domain.bingo;
 
+import com.ovcors.godlife.core.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,7 +18,9 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Bingo {
     @Builder
-    public Bingo(String title, LocalDate startDate, Integer likeCnt, Integer surpriseCnt, Integer heartCnt, Boolean activate, Boolean godlife) {
+    public Bingo(BingoCode bingoCode, User user, String title, LocalDate startDate, Integer likeCnt, Integer surpriseCnt, Integer heartCnt, Boolean activate, Boolean godlife) {
+        this.bingoCode = bingoCode;
+        this.user = user;
         this.title = title;
         this.startDate = startDate;
         this.likeCnt = likeCnt;
@@ -36,6 +39,10 @@ public class Bingo {
     @OneToOne(mappedBy = "bingo", cascade = CascadeType.ALL)
     private BingoCode bingoCode;
 
+    @ManyToOne
+    @JoinColumn(name = "user_seq")
+    private User user;
+
     private String title;
     private LocalDate startDate;
     private Integer likeCnt;
@@ -44,9 +51,30 @@ public class Bingo {
     private Boolean activate;
     private Boolean godlife;
 
+    @OneToMany(mappedBy = "bingo")
+    private List<Comment> comments = new ArrayList<>();
+
     public void setBingoCode(BingoCode bingoCode){
         this.bingoCode = bingoCode;
         bingoCode.setBingo(this);
     }
-
+    public void setUser(User user){
+        this.user = user;
+    }
+    public void changeTitle(String title) {
+        this.title = title;
+    }
+    public void changeActivate() {
+        this.activate = false;
+    }
+    public void changeGodlife() {
+        this.godlife = true;
+    }
+    public void changeLike() {
+        this.likeCnt++;
+    }
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+        comment.setBingo(this);
+    }
 }
