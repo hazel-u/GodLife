@@ -19,7 +19,7 @@ public class UserGoals {
     @GeneratedValue
     private Long seq;
 
-    @OneToMany(mappedBy = "usergoals")
+    @OneToMany(mappedBy = "userGoals")
     private List<Goals> goals = new ArrayList<>();
 
     public void addGoal(Goals goal){
