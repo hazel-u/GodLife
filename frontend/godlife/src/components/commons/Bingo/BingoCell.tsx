@@ -1,82 +1,42 @@
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box'
-
-
-// const useStyles = makeStyles(() => ({
-//   root: { position: "relative" },
-//   wrapper: {
-//     position: "absolute",
-//     top: 0,
-//     left: 0,
-//     right: 0,
-//     bottom: 0,
-//     "& > *": { height: "100%", width: "100%" }
-//   }
-// }));
-
-
-// const AspectRatioBox = ({ children, ratio = 1 }) => {
-//   const classes = useStyles();
-//   return (
-//     <div className={classes.root}>
-//       <div className={classes.wrapper}>{children}</div>
-//       <div style={{ paddingBottom: (1 / ratio) * 100 + "%" }} />
-//     </div>
-//   );
-// };
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
 
 const BingoCell = (cellText: String) => {
   return (
-    <Grid 
-      item xs = { 4 }
+    <Grid
+      item
+      xs={4}
       sx={{
-        bgcolor:'white',
-        border: "1px solid black",
         position: "relative",
         width: 120,
         "&::before": {
           display: "block",
           content: "''",
-          paddingBottom: "100%"
-        }
-
-        
-      }}  
+          paddingBottom: "100%",
+        },
+      }}
     >
-      <Box
+      <Paper
+        elevation={3}
         sx={{
-          backgroundColor: 'primary.light',
-          border: '1px dashed grey',
-          borderRadius: 4,
-          // width: '100%',
-          // height: '100%'
           position: "absolute",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0
+          top: 2,
+          left: 2,
+          right: 2,
+          bottom: 2,
 
+          borderRadius: 4,
+          padding: 1,
         }}
       >
-        <Typography
-          align='center'
-        >
-          { cellText }
-        </Typography>
-      </Box>
+        <Typography align="center">{cellText}</Typography>
+      </Paper>
     </Grid>
-  ) 
-}
+  );
+};
 
-
-export default BingoCell
-
-
-
-
-
-
+export default BingoCell;
