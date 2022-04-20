@@ -4,6 +4,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { Stack, Box, Button } from "@mui/material";
 import Logo from "../../../assets/images/logo.svg";
 import Share from "./Share";
+import CommentList from "./CommentList";
 
 const GodlifeShare = () => {
   const params = useParams();
@@ -36,6 +37,7 @@ const GodlifeShare = () => {
         <Button>빙고판 복사</Button>
       </Stack>
       <Share />
+      <CommentList />
     </Stack>
   );
 };
