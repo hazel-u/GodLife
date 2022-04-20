@@ -7,25 +7,18 @@ import axios from "axios";
 import EmailController from "./EmailController";
 import PasswordController from "./PasswordController";
 
-const LogIn = () => {
+const LoginForm = () => {
   const navigate = useNavigate();
 
   const { handleSubmit, control } = useForm<LoginInput>();
   const onSubmit: SubmitHandler<LoginInput> = async (data) => {
     await axios
-      .post("/user/login", data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        const token = response.data.token;
-        // default header
-        axios.defaults.headers.common["Authorization"] =
-          "Bearer " + response.data.token;
-        // get User date & dispatch
-        localStorage.setItem("token", token);
-        // dispatch(setLoggedUser(response.data));
+      .post("/user/login", data)
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem("refreshtoken", res.headers["refreshtoken"]);
+        localStorage.setItem("token", res.headers["authorization"]);
+
         navigate("/");
       })
       .catch((err) => {});
@@ -51,4 +44,4 @@ const LogIn = () => {
   );
 };
 
-export default LogIn;
+export default LoginForm;
