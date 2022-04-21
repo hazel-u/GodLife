@@ -1,0 +1,14 @@
+# -- Type --
+# #jira FEAT: ✨ 새로운 기능 추가
+# #jira FIX: 🐛 버그 수정 
+# #jira DOCS: ✏️ 문서 수정
+# #jira CHORE: 🤖 그 외 자잘한 작업
+# #jira TEST: 💍 테스트 코드
+# #jira BUILD: 🏹 시스템 또는 외부 종속성에 영향을 미치는 변경사항 (npm, gulp, yarn 레벨)
+# #jira CI: 🎡 CI관련 설정
+# #jira STYLE: 🎨 코드 의미에 영향을 주지 않는 변경사항 (포맷, 세미콜론 누락, 공백 등)
+# #jira REFACTOR: 💡 성능 개선
+# #jira MERGE: 🎉 기능 개발 후 브랜치 병합
+# ---
+
+# <Text> (본문 내용)
