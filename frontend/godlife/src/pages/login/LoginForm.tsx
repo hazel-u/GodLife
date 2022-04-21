@@ -1,13 +1,14 @@
+import { FormControl, Stack } from "@mui/material";
 import axios from "axios";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { Stack, FormControl } from "@mui/material";
+import { OutlinedButton } from "../../components/common/Button";
+import { useAppDispatch } from "../../store/hooks";
+import { setSnackbar } from "../../store/snackbar";
+import { setLoggedUser } from "../../store/user";
+import { LoginInput } from "../../types/user";
 import EmailController from "./EmailController";
 import PasswordController from "./PasswordController";
-import { OutlinedButton } from "../../components/common/Button";
-import { LoginInput } from "../../types/user";
-import { useAppDispatch } from "../../store/hooks";
-import { setLoggedUser } from "../../store/user";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -26,8 +27,23 @@ const LoginForm = () => {
         );
 
         navigate("/");
+        dispatch(
+          setSnackbar({
+            open: true,
+            message: "로그인이 완료되었습니다.",
+            severity: "success",
+          })
+        );
       })
-      .catch((err) => {});
+      .catch((err) => {
+        dispatch(
+          setSnackbar({
+            open: true,
+            message: "다시 시도해주세요.",
+            severity: "error",
+          })
+        );
+      });
   };
 
   return (

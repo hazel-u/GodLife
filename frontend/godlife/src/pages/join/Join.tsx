@@ -1,20 +1,22 @@
-import React, { useState } from "react";
+import { Stack } from "@mui/material";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { Stack } from "@mui/material";
+import Logo from "../../assets/images/logo.svg";
+import { OutlinedButton } from "../../components/common/Button";
+import { useAppDispatch } from "../../store/hooks";
+import { setSnackbar } from "../../store/snackbar";
 import { JoinInput } from "../../types/user";
 import EmailController from "./EmailController";
 import NicknameController from "./NicknameController";
 import PasswordContoller from "./PasswordContoller";
-import Logo from "../../assets/images/logo.svg";
-import { OutlinedButton } from "../../components/common/Button";
 
 const Join = () => {
   const { control, trigger, getValues, handleSubmit, watch } =
     useForm<JoinInput>({});
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const onSubmit = (data: JoinInput) => {
     axios({
@@ -28,8 +30,23 @@ const Join = () => {
     })
       .then((res) => {
         navigate("/login");
+        dispatch(
+          setSnackbar({
+            open: true,
+            message: "회원가입이 완료되었습니다.",
+            severity: "success",
+          })
+        );
       })
-      .catch((err) => {});
+      .catch((err) => {
+        dispatch(
+          setSnackbar({
+            open: true,
+            message: "다시 시도해주세요.",
+            severity: "error",
+          })
+        );
+      });
   };
 
   return (

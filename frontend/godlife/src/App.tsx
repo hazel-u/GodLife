@@ -1,4 +1,5 @@
 import axios from "axios";
+import CommonSnackbar from "./components/common/CommonSnackbar";
 import Router from "./router/router";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { selectUser, setLoggedUser } from "./store/user";
@@ -18,7 +19,12 @@ function App() {
       });
   }
 
-  return <Router />;
+  return (
+    <>
+      <CommonSnackbar />
+      <Router />;
+    </>
+  );
 }
 
 export default App;
