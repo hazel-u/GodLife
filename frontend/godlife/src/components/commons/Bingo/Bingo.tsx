@@ -3,8 +3,8 @@ import { useState } from "react";
 // MUI
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-
 import EditIcon from "@mui/icons-material/Edit";
+import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 // Local
 import BingoCell from "./BingoCell";
@@ -19,9 +19,6 @@ type BingoProps = {
   totalUses: Number;
   createdBy: String;
 };
-// 1. Size: 한 변의 길이.
-// 2. goals: 배열.
-// 3. isActive: 빙고 작동 여부
 
 export const Bingo = ({
   title,
@@ -48,6 +45,12 @@ export const Bingo = ({
     setState({ ...state, title: "아아아" });
   };
 
+  const completeGoal = () => {
+    setState({ ...state });
+  };
+
+  let inputValue = "";
+
   return (
     <Box
       sx={{
@@ -57,7 +60,7 @@ export const Bingo = ({
     >
       <Grid
         container
-        sx={{ justifyContent: "space-bewtween", bgcolor: "primary.dark" }}
+        sx={{ justifyContent: "space-between", bgcolor: "primary.dark" }}
       >
         <Grid item xs>
           <Typography variant="h3" onClick={() => editTitle()}>
@@ -69,6 +72,7 @@ export const Bingo = ({
             <EditIcon />
           </Typography>
         </Grid>
+        <TextField label="Standard" variant="standard" value={inputValue} />
       </Grid>
 
       <h2>
