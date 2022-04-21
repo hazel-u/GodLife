@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     public User findByEmailAndDeletedFalse(String email); //jpa query method
+    public User findByNameAndDeletedFalse(String name);
 }
