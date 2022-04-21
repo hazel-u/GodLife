@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode {
     /* 400 BAD_REQUEST : 잘못된 요청 */
+    FAIL_MESSAGE_SEND(HttpStatus.BAD_REQUEST, "메세지 전송에 실패하였습니다"),
 
     /* 401 UNAUTHORIZED : 인증되지 않은 사용자 */
     INVALID_AUTH_TOKEN(HttpStatus.UNAUTHORIZED, "권한 정보가 없는 토큰입니다."),
