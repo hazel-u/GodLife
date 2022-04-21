@@ -7,7 +7,6 @@ import {
 	TwitterShareButton,
 } from "react-share";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import instagram from "../../assets/icon/instagram.png";
 import kakaotalk from "../../assets/icon/kakaotalk.png";
 
 
@@ -19,7 +18,7 @@ const FlexContainer = styled.div`
 
 const GridContainer = styled.div`
 	display: grid;
-	grid-template-columns: repeat(5, 48px);
+	grid-template-columns: repeat(4, 48px);
 	grid-column-gap: 8px;
 	justify-content: center;
 	align-items: center;
@@ -69,9 +68,6 @@ const Footer = () => {
         <KakaoShareButton>
 					<KakaoIcon src={kakaotalk}></KakaoIcon>
 				</KakaoShareButton>
-        <InstagramShareButton>
-					<InstagramIcon src={instagram}></InstagramIcon>
-				</InstagramShareButton>
         <FacebookShareButton url={currentUrl}>
           <FacebookIcon size={48} round={true} borderRadius={24}></FacebookIcon>
         </FacebookShareButton>
