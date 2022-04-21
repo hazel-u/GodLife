@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ovcors.godlife.api.dto.request.LoginReqDto;
 import com.ovcors.godlife.api.exception.ErrorCode;
 import com.ovcors.godlife.config.auth.PrincipalDetails;
+import com.ovcors.godlife.core.domain.user.User;
 import com.ovcors.godlife.core.repository.UserRepository;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +18,7 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -44,7 +46,6 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
             UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(loginReqDto.getEmail(), loginReqDto.getPassword());
 
-            System.out.println(loginReqDto.getEmail()+" "+loginReqDto.getPassword());
             Authentication authentication = authenticationManager.authenticate(authenticationToken); // 여기서 PrincipalDetailsService 진입
 
 //            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
