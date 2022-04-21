@@ -1,4 +1,5 @@
 import { Navigate, Outlet, useRoutes } from "react-router-dom";
+import GodlifeShare from "../pages/bingo/detail/GodlifeShare";
 import Join from "../pages/join/Join";
 import Login from "../pages/login/Login";
 import Profile from "../pages/profile/Profile";
@@ -22,6 +23,10 @@ export default function Router() {
         {
           path: "/profile",
           element: <Profile />,
+        },
+        {
+          path: "/bingo/:bingoId",
+          element: <GodlifeShare />,
         },
       ],
     },
