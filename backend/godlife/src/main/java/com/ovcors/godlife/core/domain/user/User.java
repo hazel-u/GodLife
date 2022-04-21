@@ -30,7 +30,8 @@ public class User {
     private String name;
 
     @Column
-    private String oauth_type;
+    @Enumerated(EnumType.STRING)
+    private JoinType oauth_type;
 
     @Column
     private Boolean deleted;
@@ -45,7 +46,7 @@ public class User {
 //    private List<Bingo> bingos = new ArrayList<>();
 
     @Builder
-    public User(String email, String password, String name, String oauth_type, Boolean deleted, LocalDate recentDate, int godCount) {
+    public User(String email, String password, String name, JoinType oauth_type, Boolean deleted, LocalDate recentDate, int godCount) {
         this.email = email;
         this.password = password;
         this.name=name;
