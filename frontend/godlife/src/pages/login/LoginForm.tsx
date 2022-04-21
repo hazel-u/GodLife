@@ -6,6 +6,7 @@ import { LoginInput } from "../../types/user";
 import axios from "axios";
 import EmailController from "./EmailController";
 import PasswordController from "./PasswordController";
+import { OutlinedButton } from "../../components/common/Button";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -26,20 +27,20 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack
-        spacing={0.1}
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <FormControl sx={{ width: "100%" }}>
+      <FormControl sx={{ width: "100%" }}>
+        <Stack
+          spacing={1.5}
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+        >
           <EmailController control={control} />
           <PasswordController control={control} />
-          <Button type="submit" variant="contained">
+          <OutlinedButton type="submit" variant="outlined">
             갓생살러 가기
-          </Button>
-        </FormControl>
-      </Stack>
+          </OutlinedButton>
+        </Stack>
+      </FormControl>
     </form>
   );
 };

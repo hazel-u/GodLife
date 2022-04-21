@@ -24,4 +24,23 @@ const OutlinedButton = styled(Button)({
   },
 });
 
-export { OutlinedButton };
+const TextButton = styled(Button)({
+  fontFamily: "Noto Sans KR",
+  color: "#939393",
+  "&:hover": {
+    color: "#000000",
+    backgroundColor: "transparent",
+    borderColor: "#000000",
+    boxShadow: "none",
+  },
+  "&:active": {
+    boxShadow: "none",
+    backgroundColor: "transparent",
+    borderColor: "#000000",
+  },
+  "&:focus": {
+    backgroundColor: "transparent",
+  },
+});
+
+export { OutlinedButton, TextButton };

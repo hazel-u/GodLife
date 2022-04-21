@@ -1,6 +1,6 @@
 import React from "react";
 import { Controller, Control } from "react-hook-form";
-import { TextField } from "@mui/material";
+import { OutlinedInput } from "../../components/common/Input";
 import { LoginInput } from "../../types/user";
 
 const EmailController: React.FC<{
@@ -9,9 +9,9 @@ const EmailController: React.FC<{
   return (
     <Controller
       render={({ field, fieldState }) => (
-        <TextField
+        <OutlinedInput
           {...field}
-          label="이메일"
+          placeholder="이메일"
           type="text"
           error={!!fieldState.error}
           helperText={
