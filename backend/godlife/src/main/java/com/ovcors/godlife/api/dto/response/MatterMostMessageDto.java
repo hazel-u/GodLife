@@ -1,4 +1,4 @@
-package com.ovcors.godlife.api.exception.notification;
+package com.ovcors.godlife.api.dto.response;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.*;
@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MatterMostMessageDto {
+
     @Getter
     public static class Attachments {
         private Props props;
@@ -60,8 +61,14 @@ public class MatterMostMessageDto {
             this.title = e.getClass().getSimpleName();
             StringBuilder sb = new StringBuilder(text);
 
-            sb.append("**Error Message**").append("/n").append("/n").append("```").append(e.getMessage()).append("```")
-                    .append("/n").append("/n");
+            sb.append("**Error Message**").
+                    append('\n').
+                    append('\n').
+                    append("```").
+                    append(e.getMessage()).
+                    append("```")
+                    .append('\n').
+                    append('\n');
 
             this.text = sb.toString();
 
@@ -72,7 +79,7 @@ public class MatterMostMessageDto {
             this.addExceptionInfo(e);
             StringBuilder sb = new StringBuilder(text);
 
-            sb.append("**Reqeust URL**").append("/n").append("/n").append(uri).append("/n").append("/n");
+            sb.append("**Reqeust URL**").append('\n').append('\n').append(uri).append('\n').append('\n');
 
             this.text = sb.toString();
             return this;
@@ -82,7 +89,7 @@ public class MatterMostMessageDto {
             this.addExceptionInfo(e, uri);
             StringBuilder sb = new StringBuilder(text);
 
-            sb.append("**Parameters**").append("/n").append("/n").append(params.toString()).append("/n").append("/n");
+            sb.append("**Parameters**").append('\n').append('\n').append(params.toString()).append('\n').append('\n');
 
             this.text = sb.toString();
             return this;
@@ -100,11 +107,12 @@ public class MatterMostMessageDto {
 
             StringWriter sw = new StringWriter();
             e.printStackTrace(new PrintWriter(sw));
-            text.append("**Stack Trace**").append("/n").append("/n").append("```");
+            text.append("**Stack Trace**").append("\n").append('\n').append("```");
             text.append(sw.toString().substring(0,
-                    Math.min(5500, sw.toString().length())) + "/n...").append("/n").append("/n");
+                    Math.min(5500, sw.toString().length())) + "\n...").append('\n').append('\n');
 
             this.card = text.toString();
         }
     }
+
 }

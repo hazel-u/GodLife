@@ -1,14 +1,17 @@
 package com.ovcors.godlife.core.domain.bingo;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comment {
     @Builder
     public Comment(String nickname, String password, String content) {
@@ -17,11 +20,14 @@ public class Comment {
         this.content = content;
     }
 
-    @Id @GeneratedValue
-    private Long seq;
+    @Id
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(columnDefinition = "BINARY(16)")
+    private UUID seq;
 
-    @ManyToOne
-    @JoinColumn(name="comment_seq")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="bingo_seq")
     private Bingo bingo;
 
     private String nickname;
