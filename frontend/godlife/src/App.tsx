@@ -4,6 +4,7 @@ import Router from "./router/router";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { selectUser, setLoggedUser } from "./store/user";
 
+
 function App() {
   const dispatch = useAppDispatch();
   const { email } = useAppSelector(selectUser);
@@ -26,6 +27,8 @@ function App() {
       <Router />;
     </>
   );
+
 }
+
 
 export default App;
