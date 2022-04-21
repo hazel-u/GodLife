@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 // Local
 import BingoCell from "./BingoCell";
 
-type BingoProps = {
+interface BingoProps {
   title: String;
   size: Number;
   goals: Array<Object>;
@@ -18,7 +18,7 @@ type BingoProps = {
   streak: Number;
   totalUses: Number;
   createdBy: String;
-};
+}
 
 export const Bingo = ({
   title,
