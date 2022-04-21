@@ -1,12 +1,14 @@
 import React, { useRef } from "react";
 import { Controller, Control, UseFormWatch } from "react-hook-form";
-import { TextField } from "@mui/material";
+import { OutlinedInput } from "../../components/common/Input";
 import { JoinInput } from "../../types/user";
 
-const PasswordContoller: React.FC<{
+interface PasswordContollerProps {
   control: Control<JoinInput, any>;
   watch: UseFormWatch<JoinInput>;
-}> = ({ control, watch }) => {
+}
+
+const PasswordContoller = ({ control, watch }: PasswordContollerProps) => {
   const password = useRef("");
   password.current = watch("password", "");
 
@@ -35,9 +37,9 @@ const PasswordContoller: React.FC<{
           },
         }}
         render={({ field, fieldState }) => (
-          <TextField
+          <OutlinedInput
             {...field}
-            label="비밀번호"
+            placeholder="비밀번호"
             type="password"
             error={!!fieldState.error}
             helperText={
@@ -63,9 +65,9 @@ const PasswordContoller: React.FC<{
           },
         }}
         render={({ field, fieldState }) => (
-          <TextField
+          <OutlinedInput
             {...field}
-            label="비밀번호 확인"
+            placeholder="비밀번호 확인"
             type="password"
             error={!!fieldState.error}
             helperText={

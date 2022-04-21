@@ -6,33 +6,39 @@ import {
   UseFormTrigger,
 } from "react-hook-form";
 import axios from "axios";
-import { TextField } from "@mui/material";
 import { JoinInput } from "../../types/user";
 import { useIsMount } from "./CustomHook";
+import { OutlinedInput } from "../../components/common/Input";
 
-const EmailController: React.FC<{
+interface EmailControllerProps {
   control: Control<JoinInput, any>;
   trigger: UseFormTrigger<JoinInput>;
   getValues: UseFormGetValues<JoinInput>;
-}> = ({ control, trigger, getValues }) => {
-  const [validatedEmail, setValidatedEmail] = useState(false);
+}
+
+const EmailController = ({
+  control,
+  trigger,
+  getValues,
+}: EmailControllerProps) => {
+  const [validatedEmail, setValidatedEmail] = useState(true);
 
   const checkEmailDuplication = () => {
     const email = getValues().email;
-    axios
-      .post("user/duplicate-email", null, {
-        params: {
-          email,
-        },
-      })
-      .then(() => {
-        setValidatedEmail(true);
-        trigger("email");
-      })
-      .catch(() => {
-        setValidatedEmail(false);
-        trigger("email");
-      });
+    // axios
+    //   .post("user/duplicate-email", null, {
+    //     params: {
+    //       email,
+    //     },
+    //   })
+    //   .then(() => {
+    //     setValidatedEmail(true);
+    //     trigger("email");
+    //   })
+    //   .catch(() => {
+    //     setValidatedEmail(false);
+    //     trigger("email");
+    //   });
   };
 
   const isMount = useIsMount();
@@ -65,9 +71,9 @@ const EmailController: React.FC<{
       }}
       render={({ field, fieldState }) => (
         <>
-          <TextField
+          <OutlinedInput
             {...field}
-            label="이메일"
+            placeholder="이메일"
             error={!!fieldState.error}
             helperText={
               fieldState.error?.message ? fieldState.error.message : " "
