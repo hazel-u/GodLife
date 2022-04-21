@@ -13,6 +13,7 @@ export interface LoginInput {
 export interface UserInfo {
   email: string;
   nickname: string;
+  isLogged: boolean;
 }
 
 export interface ChangePasswordInput {

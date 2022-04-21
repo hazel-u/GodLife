@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Stack, Button, FormControl } from "@mui/material";
-import { LoginInput } from "../../types/user";
-import axios from "axios";
+import { Stack, FormControl } from "@mui/material";
 import EmailController from "./EmailController";
 import PasswordController from "./PasswordController";
 import { OutlinedButton } from "../../components/common/Button";
+import { LoginInput } from "../../types/user";
+import { useAppDispatch } from "../../store/hooks";
+import { setLoggedUser } from "../../store/user";
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const { handleSubmit, control } = useForm<LoginInput>();
   const onSubmit: SubmitHandler<LoginInput> = async (data) => {
@@ -19,6 +21,7 @@ const LoginForm = () => {
         console.log(res);
         localStorage.setItem("refreshtoken", res.headers["refreshtoken"]);
         localStorage.setItem("token", res.headers["authorization"]);
+        dispatch(setLoggedUser(res.data));
 
         navigate("/");
       })
