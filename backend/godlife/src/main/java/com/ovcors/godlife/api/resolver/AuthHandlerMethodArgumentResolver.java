@@ -12,6 +12,7 @@ import com.ovcors.godlife.core.domain.user.User;
 import com.ovcors.godlife.core.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @Component
 public class AuthHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
+    @Autowired
     private final UserRepository userRepository;
 
     @Value("${spring.jwt.secret}")
@@ -43,7 +45,6 @@ public class AuthHandlerMethodArgumentResolver implements HandlerMethodArgumentR
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         String token = webRequest.getHeader(JwtProperties.HEADER_STRING);
-
         if (token != null) {
             JWTVerifier verifier = JWT.require(Algorithm.HMAC512(secret)).build(); // issuer?
             handleError(token);
