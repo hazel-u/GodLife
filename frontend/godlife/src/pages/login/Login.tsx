@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Box, Button, Grid, Divider } from "@mui/material";
-import LoginForm from "./LoginForm";
-import LoginBanner from "./LoginBanner";
-import SocialLogin from "./SocialLogin";
 import Logo from "../../assets/images/logo.svg";
 import { TextButton } from "../../components/common/Button";
+import LoginBanner from "./LoginBanner";
+import LoginForm from "./LoginForm";
+import SocialLogin from "./SocialLogin";
+import { Box, Button, Grid, Divider } from "@mui/material";
+import React, { useState } from "react";
 
 const Login = () => {
   return (
