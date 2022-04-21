@@ -1,6 +1,6 @@
 import React from "react";
 import { Controller, Control } from "react-hook-form";
-import { TextField } from "@mui/material";
+import { OutlinedInput } from "../../components/common/Input";
 import { LoginInput } from "../../types/user";
 
 const PasswordContoller: React.FC<{
@@ -9,9 +9,9 @@ const PasswordContoller: React.FC<{
   return (
     <Controller
       render={({ field, fieldState }) => (
-        <TextField
+        <OutlinedInput
           {...field}
-          label="비밀번호"
+          placeholder="비밀번호"
           type="password"
           error={!!fieldState.error}
           helperText={

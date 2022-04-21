@@ -6,42 +6,48 @@ import {
   UseFormTrigger,
 } from "react-hook-form";
 import axios from "axios";
-import { TextField } from "@mui/material";
+import { OutlinedInput } from "../../components/common/Input";
 import { JoinInput } from "../../types/user";
 import { useIsMount } from "./CustomHook";
 
-const NicknameController: React.FC<{
+interface NicknameControllerProps {
   control: Control<JoinInput, any>;
   trigger: UseFormTrigger<JoinInput>;
   getValues: UseFormGetValues<JoinInput>;
-}> = ({ control, trigger, getValues }) => {
-  const [validatedNickname, setValidatedNickname] = useState(false);
+}
+
+const NicknameController = ({
+  control,
+  trigger,
+  getValues,
+}: NicknameControllerProps) => {
+  const [validatedNickname, setValidatedNickname] = useState(true);
 
   const checkNicknameDuplication = () => {
     const nickname = getValues().nickname;
 
-    axios
-      .post("user/duplicate-name", null, {
-        params: {
-          nickname,
-        },
-      })
-      .then(() => {
-        setValidatedNickname(true);
-        trigger("nickname");
-      })
-      .catch(() => {
-        setValidatedNickname(false);
-        trigger("nickname");
-      });
+    // axios
+    //   .post("user/duplicate-name", null, {
+    //     params: {
+    //       nickname,
+    //     },
+    //   })
+    //   .then(() => {
+    //     setValidatedNickname(true);
+    //     trigger("nickname");
+    //   })
+    //   .catch(() => {
+    //     setValidatedNickname(false);
+    //     trigger("nickname");
+    //   });
   };
 
-  const isMount = useIsMount();
-  useEffect(() => {
-    if (!isMount) {
-      trigger("email");
-    }
-  }, [validatedNickname, isMount, trigger]);
+  // const isMount = useIsMount();
+  // useEffect(() => {
+  //   if (!isMount) {
+  //     trigger("email");
+  //   }
+  // }, [validatedNickname, isMount, trigger]);
 
   return (
     <Controller
@@ -57,6 +63,10 @@ const NicknameController: React.FC<{
           value: 8,
           message: "닉네임은 8자 이내로 입력해주세요.",
         },
+        pattern: {
+          value: /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/,
+          message: "영문, 한글, 숫자만 입력해주세요.",
+        },
         validate: () => {
           if (!validatedNickname) {
             return "중복된 닉네임입니다.";
@@ -64,9 +74,9 @@ const NicknameController: React.FC<{
         },
       }}
       render={({ field, fieldState }) => (
-        <TextField
+        <OutlinedInput
           {...field}
-          label="닉네임"
+          placeholder="닉네임"
           error={!!fieldState.error}
           helperText={
             fieldState.error?.message ? fieldState.error.message : " "
