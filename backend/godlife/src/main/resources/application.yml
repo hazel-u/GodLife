@@ -51,6 +51,9 @@ spring:
       location: C:\Develop\projects\ssafy\upload
       max-file-size: 100MB
       max-request-size: 100MB
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 server:
   # 프로젝트 환경의 포트 설정
@@ -78,7 +81,7 @@ swagger:
 notification:
   mattermost:
     enabled: true # mmSender를 사용할 지 여부, false면 알림이 오지 않는다
-    webhook-url: https://meeting.ssafy.com/hooks/dh619rkxeidpu8txns3qxfqxbr # 위의 Webhook URL을 기입
+    webhook-url: https://meeting.ssafy.com/hooks/awjtbmh6rirj9ywyp5x3uo989y # 위의 Webhook URL을 기입
     channel: # 기본 설정한 채널이 아닌 다른 채널로 보내고 싶을 때 기입한다
     pretext: # attachments의 상단에 나오게 되는 일반 텍스트 문자
     color: # attachment에 왼쪽 사이드 컬러. default=red
