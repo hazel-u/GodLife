@@ -1,7 +1,10 @@
 package com.ovcors.godlife.config;
 
+import com.ovcors.godlife.api.resolver.AuthHandlerMethodArgumentResolver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -12,10 +15,15 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.util.List;
+
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig extends WebMvcConfigurationSupport {  // Swagger
+public class WebMvcConfig extends WebMvcConfigurationSupport {
+
+    @Autowired
+    AuthHandlerMethodArgumentResolver authHandlerMethodArgumentResolver;
 
     private static final String API_NAME = "갓생살기 API";
     private static final String API_VERSION = "V1";
@@ -47,5 +55,8 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {  // Swagger
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
-
+    @Override
+    protected void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(authHandlerMethodArgumentResolver);
+    }
 }
