@@ -5,7 +5,6 @@ import { UserInfo } from "../types/user";
 const initialState: UserInfo = {
   email: "",
   nickname: "",
-  isLogged: false,
 };
 
 export const userSlice = createSlice({
@@ -13,7 +12,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setLoggedUser: (state, action: PayloadAction<UserInfo>) => {
-      return (state = { ...action.payload, isLogged: true });
+      return (state = { ...action.payload });
     },
   },
 });

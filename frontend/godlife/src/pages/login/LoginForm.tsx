@@ -21,7 +21,9 @@ const LoginForm = () => {
         console.log(res);
         localStorage.setItem("refreshtoken", res.headers["refreshtoken"]);
         localStorage.setItem("token", res.headers["authorization"]);
-        dispatch(setLoggedUser(res.data));
+        dispatch(
+          setLoggedUser({ email: "asd@asd.com", nickname: "nicknamead" })
+        );
 
         navigate("/");
       })
