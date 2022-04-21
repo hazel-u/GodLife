@@ -14,8 +14,12 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class SaveBingoReqDto {
+    @Builder
+    public SaveBingoReqDto(String title) {
+        this.title = title;
+    }
+
     @NotNull
     String title;
     List<Integer> goals = new ArrayList<>();
