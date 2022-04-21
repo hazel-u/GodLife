@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,7 +23,7 @@ public class FindBingoResDto {
     LocalDate startDate;
     Integer likeCnt;
     Integer commentCnt;
-    List<Comment> comments;
+    List<Comment> comments = new ArrayList<>();
 
     public FindBingoResDto(UUID id, Long code, String title, String userEmail, Boolean activate, Boolean godlife, LocalDate startDate, Integer likeCnt, Integer commentCnt) {
         this.id = id;
@@ -34,5 +35,9 @@ public class FindBingoResDto {
         this.startDate = startDate;
         this.likeCnt = likeCnt;
         this.commentCnt = commentCnt;
+    }
+
+    public void addComments(List<Comment> comments) {
+        comments.addAll(comments);
     }
 }
