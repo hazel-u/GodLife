@@ -1,0 +1,28 @@
+# 로컬에서 사용할 application yml 설정 파일
+# ':' 뒤에 설정값을 입력할 때는 반드시 ':' 다음에 공백이 필요
+# 설정할 값들의 레벨 주의 (ex. spring.datasource.url 을 입력할 경우, datasource: 는 spring: 보다 우측으로 한 탭 이동. url: 은 datasource: 보다 우측으로 한 탭 이동)
+
+spring:
+  profiles:
+    active: test
+  # JWT 토큰에 사용할 secret 키값 (임의의 랜덤 키값)
+  jwt:
+    secret: RktTodWkdWkdaos
+
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/godlifeTest
+    username: admin
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 100
+
+logging.level:
+  org.hibernate.SQL: debug
+  org.hibernate.type: trace
