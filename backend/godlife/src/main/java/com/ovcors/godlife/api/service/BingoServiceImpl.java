@@ -3,11 +3,14 @@ package com.ovcors.godlife.api.service;
 import com.ovcors.godlife.api.dto.request.SaveBingoReqDto;
 import com.ovcors.godlife.api.dto.request.SaveCommentReqDto;
 import com.ovcors.godlife.api.dto.request.UpdateTitleReqDto;
+import com.ovcors.godlife.api.dto.response.FindBingoResDto;
 import com.ovcors.godlife.api.exception.CustomException;
 import com.ovcors.godlife.api.exception.ErrorCode;
 import com.ovcors.godlife.core.domain.bingo.Bingo;
 import com.ovcors.godlife.core.domain.bingo.Comment;
 import com.ovcors.godlife.core.domain.user.User;
+import com.ovcors.godlife.core.queryrepository.BingoQueryRepository;
+import com.ovcors.godlife.core.queryrepository.CommentQueryRepository;
 import com.ovcors.godlife.core.repository.BingoRepository;
 import com.ovcors.godlife.core.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +23,11 @@ import java.util.UUID;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class BingoServiceImpl {
+public class BingoServiceImpl implements BingoService{
 
     private final BingoRepository bingoRepository;
+    private final BingoQueryRepository bingoQueryRepository;
+    private final CommentQueryRepository commentQueryRepository;
     private final UserRepository userRepository;
 
     public Bingo createBingo(String userEmail, SaveBingoReqDto reqDto) {
@@ -36,16 +41,16 @@ public class BingoServiceImpl {
         return bingoRepository.save(bingo);
     }
 
-    public List<Bingo> findAllBingo(String userEmail) {
-        User user = userRepository.findByEmailAndDeletedFalse(userEmail);
-        List<Bingo> response = bingoRepository.findAllByUser(user);
+    public List<FindBingoResDto> findAllBingo(String userEmail) {
+        List<FindBingoResDto> response = bingoQueryRepository.findAllBingoByUser(userEmail);
         return response;
     }
 
-    public Bingo findBingo(String bingoSeq){
-        Bingo bingo = bingoRepository.findById(UUID.fromString(bingoSeq))
-                .orElseThrow(()->new CustomException(ErrorCode.BINGO_NOT_FOUND));
-        return bingo;
+    public FindBingoResDto findBingo(Long code){
+        FindBingoResDto response = bingoQueryRepository.findBingo(code);
+        List<Comment> comments = commentQueryRepository.findAllByBingoCode(code);
+        response.addComments(comments);
+        return response;
     }
 
     public void updateTitle(String seq, UpdateTitleReqDto reqDto) {
@@ -54,7 +59,7 @@ public class BingoServiceImpl {
         bingo.changeTitle(reqDto.getTitle());
     }
 
-    public void updateBingo(String seq) {
+    public void updateActivate(String seq) {
         Bingo bingo = bingoRepository.findById(UUID.fromString(seq))
                 .orElseThrow(()->new CustomException(ErrorCode.BINGO_NOT_FOUND));
         bingo.changeActivate();
