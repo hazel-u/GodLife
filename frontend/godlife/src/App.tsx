@@ -7,11 +7,12 @@ import { selectUser, setLoggedUser } from "./store/user";
 function App() {
   const dispatch = useAppDispatch();
   const { email } = useAppSelector(selectUser);
-  if (!email) {
+  const token = localStorage.getItem("token");
+  if (!email && token) {
     axios
       .get("user/info", {
         headers: {
-          Authorization: `${localStorage.getItem("token")}`,
+          Authorization: token,
         },
       })
       .then((res) => {
