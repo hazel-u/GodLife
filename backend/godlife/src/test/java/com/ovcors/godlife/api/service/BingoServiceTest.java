@@ -1,13 +1,13 @@
 package com.ovcors.godlife.api.service;
 
 import com.ovcors.godlife.api.dto.request.SaveBingoReqDto;
-import com.ovcors.godlife.api.dto.request.SaveCommentReqDto;
 import com.ovcors.godlife.api.dto.request.UpdateTitleReqDto;
+import com.ovcors.godlife.api.dto.response.FindBingoResDto;
 import com.ovcors.godlife.core.domain.bingo.Bingo;
 import com.ovcors.godlife.core.domain.user.User;
+import com.ovcors.godlife.core.queryrepository.BingoQueryRepository;
 import com.ovcors.godlife.core.repository.BingoRepository;
 import com.ovcors.godlife.core.repository.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -36,6 +36,9 @@ class BingoServiceTest {
     BingoRepository bingoRepository;
 
     @Mock
+    BingoQueryRepository bingoQueryRepository;
+
+    @Mock
     UserRepository userRepository;
 
     final String userEmail = "wjddma1214@gmail.com";
@@ -47,34 +50,35 @@ class BingoServiceTest {
     @Test
     void findAllBingo() {
         // given
-        setUp();
-        List<Bingo> expected = new ArrayList<>();
-        expected.add(bingo());
-        given(bingoRepository.findAllByUser(any(User.class))).willReturn(expected);
+        List<FindBingoResDto> expected = new ArrayList<>();
+        FindBingoResDto resDto = new FindBingoResDto();
+        resDto.setTitle("Hello world");
+        expected.add(resDto);
+        given(bingoQueryRepository.findAllBingoByUser(userEmail)).willReturn(expected);
 
         // when
-        List<Bingo> result = bingoService.findAllBingo(userEmail);
+        List<FindBingoResDto> result = bingoQueryRepository.findAllBingoByUser(userEmail);
 
         // then
         assertThat(result.size()).isEqualTo(1);
         assertThat(result.get(0).getTitle()).isEqualTo("Hello world");
 
-        verify(userRepository, times(1)).findByEmailAndDeletedFalse(userEmail);
-        verify(bingoRepository, times(1)).findAllByUser(any(User.class));
+        verify(bingoQueryRepository, times(1)).findAllBingoByUser(userEmail);
     }
 
     @Test
     void findBingo() {
         // given
-        UUID id = UUID.randomUUID();
-        given(bingoRepository.findById(id)).willReturn(Optional.of(bingo()));
+        FindBingoResDto resDto = new FindBingoResDto();
+        resDto.setTitle("Hello world");
+        given(bingoQueryRepository.findBingo(1L)).willReturn(resDto);
 
         // when
-        Bingo result = bingoService.findBingo(id.toString());
+        FindBingoResDto result = bingoQueryRepository.findBingo(1L);
 
         // then
         assertThat(result.getTitle()).isEqualTo("Hello world");
-        verify(bingoRepository, times(1)).findById(id);
+        verify(bingoQueryRepository, times(1)).findBingo(1L);
     }
 
     @Test
