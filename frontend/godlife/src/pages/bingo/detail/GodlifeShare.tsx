@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useLocation, useParams } from "react-router-dom";
-import { Stack, Box, Button } from "@mui/material";
+import { Stack, Box, Button, Container } from "@mui/material";
 import Logo from "../../../assets/images/logo.svg";
 import Share from "./Share";
 import CommentList from "./CommentList";
+import Bingo from "../../../components/common/Bingo/Bingo";
 
 const GodlifeShare = () => {
   const params = useParams();
@@ -15,20 +16,68 @@ const GodlifeShare = () => {
     axios.get(`bingo/${params.bingoId}`).then((res) => console.log(res));
   }, []);
 
+  const exampleBingo = [
+    {
+      content: "일이삼사오",
+      isCompleted: false,
+    },
+    {
+      content: "일이삼사오",
+      isCompleted: false,
+    },
+    {
+      content: "일이삼사오",
+      isCompleted: false,
+    },
+    {
+      content: "일이삼사오",
+      isCompleted: false,
+    },
+    {
+      content: "일이삼사오",
+      isCompleted: false,
+    },
+    {
+      content: "일이삼사오",
+      isCompleted: false,
+    },
+    {
+      content: "일이삼사오",
+      isCompleted: false,
+    },
+    {
+      content: "일이삼사오",
+      isCompleted: false,
+    },
+    {
+      content: "일이삼사오",
+      isCompleted: false,
+    },
+  ];
+
   return (
     <Stack direction="column" alignItems="center">
       <Box sx={{ textAlign: "center" }}>
         <img src={Logo} alt="logo" />
       </Box>
-      <p>미라클모닝어쩌구</p>
-      <p>3일째 갓생중 어쩌구</p>
-      <Box sx={{ width: "300px", height: "300px", backgroundColor: "beige" }}>
-        빙고 자리
-      </Box>
+
+      <Container sx={{ width: "500px" }}>
+        <Bingo
+          title={"도와주세요!! 개발자가 갇혀있어요!"}
+          createdBy={"백우민"}
+          size={3}
+          goals={exampleBingo}
+          mode={"Active"}
+          date={new Date()}
+          streak={1}
+          totalUses={1}
+        />
+      </Container>
+
       <Stack
         direction="row"
         justifyContent="space-between"
-        sx={{ width: "300px" }}
+        sx={{ width: "500px" }}
       >
         <Box>
           <span>👍 20</span>
