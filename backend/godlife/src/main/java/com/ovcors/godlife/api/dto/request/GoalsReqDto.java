@@ -5,9 +5,7 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class LoginReqDto {
+public class GoalsReqDto {
     @NotNull
-    private String email;
-    @NotNull
-    private String password;
+    Long seq;
 }
