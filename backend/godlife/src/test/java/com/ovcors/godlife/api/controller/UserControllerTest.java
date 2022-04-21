@@ -2,18 +2,14 @@ package com.ovcors.godlife.api.controller;
 
 import com.google.gson.Gson;
 import com.ovcors.godlife.api.dto.request.JoinReqDto;
-import com.ovcors.godlife.api.dto.response.BaseResponseEntity;
 import com.ovcors.godlife.api.service.UserService;
-import com.ovcors.godlife.api.service.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -27,11 +23,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class UserControllerTest {
 
     @InjectMocks
-    @Autowired
     private UserController userController;
 
     @Mock
-    private UserServiceImpl userService;
+    private UserService userService;
 
     private MockMvc mockMvc;
     private Gson gson;

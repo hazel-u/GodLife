@@ -31,7 +31,7 @@ class UserServiceImplTest {
     @Mock
     private UserRepository userRepository;
 
-    @Autowired
+    @Mock
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final String email = "userEmail";
