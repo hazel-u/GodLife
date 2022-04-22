@@ -24,7 +24,7 @@ function App() {
   return (
     <>
       <CommonSnackbar />
-      <Router />;
+      <Router />
     </>
   );
 
