@@ -1,5 +1,8 @@
+import { IconButton } from "@mui/material";
+
 import React, { useEffect } from "react";
-import { Button } from "@mui/material";
+
+import KakaotalkLogo from "../../../assets/logo/Brand/kakaotalk.png";
 
 interface KakaoShareProps {
   likeCount: number;
@@ -32,7 +35,11 @@ const KakaoShare = (props: KakaoShareProps) => {
       },
     });
   };
-  return <Button onClick={shareKakao}>카카오톡</Button>;
+  return (
+    <IconButton onClick={shareKakao} sx={{ padding: 0, height: "40px" }}>
+      <img src={KakaotalkLogo} alt="Kakaotalk Logo" style={{ width: "40px" }} />
+    </IconButton>
+  );
 };
 
 export default KakaoShare;

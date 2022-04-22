@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+
 import { useState } from "react";
 
 // Local
@@ -91,6 +92,7 @@ export const Bingo = ({
           stretch: { height: "100%" },
           maxWidth: 750,
         }}
+        id="bingo"
       >
         {goals.map(function (goal, index) {
           return BingoCell(goal);

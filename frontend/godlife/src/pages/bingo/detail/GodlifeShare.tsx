@@ -119,7 +119,7 @@ const GodlifeShare = () => {
       </Container>
 
       <Interaction code={bingo.code} likeCnt={bingo.likeCnt} seq={bingo.id} />
-      <Share />
+      <Share likeCnt={bingo.likeCnt} commentCnt={bingo.commentCnt} />
       <CommentList />
     </Stack>
   );
