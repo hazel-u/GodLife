@@ -1,84 +1,45 @@
 import styled from "@emotion/styled";
-
+import { Box, Stack } from "@mui/material";
 import React from "react";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import {
-  FacebookIcon,
-  FacebookShareButton,
-  TwitterIcon,
-  TwitterShareButton,
-} from "react-share";
+import Logo from "../../assets/logo/Godlife/logo.svg";
 
-import kakaotalk from "../../assets/logo/Brand/kakaotalk.png";
+const Footer = () => {
+  return (
+    <Container>
+      <FooterWrapper>
+        <Stack>
+          <img src={Logo} alt="logo" style={{ width: "50px", marginBottom: "10px" }} />
+          <Box sx={{ fontSize: "12px", margin: "15px 0" }}>
+            <span>문의</span>
+            <Stack>
+              <span>godlife@gmail.com</span>
+            </Stack>
+            <Stack>
+              <span>서울특별시 강남구 테헤란로 212길</span>
+            </Stack>
+            <Stack>
+              <p>CopyRight 2022 갓생살기 All rights reserved.</p>
+            </Stack>
+          </Box>
+        </Stack>
+      </FooterWrapper>
+    </Container>
+  )
+}
 
-const FlexContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const GridContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 48px);
-  grid-column-gap: 8px;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 16px;
-`;
-
-const URLShareButton = styled.button`
-  width: 48px;
-  height: 48px;
-  color: white;
-  border-radius: 24px;
-  border: 0px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #7362ff;
-  &:hover {
-    background-color: #a99fee;
+const Container = styled.footer`
+  width: 90%;
+  margin-top: 70px;
+  border-top: 1px solid #f1f1f1;
+  @media (max-width: 899px) {
+    margin-top: 40px;
   }
 `;
 
-const KakaoShareButton = styled.a`
-  cursor: pointer;
+const FooterWrapper = styled.div`
+  max-width: 1200px;
+  margin: 0 30px;
+  padding: 48px 16px;
 `;
 
-const KakaoIcon = styled.img`
-  width: 48px;
-  height: 48px;
-`;
-
-const InstagramShareButton = styled.a`
-  cursor: pointer;
-`;
-
-const InstagramIcon = styled.img`
-  width: 52px;
-  height: 52px;
-`;
-
-const Footer = () => {
-  const currentUrl = window.location.href;
-  return (
-    <FlexContainer>
-      <p>내 갓생 자랑하기</p>
-      <GridContainer>
-        <KakaoShareButton>
-          <KakaoIcon src={kakaotalk}></KakaoIcon>
-        </KakaoShareButton>
-        <FacebookShareButton url={currentUrl}>
-          <FacebookIcon size={48} round={true} borderRadius={24}></FacebookIcon>
-        </FacebookShareButton>
-        <TwitterShareButton url={currentUrl}>
-          <TwitterIcon size={48} round={true} borderRadius={24}></TwitterIcon>
-        </TwitterShareButton>
-        <CopyToClipboard text={currentUrl}>
-          <URLShareButton>URL</URLShareButton>
-        </CopyToClipboard>
-      </GridContainer>
-    </FlexContainer>
-  );
-};
-
-export default Footer;
+export default Footer

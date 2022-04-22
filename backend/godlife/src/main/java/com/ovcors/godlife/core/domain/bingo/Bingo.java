@@ -1,5 +1,6 @@
 package com.ovcors.godlife.core.domain.bingo;
 
+import com.ovcors.godlife.core.domain.goals.BingoGoals;
 import com.ovcors.godlife.core.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -53,6 +54,9 @@ public class Bingo {
 
     @OneToMany(mappedBy = "bingo")
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "bingo")
+    private List<BingoGoals> bingoGoals = new ArrayList<>();
 
     public void setBingoCode(BingoCode bingoCode){
         this.bingoCode = bingoCode;

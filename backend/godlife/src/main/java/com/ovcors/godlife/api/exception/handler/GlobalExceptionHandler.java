@@ -4,6 +4,7 @@ import com.ovcors.godlife.api.exception.CustomException;
 import com.ovcors.godlife.api.exception.ErrorResponseEntity;
 import com.ovcors.godlife.api.exception.notification.NotificationManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,11 +17,17 @@ public class GlobalExceptionHandler {
     @Autowired
     private NotificationManager notificationManager;
 
-
     @ExceptionHandler(CustomException.class)
     protected ResponseEntity<ErrorResponseEntity> handleCustomException(CustomException e, HttpServletRequest req) {
-        notificationManager.sendNotification(e, req.getRequestURI(), getParams(req));
         return ErrorResponseEntity.toResponseEntity(e.getErrorCode());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity exceptionTest(Exception e, HttpServletRequest req) {
+        e.printStackTrace();
+        notificationManager.sendNotification(e, req.getRequestURI(), getParams(req));
+
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private String getParams(HttpServletRequest req) {

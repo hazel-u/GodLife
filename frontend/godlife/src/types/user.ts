@@ -1,6 +1,6 @@
 export interface JoinInput {
   email: string;
-  nickname: string;
+  name: string;
   password: string;
   confirmPassword: string;
 }
@@ -12,11 +12,13 @@ export interface LoginInput {
 
 export interface UserInfo {
   email: string;
-  nickname: string;
+  name: string;
+  godCount: number;
+  recentDate: null;
 }
 
 export interface ChangePasswordInput {
-  currentPassword: string;
-  password: string;
-  confirmPassword: string;
+  oldPassword: string;
+  newPassword: string;
+  newPasswordCheck: string;
 }
