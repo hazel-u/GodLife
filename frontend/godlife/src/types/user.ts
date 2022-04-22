@@ -16,7 +16,7 @@ export interface UserInfo {
 }
 
 export interface ChangePasswordInput {
-  currentPassword: string;
-  password: string;
-  confirmPassword: string;
+  oldPassword: string;
+  newPassword: string;
+  newPasswordCheck: string;
 }

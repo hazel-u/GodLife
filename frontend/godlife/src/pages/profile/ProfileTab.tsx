@@ -1,10 +1,12 @@
-import React from "react";
-import { styled } from "@mui/material/styles";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { styled } from "@mui/material/styles";
+
+import React from "react";
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   width: "100%",
   "& .MuiToggleButtonGroup-grouped": {
+    fontFamily: "Noto Sans KR",
     width: "50%",
     margin: theme.spacing(0.5),
     border: 0,
