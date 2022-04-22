@@ -1,12 +1,52 @@
 import { Box, Divider, Grid } from "@mui/material";
+
 import React from "react";
+
 import Logo from "../../assets/logo/Godlife/logo.svg";
+import Bingo from "../../components/common/Bingo/Bingo";
 import { TextButton } from "../../components/common/Button";
 import LoginBanner from "./LoginBanner";
 import LoginForm from "./LoginForm";
 import SocialLogin from "./SocialLogin";
 
-
+const exampleBingo = [
+  {
+    content: "일이삼사오",
+    isCompleted: false,
+  },
+  {
+    content: "일이삼사오",
+    isCompleted: false,
+  },
+  {
+    content: "일이삼사오",
+    isCompleted: false,
+  },
+  {
+    content: "일이삼사오",
+    isCompleted: false,
+  },
+  {
+    content: "일이삼사오",
+    isCompleted: false,
+  },
+  {
+    content: "일이삼사오",
+    isCompleted: false,
+  },
+  {
+    content: "일이삼사오",
+    isCompleted: false,
+  },
+  {
+    content: "일이삼사오",
+    isCompleted: false,
+  },
+  {
+    content: "일이삼사오",
+    isCompleted: false,
+  },
+];
 
 const Login = () => {
   return (
@@ -19,6 +59,16 @@ const Login = () => {
       sx={{ height: "100vh" }}
     >
       <Grid item md={8} display={{ xs: "none", md: "block" }}>
+        <Bingo
+          title={"도와주세요!! 개발자가 갇혀있어요!"}
+          createdBy={"백우민"}
+          size={3}
+          goals={exampleBingo}
+          mode={"Active"}
+          date={new Date()}
+          streak={1}
+          totalUses={1}
+        ></Bingo>
         <LoginBanner />
       </Grid>
 
