@@ -31,7 +31,7 @@ export default function Router() {
     },
     {
       path: "/",
-      element: isAuth ? <ShareLayout /> : <Navigate to="/login" />,
+      element: <ShareLayout />,
       children: [
         {
           path: "/bingo/:bingoId",
