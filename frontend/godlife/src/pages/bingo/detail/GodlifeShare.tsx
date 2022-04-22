@@ -1,10 +1,12 @@
 import { Container, Stack } from "@mui/material";
 import axios from "axios";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
 import Bingo from "../../../components/common/Bingo/Bingo";
+import { setBingo } from "../../../store/bingo";
+import { useAppDispatch } from "../../../store/hooks";
 import CommentList from "./CommentList";
 import Interaction from "./Interaction";
 import Share from "./Share";
@@ -20,32 +22,16 @@ const GodlifeShare = () => {
     commentCnt: 0,
     comments: [
       {
-        bingo: {
-          activate: true,
-          bingoCode: {
-            code: 0,
-          },
-          comments: [null],
-          godlife: true,
-          heartCnt: 0,
-          likeCnt: 0,
-          seq: "string",
-          startDate: "string",
-          surpriseCnt: 0,
-          title: "string",
-          user: {
-            deleted: true,
-            email: "string",
-            godCount: 0,
-            name: "string",
-            oauth_type: "NATIVE",
-            password: "string",
-            recentDate: "string",
-            seq: 0,
-          },
-        },
-        content: "string",
-        nickname: "string",
+        content:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur placeat, nisi incidunt, deleniti commodi esse porro iusto voluptates id, tempora vel unde accusamus? Quasi nulla ipsa aspernatur nesciunt aperiam adipisci!",
+        nickname: "일이삼사오육칠팔",
+        password: "string",
+        seq: "string",
+      },
+      {
+        content:
+          "Tenetur placeat, nisi incidunt, deleniti commodi esse porro iusto voluptates id, tempora vel unde accusamus? Quasi nulla ipsa aspernatur nesciunt aperiam adipisci!",
+        nickname: "qwer1234",
         password: "string",
         seq: "string",
       },
@@ -55,14 +41,18 @@ const GodlifeShare = () => {
     likeCnt: 0,
     startDate: "string",
     title: "string",
-    userEmail: "string",
+    userEmail: "qwe@qwe.cm",
   };
 
-  const [bingo, setBingo] = useState(dummyBingo);
-
   useEffect(() => {
-    axios.get(`bingo/${params.bingoId}`).then((res) => console.log(res));
+    getBingo();
   }, []);
+
+  const dispatch = useAppDispatch();
+  const getBingo = () => {
+    // axios.get(`bingo/${params.bingoId}`).then((res) => console.log(res));
+    dispatch(setBingo(dummyBingo));
+  };
 
   const exampleBingo = [
     {
@@ -103,11 +93,26 @@ const GodlifeShare = () => {
     },
   ];
 
+  const create = () => {
+    axios
+      .post(
+        "bingo",
+        { goals: [0, 1, 2, 3, 4, 5, 6, 7, 8], title: "string" },
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
   return (
     <Stack direction="column" alignItems="center">
       <Container sx={{ width: "500px" }}>
         <Bingo
-          title={bingo.title}
+          title={dummyBingo.title}
           createdBy={"백우민"}
           size={3}
           goals={exampleBingo}
@@ -118,9 +123,15 @@ const GodlifeShare = () => {
         />
       </Container>
 
-      <Interaction code={bingo.code} likeCnt={bingo.likeCnt} seq={bingo.id} />
-      <Share likeCnt={bingo.likeCnt} commentCnt={bingo.commentCnt} />
-      <CommentList />
+      <Interaction
+        code={dummyBingo.code}
+        likeCnt={dummyBingo.likeCnt}
+        seq={dummyBingo.id}
+        getBingo={getBingo}
+      />
+      <button onClick={create}>임시 빙고 만들기 버튼</button>
+      <Share />
+      <CommentList comments={dummyBingo.comments} getBingo={getBingo} />
     </Stack>
   );
 };

@@ -3,13 +3,12 @@ import { IconButton } from "@mui/material";
 import React, { useEffect } from "react";
 
 import KakaotalkLogo from "../../../assets/logo/Brand/kakaotalk.png";
+import { selectBingo } from "../../../store/bingo";
+import { useAppSelector } from "../../../store/hooks";
 
-interface KakaoShareProps {
-  likeCount: number;
-  commentCount: number;
-}
+const KakaoShare = () => {
+  const { likeCnt, commentCnt } = useAppSelector(selectBingo);
 
-const KakaoShare = (props: KakaoShareProps) => {
   useEffect(() => {
     if (!window.Kakao.isInitialized())
       window.Kakao.init(process.env.REACT_APP_KAKAO_KEY);
@@ -29,8 +28,8 @@ const KakaoShare = (props: KakaoShareProps) => {
         },
       },
       social: {
-        likeCount: props.likeCount,
-        commentCount: props.commentCount,
+        likeCount: likeCnt,
+        commentCount: commentCnt,
         // sharedCount: 30,
       },
     });

@@ -9,13 +9,7 @@ import FacebookLogo from "../../../assets/logo/Brand/facebook.png";
 import TwitterLogo from "../../../assets/logo/Brand/twitter.png";
 import KakaoShare from "./KakaoShare";
 
-const Share = ({
-  likeCnt,
-  commentCnt,
-}: {
-  likeCnt: number;
-  commentCnt: number;
-}) => {
+const Share = () => {
   const today = new Date();
   const month = today.getMonth() + 1; // 월
   const date = today.getDate(); // 날짜
@@ -52,7 +46,7 @@ const Share = ({
           <ImageIcon />
         </IconButton>
 
-        <KakaoShare likeCount={likeCnt} commentCount={commentCnt} />
+        <KakaoShare />
 
         <IconButton
           onClick={() => {
