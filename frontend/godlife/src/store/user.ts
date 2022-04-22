@@ -1,10 +1,13 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+
 import { RootState } from ".";
 import { UserInfo } from "../types/user";
 
 const initialState: UserInfo = {
   email: "",
-  nickname: "",
+  name: "",
+  godCount: 0,
+  recentDate: null,
 };
 
 export const userSlice = createSlice({
