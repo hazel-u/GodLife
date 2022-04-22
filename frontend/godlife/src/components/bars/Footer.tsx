@@ -18,7 +18,7 @@ const Footer = () => {
               <span>서울특별시 강남구 테헤란로 212길</span>
             </Stack>
             <Stack>
-              <p>CopyRight 2022 갓생살기, All rights reserved.</p>
+              <p>CopyRight 2022 갓생살기 All rights reserved.</p>
             </Stack>
           </Box>
         </Stack>
