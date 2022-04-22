@@ -1,7 +1,8 @@
-import React from "react";
-import { ReactComponent as Logo }  from "../../assets/logo/logo.svg";
 import styled from "@emotion/styled";
 
+import React from "react";
+
+import { ReactComponent as Logo } from "../../assets/logo/Godlife/logo.svg";
 
 const DivStyle = styled.div`
   background-color: #ffffff;
@@ -15,13 +16,12 @@ const DivStyle = styled.div`
   top: 0;
 `;
 
-
 const ShareNavbar = () => {
   return (
     <DivStyle>
-      <Logo width="8%" height="8%"/>
+      <Logo width="8%" height="8%" />
     </DivStyle>
-  )
-}
+  );
+};
 
-export default ShareNavbar
+export default ShareNavbar;
