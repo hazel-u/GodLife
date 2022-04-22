@@ -7,6 +7,7 @@ import com.ovcors.godlife.api.dto.response.BaseResponseEntity;
 import com.ovcors.godlife.api.dto.response.FindBingoResDto;
 import com.ovcors.godlife.api.resolver.Auth;
 import com.ovcors.godlife.api.service.BingoService;
+import com.ovcors.godlife.core.domain.bingo.Bingo;
 import com.ovcors.godlife.core.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,8 @@ public class BingoController {
 
     @PostMapping
     public ResponseEntity<BaseResponseEntity> saveBingo(@Auth User user, @RequestBody @Valid SaveBingoReqDto reqDto){
-        bingoService.createBingo(user.getEmail(), reqDto);
+        Bingo bingo= bingoService.createBingo(user.getEmail(), reqDto);
+        bingoService.addBingoGoals(bingo, reqDto);
         return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
     }
 

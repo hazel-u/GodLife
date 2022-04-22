@@ -51,7 +51,11 @@ public class AuthHandlerMethodArgumentResolver implements HandlerMethodArgumentR
             handleError(token);
             DecodedJWT decodedJWT = verifier.verify(token.replace(JwtProperties.TOKEN_PREFIX, ""));
             String email = decodedJWT.getSubject();
-            return userRepository.findByEmailAndDeletedFalse(email);
+            User user = userRepository.findByEmailAndDeletedFalse(email);
+            if(user == null) {
+                throw new CustomException(ErrorCode.USER_NOT_FOUND);
+            }
+            return user;
         } else {
             throw new CustomException(ErrorCode.TOKEN_NOT_FOUND);
         }

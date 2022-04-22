@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface BingoService {
     Bingo createBingo(String userEmail, SaveBingoReqDto reqDto);
+    void addBingoGoals(Bingo bingo, SaveBingoReqDto reqDto);
     List<FindBingoResDto> findAllBingo(String userEmail);
     FindBingoResDto findBingo(Long code);
     void updateTitle(String seq, UpdateTitleReqDto reqDto);

@@ -23,11 +23,7 @@ const Join = () => {
     axios({
       method: "post",
       url: "user/join",
-      data: {
-        email: data.email,
-        password: data.password,
-        nickname: data.nickname,
-      },
+      data,
     })
       .then((res) => {
         navigate("/login");
