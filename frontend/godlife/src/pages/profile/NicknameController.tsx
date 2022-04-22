@@ -30,11 +30,7 @@ const NicknameController = ({
     const name = getValues().name;
 
     axios
-      .post("user/duplicate-name", null, {
-        params: {
-          name,
-        },
-      })
+      .post("user/duplicate-name", { name })
       .then(() => {
         setValidatedNickname(true);
       })

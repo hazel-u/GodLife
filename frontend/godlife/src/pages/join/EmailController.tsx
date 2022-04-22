@@ -28,11 +28,7 @@ const EmailController = ({
   const checkEmailDuplication = () => {
     const email = getValues().email;
     axios
-      .post("user/duplicate-email", null, {
-        params: {
-          email,
-        },
-      })
+      .post("user/duplicate-email", { email })
       .then(() => {
         setValidatedEmail(true);
       })
