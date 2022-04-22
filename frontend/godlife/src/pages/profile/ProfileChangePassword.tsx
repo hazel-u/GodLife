@@ -56,10 +56,7 @@ const ProfileChangePassword = ({
   return (
     <>
       <p>새로 사용할 비밀번호를 입력해주세요.</p>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        style={{ width: "100%", minWidth: "300px" }}
-      >
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Stack direction="column" alignItems="center" spacing={1.5}>
           <Controller
             render={({ field, fieldState }) => (

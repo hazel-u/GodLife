@@ -1,16 +1,10 @@
-import {
-  Box,
-  Dialog,
-  Divider,
-  Stack,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Box, Dialog, Divider, useMediaQuery, useTheme } from "@mui/material";
 
 import React, { useState } from "react";
 
 import { OutlinedButton } from "../../components/common/Button";
 import ProfileChangePassword from "./ProfileChangePassword";
+import ProfileDelete from "./ProfileDelete";
 import ProfileEdit from "./ProfileEdit";
 import ProfileTab from "./ProfileTab";
 
@@ -29,23 +23,28 @@ const Profile = () => {
       onClose={handleClose}
       open={open}
       PaperProps={{
-        style: { minWidth: "60%" },
+        style: !fullScreen ? { minWidth: "min(60%, 600px)", width: "60%" } : {},
       }}
       sx={{ fontFamily: "Noto Sans KR" }}
       fullScreen={fullScreen}
     >
       <ProfileTab tab={tab} setTab={setTab} />
       <Divider />
-      <Stack
-        direction="column"
-        alignItems="center"
-        sx={{ height: "100%", minHeight: "500px", padding: "20px" }}
+      <Box
+        sx={{
+          height: "100%",
+          minHeight: "500px",
+          padding: "20px",
+          width: "60%",
+          margin: "0 auto",
+        }}
       >
         {tab === "info" && <ProfileEdit handleClose={handleClose} />}
         {tab === "password" && (
           <ProfileChangePassword handleClose={handleClose} />
         )}
-      </Stack>
+        {tab === "delete" && <ProfileDelete handleClose={handleClose} />}
+      </Box>
       <Box sx={{ textAlign: "center", paddingBottom: "20px" }}>
         <OutlinedButton variant="outlined" onClick={handleClose}>
           돌아가기

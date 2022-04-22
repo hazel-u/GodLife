@@ -1,4 +1,4 @@
-import { Box, Divider } from "@mui/material";
+import { Box, Divider, Stack } from "@mui/material";
 import axios from "axios";
 
 import { useForm } from "react-hook-form";
@@ -45,20 +45,24 @@ const ProfileEdit = ({ handleClose }: { handleClose: () => void }) => {
   };
 
   return (
-    <Box>
-      <Box>
+    <Box sx={{ maxWidth: "300px", margin: "0 auto" }}>
+      <Stack direction="row" spacing={2} alignItems="center">
         <p>이메일</p>
         <p>{email}</p>
-      </Box>
-      <Divider />
-      <p>닉네임</p>
-      <form onSubmit={handleSubmit(onSubmit)} style={{ display: "inline" }}>
-        <NicknameController
-          control={control}
-          trigger={trigger}
-          getValues={getValues}
-          currentNickname={name}
-        />
+      </Stack>
+
+      <Divider sx={{ margin: "10px 0" }} />
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Stack direction="row" spacing={2} alignItems="center">
+          <p style={{ marginTop: 0 }}>닉네임</p>
+          <NicknameController
+            control={control}
+            trigger={trigger}
+            getValues={getValues}
+            currentNickname={name}
+          />
+        </Stack>
         <Box sx={{ textAlign: "center", margin: "20px 0" }}>
           <OutlinedButton variant="outlined" type="submit">
             닉네임 수정

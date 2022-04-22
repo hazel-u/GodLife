@@ -36,6 +36,7 @@ const ProfileTab = (props: Tab) => {
     <StyledToggleButtonGroup value={props.tab} exclusive onChange={handleTab}>
       <ToggleButton value="info">회원정보 수정</ToggleButton>
       <ToggleButton value="password">비밀번호 변경</ToggleButton>
+      <ToggleButton value="delete">회원 탈퇴</ToggleButton>
     </StyledToggleButtonGroup>
   );
 };
