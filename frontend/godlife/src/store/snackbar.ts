@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+
 import { RootState } from ".";
 import { CommonSnackbarType } from "../types/commonComponents";
 
@@ -13,10 +14,11 @@ export const snackbarSlice = createSlice({
   initialState,
   reducers: {
     setSnackbar: (state, action: PayloadAction<CommonSnackbarType>) => {
-      console.log("??");
       return (state = { ...action.payload });
     },
-    clearSnackbar: () => initialState,
+    clearSnackbar: (state) => {
+      state.open = false;
+    },
   },
 });
 
