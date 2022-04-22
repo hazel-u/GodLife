@@ -21,6 +21,7 @@ public enum ErrorCode {
     TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND, "요청 헤더에 토큰이 없습니다."),
     BINGO_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 빙고의 사용자를 찾을 수 없습니다."),
     GOALS_NOT_FOUND(HttpStatus.NOT_FOUND, "목표가 존재하지 않습니다"),
+    BINGO_GOALS_NOT_FOUND(HttpStatus.NOT_FOUND, "빙고 목표가 존재하지 않습니다"),
     /* 409 : CONFLICT : Resource의 현재 상태와 충돌. 보통 중복된 데이터 존재 */
     DUPLICATE_RESOURCE(HttpStatus.CONFLICT, "데이터가 이미 존재합니다.")
 

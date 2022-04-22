@@ -37,6 +37,9 @@ public class BingoGoals {
         this.goals = goals;
         this.completed = false;
     }
+    public void changeCompleted(Boolean bool){
+        this.completed = bool;
+    }
 
 
 }
