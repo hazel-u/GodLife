@@ -81,6 +81,7 @@ const NicknameController = ({
             field.onChange(e);
             checkNicknameDuplication();
           }}
+          inputProps={{ maxLength: 8 }}
         />
       )}
     />
