@@ -1,35 +1,20 @@
 import styled from "@emotion/styled";
-import { Box, Grid } from "@mui/material";
-
-import React, { useEffect, useState } from "react";
-import { useMediaQuery } from "react-responsive";
-
+import { Box, Grid, Hidden } from "@mui/material";
+import React from "react";
 import { ReactComponent as Logo } from "../../assets/logo/Godlife/logo.svg";
 import MobileNavbarDialog from "./MobileNavbarDialog";
 
+
 const Navbar: React.FC<{ menuName: string }> = ({ menuName }) => {
-  const [isMobile, setIsMobile] = useState<Boolean>(false);
-
-  const Mobile = useMediaQuery({
-    query: "(max-width: 991px)",
-  });
-
-  useEffect(() => {
-    if (Mobile) {
-      setIsMobile(true);
-    } else {
-      setIsMobile(false);
-    }
-  }, [Mobile]);
 
   return (
     <Container>
-      {!isMobile ? (
+      <Hidden mdDown>
         <Box
           sx={{
             display: "flex",
             justifyContent: "center",
-            p: 1,
+            paddingTop: 1,
             alignItems: "flex-end",
           }}
         >
@@ -38,49 +23,58 @@ const Navbar: React.FC<{ menuName: string }> = ({ menuName }) => {
             <MenuItem>이전의 갓생</MenuItem>
             <MenuItem>내 그룹</MenuItem>
           </MenuList>
-          <Logo />
+          <Logo height="10%"/>
           <MenuList>
             <MenuItem>아이템 샵</MenuItem>
             <MenuItem>내 정보</MenuItem>
             <MenuItem>로그아웃</MenuItem>
           </MenuList>
         </Box>
-      ) : (
-        <Grid
-          container
-          spacing={1}
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
+      </Hidden>
+      <Grid
+        container
+        spacing={1}
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        display={{ md: "none", lg: "none" }}
+      >
+        <Grid 
+          item
+          xs  
+          sx={{ 
+            textAlign: "center", 
+            marginTop: 1,
+            marginLeft: 1
+          }}
         >
-          <Grid item xs sx={{ textAlign: "center", marginTop: 1 }}>
-            <Logo />
-          </Grid>
-          <Grid
-            item
-            xs={5}
-            sm={8}
-            sx={{
-              textAlign: "center",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <p>{menuName}</p>
-          </Grid>
-          <Grid
-            item
-            xs
-            sx={{
-              textAlign: "center",
-              marginTop: 1,
-            }}
-          >
-            <MobileNavbarDialog />
-          </Grid>
+          <Logo width="70%" height="70%"/>
         </Grid>
-      )}
+        <Grid
+          item
+          xs={4}
+          sm={6}
+          sx={{
+            textAlign: "center",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <p>{menuName}</p>
+        </Grid>
+        <Grid
+          item
+          xs
+          sx={{
+            textAlign: "center",
+            marginTop: 1,
+            marginRight: 1
+          }}
+        >
+          <MobileNavbarDialog />
+        </Grid>
+      </Grid>
     </Container>
   );
 };

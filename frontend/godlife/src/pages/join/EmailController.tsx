@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+import React, { useEffect, useState } from "react";
 import {
-  Controller,
   Control,
+  Controller,
   UseFormGetValues,
   UseFormTrigger,
 } from "react-hook-form";
-import axios from "axios";
-import { JoinInput } from "../../types/user";
-import { useIsMount } from "./CustomHook";
+
 import { OutlinedInput } from "../../components/common/Input";
+import { useIsMount } from "../../hooks/useIsMount";
+import { JoinInput } from "../../types/user";
 
 interface EmailControllerProps {
   control: Control<JoinInput, any>;
@@ -25,20 +27,14 @@ const EmailController = ({
 
   const checkEmailDuplication = () => {
     const email = getValues().email;
-    // axios
-    //   .post("user/duplicate-email", null, {
-    //     params: {
-    //       email,
-    //     },
-    //   })
-    //   .then(() => {
-    //     setValidatedEmail(true);
-    //     trigger("email");
-    //   })
-    //   .catch(() => {
-    //     setValidatedEmail(false);
-    //     trigger("email");
-    //   });
+    axios
+      .post("user/duplicate-email", { email })
+      .then(() => {
+        setValidatedEmail(true);
+      })
+      .catch(() => {
+        setValidatedEmail(false);
+      });
   };
 
   const isMount = useIsMount();
@@ -70,20 +66,18 @@ const EmailController = ({
         },
       }}
       render={({ field, fieldState }) => (
-        <>
-          <OutlinedInput
-            {...field}
-            placeholder="이메일"
-            error={!!fieldState.error}
-            helperText={
-              fieldState.error?.message ? fieldState.error.message : " "
-            }
-            onChange={(e) => {
-              field.onChange(e);
-              checkEmailDuplication();
-            }}
-          />
-        </>
+        <OutlinedInput
+          {...field}
+          placeholder="이메일"
+          error={!!fieldState.error}
+          helperText={
+            fieldState.error?.message ? fieldState.error.message : " "
+          }
+          onChange={(e) => {
+            field.onChange(e);
+            checkEmailDuplication();
+          }}
+        />
       )}
     />
   );

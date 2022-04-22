@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+import React, { useEffect, useState } from "react";
 import {
-  Controller,
   Control,
+  Controller,
   UseFormGetValues,
   UseFormTrigger,
 } from "react-hook-form";
-import axios from "axios";
+
 import { OutlinedInput } from "../../components/common/Input";
+import { useIsMount } from "../../hooks/useIsMount";
 import { JoinInput } from "../../types/user";
-import { useIsMount } from "./CustomHook";
 
 interface NicknameControllerProps {
   control: Control<JoinInput, any>;
@@ -24,34 +26,28 @@ const NicknameController = ({
   const [validatedNickname, setValidatedNickname] = useState(true);
 
   const checkNicknameDuplication = () => {
-    const nickname = getValues().nickname;
+    const name = getValues().name;
 
-    // axios
-    //   .post("user/duplicate-name", null, {
-    //     params: {
-    //       nickname,
-    //     },
-    //   })
-    //   .then(() => {
-    //     setValidatedNickname(true);
-    //     trigger("nickname");
-    //   })
-    //   .catch(() => {
-    //     setValidatedNickname(false);
-    //     trigger("nickname");
-    //   });
+    axios
+      .post("user/duplicate-name", { name })
+      .then(() => {
+        setValidatedNickname(true);
+      })
+      .catch(() => {
+        setValidatedNickname(false);
+      });
   };
 
-  // const isMount = useIsMount();
-  // useEffect(() => {
-  //   if (!isMount) {
-  //     trigger("email");
-  //   }
-  // }, [validatedNickname, isMount, trigger]);
+  const isMount = useIsMount();
+  useEffect(() => {
+    if (!isMount) {
+      trigger("name");
+    }
+  }, [validatedNickname, isMount, trigger]);
 
   return (
     <Controller
-      name="nickname"
+      name="name"
       control={control}
       defaultValue=""
       rules={{
@@ -85,6 +81,7 @@ const NicknameController = ({
             field.onChange(e);
             checkNicknameDuplication();
           }}
+          inputProps={{ maxLength: 8 }}
         />
       )}
     />
