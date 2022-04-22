@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+import React, { useEffect, useState } from "react";
 import {
-  Controller,
   Control,
+  Controller,
   UseFormGetValues,
   UseFormTrigger,
 } from "react-hook-form";
-import axios from "axios";
+
 import { OutlinedInput } from "../../components/common/Input";
 import { JoinInput } from "../../types/user";
 import { useIsMount } from "./CustomHook";
@@ -24,34 +26,34 @@ const NicknameController = ({
   const [validatedNickname, setValidatedNickname] = useState(true);
 
   const checkNicknameDuplication = () => {
-    const nickname = getValues().nickname;
+    const name = getValues().name;
 
-    // axios
-    //   .post("user/duplicate-name", null, {
-    //     params: {
-    //       nickname,
-    //     },
-    //   })
-    //   .then(() => {
-    //     setValidatedNickname(true);
-    //     trigger("nickname");
-    //   })
-    //   .catch(() => {
-    //     setValidatedNickname(false);
-    //     trigger("nickname");
-    //   });
+    axios
+      .post("user/duplicate-name", null, {
+        params: {
+          name,
+        },
+      })
+      .then(() => {
+        setValidatedNickname(true);
+        trigger("name");
+      })
+      .catch(() => {
+        setValidatedNickname(false);
+        trigger("name");
+      });
   };
 
-  // const isMount = useIsMount();
-  // useEffect(() => {
-  //   if (!isMount) {
-  //     trigger("email");
-  //   }
-  // }, [validatedNickname, isMount, trigger]);
+  const isMount = useIsMount();
+  useEffect(() => {
+    if (!isMount) {
+      trigger("name");
+    }
+  }, [validatedNickname, isMount, trigger]);
 
   return (
     <Controller
-      name="nickname"
+      name="name"
       control={control}
       defaultValue=""
       rules={{

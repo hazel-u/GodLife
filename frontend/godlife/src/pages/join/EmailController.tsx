@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+import React, { useEffect, useState } from "react";
 import {
-  Controller,
   Control,
+  Controller,
   UseFormGetValues,
   UseFormTrigger,
 } from "react-hook-form";
-import axios from "axios";
+
+import { OutlinedInput } from "../../components/common/Input";
 import { JoinInput } from "../../types/user";
 import { useIsMount } from "./CustomHook";
-import { OutlinedInput } from "../../components/common/Input";
 
 interface EmailControllerProps {
   control: Control<JoinInput, any>;
@@ -25,20 +27,20 @@ const EmailController = ({
 
   const checkEmailDuplication = () => {
     const email = getValues().email;
-    // axios
-    //   .post("user/duplicate-email", null, {
-    //     params: {
-    //       email,
-    //     },
-    //   })
-    //   .then(() => {
-    //     setValidatedEmail(true);
-    //     trigger("email");
-    //   })
-    //   .catch(() => {
-    //     setValidatedEmail(false);
-    //     trigger("email");
-    //   });
+    axios
+      .post("user/duplicate-email", null, {
+        params: {
+          email,
+        },
+      })
+      .then(() => {
+        setValidatedEmail(true);
+        trigger("email");
+      })
+      .catch(() => {
+        setValidatedEmail(false);
+        trigger("email");
+      });
   };
 
   const isMount = useIsMount();
