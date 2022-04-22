@@ -1,8 +1,10 @@
 package com.ovcors.godlife.core.domain.goals;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ovcors.godlife.core.domain.user.User;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -30,6 +32,8 @@ public class UserGoals {
 
     @ManyToOne
     @JoinColumn(name="user_seq")
+    @JsonIgnore
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     private User user;
 
     @Builder

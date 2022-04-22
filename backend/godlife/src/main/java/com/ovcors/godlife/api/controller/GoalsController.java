@@ -37,6 +37,7 @@ public class GoalsController {
     }
     @PutMapping
     public ResponseEntity<BaseResponseEntity> addUserGoals(@Auth User user,@RequestBody GoalsReqDto goalsReqDto) {
+       System.out.println(user.getEmail());
         goalsService.addUserGoals(user,goalsReqDto);
         return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
     }

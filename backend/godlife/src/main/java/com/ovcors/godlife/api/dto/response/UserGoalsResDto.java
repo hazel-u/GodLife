@@ -12,5 +12,5 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserGoalsResDto {
-    List<UserGoals> goals;
+    List<UserGoals> userGoals;
 }

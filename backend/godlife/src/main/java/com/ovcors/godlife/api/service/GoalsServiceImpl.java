@@ -47,6 +47,8 @@ public class GoalsServiceImpl implements GoalsService{
 
     @Override
     public UserGoalsResDto getUserGoals(User user) {
+        System.out.println(user.getEmail());
+        System.out.println(user.getSeq());
         UserGoalsResDto response = new UserGoalsResDto(userGoalsRepository.findByUserSeq(user.getSeq()));
         return response;
 //        return null;
