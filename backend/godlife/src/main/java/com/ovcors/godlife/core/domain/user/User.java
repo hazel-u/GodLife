@@ -55,4 +55,17 @@ public class User {
         this.recentDate = recentDate;
         this.godCount=godCount;
     }
+
+    public void changeName(String name) {
+        this.name = name;
+    }
+
+    public void deleteUser() {
+        this.name = "deleteUserName";
+        this.deleted = true;
+    }
+
+    public void changePW(String newPassword) {
+        this.password = newPassword;
+    }
 }

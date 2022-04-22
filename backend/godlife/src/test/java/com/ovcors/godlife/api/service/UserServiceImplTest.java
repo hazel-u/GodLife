@@ -1,25 +1,23 @@
 package com.ovcors.godlife.api.service;
 
-import com.ovcors.godlife.GodlifeApplication;
+import com.ovcors.godlife.api.dto.request.ChangePasswordReqDto;
+import com.ovcors.godlife.api.dto.request.ChangeUserInfoReqDto;
 import com.ovcors.godlife.api.dto.request.JoinReqDto;
-import com.ovcors.godlife.api.exception.CustomException;
-import com.ovcors.godlife.api.exception.ErrorCode;
+import com.ovcors.godlife.api.dto.response.GodLifeResDto;
+import com.ovcors.godlife.api.dto.response.UserInfoResDto;
 import com.ovcors.godlife.core.domain.user.JoinType;
 import com.ovcors.godlife.core.domain.user.User;
 import com.ovcors.godlife.core.repository.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
@@ -31,46 +29,22 @@ class UserServiceImplTest {
     @Mock
     private UserRepository userRepository;
 
-    @Mock
+    @Spy
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    private final String email = "userEmail";
+    private final String email = "test@naver.com";
     private final String password = "1234";
     private final String name = "테스트계정";
 
     @Test
-    void joinFail_emailDuplicated() {
-        // given
-        doReturn(User.builder().build()).when(userRepository).findByEmailAndDeletedFalse(email);
-
-        // when
-        final CustomException result = assertThrows(CustomException.class, () -> userService.join(new JoinReqDto("userEmail", "1234", "테스트계정")));
-
-        // then
-        assertThat(result.getErrorCode().getHttpStatus()).isEqualTo(ErrorCode.DUPLICATE_RESOURCE.getHttpStatus());
-    }
-
-    @Test
-    void joinFail_nameDuplicated() {
-        // given
-        doReturn(User.builder().email(email).password(password).name(name).build()).when(userRepository).findByNameAndDeletedFalse(name);
-
-        // when
-        final CustomException result = assertThrows(CustomException.class, () -> userService.join(new JoinReqDto("userEmail", "1234", "테스트계정")));
-
-        // then
-        assertThat(result.getErrorCode().getHttpStatus()).isEqualTo(ErrorCode.DUPLICATE_RESOURCE.getHttpStatus());
-    }
-
-    @Test
-    void joinSuccess() {
+    void join() {
         // given
         doReturn(null).when(userRepository).findByEmailAndDeletedFalse(email);
         doReturn(user()).when(userRepository).save(any(User.class));
 
         // when
         final User user = userService.join(new JoinReqDto(email, password, name));
-        System.out.println(user);
+
         // then
         assertThat(user.getEmail()).isNotNull();
         assertThat(user.getEmail()).isEqualTo(email);
@@ -80,11 +54,129 @@ class UserServiceImplTest {
         return User.builder()
                 .email(email)
                 .name(name)
-                .password(password)
+                .password(bCryptPasswordEncoder.encode(password))
                 .oauth_type(JoinType.NATIVE)
                 .deleted(false)
                 .recentDate(null)
-                .godCount(0)
+                .godCount(2)
                 .build();
+    }
+
+    // 회원정보 불러오기
+    @Test
+    void getUserInfo() {
+        // given
+        doReturn(Optional.of(user())).when(userRepository).findById(any(Long.class));
+
+        // when
+        final UserInfoResDto userInfoResDto = userService.getUserInfo(0L);
+
+        //then
+        assertThat(userInfoResDto.getEmail()).isNotNull();
+        assertThat(userInfoResDto.getEmail()).isEqualTo(email);
+        assertThat(userInfoResDto.getName()).isEqualTo(name);
+    }
+
+    // 회원정보 수정
+    @Test
+    void setUserInfo() {
+        // given
+        doReturn(Optional.of(user())).when(userRepository).findById(any(Long.class));
+        ChangeUserInfoReqDto changeUserInfoReqDto = changeUserInfo();
+
+        // when
+        userService.setUserInfo(0L, changeUserInfoReqDto);
+
+        //then
+        final User changeUser = userRepository.findById(0L).get();
+        assertThat(changeUser.getName()).isNotNull();
+        assertThat(changeUser.getName()).isEqualTo("changeName");
+    }
+
+    private ChangeUserInfoReqDto changeUserInfo() {
+        return ChangeUserInfoReqDto.builder()
+                .name("changeName")
+                .build();
+    }
+
+    // 회원 탈퇴
+    @Test
+    void deleteUser() {
+        // given
+        doReturn(Optional.of(user())).when(userRepository).findById(any(Long.class));
+
+        // when
+        userService.deleteUser(0L);
+
+        // then
+        final User deleteUser = userRepository.findById(0L).get();
+        assertThat(deleteUser.getName()).isNotNull();
+        assertThat(deleteUser.getName()).isEqualTo("deleteUserName");
+        assertThat(deleteUser.getDeleted()).isTrue();
+    }
+
+    // 이메일 중복 확인
+    @Test
+    void duplicatedEmail() {
+        // given
+        doReturn(null).when(userRepository).findByEmailAndDeletedFalse(any(String.class));
+
+        // when
+        Boolean notDuplicated = userService.duplicatedEmail(email);
+
+        //then
+        assertThat(notDuplicated).isTrue();
+    }
+
+    // 닉네임 중복 확인
+    @Test
+    void duplicatedName() {
+        // given
+        doReturn(null).when(userRepository).findByNameAndDeletedFalse(any(String.class));
+
+        // when
+        Boolean notDuplicated = userService.duplicatedName(name);
+
+        //then
+        assertThat(notDuplicated).isTrue();
+    }
+
+    // 비밀번호 변경
+    @Test
+    void changePW() {
+        // given
+        doReturn(Optional.of(user())).when(userRepository).findById(0L);
+        ChangePasswordReqDto changePasswordReqDto = changePasswordReqDto(password, "5678", "5678");
+
+        // when
+        Boolean result = userService.changePassword(0L, changePasswordReqDto);
+
+        // then
+        assertThat(result).isTrue();
+    }
+
+    private ChangePasswordReqDto changePasswordReqDto(String oldPassword, String newPassword, String newPasswordCheck) {
+        return ChangePasswordReqDto.builder()
+                .oldPassword(oldPassword)
+                .newPassword(newPassword)
+                .newPasswordCheck(newPasswordCheck)
+                .build();
+    }
+
+    // JWT 갱신
+
+
+    // 최근 갓생일자, 연속 갓생 일수 조회
+    @Test
+    void godLife() {
+        // given
+        doReturn(Optional.of(user())).when(userRepository).findById(any(Long.class));
+
+        // when
+        GodLifeResDto godLifeResDto = userService.getGodLife(0L);
+
+        // then
+        assertThat(godLifeResDto).isNotNull();
+        assertThat(godLifeResDto.getGodCount()).isEqualTo(2);
     }
 }

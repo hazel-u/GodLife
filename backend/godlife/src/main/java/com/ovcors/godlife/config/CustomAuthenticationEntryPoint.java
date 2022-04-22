@@ -24,9 +24,9 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 
         if("token expired".equals(exception)) {
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            response.setStatus(ErrorCode.EXPIRED_TOKEN.getHttpStatus().value());
+            response.setStatus(ErrorCode.EXPIRED_TOKEN.getStatus().value());
             response.getWriter().println("{ \"message\" : \"" + exception
-                    + "\", \"code\" : \"" + ErrorCode.EXPIRED_TOKEN.getHttpStatus().value()
+                    + "\", \"code\" : \"" + ErrorCode.EXPIRED_TOKEN.getStatus().value()
                     + "\", \"status\" : " + ErrorCode.EXPIRED_TOKEN.getMessage()
                     + ", \"errors\" : [ ] }");
         }
