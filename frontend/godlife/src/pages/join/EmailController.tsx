@@ -70,20 +70,18 @@ const EmailController = ({
         },
       }}
       render={({ field, fieldState }) => (
-        <>
-          <OutlinedInput
-            {...field}
-            placeholder="이메일"
-            error={!!fieldState.error}
-            helperText={
-              fieldState.error?.message ? fieldState.error.message : " "
-            }
-            onChange={(e) => {
-              field.onChange(e);
-              checkEmailDuplication();
-            }}
-          />
-        </>
+        <OutlinedInput
+          {...field}
+          placeholder="이메일"
+          error={!!fieldState.error}
+          helperText={
+            fieldState.error?.message ? fieldState.error.message : " "
+          }
+          onChange={(e) => {
+            field.onChange(e);
+            checkEmailDuplication();
+          }}
+        />
       )}
     />
   );
