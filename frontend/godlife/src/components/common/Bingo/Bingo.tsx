@@ -96,8 +96,8 @@ export const Bingo = ({
 
   const completeGoal = (index: number) => {
     let updatedGoals = state.goals.slice();
-
     const updatedGoal: any = state.goals[index];
+
     updatedGoal.isCompleted = !updatedGoal.isCompleted;
     updatedGoals[index] = updatedGoal;
 
