@@ -1,6 +1,8 @@
 import { IconButton, Stack } from "@mui/material";
 import axios from "axios";
 
+import { useState } from "react";
+
 import { TextButton } from "../../../components/common/Button";
 import { setDialog } from "../../../store/dialog";
 import { useAppDispatch } from "../../../store/hooks";
@@ -9,9 +11,10 @@ interface InteractionProps {
   code: number;
   likeCnt: number;
   seq: string;
+  getBingo: () => void;
 }
 
-const Interaction = ({ code, likeCnt, seq }: InteractionProps) => {
+const Interaction = ({ code, likeCnt, seq, getBingo }: InteractionProps) => {
   const dispatch = useAppDispatch();
   const copyBingoCode = () => {
     navigator.clipboard.writeText(`${code}`);
@@ -25,8 +28,12 @@ const Interaction = ({ code, likeCnt, seq }: InteractionProps) => {
     );
   };
 
+  const [clickLike, setClickLike] = useState(false);
   const like = () => {
-    axios.put(`bingo/${seq}/like`);
+    axios.put(`bingo/${seq}/like`).then(() => {
+      setClickLike(true);
+      getBingo();
+    });
   };
 
   return (
@@ -36,7 +43,7 @@ const Interaction = ({ code, likeCnt, seq }: InteractionProps) => {
       sx={{ width: "500px" }}
     >
       <Stack direction="row" alignItems="center">
-        <IconButton size="small" onClick={like}>
+        <IconButton disabled={clickLike} size="small" onClick={like}>
           👍
         </IconButton>
         <span>{likeCnt}</span>
