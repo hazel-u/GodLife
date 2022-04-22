@@ -1,13 +1,13 @@
-import * as React from 'react';
 import { Global } from '@emotion/react';
-import { styled } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { grey } from '@mui/material/colors';
-import { Box, Stack } from '@mui/material';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import "./bars.css"
-import menu from "../../assets/icon/menu.png";
 import customStyled from "@emotion/styled";
+import { Box, Stack } from '@mui/material';
+import { grey } from '@mui/material/colors';
+import CssBaseline from '@mui/material/CssBaseline';
+import { styled } from '@mui/material/styles';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import * as React from 'react';
+import menu from "../../assets/icon/menu.png";
+import "./bars.css";
 
 
 const MenuIcon = customStyled.img`
@@ -70,18 +70,22 @@ export default function SwipeableEdgeDrawer() {
       >
         <StyledBox
           sx={{
+            position: 'absolute',
+            visibility: 'visible',
+            right: 0,
+            left: 0,
             px: 2,
-            pb: 2,
+            pb: 1,
             height: '100%',
             overflow: 'auto',
           }}
         >
           <Puller />
           <Stack 
-            height="100%"
             direction="column"
             justifyContent="center"
             alignItems="center"
+            marginTop="10px"
           >
             <Stack>
               <h2>갓생러님, 갓생사세요!</h2>
