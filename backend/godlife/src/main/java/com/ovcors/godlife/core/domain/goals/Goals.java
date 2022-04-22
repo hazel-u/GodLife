@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 public class Goals {
+
     @Id
     @GeneratedValue
     private Long seq;

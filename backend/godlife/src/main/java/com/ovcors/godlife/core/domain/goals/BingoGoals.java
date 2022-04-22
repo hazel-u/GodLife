@@ -14,9 +14,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class BingoGoals {
-
-
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
@@ -25,8 +24,19 @@ public class BingoGoals {
 
     private boolean completed;
 
-    public BingoGoals(){
+    @ManyToOne
+    @JoinColumn(name="bingo_seq")
+    private Bingo bingo;
+
+    @ManyToOne
+    @JoinColumn(name="goals_seq")
+    private Goals goals;
+    @Builder
+    public BingoGoals(Bingo bingo, Goals goals){
+        this.bingo = bingo;
+        this.goals = goals;
         this.completed = false;
     }
+
 
 }

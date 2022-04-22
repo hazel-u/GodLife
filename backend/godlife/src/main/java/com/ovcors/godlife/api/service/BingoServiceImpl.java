@@ -8,10 +8,14 @@ import com.ovcors.godlife.api.exception.CustomException;
 import com.ovcors.godlife.api.exception.ErrorCode;
 import com.ovcors.godlife.core.domain.bingo.Bingo;
 import com.ovcors.godlife.core.domain.bingo.Comment;
+import com.ovcors.godlife.core.domain.goals.BingoGoals;
+import com.ovcors.godlife.core.domain.goals.Goals;
 import com.ovcors.godlife.core.domain.user.User;
 import com.ovcors.godlife.core.queryrepository.BingoQueryRepository;
 import com.ovcors.godlife.core.queryrepository.CommentQueryRepository;
+import com.ovcors.godlife.core.repository.BingoGoalsRepository;
 import com.ovcors.godlife.core.repository.BingoRepository;
+import com.ovcors.godlife.core.repository.GoalsRepository;
 import com.ovcors.godlife.core.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,6 +33,8 @@ public class BingoServiceImpl implements BingoService{
     private final BingoQueryRepository bingoQueryRepository;
     private final CommentQueryRepository commentQueryRepository;
     private final UserRepository userRepository;
+    private final BingoGoalsRepository bingoGoalsRepository;
+    private final GoalsRepository goalsRepository;
 
     public Bingo createBingo(String userEmail, SaveBingoReqDto reqDto) {
         User user =  userRepository.findByEmailAndDeletedFalse(userEmail);
@@ -39,6 +45,19 @@ public class BingoServiceImpl implements BingoService{
         bingo.setUser(user);
 
         return bingoRepository.save(bingo);
+
+    }
+    public void addBingoGoals(Bingo bingo, SaveBingoReqDto reqDto){
+        for(Integer i : reqDto.getGoals()){
+            Goals goal = goalsRepository.findById(Long.valueOf(i))
+                    .orElseThrow(() -> new CustomException(ErrorCode.GOALS_NOT_FOUND));
+            BingoGoals bingoGoals = BingoGoals.builder()
+                    .bingo(bingo)
+                    .goals(goal)
+                    .build();
+            bingoGoalsRepository.save(bingoGoals);
+        }
+
     }
 
     public List<FindBingoResDto> findAllBingo(String userEmail) {

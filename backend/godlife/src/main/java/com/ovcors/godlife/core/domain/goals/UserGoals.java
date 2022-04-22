@@ -25,7 +25,6 @@ public class UserGoals {
     @Column(columnDefinition = "BINARY(16)")
     private UUID seq;
 
-
     @ManyToOne
     @JoinColumn(name="goals_seq")
     private Goals goals;
