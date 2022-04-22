@@ -2,7 +2,6 @@ import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 const OutlinedButton = styled(Button)({
-  fontFamily: "Noto Sans KR",
   width: "100%",
   maxWidth: "300px",
   borderRadius: 10,
@@ -25,7 +24,6 @@ const OutlinedButton = styled(Button)({
 });
 
 const TextButton = styled(Button)({
-  fontFamily: "Noto Sans KR",
   color: "#939393",
   "&:hover": {
     color: "#000000",
