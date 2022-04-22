@@ -1,13 +1,12 @@
-// react
 import EditIcon from "@mui/icons-material/Edit";
-// MUI
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+
 import { useState } from "react";
 
-// Local
+import { OutlinedInput } from "../Input";
 import BingoCell from "./BingoCell";
 
 interface BingoProps {
@@ -73,7 +72,7 @@ export const Bingo = ({
             <EditIcon />
           </Typography>
         </Grid>
-        <TextField label="Standard" variant="standard" value={inputValue} />
+        <OutlinedInput></OutlinedInput>
       </Grid>
 
       <h2>
