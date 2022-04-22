@@ -12,7 +12,9 @@ export interface LoginInput {
 
 export interface UserInfo {
   email: string;
-  nickname: string;
+  name: string;
+  godCount: number;
+  recentDate: null;
 }
 
 export interface ChangePasswordInput {

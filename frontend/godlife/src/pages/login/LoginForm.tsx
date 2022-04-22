@@ -1,7 +1,9 @@
 import { FormControl, Stack } from "@mui/material";
 import axios from "axios";
+
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+
 import { OutlinedButton } from "../../components/common/Button";
 import { useAppDispatch } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
@@ -19,13 +21,8 @@ const LoginForm = () => {
     await axios
       .post("/user/login", data)
       .then((res) => {
-        console.log(res);
         localStorage.setItem("refreshtoken", res.headers["refreshtoken"]);
         localStorage.setItem("token", res.headers["authorization"]);
-        dispatch(
-          setLoggedUser({ email: "asd@asd.com", nickname: "nicknamead" })
-        );
-
         navigate("/");
         dispatch(
           setSnackbar({
@@ -34,12 +31,22 @@ const LoginForm = () => {
             severity: "success",
           })
         );
+
+        axios
+          .get("user/info", {
+            headers: {
+              Authorization: res.headers["refreshtoken"],
+            },
+          })
+          .then((res) => {
+            dispatch(setLoggedUser(res.data));
+          });
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch(
           setSnackbar({
             open: true,
-            message: "다시 시도해주세요.",
+            message: "이메일 또는 비밀번호를 확인해주세요.",
             severity: "error",
           })
         );

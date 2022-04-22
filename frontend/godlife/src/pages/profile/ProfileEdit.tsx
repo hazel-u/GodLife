@@ -10,7 +10,7 @@ import { selectUser } from "../../store/user";
 import NicknameController from "./NicknameController";
 
 const ProfileEdit = () => {
-  const { email, nickname } = useAppSelector(selectUser);
+  const { email, name } = useAppSelector(selectUser);
   const { control, trigger, getValues, handleSubmit } = useForm<{
     name: string;
   }>({});
@@ -60,7 +60,7 @@ const ProfileEdit = () => {
           control={control}
           trigger={trigger}
           getValues={getValues}
-          currentNickname={nickname}
+          currentNickname={name}
         />
         <Box sx={{ textAlign: "center", margin: "20px 0" }}>
           <OutlinedButton variant="outlined" type="submit">
