@@ -1,8 +1,10 @@
 import { Stack } from "@mui/material";
 import axios from "axios";
+
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import Logo from "../../assets/images/logo.svg";
+
+import Logo from "../../assets/logo/Godlife/logo.svg";
 import { OutlinedButton } from "../../components/common/Button";
 import { useAppDispatch } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";

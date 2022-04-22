@@ -1,8 +1,8 @@
-import { Box, Button, Divider, Grid } from "@mui/material";
+import { Box, Divider, Grid } from "@mui/material";
 
-import React, { useState } from "react";
+import React from "react";
 
-import Logo from "../../assets/images/logo.svg";
+import Logo from "../../assets/logo/Godlife/logo.svg";
 import { TextButton } from "../../components/common/Button";
 import LoginBanner from "./LoginBanner";
 import LoginForm from "./LoginForm";

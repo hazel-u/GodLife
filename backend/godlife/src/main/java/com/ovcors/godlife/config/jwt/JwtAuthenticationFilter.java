@@ -63,11 +63,11 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
         System.out.println("잘못된 로그인 정보입니다.");
         // Todo: ErrorCode만들어지면 주석 해제
         response.setCharacterEncoding("UTF-8");
-        response.setStatus(ErrorCode.USER_NOT_FOUND.getHttpStatus().value());
+        response.setStatus(ErrorCode.USER_NOT_FOUND.getStatus().value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.getWriter().println("{ \"message\" : \"" + message
-                + "\", \"code\" : \"" + ErrorCode.USER_NOT_FOUND.getHttpStatus().value()
-                + "\", \"status\" : " + ErrorCode.USER_NOT_FOUND.getHttpStatus().name()
+                + "\", \"code\" : \"" + ErrorCode.USER_NOT_FOUND.getStatus().value()
+                + "\", \"status\" : " + ErrorCode.USER_NOT_FOUND.getStatus().name()
                 + ", \"errors\" : [ ] }");
     }
 

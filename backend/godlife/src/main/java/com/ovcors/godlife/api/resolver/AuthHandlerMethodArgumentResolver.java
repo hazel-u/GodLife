@@ -44,6 +44,7 @@ public class AuthHandlerMethodArgumentResolver implements HandlerMethodArgumentR
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+        System.out.println("@Auth 진입");
         String token = webRequest.getHeader(JwtProperties.HEADER_STRING);
         if (token != null) {
             JWTVerifier verifier = JWT.require(Algorithm.HMAC512(secret)).build(); // issuer?
