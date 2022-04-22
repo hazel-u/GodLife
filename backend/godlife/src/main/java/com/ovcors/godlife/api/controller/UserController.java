@@ -34,31 +34,31 @@ public class UserController {
     }
 
     @PostMapping("/info")
-    public ResponseEntity<BaseResponseEntity> setUserInfo(@Auth User user, ChangeUserInfoReqDto changeUserInfoReqDto) {
+    public ResponseEntity<BaseResponseEntity> setUserInfo(@Auth User user, @RequestBody ChangeUserInfoReqDto changeUserInfoReqDto) {
         userService.setUserInfo(user.getSeq(), changeUserInfoReqDto);
         return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("")
     public ResponseEntity<BaseResponseEntity> deleteUser(@Auth User user) {
         userService.deleteUser(user.getSeq());
         return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
     }
 
     @PostMapping("/duplicate-email")
-    public ResponseEntity<BaseResponseEntity> duplicatedEmail(DuplicatedEmailReqDto duplicatedEmailReqDto) {
+    public ResponseEntity<BaseResponseEntity> duplicatedEmail(@RequestBody DuplicatedEmailReqDto duplicatedEmailReqDto) {
         userService.duplicatedEmail(duplicatedEmailReqDto.getEmail());
         return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
     }
 
     @PostMapping("/duplicate-name")
-    public ResponseEntity<BaseResponseEntity> duplicatedEmail(DuplicatedNameReqDto duplicatedNameReqDto) {
+    public ResponseEntity<BaseResponseEntity> duplicatedEmail(@RequestBody DuplicatedNameReqDto duplicatedNameReqDto) {
         userService.duplicatedName(duplicatedNameReqDto.getName());
         return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
     }
 
     @PostMapping("/change-pw")
-    public ResponseEntity<BaseResponseEntity> changePassword(@Auth User user, ChangePasswordReqDto changePasswordReqDto) {
+    public ResponseEntity<BaseResponseEntity> changePassword(@Auth User user, @RequestBody ChangePasswordReqDto changePasswordReqDto) {
         userService.changePassword(user.getSeq(), changePasswordReqDto);
         return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
     }
