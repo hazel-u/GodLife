@@ -11,20 +11,22 @@ import { setSnackbar } from "../../store/snackbar";
 import { ChangePasswordInput } from "../../types/user";
 import PasswordContoller from "./PasswordContoller";
 
-const ProfileChangePassword = () => {
-  const { control, handleSubmit, watch } = useForm<ChangePasswordInput>({});
+const ProfileChangePassword = ({
+  handleClose,
+}: {
+  handleClose: () => void;
+}) => {
+  const { control, handleSubmit, watch, setError } =
+    useForm<ChangePasswordInput>({});
 
   const dispatch = useAppDispatch();
   const onSubmit = (data: ChangePasswordInput) => {
     axios
-      .post(
-        "user/change-pw",
-        { data },
-        {
-          headers: { Authorization: `${localStorage.getItem("token")}` },
-        }
-      )
+      .post("user/change-pw", data, {
+        headers: { Authorization: `${localStorage.getItem("token")}` },
+      })
       .then(() => {
+        handleClose();
         dispatch(
           setSnackbar({
             open: true,
@@ -33,14 +35,21 @@ const ProfileChangePassword = () => {
           })
         );
       })
-      .catch(() => {
-        dispatch(
-          setSnackbar({
-            open: true,
-            message: "다시 시도해주세요.",
-            severity: "error",
-          })
-        );
+      .catch((err) => {
+        if (err.response.data.code == "WRONG_PASSWORD") {
+          setError("oldPassword", {
+            type: "manual",
+            message: err.response.data.message,
+          });
+        } else {
+          dispatch(
+            setSnackbar({
+              open: true,
+              message: "다시 시도해주세요.",
+              severity: "error",
+            })
+          );
+        }
       });
   };
 

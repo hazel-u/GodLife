@@ -41,8 +41,10 @@ const Profile = () => {
         alignItems="center"
         sx={{ height: "100%", minHeight: "500px", padding: "20px" }}
       >
-        {tab === "info" && <ProfileEdit />}
-        {tab === "password" && <ProfileChangePassword />}
+        {tab === "info" && <ProfileEdit handleClose={handleClose} />}
+        {tab === "password" && (
+          <ProfileChangePassword handleClose={handleClose} />
+        )}
       </Stack>
       <Box sx={{ textAlign: "center", paddingBottom: "20px" }}>
         <OutlinedButton variant="outlined" onClick={handleClose}>

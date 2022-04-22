@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import axios from "axios";
 
 import { useForm } from "react-hook-form";
@@ -9,7 +9,7 @@ import { setSnackbar } from "../../store/snackbar";
 import { selectUser } from "../../store/user";
 import NicknameController from "./NicknameController";
 
-const ProfileEdit = () => {
+const ProfileEdit = ({ handleClose }: { handleClose: () => void }) => {
   const { email, name } = useAppSelector(selectUser);
   const { control, trigger, getValues, handleSubmit } = useForm<{
     name: string;
@@ -18,16 +18,13 @@ const ProfileEdit = () => {
   const dispatch = useAppDispatch();
   const onSubmit = (data: { name: string }) => {
     axios
-      .patch(
-        "user",
-        { data },
-        {
-          headers: {
-            Authorization: `${localStorage.getItem("token")}`,
-          },
-        }
-      )
+      .post("user/info", data, {
+        headers: {
+          Authorization: `${localStorage.getItem("token")}`,
+        },
+      })
       .then(() => {
+        handleClose();
         dispatch(
           setSnackbar({
             open: true,
@@ -53,7 +50,7 @@ const ProfileEdit = () => {
         <p>이메일</p>
         <p>{email}</p>
       </Box>
-
+      <Divider />
       <p>닉네임</p>
       <form onSubmit={handleSubmit(onSubmit)} style={{ display: "inline" }}>
         <NicknameController
