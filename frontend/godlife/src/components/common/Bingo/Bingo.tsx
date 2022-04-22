@@ -149,6 +149,7 @@ export const Bingo = ({
           stretch: { height: "100%" },
           maxWidth: 750,
         }}
+        id="bingo"
       >
         {goals.map(function (goal: any, index: number) {
           return (

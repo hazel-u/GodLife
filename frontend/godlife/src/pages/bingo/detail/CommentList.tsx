@@ -1,40 +1,112 @@
+import { Box, Divider, Stack } from "@mui/material";
+import axios from "axios";
+
 import React from "react";
-import { Box, Divider } from "@mui/material";
+
+import { OutlinedButton } from "../../../components/common/Button";
+import { OutlinedInput } from "../../../components/common/Input";
+import { selectBingo } from "../../../store/bingo";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { setSnackbar } from "../../../store/snackbar";
+import { CommentType } from "../../../types/comment";
 import Comment from "./Comment";
 
-const CommentList = () => {
-  const dummy = [
-    {
-      author: "사람1",
-      content:
-        "언론·출판은 타인의 명예나 권리 또는 공중도덕이나 사회윤리를 침해하여서는 아니된다. 언론·출판이 타인의 명예나 권리를 침해한 때에는 피해자는 이에 대한 피해의 배상을 청구할 수 있다.",
-    },
-    {
-      author: "사람123",
-      content:
-        "외국인은 국제법과 조약이 정하는 바에 의하여 그 지위가 보장된다.",
-    },
-    {
-      author: "사sfda",
-      content:
-        "모든 국민은 법 앞에 평등하다. 누구든지 성별·종교 또는 사회적 신분에 의하여 정치적·경제적·사회적·문화적 생활의 모든 영역에 있어서 차별을 받지 아니한다.",
-    },
-    {
-      author: "사람asd231",
-      content:
-        "헌법에 의하여 체결·공포된 조약과 일반적으로 승인된 국제법규는 국내법과 같은 효력을 가진다.",
-    },
-  ];
+const CommentList = ({
+  comments,
+  getBingo,
+}: {
+  comments: CommentType[];
+  getBingo: () => void;
+}) => {
+  const [newComment, setNewComment] = React.useState({
+    nickname: "",
+    content: "",
+    password: "",
+  });
+
+  const dispatch = useAppDispatch();
+  const { id } = useAppSelector(selectBingo);
+
+  const handleSubmit = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    const { nickname, content, password } = { ...newComment };
+    if (nickname && content && password) {
+      axios
+        .post(`bingo/${id}/comment`, newComment, {
+          headers: { Authorization: `${localStorage.getItem("token")}` },
+        })
+        .then(() => {
+          dispatch(
+            setSnackbar({
+              open: true,
+              message: "댓글이 작성되었습니다.",
+              severity: "success",
+            })
+          );
+          getBingo();
+        })
+        .catch(() => {
+          dispatch(
+            setSnackbar({
+              open: true,
+              message: "다시 시도해주세요.",
+              severity: "error",
+            })
+          );
+        });
+    } else {
+      dispatch(
+        setSnackbar({
+          open: true,
+          message: "닉네임과 비밀번호, 내용을 모두 입력해주세요.",
+          severity: "warning",
+        })
+      );
+    }
+  };
 
   return (
-    <Box sx={{ maxWidth: "500px" }}>
-      <p>댓글 {dummy.length}개</p>
-      {dummy.map((comment, index) => (
+    <Box sx={{ maxWidth: "500px", margin: "30px" }}>
+      <p>댓글 {comments.length}개</p>
+      <Divider />
+      {comments.map((comment: any, index: number) => (
         <>
           <Comment comment={comment} />
-          {index !== dummy.length - 1 && <Divider />}
+          {index !== comments.length - 1 && <Divider />}
         </>
       ))}
+      <form onSubmit={handleSubmit}>
+        <Stack direction="row" spacing={2} sx={{ margin: "10px 0" }}>
+          <OutlinedInput
+            placeholder="닉네임"
+            size="small"
+            value={newComment.nickname}
+            onChange={(e) => {
+              setNewComment({ ...newComment, nickname: e.target.value });
+            }}
+          />
+          <OutlinedInput
+            placeholder="비밀번호"
+            size="small"
+            value={newComment.password}
+            type="password"
+            onChange={(e) => {
+              setNewComment({ ...newComment, password: e.target.value });
+            }}
+          />
+          <OutlinedButton variant="outlined" type="submit">
+            작성
+          </OutlinedButton>
+        </Stack>
+        <OutlinedInput
+          placeholder="내용"
+          value={newComment.content}
+          sx={{ width: "100%", maxWidth: "500px" }}
+          onChange={(e) => {
+            setNewComment({ ...newComment, content: e.target.value });
+          }}
+        />
+      </form>
     </Box>
   );
 };

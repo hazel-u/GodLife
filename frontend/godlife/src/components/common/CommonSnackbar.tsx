@@ -1,5 +1,7 @@
 import { Alert, Snackbar } from "@mui/material";
+
 import React from "react";
+
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { clearSnackbar, selectSnackbar } from "../../store/snackbar";
 
@@ -20,11 +22,7 @@ const CommonSnackbar = () => {
 
   return (
     <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-      <Alert
-        onClose={handleClose}
-        severity={severity}
-        sx={{ fontFamily: "Noto Sans KR" }}
-      >
+      <Alert onClose={handleClose} severity={severity}>
         {message}
       </Alert>
     </Snackbar>
