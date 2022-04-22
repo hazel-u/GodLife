@@ -9,7 +9,7 @@ public class NotificationManager {
     @Autowired
     private MatterMostSender mmSender;
 
-    public void sendNotification(CustomException e, String uri, String params) {
+    public void sendNotification(Exception e, String uri, String params) {
         mmSender.sendMessage(e, uri, params);
     }
 

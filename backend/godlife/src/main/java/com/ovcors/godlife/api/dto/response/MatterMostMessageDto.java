@@ -1,7 +1,6 @@
 package com.ovcors.godlife.api.dto.response;
 
 import com.google.gson.annotations.SerializedName;
-import com.ovcors.godlife.api.exception.CustomException;
 import lombok.*;
 
 import java.io.PrintWriter;
@@ -58,15 +57,15 @@ public class MatterMostMessageDto {
 
         private String footer;
 
-        public Attachment addExceptionInfo(CustomException e) {
-            this.title = e.getErrorCode().name();
+        public Attachment addExceptionInfo(Exception e) {
+            this.title = e.getClass().getSimpleName();
             StringBuilder sb = new StringBuilder(text);
 
             sb.append("**Error Message**").
                     append('\n').
                     append('\n').
                     append("```").
-                    append(e.getErrorCode().getMessage()).
+                    append(e.getMessage()).
                     append("```")
                     .append('\n').
                     append('\n');
@@ -76,7 +75,7 @@ public class MatterMostMessageDto {
             return this;
         }
 
-        public Attachment addExceptionInfo(CustomException e, String uri) {
+        public Attachment addExceptionInfo(Exception e, String uri) {
             this.addExceptionInfo(e);
             StringBuilder sb = new StringBuilder(text);
 
@@ -86,7 +85,7 @@ public class MatterMostMessageDto {
             return this;
         }
 
-        public Attachment addExceptionInfo(CustomException e, String uri, String params) {
+        public Attachment addExceptionInfo(Exception e, String uri, String params) {
             this.addExceptionInfo(e, uri);
             StringBuilder sb = new StringBuilder(text);
 
