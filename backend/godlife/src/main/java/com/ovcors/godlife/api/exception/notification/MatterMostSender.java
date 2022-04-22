@@ -1,6 +1,7 @@
 package com.ovcors.godlife.api.exception.notification;
 
 import com.google.gson.Gson;
+import com.ovcors.godlife.api.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ public class MatterMostSender {
     private final RestTemplate restTemplate;
     private final MattermostProperties mmProperties;
 
-    public void sendMessage(Exception excpetion, String uri, String params) {
+    public void sendMessage(CustomException excpetion, String uri, String params) {
         if (!mmEnabled)
             return;
 
