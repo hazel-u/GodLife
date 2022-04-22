@@ -4,6 +4,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.ovcors.godlife.api.exception.CustomException;
+import com.ovcors.godlife.api.exception.ErrorCode;
 import com.ovcors.godlife.config.auth.PrincipalDetails;
 import com.ovcors.godlife.core.domain.user.User;
 import com.ovcors.godlife.core.repository.UserRepository;
@@ -49,7 +51,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                 User user = userRepository.findByEmailAndDeletedFalse(email);
 
                 if(user == null) {
-                    System.out.println("해당하는 유저가 없습니다.");
+                    throw new CustomException(ErrorCode.USER_NOT_FOUND);
                 }
                 PrincipalDetails principalDetails = new PrincipalDetails(user);
 
@@ -61,6 +63,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             request.setAttribute("exception", "token expired");
         } catch(JWTDecodeException e) {
             request.setAttribute("exception", "wrong token");
+        } catch(CustomException e) {
+            request.setAttribute("exception", "user not found");
         }
         chain.doFilter(request, response);
     }
