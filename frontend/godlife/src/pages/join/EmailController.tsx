@@ -9,8 +9,8 @@ import {
 } from "react-hook-form";
 
 import { OutlinedInput } from "../../components/common/Input";
+import { useIsMount } from "../../hooks/useIsMount";
 import { JoinInput } from "../../types/user";
-import { useIsMount } from "./CustomHook";
 
 interface EmailControllerProps {
   control: Control<JoinInput, any>;
@@ -35,11 +35,9 @@ const EmailController = ({
       })
       .then(() => {
         setValidatedEmail(true);
-        trigger("email");
       })
       .catch(() => {
         setValidatedEmail(false);
-        trigger("email");
       });
   };
 
