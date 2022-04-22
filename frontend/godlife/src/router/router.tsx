@@ -1,4 +1,7 @@
-import { Navigate, Outlet, useRoutes } from "react-router-dom";
+import { Navigate, useRoutes } from "react-router-dom";
+
+import MainLayout from "../layouts/MainLayout";
+import ShareLayout from "../layouts/ShareLayout";
 import GodlifeShare from "../pages/bingo/detail/GodlifeShare";
 import Join from "../pages/join/Join";
 import Login from "../pages/login/Login";
@@ -18,12 +21,18 @@ export default function Router() {
     },
     {
       path: "/",
-      element: isAuth ? <Outlet /> : <Navigate to="/login" />,
+      element: isAuth ? <MainLayout /> : <Navigate to="/login" />,
       children: [
         {
           path: "/profile",
           element: <Profile />,
         },
+      ],
+    },
+    {
+      path: "/",
+      element: isAuth ? <ShareLayout /> : <Navigate to="/login" />,
+      children: [
         {
           path: "/bingo/:bingoId",
           element: <GodlifeShare />,

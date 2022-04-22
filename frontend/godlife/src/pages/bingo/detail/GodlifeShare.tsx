@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import { Box, Button, Container, Stack } from "@mui/material";
 import axios from "axios";
+
+import React, { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { Stack, Box, Button, Container } from "@mui/material";
-import Logo from "../../../assets/images/logo.svg";
-import Share from "./Share";
-import CommentList from "./CommentList";
+
 import Bingo from "../../../components/common/Bingo/Bingo";
+import CommentList from "./CommentList";
+import Share from "./Share";
 
 const GodlifeShare = () => {
   const params = useParams();
@@ -57,10 +58,6 @@ const GodlifeShare = () => {
 
   return (
     <Stack direction="column" alignItems="center">
-      <Box sx={{ textAlign: "center" }}>
-        <img src={Logo} alt="logo" />
-      </Box>
-
       <Container sx={{ width: "500px" }}>
         <Bingo
           title={"도와주세요!! 개발자가 갇혀있어요!"}
