@@ -1,59 +1,106 @@
-import styled from "@emotion/styled";
-import { Box, Grid, Hidden } from "@mui/material";
-import React from "react";
+import { Grid, Hidden, Stack } from "@mui/material";
+
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+
 import { ReactComponent as Logo } from "../../assets/logo/Godlife/logo.svg";
+import Profile from "../../pages/profile/Profile";
+import { useAppDispatch } from "../../store/hooks";
+import { setSnackbar } from "../../store/snackbar";
+import { clearLoggedUser } from "../../store/user";
+import { TextButton } from "../common/Button";
 import MobileNavbarDialog from "./MobileNavbarDialog";
 
+const Navbar = () => {
+  const [open, setOpen] = useState(false);
 
-const Navbar: React.FC<{ menuName: string }> = ({ menuName }) => {
+  const pageNameList: { [key: string]: string } = {
+    "/": "메인",
+    "/today": "오늘의 갓생",
+    "/list": "이전의 갓생",
+    "/group": "내 그룹",
+    "/item": "아이템 샵",
+  };
+
+  const location = useLocation();
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const logout = () => {
+    navigate("login");
+    localStorage.removeItem("token");
+    localStorage.removeItem("refreshtoken");
+    dispatch(clearLoggedUser());
+    dispatch(
+      setSnackbar({
+        open: true,
+        message: "로그아웃 되었습니다.",
+        severity: "success",
+      })
+    );
+  };
 
   return (
-    <Container>
-      <Hidden mdDown>
-        <Box
+    <>
+      <Profile open={open} setOpen={setOpen} />
+
+      <Hidden smDown>
+        <Grid
+          container
+          alignItems="end"
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            paddingTop: 1,
-            alignItems: "flex-end",
+            padding: "10px",
           }}
         >
-          <MenuList>
-            <MenuItem>오늘의 갓생</MenuItem>
-            <MenuItem>이전의 갓생</MenuItem>
-            <MenuItem>내 그룹</MenuItem>
-          </MenuList>
-          <Logo height="10%"/>
-          <MenuList>
-            <MenuItem>아이템 샵</MenuItem>
-            <MenuItem>내 정보</MenuItem>
-            <MenuItem>로그아웃</MenuItem>
-          </MenuList>
-        </Box>
+          <Grid item sm={5}>
+            <Stack direction="row" justifyContent="space-around">
+              <TextButton href="/today">오늘의 갓생</TextButton>
+              <TextButton href="/list">이전의 갓생</TextButton>
+
+              <TextButton href="/group">내 그룹</TextButton>
+            </Stack>
+          </Grid>
+          <Grid
+            item
+            sm={2}
+            sx={{
+              textAlign: "center",
+            }}
+          >
+            <Logo width="100px" height="100px" />
+          </Grid>
+          <Grid item sm={5}>
+            <Stack direction="row" justifyContent="space-around">
+              <TextButton href="/item">아이템 샵</TextButton>
+              <TextButton onClick={() => setOpen(true)}>내 정보</TextButton>
+              <TextButton onClick={logout}>로그아웃</TextButton>
+            </Stack>
+          </Grid>
+        </Grid>
       </Hidden>
+
       <Grid
         container
-        spacing={1}
         direction="row"
         justifyContent="center"
         alignItems="center"
-        display={{ md: "none", lg: "none" }}
+        display={{ sm: "none", md: "none" }}
+        sx={{
+          padding: "10px",
+        }}
       >
-        <Grid 
+        <Grid
           item
-          xs  
-          sx={{ 
-            textAlign: "center", 
-            marginTop: 1,
-            marginLeft: 1
+          xs
+          sx={{
+            textAlign: "left",
           }}
         >
-          <Logo width="70%" height="70%"/>
+          <Logo width="70px" height="70px" />
         </Grid>
         <Grid
           item
-          xs={4}
-          sm={6}
+          xs
           sx={{
             textAlign: "center",
             display: "flex",
@@ -61,43 +108,14 @@ const Navbar: React.FC<{ menuName: string }> = ({ menuName }) => {
             alignItems: "center",
           }}
         >
-          <p>{menuName}</p>
+          <p>{pageNameList[location.pathname]}</p>
         </Grid>
-        <Grid
-          item
-          xs
-          sx={{
-            textAlign: "center",
-            marginTop: 1,
-            marginRight: 1
-          }}
-        >
-          <MobileNavbarDialog />
+        <Grid item xs>
+          <MobileNavbarDialog logout={logout} setOpen={setOpen} />
         </Grid>
       </Grid>
-    </Container>
+    </>
   );
 };
-
-const Container = styled.div`
-  position: "fixed";
-  top: 0;
-  left: 0;
-  z-index: 100;
-  width: 100%;
-  height: 10%;
-`;
-
-const MenuList = styled.ul`
-  display: flex;
-  text-align: "center";
-  list-style: none;
-  margin: 0 5%;
-  padding: 0;
-`;
-
-const MenuItem = styled.li`
-  margin: 0 20px;
-`;
 
 export default Navbar;

@@ -5,7 +5,6 @@ import ShareLayout from "../layouts/ShareLayout";
 import GodlifeShare from "../pages/bingo/detail/GodlifeShare";
 import Join from "../pages/join/Join";
 import Login from "../pages/login/Login";
-import Profile from "../pages/profile/Profile";
 
 export default function Router() {
   const isAuth = localStorage.getItem("token");
@@ -22,12 +21,7 @@ export default function Router() {
     {
       path: "/",
       element: isAuth ? <MainLayout /> : <Navigate to="/login" />,
-      children: [
-        {
-          path: "/profile",
-          element: <Profile />,
-        },
-      ],
+      children: [],
     },
     {
       path: "/",
