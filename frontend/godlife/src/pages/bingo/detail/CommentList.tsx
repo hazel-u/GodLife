@@ -1,4 +1,4 @@
-import { Box, Divider, Stack } from "@mui/material";
+import { Box, Divider, Grid } from "@mui/material";
 import axios from "axios";
 
 import React from "react";
@@ -76,28 +76,6 @@ const CommentList = ({
         </>
       ))}
       <form onSubmit={handleSubmit}>
-        <Stack direction="row" spacing={2} sx={{ margin: "10px 0" }}>
-          <OutlinedInput
-            placeholder="닉네임"
-            size="small"
-            value={newComment.nickname}
-            onChange={(e) => {
-              setNewComment({ ...newComment, nickname: e.target.value });
-            }}
-          />
-          <OutlinedInput
-            placeholder="비밀번호"
-            size="small"
-            value={newComment.password}
-            type="password"
-            onChange={(e) => {
-              setNewComment({ ...newComment, password: e.target.value });
-            }}
-          />
-          <OutlinedButton variant="outlined" type="submit">
-            작성
-          </OutlinedButton>
-        </Stack>
         <OutlinedInput
           placeholder="내용"
           value={newComment.content}
@@ -106,6 +84,38 @@ const CommentList = ({
             setNewComment({ ...newComment, content: e.target.value });
           }}
         />
+        <Grid container spacing={2} sx={{ padding: "10px 0" }}>
+          <Grid item xs={6} sm={4}>
+            <OutlinedInput
+              placeholder="닉네임"
+              size="small"
+              value={newComment.nickname}
+              onChange={(e) => {
+                setNewComment({ ...newComment, nickname: e.target.value });
+              }}
+            />
+          </Grid>
+          <Grid item xs={6} sm={4}>
+            <OutlinedInput
+              placeholder="비밀번호"
+              size="small"
+              value={newComment.password}
+              type="password"
+              onChange={(e) => {
+                setNewComment({ ...newComment, password: e.target.value });
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <OutlinedButton
+              variant="outlined"
+              type="submit"
+              sx={{ width: "100%", minWidth: "100%" }}
+            >
+              작성
+            </OutlinedButton>
+          </Grid>
+        </Grid>
       </form>
     </Box>
   );
