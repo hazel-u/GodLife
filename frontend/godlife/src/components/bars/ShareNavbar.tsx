@@ -12,8 +12,6 @@ const DivStyle = styled.div`
   box-shadow: none;
   padding: 10px 0px;
   height: 10%;
-  position: sticky;
-  top: 0;
 `;
 
 const ShareNavbar = () => {
