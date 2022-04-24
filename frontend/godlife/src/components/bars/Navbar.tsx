@@ -80,12 +80,15 @@ const Navbar: React.FC<{ menuName: string }> = ({ menuName }) => {
 };
 
 const Container = styled.div`
-  position: "fixed";
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
   width: 100%;
   height: 10%;
+  flex-direction: row;
+  justifyContent: center;
+  alignItems: center;
 `;
 
 const MenuList = styled.ul`

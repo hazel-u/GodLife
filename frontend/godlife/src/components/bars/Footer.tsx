@@ -28,7 +28,12 @@ const Footer = () => {
 }
 
 const Container = styled.footer`
-  width: 90%;
+  position: fixed;
+  bottom: 0;
+  flex-direction: column;
+  justifyContent: center;
+  alignItems: center;
+  width: 100%;
   margin-top: 70px;
   border-top: 1px solid #f1f1f1;
   @media (max-width: 899px) {
