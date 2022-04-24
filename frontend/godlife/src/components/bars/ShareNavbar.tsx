@@ -17,7 +17,7 @@ const DivStyle = styled.div`
 const ShareNavbar = () => {
   return (
     <DivStyle>
-      <Logo width="8%" height="8%" />
+      <Logo width="100px" height="100px" />
     </DivStyle>
   );
 };

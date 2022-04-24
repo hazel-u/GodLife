@@ -17,10 +17,11 @@ export const userSlice = createSlice({
     setLoggedUser: (state, action: PayloadAction<UserInfo>) => {
       return (state = { ...action.payload });
     },
+    clearLoggedUser: () => initialState,
   },
 });
 
-export const { setLoggedUser } = userSlice.actions;
+export const { setLoggedUser, clearLoggedUser } = userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user;
 

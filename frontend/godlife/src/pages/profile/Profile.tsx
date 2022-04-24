@@ -8,13 +8,19 @@ import ProfileDelete from "./ProfileDelete";
 import ProfileEdit from "./ProfileEdit";
 import ProfileTab from "./ProfileTab";
 
-const Profile = () => {
+const Profile = ({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const [tab, setTab] = useState("info");
-  const [open, setOpen] = useState(true);
+
   const handleClose = () => {
-    console.log("dialog close");
     setOpen(false);
   };
+
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
