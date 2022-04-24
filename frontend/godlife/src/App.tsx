@@ -28,7 +28,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CommonDialog />
       <CommonSnackbar />
-      <Router />;
+      <Router />
     </ThemeProvider>
   );
 }

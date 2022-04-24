@@ -70,10 +70,10 @@ const CommentList = ({
       <p>댓글 {comments.length}개</p>
       <Divider />
       {comments.map((comment: any, index: number) => (
-        <>
+        <React.Fragment key={index}>
           <Comment comment={comment} />
           {index !== comments.length - 1 && <Divider />}
-        </>
+        </React.Fragment>
       ))}
       <form onSubmit={handleSubmit}>
         <OutlinedInput
