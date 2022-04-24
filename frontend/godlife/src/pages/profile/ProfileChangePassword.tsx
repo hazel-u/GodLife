@@ -55,9 +55,9 @@ const ProfileChangePassword = ({
 
   return (
     <>
-      <p>새로 사용할 비밀번호를 입력해주세요.</p>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack direction="column" alignItems="center" spacing={1.5}>
+          <p>새로 사용할 비밀번호를 입력해주세요.</p>
           <Controller
             render={({ field, fieldState }) => (
               <OutlinedInput

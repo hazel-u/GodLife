@@ -47,7 +47,7 @@ const ProfileEdit = ({ handleClose }: { handleClose: () => void }) => {
   return (
     <Box sx={{ maxWidth: "300px", margin: "0 auto" }}>
       <Stack direction="row" spacing={2} alignItems="center">
-        <p>이메일</p>
+        <p style={{ minWidth: "45px" }}>이메일</p>
         <p>{email}</p>
       </Stack>
 
@@ -55,7 +55,7 @@ const ProfileEdit = ({ handleClose }: { handleClose: () => void }) => {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack direction="row" spacing={2} alignItems="center">
-          <p style={{ marginTop: 0 }}>닉네임</p>
+          <p style={{ marginTop: 0, minWidth: "45px" }}>닉네임</p>
           <NicknameController
             control={control}
             trigger={trigger}
