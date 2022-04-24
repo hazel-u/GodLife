@@ -54,10 +54,22 @@ const Navbar = () => {
         >
           <Grid item sm={5}>
             <Stack direction="row" justifyContent="space-around">
-              <TextButton href="/today">오늘의 갓생</TextButton>
+              <TextButton href="/bingo/123">오늘의 갓생</TextButton>
               <TextButton href="/list">이전의 갓생</TextButton>
 
-              <TextButton href="/group">내 그룹</TextButton>
+              <TextButton
+                onClick={() => {
+                  dispatch(
+                    setSnackbar({
+                      open: true,
+                      message: "서비스 준비중입니다.",
+                      severity: "info",
+                    })
+                  );
+                }}
+              >
+                내 그룹
+              </TextButton>
             </Stack>
           </Grid>
           <Grid
@@ -71,7 +83,19 @@ const Navbar = () => {
           </Grid>
           <Grid item sm={5}>
             <Stack direction="row" justifyContent="space-around">
-              <TextButton href="/item">아이템 샵</TextButton>
+              <TextButton
+                onClick={() => {
+                  dispatch(
+                    setSnackbar({
+                      open: true,
+                      message: "서비스 준비중입니다.",
+                      severity: "info",
+                    })
+                  );
+                }}
+              >
+                아이템 샵
+              </TextButton>
               <TextButton onClick={() => setOpen(true)}>내 정보</TextButton>
               <TextButton onClick={logout}>로그아웃</TextButton>
             </Stack>
