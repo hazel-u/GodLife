@@ -61,11 +61,6 @@ const BingoCreate = () => {
       content: "밥 먹고 눕지 않기 ",
       category: "건강한삶",
     },
-    {
-      seq: 8,
-      content: "수면 이외에 눕지 않기",
-      category: "건강한삶",
-    },
   ]);
   const [goals, setGoals] = useState<Goal[]>([
     {
@@ -140,25 +135,6 @@ const BingoCreate = () => {
     },
   ]);
 
-  const startBingo = () => {
-    const selectedGoalsSeqs: number[] = selectedGoals.map(
-      (goal: { seq: number }) => goal.seq
-    );
-
-    if (selectedGoals.length === 9) {
-      createBingo(selectedGoalsSeqs);
-    } else {
-      const goalsSeqs: number[] = goals.map(
-        (goal: { seq: number }) => goal.seq
-      );
-
-      const unselectedGoals = goalsSeqs.filter((goal) => {
-        return !selectedGoalsSeqs.includes(goal);
-      });
-      createBingo(unselectedGoals);
-    }
-  };
-
   const shuffle = (array: number[]) => {
     for (let i = array.length - 1; i > 0; i--) {
       let j = Math.floor(Math.random() * (i + 1));
@@ -167,13 +143,37 @@ const BingoCreate = () => {
     return array;
   };
 
+  const startBingo = () => {
+    const goalsCount = selectedGoals.length;
+    const selectedGoalsSeqs: number[] = selectedGoals.map(
+      (goal: { seq: number }) => goal.seq
+    );
+
+    if (goalsCount === 9) {
+      createBingo(selectedGoalsSeqs);
+    } else {
+      const goalsSeqs: number[] = goals.map(
+        (goal: { seq: number }) => goal.seq
+      );
+
+      const unselectedGoalsSeqs = goalsSeqs.filter((goal) => {
+        return !selectedGoalsSeqs.includes(goal);
+      });
+
+      shuffle(unselectedGoalsSeqs);
+      const randomGoalsSeqs = unselectedGoalsSeqs.slice(0, 9 - goalsCount);
+      selectedGoalsSeqs.push(...randomGoalsSeqs);
+
+      createBingo(selectedGoalsSeqs);
+    }
+  };
+
   const navigate = useNavigate();
   const createBingo = (goals: number[]) => {
-    console.log(shuffle(goals));
     axios
       .post(
         "bingo",
-        { goals, title },
+        { goals: shuffle(goals), title },
         {
           headers: {
             Authorization: `${localStorage.getItem("token")}`,
