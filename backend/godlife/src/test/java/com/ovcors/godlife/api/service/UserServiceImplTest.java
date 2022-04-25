@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -66,10 +67,11 @@ class UserServiceImplTest {
     @Test
     void getUserInfo() {
         // given
-        doReturn(Optional.of(user())).when(userRepository).findById(any(Long.class));
+        doReturn(Optional.of(user())).when(userRepository).findById(any(UUID.class));
 
         // when
-        final UserInfoResDto userInfoResDto = userService.getUserInfo(0L);
+        UUID seq = UUID.randomUUID();
+        final UserInfoResDto userInfoResDto = userService.getUserInfo(seq);
 
         //then
         assertThat(userInfoResDto.getEmail()).isNotNull();
@@ -81,14 +83,15 @@ class UserServiceImplTest {
     @Test
     void setUserInfo() {
         // given
-        doReturn(Optional.of(user())).when(userRepository).findById(any(Long.class));
+        doReturn(Optional.of(user())).when(userRepository).findById(any(UUID.class));
         ChangeUserInfoReqDto changeUserInfoReqDto = changeUserInfo();
 
         // when
-        userService.setUserInfo(0L, changeUserInfoReqDto);
+        UUID seq = UUID.randomUUID();
+        userService.setUserInfo(seq, changeUserInfoReqDto);
 
         //then
-        final User changeUser = userRepository.findById(0L).get();
+        final User changeUser = userRepository.findById(seq).get();
         assertThat(changeUser.getName()).isNotNull();
         assertThat(changeUser.getName()).isEqualTo("changeName");
     }
@@ -103,13 +106,14 @@ class UserServiceImplTest {
     @Test
     void deleteUser() {
         // given
-        doReturn(Optional.of(user())).when(userRepository).findById(any(Long.class));
+        doReturn(Optional.of(user())).when(userRepository).findById(any(UUID.class));
 
         // when
-        userService.deleteUser(0L);
+        UUID seq = UUID.randomUUID();
+        userService.deleteUser(seq);
 
         // then
-        final User deleteUser = userRepository.findById(0L).get();
+        final User deleteUser = userRepository.findById(seq).get();
         assertThat(deleteUser.getName()).isNotNull();
         assertThat(deleteUser.getName()).isEqualTo("deleteUserName");
         assertThat(deleteUser.getDeleted()).isTrue();
@@ -145,11 +149,12 @@ class UserServiceImplTest {
     @Test
     void changePW() {
         // given
-        doReturn(Optional.of(user())).when(userRepository).findById(0L);
+        doReturn(Optional.of(user())).when(userRepository).findById(any(UUID.class));
         ChangePasswordReqDto changePasswordReqDto = changePasswordReqDto(password, "5678", "5678");
 
         // when
-        Boolean result = userService.changePassword(0L, changePasswordReqDto);
+        UUID seq = UUID.randomUUID();
+        Boolean result = userService.changePassword(seq, changePasswordReqDto);
 
         // then
         assertThat(result).isTrue();
@@ -170,10 +175,11 @@ class UserServiceImplTest {
     @Test
     void godLife() {
         // given
-        doReturn(Optional.of(user())).when(userRepository).findById(any(Long.class));
+        doReturn(Optional.of(user())).when(userRepository).findById(any(UUID.class));
 
         // when
-        GodLifeResDto godLifeResDto = userService.getGodLife(0L);
+        UUID seq = UUID.randomUUID();
+        GodLifeResDto godLifeResDto = userService.getGodLife(seq);
 
         // then
         assertThat(godLifeResDto).isNotNull();
