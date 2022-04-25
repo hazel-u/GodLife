@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import Bingo from "../../../components/common/Bingo/Bingo";
 import { selectBingo, setBingo } from "../../../store/bingo";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { selectUser } from "../../../store/user";
 import BingoTitle from "./BingoTitle";
 import CommentList from "./CommentList";
 import Interaction from "./Interaction";
@@ -27,6 +28,7 @@ const GodlifeShare = () => {
   };
 
   const bingo = useAppSelector(selectBingo);
+  const { email } = useAppSelector(selectUser);
 
   return (
     <Stack direction="column" alignItems="center">
@@ -36,7 +38,11 @@ const GodlifeShare = () => {
           본인의 bingo일 경우에만 실제 id 넘겨주고 
           그렇지 않다면 "" 빈 문자열 넘기기
          */}
-          <BingoTitle id={bingo.id} title={bingo.title} />
+          <BingoTitle
+            id={bingo.userEmail === email ? bingo.id : ""}
+            title={bingo.title}
+            getBingo={getBingo}
+          />
           <Bingo
             createdBy={"백우민"}
             size={3}
