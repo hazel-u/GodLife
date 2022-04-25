@@ -11,15 +11,14 @@ import com.ovcors.godlife.core.domain.user.JoinType;
 import com.ovcors.godlife.core.domain.user.User;
 import com.ovcors.godlife.core.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @Service
 @Transactional
-@Configurable
 public class UserServiceImpl implements UserService{
 
     @Autowired
@@ -31,6 +30,9 @@ public class UserServiceImpl implements UserService{
     @Override
     public User join(JoinReqDto joinReqDto) {
         System.out.println("join 진입");
+        if("deleteUserName".equals(joinReqDto.getName()) || "deleteEmail@delete.com".equals(joinReqDto.getEmail())) {
+            throw new CustomException(ErrorCode.WRONG_INPUT);
+        }
         User existedEmailUser = userRepository.findByEmailAndDeletedFalse(joinReqDto.getEmail());
         if(existedEmailUser != null) {
             throw new CustomException(ErrorCode.DUPLICATE_RESOURCE);
@@ -57,7 +59,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserInfoResDto getUserInfo(Long seq) {
+    public UserInfoResDto getUserInfo(UUID seq) {
         if(seq == null) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
@@ -73,7 +75,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void setUserInfo(Long seq, ChangeUserInfoReqDto changeUserInfoReqDto) {
+    public void setUserInfo(UUID seq, ChangeUserInfoReqDto changeUserInfoReqDto) {
         if(seq == null) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
@@ -84,7 +86,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void deleteUser(Long seq) {
+    public void deleteUser(UUID seq) {
         if(seq == null) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
@@ -113,7 +115,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Boolean changePassword(Long seq, ChangePasswordReqDto changePasswordReqDto) {
+    public Boolean changePassword(UUID seq, ChangePasswordReqDto changePasswordReqDto) {
         if(seq == null) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
@@ -138,7 +140,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public GodLifeResDto getGodLife(Long seq) {
+    public GodLifeResDto getGodLife(UUID seq) {
         if(seq == null) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }

@@ -7,13 +7,15 @@ import com.ovcors.godlife.api.dto.response.GodLifeResDto;
 import com.ovcors.godlife.api.dto.response.UserInfoResDto;
 import com.ovcors.godlife.core.domain.user.User;
 
+import java.util.UUID;
+
 public interface UserService {
     User join(JoinReqDto joinReqDto);
-    UserInfoResDto getUserInfo(Long seq);
-    void setUserInfo(Long seq, ChangeUserInfoReqDto changeUserInfoReqDto);
-    void deleteUser(Long seq);
+    UserInfoResDto getUserInfo(UUID seq);
+    void setUserInfo(UUID seq, ChangeUserInfoReqDto changeUserInfoReqDto);
+    void deleteUser(UUID seq);
     Boolean duplicatedEmail(String email);
     Boolean duplicatedName(String name);
-    Boolean changePassword(Long seq, ChangePasswordReqDto changePasswordReqDto);
-    GodLifeResDto getGodLife(Long seq);
+    Boolean changePassword(UUID seq, ChangePasswordReqDto changePasswordReqDto);
+    GodLifeResDto getGodLife(UUID seq);
 }
