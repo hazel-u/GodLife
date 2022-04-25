@@ -21,7 +21,7 @@ import java.util.UUID;
 public class Bingo {
 
     @Builder
-    public Bingo(BingoCode bingoCode, User user, String title, LocalDate startDate, Integer likeCnt, Integer surpriseCnt, Integer heartCnt, Boolean activate, Boolean godlife, Integer commentCnt) {
+    public Bingo(BingoCode bingoCode, User user, String title, LocalDate startDate, Integer likeCnt, Integer surpriseCnt, Integer heartCnt, Boolean activate, Boolean godlife) {
         this.bingoCode = bingoCode;
         this.user = user;
         this.title = title;
@@ -31,7 +31,6 @@ public class Bingo {
         this.heartCnt = heartCnt;
         this.activate = activate;
         this.godlife = godlife;
-        this.commentCnt = commentCnt;
     }
 
     @Id
@@ -54,9 +53,8 @@ public class Bingo {
     private Integer heartCnt;
     private Boolean activate;
     private Boolean godlife;
-    private Integer commentCnt;
 
-    @OneToMany(mappedBy = "bingo")
+    @OneToMany(mappedBy = "bingo", fetch = FetchType.EAGER)
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "bingo")
@@ -85,7 +83,6 @@ public class Bingo {
 
     public void addComment(Comment comment) {
         this.comments.add(comment);
-        this.commentCnt = this.comments.size();
         comment.setBingo(this);
     }
     public void addGoal(BingoGoals goal){

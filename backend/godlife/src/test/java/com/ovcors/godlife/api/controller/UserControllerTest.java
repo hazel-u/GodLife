@@ -4,15 +4,16 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.google.gson.Gson;
 import com.ovcors.godlife.api.dto.request.*;
-import com.ovcors.godlife.api.resolver.AuthHandlerMethodArgumentResolver;
 import com.ovcors.godlife.api.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -30,15 +31,12 @@ class UserControllerTest {
     @Mock
     private UserService userService;
 
-    @Mock
-    AuthHandlerMethodArgumentResolver authHandlerMethodArgumentResolver;
-
     private MockMvc mockMvc;
     private Gson gson;
 
     private String jwtToken = JWT.create()
             .withClaim("email", "test@naver.com")
-            .sign(Algorithm.HMAC512("RktTodWkdWkdaos"));
+            .sign(Algorithm.HMAC512("123456"));
 
     @BeforeEach
     public void init() {
@@ -122,7 +120,7 @@ class UserControllerTest {
     @Test
     public void deleteUser() throws Exception {
         // given
-        final String url = "/user/delete";
+        final String url = "/user/";
 
         // when
         final ResultActions resultActions = mockMvc.perform(

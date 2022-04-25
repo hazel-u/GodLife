@@ -1,5 +1,6 @@
 package com.ovcors.godlife.api.controller;
 
+import com.ovcors.godlife.api.dto.request.BingoGoalsCompletedReqDto;
 import com.ovcors.godlife.api.dto.request.GoalsReqDto;
 import com.ovcors.godlife.api.dto.request.JoinReqDto;
 import com.ovcors.godlife.api.dto.request.UserGoalsReqDto;
@@ -44,6 +45,12 @@ public class GoalsController {
     @DeleteMapping
     public ResponseEntity<BaseResponseEntity> deleteUserGoals(@RequestBody UserGoalsReqDto userGoalsReqDto) {
         goalsService.deleteUserGoals(userGoalsReqDto);
+        return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
+    }
+
+    @PostMapping
+    public ResponseEntity<BaseResponseEntity> setBingoGoalsCompleted(@RequestBody BingoGoalsCompletedReqDto reqDto){
+        goalsService.setCompleted(reqDto);
         return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
     }
 }

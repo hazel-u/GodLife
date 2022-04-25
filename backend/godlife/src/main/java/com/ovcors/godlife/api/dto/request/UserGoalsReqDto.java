@@ -8,5 +8,5 @@ import java.util.UUID;
 @Data
 public class UserGoalsReqDto {
     @NotNull
-    private UUID seq;
+    private String seq;
 }

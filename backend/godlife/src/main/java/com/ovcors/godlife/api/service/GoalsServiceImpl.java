@@ -1,11 +1,13 @@
 package com.ovcors.godlife.api.service;
 
+import com.ovcors.godlife.api.dto.request.BingoGoalsCompletedReqDto;
 import com.ovcors.godlife.api.dto.request.GoalsReqDto;
 import com.ovcors.godlife.api.dto.request.UserGoalsReqDto;
 import com.ovcors.godlife.api.dto.response.GoalsResDto;
 import com.ovcors.godlife.api.dto.response.UserGoalsResDto;
 import com.ovcors.godlife.api.exception.CustomException;
 import com.ovcors.godlife.api.exception.ErrorCode;
+import com.ovcors.godlife.core.domain.goals.BingoGoals;
 import com.ovcors.godlife.core.domain.goals.Goals;
 import com.ovcors.godlife.core.domain.goals.UserGoals;
 import com.ovcors.godlife.core.domain.user.User;
@@ -17,9 +19,10 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @Service
 @Transactional
-@Configurable
 public class GoalsServiceImpl implements GoalsService{
 
     @Autowired
@@ -42,13 +45,11 @@ public class GoalsServiceImpl implements GoalsService{
 
     @Override
     public void deleteUserGoals(UserGoalsReqDto userGoalsReqDto) {
-        userGoalsRepository.deleteById(userGoalsReqDto.getSeq());
+        userGoalsRepository.deleteById(UUID.fromString(userGoalsReqDto.getSeq()));
     }
 
     @Override
     public UserGoalsResDto getUserGoals(User user) {
-        System.out.println(user.getEmail());
-        System.out.println(user.getSeq());
         UserGoalsResDto response = new UserGoalsResDto(userGoalsRepository.findByUserSeq(user.getSeq()));
         return response;
 //        return null;
@@ -59,4 +60,12 @@ public class GoalsServiceImpl implements GoalsService{
         GoalsResDto response = new GoalsResDto(goalsRepository.findAll());
         return response ;
     }
+
+    @Override
+    public void setCompleted(BingoGoalsCompletedReqDto reqDto) {
+        BingoGoals bingoGoals = bingoGoalsRepository.findById(UUID.fromString(reqDto.getSeq()))
+                .orElseThrow(()->new CustomException(ErrorCode.BINGO_GOALS_NOT_FOUND));
+        bingoGoals.changeCompleted(reqDto.getCompleted());
+    }
+
 }

@@ -11,4 +11,10 @@ export interface BingoType {
   startDate: string;
   title: string;
   userEmail: string;
+  goals: {
+    seq: number;
+    content: string;
+    category: string;
+    completed: boolean;
+  }[];
 }
