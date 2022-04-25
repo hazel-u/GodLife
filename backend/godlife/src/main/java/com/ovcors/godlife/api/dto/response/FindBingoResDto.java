@@ -29,7 +29,7 @@ public class FindBingoResDto {
     LocalDate startDate;
     Integer likeCnt;
     List<BingoGoalResDto> goals = new ArrayList<>();
-    List<Comment> comments = new ArrayList<>();
+    List<CommentResDto> comments = new ArrayList<>();
 
     public FindBingoResDto (Bingo bingo){
         this.id = bingo.getSeq();
@@ -41,7 +41,7 @@ public class FindBingoResDto {
         this.godlife = bingo.getGodlife();
         this.startDate = bingo.getStartDate();
         this.likeCnt = bingo.getLikeCnt();
-        this.comments = bingo.getComments();
+
         List<BingoGoals> bingoGoals = bingo.getBingoGoals();
         for(BingoGoals bingoGoal: bingoGoals){
             this.goals.add(BingoGoalResDto.builder()
@@ -50,6 +50,15 @@ public class FindBingoResDto {
                             .content(bingoGoal.getGoals().getContent())
                             .completed(bingoGoal.isCompleted())
                             .build());
+        }
+
+        List<Comment> comments = bingo.getComments();
+        for(Comment comment:comments){
+            this.comments.add(CommentResDto.builder()
+                    .content(comment.getContent())
+                    .nickname(comment.getNickname())
+                    .password(comment.getPassword())
+                    .build());
         }
     }
 }
