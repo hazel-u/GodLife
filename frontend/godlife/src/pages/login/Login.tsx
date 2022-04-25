@@ -60,14 +60,11 @@ const Login = () => {
     >
       <Grid item md={8} display={{ xs: "none", md: "block" }}>
         <Bingo
-          title={"도와주세요!! 개발자가 갇혀있어요!"}
           createdBy={"백우민"}
           size={3}
           goals={exampleBingo}
           mode={"Active"}
           date={new Date()}
-          streak={1}
-          totalUses={1}
         ></Bingo>
         <LoginBanner />
       </Grid>
