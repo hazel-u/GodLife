@@ -1,12 +1,14 @@
+import { IconButton } from "@mui/material";
+
 import React, { useEffect } from "react";
-import { Button } from "@mui/material";
 
-interface KakaoShareProps {
-  likeCount: number;
-  commentCount: number;
-}
+import KakaotalkLogo from "../../../assets/logo/Brand/kakaotalk.png";
+import { selectBingo } from "../../../store/bingo";
+import { useAppSelector } from "../../../store/hooks";
 
-const KakaoShare = (props: KakaoShareProps) => {
+const KakaoShare = () => {
+  const { likeCnt, commentCnt } = useAppSelector(selectBingo);
+
   useEffect(() => {
     if (!window.Kakao.isInitialized())
       window.Kakao.init(process.env.REACT_APP_KAKAO_KEY);
@@ -26,13 +28,17 @@ const KakaoShare = (props: KakaoShareProps) => {
         },
       },
       social: {
-        likeCount: props.likeCount,
-        commentCount: props.commentCount,
+        likeCount: likeCnt,
+        commentCount: commentCnt,
         // sharedCount: 30,
       },
     });
   };
-  return <Button onClick={shareKakao}>카카오톡</Button>;
+  return (
+    <IconButton onClick={shareKakao} sx={{ padding: 0, height: "40px" }}>
+      <img src={KakaotalkLogo} alt="Kakaotalk Logo" style={{ width: "40px" }} />
+    </IconButton>
+  );
 };
 
 export default KakaoShare;

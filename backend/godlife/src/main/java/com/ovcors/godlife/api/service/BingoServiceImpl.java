@@ -21,6 +21,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,24 +41,21 @@ public class BingoServiceImpl implements BingoService{
     public Bingo createBingo(String userEmail, SaveBingoReqDto reqDto) {
         User user =  userRepository.findByEmailAndDeletedFalse(userEmail);
 
-        /* goals 생성 */
-
         Bingo bingo = reqDto.toEntity();
         bingo.setUser(user);
 
-        return bingoRepository.save(bingo);
+        Collections.shuffle(reqDto.getGoals());
 
-    }
-    public void addBingoGoals(Bingo bingo, SaveBingoReqDto reqDto){
-        for(Integer i : reqDto.getGoals()){
-            Goals goal = goalsRepository.findById(Long.valueOf(i))
+        for(Long i : reqDto.getGoals()){
+            Goals goal = goalsRepository.findById(i)
                     .orElseThrow(() -> new CustomException(ErrorCode.GOALS_NOT_FOUND));
-            BingoGoals bingoGoals = BingoGoals.builder()
+            bingoGoalsRepository.save(BingoGoals.builder()
                     .bingo(bingo)
                     .goals(goal)
-                    .build();
-            bingoGoalsRepository.save(bingoGoals);
+                    .build());
         }
+
+        return bingoRepository.save(bingo);
 
     }
 

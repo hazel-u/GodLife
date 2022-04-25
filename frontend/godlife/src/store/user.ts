@@ -1,10 +1,13 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+
 import { RootState } from ".";
 import { UserInfo } from "../types/user";
 
 const initialState: UserInfo = {
   email: "",
-  nickname: "",
+  name: "",
+  godCount: 0,
+  recentDate: null,
 };
 
 export const userSlice = createSlice({
@@ -14,10 +17,11 @@ export const userSlice = createSlice({
     setLoggedUser: (state, action: PayloadAction<UserInfo>) => {
       return (state = { ...action.payload });
     },
+    clearLoggedUser: () => initialState,
   },
 });
 
-export const { setLoggedUser } = userSlice.actions;
+export const { setLoggedUser, clearLoggedUser } = userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user;
 

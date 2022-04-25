@@ -21,12 +21,6 @@ const OutlinedInput = styled(TextField)(({ theme }) => ({
       border: "solid 1px #C4C4C4",
     },
   },
-  "& input::placeholder": {
-    fontFamily: "Noto Sans KR",
-  },
-  "& .MuiFormHelperText-root": {
-    fontFamily: "Noto Sans KR",
-  },
 }));
 
 export { OutlinedInput };

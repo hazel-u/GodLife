@@ -1,20 +1,26 @@
-// mui
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 
+import React from "react";
 import { useState } from "react";
 
-const BingoCell = (goal: any) => {
-  const [state, setState] = useState({
-    content: goal.content,
-    isCompleted: goal.isCompleted,
-  });
+interface BingoCellProp {
+  content: String;
+  isCompleted: boolean;
+  customClickEvent: () => void;
+}
 
+const BingoCell = ({
+  content,
+  isCompleted,
+  customClickEvent,
+}: BingoCellProp) => {
   return (
     <Grid
       item
       xs={4}
+      onClick={customClickEvent}
       sx={{
         position: "relative",
         width: 120,
@@ -28,6 +34,7 @@ const BingoCell = (goal: any) => {
       <Paper
         elevation={3}
         sx={{
+          bgcolor: isCompleted ? "primary.dark" : "primary.light",
           position: "absolute",
           display: "flex",
           justifyContent: "center",
@@ -40,7 +47,7 @@ const BingoCell = (goal: any) => {
         }}
       >
         <Typography align="center" variant="h3">
-          {state.content}
+          {content}
         </Typography>
       </Paper>
     </Grid>

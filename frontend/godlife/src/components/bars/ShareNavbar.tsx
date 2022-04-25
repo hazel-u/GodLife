@@ -12,14 +12,12 @@ const DivStyle = styled.div`
   box-shadow: none;
   padding: 10px 0px;
   height: 10%;
-  position: sticky;
-  top: 0;
 `;
 
 const ShareNavbar = () => {
   return (
     <DivStyle>
-      <Logo width="8%" height="8%" />
+      <Logo width="100px" height="100px" />
     </DivStyle>
   );
 };
