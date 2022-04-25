@@ -12,7 +12,6 @@ import java.util.UUID;
 
 @Entity
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class BingoGoals {
@@ -39,6 +38,9 @@ public class BingoGoals {
     }
     public void changeCompleted(Boolean bool){
         this.completed = bool;
+    }
+    public void setBingo(Bingo bingo){
+        this.bingo = bingo;
     }
 
 

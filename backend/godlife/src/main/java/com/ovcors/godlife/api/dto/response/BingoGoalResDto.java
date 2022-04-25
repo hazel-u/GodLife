@@ -1,5 +1,6 @@
 package com.ovcors.godlife.api.dto.response;
 
+import com.ovcors.godlife.core.domain.goals.Category;
 import com.ovcors.godlife.core.domain.goals.Goals;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +14,6 @@ import lombok.NoArgsConstructor;
 public class BingoGoalResDto {
     Long seq;
     String content;
-    Goals.Category category;
+    Category category;
     Boolean completed;
 }

@@ -50,8 +50,6 @@ public class GoalsServiceImpl implements GoalsService{
 
     @Override
     public UserGoalsResDto getUserGoals(User user) {
-        System.out.println(user.getEmail());
-        System.out.println(user.getSeq());
         UserGoalsResDto response = new UserGoalsResDto(userGoalsRepository.findByUserSeq(user.getSeq()));
         return response;
 //        return null;
@@ -67,7 +65,7 @@ public class GoalsServiceImpl implements GoalsService{
     public void setCompleted(BingoGoalsCompletedReqDto reqDto) {
         BingoGoals bingoGoals = bingoGoalsRepository.findById(UUID.fromString(reqDto.getSeq()))
                 .orElseThrow(()->new CustomException(ErrorCode.BINGO_GOALS_NOT_FOUND));
-        bingoGoals.setCompleted(reqDto.getCompleted());
+        bingoGoals.changeCompleted(reqDto.getCompleted());
     }
 
 }
