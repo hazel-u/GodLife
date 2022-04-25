@@ -112,14 +112,11 @@ const GodlifeShare = () => {
     <Stack direction="column" alignItems="center">
       <Container sx={{ width: "500px" }}>
         <Bingo
-          title={dummyBingo.title}
           createdBy={"백우민"}
           size={3}
           goals={exampleBingo}
           mode={"Active"}
           date={new Date()}
-          streak={1}
-          totalUses={1}
         />
       </Container>
 

@@ -377,14 +377,11 @@ const PreviousBingoList = () => {
         <Grid item xs={12} sm={6} md={4}>
           <Box sx={{ maxWidth: "300px", margin: "auto" }}>
             <Bingo
-              title={bingo.title}
               createdBy={"백우민"}
               size={3}
               goals={bingo.goals}
               mode={"Active"}
               date={new Date()}
-              streak={1}
-              totalUses={1}
             />
           </Box>
         </Grid>

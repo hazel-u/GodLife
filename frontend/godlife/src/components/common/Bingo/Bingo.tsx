@@ -10,35 +10,19 @@ import { OutlinedInput } from "../Input";
 import BingoCell from "./BingoCell";
 
 interface BingoProps {
-  title: String;
   size: number;
   goals: Array<Object>;
   mode: String;
   date: Date;
-  streak: Number;
-  totalUses: Number;
   createdBy: String;
 }
 
-export const Bingo = ({
-  title,
-  size,
-  goals,
-  mode,
-  date,
-  streak,
-  totalUses,
-  createdBy,
-}: BingoProps) => {
+export const Bingo = ({ size, goals, mode, date, createdBy }: BingoProps) => {
   const [state, setState] = useState({
-    title: title,
     size: size,
     goals: goals,
     mode: mode,
     date: date,
-    streak: streak,
-    totalUses: totalUses,
-    createdBy: createdBy,
     bingoCounts: 0,
   });
   useEffect(() => {
@@ -90,10 +74,6 @@ export const Bingo = ({
     }
   };
 
-  const editTitle = () => {
-    setState({ ...state, title: "아아아" });
-  };
-
   const completeGoal = (index: number) => {
     let updatedGoals = state.goals.slice();
     const updatedGoal: any = state.goals[index];
@@ -116,32 +96,6 @@ export const Bingo = ({
         height: 800,
       }}
     >
-      <Grid
-        container
-        sx={{ justifyContent: "space-between", bgcolor: "primary.dark" }}
-      >
-        <Grid item xs>
-          <Typography variant="h3" onClick={() => editTitle()}>
-            {state.title}
-          </Typography>
-        </Grid>
-        <Grid item xs={1} sx={{ justifyContent: "flex-end" }}>
-          <Typography>
-            <EditIcon />
-          </Typography>
-        </Grid>
-      </Grid>
-
-      <h2>
-        {state.createdBy +
-          "님 " +
-          state.totalUses +
-          "일째 갓생중✨ | " +
-          state.streak +
-          "일 연속 갓생중💨 |" +
-          state.bingoCounts +
-          "빙고"}
-      </h2>
       {/* 빙고 박스 */}
       <Grid
         container
