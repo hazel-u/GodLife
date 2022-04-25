@@ -5,6 +5,7 @@ import React, { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
 import Bingo from "../../../components/common/Bingo/Bingo";
+import BingoTitle from "../../../components/common/Bingo/BingoTitle";
 import { setBingo } from "../../../store/bingo";
 import { useAppDispatch } from "../../../store/hooks";
 import CommentList from "./CommentList";
@@ -111,6 +112,11 @@ const GodlifeShare = () => {
   return (
     <Stack direction="column" alignItems="center">
       <Container sx={{ width: "500px" }}>
+        {/* 
+          본인의 bingo일 경우에만 실제 id 넘겨주고 
+          그렇지 않다면 "" 빈 문자열 넘기기
+         */}
+        <BingoTitle id={dummyBingo.id} title={dummyBingo.title} />
         <Bingo
           title={dummyBingo.title}
           createdBy={"백우민"}
