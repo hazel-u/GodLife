@@ -13,11 +13,7 @@ import com.ovcors.godlife.core.domain.goals.BingoGoals;
 import com.ovcors.godlife.core.domain.goals.Goals;
 import com.ovcors.godlife.core.domain.user.User;
 import com.ovcors.godlife.core.queryrepository.BingoQueryRepository;
-import com.ovcors.godlife.core.queryrepository.CommentQueryRepository;
-import com.ovcors.godlife.core.repository.BingoGoalsRepository;
-import com.ovcors.godlife.core.repository.BingoRepository;
-import com.ovcors.godlife.core.repository.GoalsRepository;
-import com.ovcors.godlife.core.repository.UserRepository;
+import com.ovcors.godlife.core.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +30,7 @@ public class BingoServiceImpl implements BingoService{
     private final UserRepository userRepository;
     private final BingoGoalsRepository bingoGoalsRepository;
     private final GoalsRepository goalsRepository;
+    private final CommentRepository commentRepository;
 
     public Long createBingo(String userEmail, SaveBingoReqDto reqDto) {
         User user =  userRepository.findByEmailAndDeletedFalse(userEmail);
@@ -101,5 +98,7 @@ public class BingoServiceImpl implements BingoService{
                 .orElseThrow(()->new CustomException(ErrorCode.BINGO_NOT_FOUND));
         Comment comment = reqDto.toEntity();
         bingo.addComment(comment);
+
+        commentRepository.save(comment);
     }
 }
