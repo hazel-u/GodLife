@@ -56,7 +56,7 @@ public class Bingo {
     private Boolean godlife;
     private Integer commentCnt;
 
-    @OneToMany(mappedBy = "bingo")
+    @OneToMany(mappedBy = "bingo", fetch = FetchType.EAGER)
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "bingo")
