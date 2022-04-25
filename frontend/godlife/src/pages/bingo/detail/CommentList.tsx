@@ -8,16 +8,9 @@ import { OutlinedInput } from "../../../components/common/Input";
 import { selectBingo } from "../../../store/bingo";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
-import { CommentType } from "../../../types/comment";
 import Comment from "./Comment";
 
-const CommentList = ({
-  comments,
-  getBingo,
-}: {
-  comments: CommentType[];
-  getBingo: () => void;
-}) => {
+const CommentList = ({ getBingo }: { getBingo: () => void }) => {
   const [newComment, setNewComment] = React.useState({
     nickname: "",
     content: "",
@@ -25,7 +18,7 @@ const CommentList = ({
   });
 
   const dispatch = useAppDispatch();
-  const { id } = useAppSelector(selectBingo);
+  const { id, comments } = useAppSelector(selectBingo);
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -43,6 +36,11 @@ const CommentList = ({
               severity: "success",
             })
           );
+          setNewComment({
+            nickname: "",
+            content: "",
+            password: "",
+          });
           getBingo();
         })
         .catch(() => {
@@ -69,6 +67,7 @@ const CommentList = ({
     <Box sx={{ maxWidth: "500px", margin: "30px" }}>
       <p>댓글 {comments.length}개</p>
       <Divider />
+      {!comments.length && <p>댓글이 없습니다.</p>}
       {comments.map((comment: any, index: number) => (
         <React.Fragment key={index}>
           <Comment comment={comment} />
