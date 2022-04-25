@@ -2,10 +2,12 @@ import { Navigate, useRoutes } from "react-router-dom";
 
 import MainLayout from "../layouts/MainLayout";
 import ShareLayout from "../layouts/ShareLayout";
+import NotFound from "../pages/NotFound";
+import BingoCreate from "../pages/bingo/create/BingoCreateComponents";
 import GodlifeShare from "../pages/bingo/detail/GodlifeShare";
+import PreviousBingoList from "../pages/bingo/list/PreviousBingoList";
 import Join from "../pages/join/Join";
 import Login from "../pages/login/Login";
-import Profile from "../pages/profile/Profile";
 
 export default function Router() {
   const isAuth = localStorage.getItem("token");
@@ -24,20 +26,28 @@ export default function Router() {
       element: isAuth ? <MainLayout /> : <Navigate to="/login" />,
       children: [
         {
-          path: "/profile",
-          element: <Profile />,
+          path: "/create",
+          element: <BingoCreate />,
+        },
+        {
+          path: "/list",
+          element: <PreviousBingoList />,
         },
       ],
     },
     {
       path: "/",
-      element: isAuth ? <ShareLayout /> : <Navigate to="/login" />,
+      element: <ShareLayout />,
       children: [
         {
           path: "/bingo/:bingoId",
           element: <GodlifeShare />,
         },
       ],
+    },
+    {
+      path: "/*",
+      element: <NotFound />,
     },
   ]);
 }

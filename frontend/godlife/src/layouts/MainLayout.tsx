@@ -7,7 +7,7 @@ import Navbar from "../components/bars/Navbar";
 const MainLayout = () => {
   return (
     <>
-      <Navbar menuName={"네브바"} />
+      <Navbar />
       <Outlet />
       <Footer />
     </>

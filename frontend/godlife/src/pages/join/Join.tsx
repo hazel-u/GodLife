@@ -1,9 +1,7 @@
 import { Stack } from "@mui/material";
 import axios from "axios";
-
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-
 import Logo from "../../assets/logo/Godlife/logo.svg";
 import { OutlinedButton } from "../../components/common/Button";
 import { useAppDispatch } from "../../store/hooks";
@@ -12,6 +10,7 @@ import { JoinInput } from "../../types/user";
 import EmailController from "./EmailController";
 import NicknameController from "./NicknameController";
 import PasswordContoller from "./PasswordContoller";
+
 
 const Join = () => {
   const { control, trigger, getValues, handleSubmit, watch } =
@@ -24,11 +23,7 @@ const Join = () => {
     axios({
       method: "post",
       url: "user/join",
-      data: {
-        email: data.email,
-        password: data.password,
-        nickname: data.nickname,
-      },
+      data,
     })
       .then((res) => {
         navigate("/login");

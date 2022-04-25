@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
-import { Controller, Control, UseFormWatch } from "react-hook-form";
-import { TextField } from "@mui/material";
+import { Control, Controller, UseFormWatch } from "react-hook-form";
+
+import { OutlinedInput } from "../../components/common/Input";
 import { ChangePasswordInput } from "../../types/user";
 
 interface PasswordContollerProps {
@@ -9,19 +10,19 @@ interface PasswordContollerProps {
 }
 
 const PasswordContoller = ({ control, watch }: PasswordContollerProps) => {
-  const password = useRef("");
-  password.current = watch("password", "");
+  const newPassword = useRef("");
+  newPassword.current = watch("newPassword", "");
 
   return (
     <>
       <Controller
-        name="password"
+        name="newPassword"
         control={control}
         defaultValue=""
         rules={{
           required: {
             value: true,
-            message: "비밀번호를 입력해주세요.",
+            message: "새 비밀번호를 입력해주세요.",
           },
           minLength: {
             value: 8,
@@ -37,9 +38,9 @@ const PasswordContoller = ({ control, watch }: PasswordContollerProps) => {
           },
         }}
         render={({ field, fieldState }) => (
-          <TextField
+          <OutlinedInput
             {...field}
-            label="새 비밀번호"
+            placeholder="새 비밀번호"
             type="password"
             error={!!fieldState.error}
             helperText={
@@ -50,7 +51,7 @@ const PasswordContoller = ({ control, watch }: PasswordContollerProps) => {
       />
 
       <Controller
-        name="confirmPassword"
+        name="newPasswordCheck"
         control={control}
         defaultValue=""
         rules={{
@@ -59,15 +60,15 @@ const PasswordContoller = ({ control, watch }: PasswordContollerProps) => {
             message: "비밀번호를 다시 입력해주세요.",
           },
           validate: (value) => {
-            if (value !== password.current) {
+            if (value !== newPassword.current) {
               return "비밀번호가 일치하지 않습니다.";
             }
           },
         }}
         render={({ field, fieldState }) => (
-          <TextField
+          <OutlinedInput
             {...field}
-            label="새 비밀번호 확인"
+            placeholder="새 비밀번호 확인"
             type="password"
             error={!!fieldState.error}
             helperText={

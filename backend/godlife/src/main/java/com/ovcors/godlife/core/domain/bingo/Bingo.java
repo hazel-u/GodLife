@@ -1,5 +1,7 @@
 package com.ovcors.godlife.core.domain.bingo;
 
+import com.ovcors.godlife.core.domain.goals.BingoGoals;
+import com.ovcors.godlife.core.domain.goals.Goals;
 import com.ovcors.godlife.core.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -17,8 +19,9 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Bingo {
+
     @Builder
-    public Bingo(BingoCode bingoCode, User user, String title, LocalDate startDate, Integer likeCnt, Integer surpriseCnt, Integer heartCnt, Boolean activate, Boolean godlife) {
+    public Bingo(BingoCode bingoCode, User user, String title, LocalDate startDate, Integer likeCnt, Integer surpriseCnt, Integer heartCnt, Boolean activate, Boolean godlife, Integer commentCnt) {
         this.bingoCode = bingoCode;
         this.user = user;
         this.title = title;
@@ -28,6 +31,7 @@ public class Bingo {
         this.heartCnt = heartCnt;
         this.activate = activate;
         this.godlife = godlife;
+        this.commentCnt = commentCnt;
     }
 
     @Id
@@ -50,9 +54,13 @@ public class Bingo {
     private Integer heartCnt;
     private Boolean activate;
     private Boolean godlife;
+    private Integer commentCnt;
 
     @OneToMany(mappedBy = "bingo")
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "bingo")
+    private List<BingoGoals> bingoGoals = new ArrayList<>();
 
     public void setBingoCode(BingoCode bingoCode){
         this.bingoCode = bingoCode;
@@ -61,6 +69,7 @@ public class Bingo {
     public void setUser(User user){
         this.user = user;
     }
+
     public void changeTitle(String title) {
         this.title = title;
     }
@@ -73,8 +82,14 @@ public class Bingo {
     public void changeLike() {
         this.likeCnt++;
     }
+
     public void addComment(Comment comment) {
         this.comments.add(comment);
+        this.commentCnt = this.comments.size();
         comment.setBingo(this);
+    }
+    public void addGoal(BingoGoals goal){
+        this.bingoGoals.add(goal);
+        goal.setBingo(this);
     }
 }
