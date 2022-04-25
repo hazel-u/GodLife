@@ -42,7 +42,6 @@ class BingoQueryRepositoryTest {
 
 
     @Test
-    @Commit
     void findAllBingoByUser() {
         // given
         User user = User.builder()
@@ -68,12 +67,12 @@ class BingoQueryRepositoryTest {
         Bingo savedBingo = bingoRepository.save(bingo);
 
         // when
-        List<FindBingoResDto> result = bingoQueryRepository.findAllBingoByUser(savedUser.getEmail());
+        List<Bingo> result = bingoQueryRepository.findPageByUser(savedUser.getEmail(), 0, 5);
 
         // then
         assertThat(result.size()).isEqualTo(1);
-        assertThat(result.get(0).getId()).isEqualTo(savedBingo.getSeq());
-        assertThat(result.get(0).getGoals().size()).isEqualTo(1);
+        assertThat(result.get(0).getSeq()).isEqualTo(savedBingo.getSeq());
+        assertThat(result.get(0).getBingoGoals().size()).isEqualTo(1);
     }
 
     @Test
@@ -94,11 +93,11 @@ class BingoQueryRepositoryTest {
         Bingo savedBingo = bingoRepository.save(bingo);
 
         // when
-        FindBingoResDto result = bingoQueryRepository.findBingo(savedBingo.getBingoCode().getCode());
+        Bingo result = bingoQueryRepository.findBingo(savedBingo.getBingoCode().getCode());
 
         // then
-        assertThat(result.getId()).isEqualTo(savedBingo.getSeq());
-        assertThat(result.getCode()).isEqualTo(savedBingo.getBingoCode().getCode());
+        assertThat(result.getSeq()).isEqualTo(savedBingo.getSeq());
+        assertThat(result.getBingoCode().getCode()).isEqualTo(savedBingo.getBingoCode().getCode());
         assertThat(result.getTitle()).isEqualTo(savedBingo.getTitle());
     }
 }

@@ -50,31 +50,33 @@ class BingoServiceTest {
     @Test
     void findAllBingo() {
         // given
-        List<FindBingoResDto> expected = new ArrayList<>();
-        FindBingoResDto resDto = new FindBingoResDto();
-        resDto.setTitle("Hello world");
+        List<Bingo> expected = new ArrayList<>();
+        Bingo resDto = Bingo.builder()
+                .title("Hello world")
+                .build();
         expected.add(resDto);
-        given(bingoQueryRepository.findAllBingoByUser(userEmail)).willReturn(expected);
+        given(bingoQueryRepository.findPageByUser(userEmail, 0, 1)).willReturn(expected);
 
         // when
-        List<FindBingoResDto> result = bingoQueryRepository.findAllBingoByUser(userEmail);
+        List<Bingo> result = bingoQueryRepository.findPageByUser(userEmail, 0, 1);
 
         // then
         assertThat(result.size()).isEqualTo(1);
         assertThat(result.get(0).getTitle()).isEqualTo("Hello world");
 
-        verify(bingoQueryRepository, times(1)).findAllBingoByUser(userEmail);
+        verify(bingoQueryRepository, times(1)).findPageByUser(userEmail, 0, 1);
     }
 
     @Test
     void findBingo() {
         // given
-        FindBingoResDto resDto = new FindBingoResDto();
-        resDto.setTitle("Hello world");
+        Bingo resDto = Bingo.builder()
+                .title("Hello world")
+                .build();
         given(bingoQueryRepository.findBingo(1L)).willReturn(resDto);
 
         // when
-        FindBingoResDto result = bingoQueryRepository.findBingo(1L);
+        Bingo result = bingoQueryRepository.findBingo(1L);
 
         // then
         assertThat(result.getTitle()).isEqualTo("Hello world");

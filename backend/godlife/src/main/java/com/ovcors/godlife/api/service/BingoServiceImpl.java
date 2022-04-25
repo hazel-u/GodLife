@@ -21,10 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Transactional
@@ -33,7 +30,6 @@ public class BingoServiceImpl implements BingoService{
 
     private final BingoRepository bingoRepository;
     private final BingoQueryRepository bingoQueryRepository;
-    private final CommentQueryRepository commentQueryRepository;
     private final UserRepository userRepository;
     private final BingoGoalsRepository bingoGoalsRepository;
     private final GoalsRepository goalsRepository;
@@ -59,16 +55,18 @@ public class BingoServiceImpl implements BingoService{
 
     }
 
-    public List<FindBingoResDto> findAllBingo(String userEmail) {
-        List<FindBingoResDto> response = bingoQueryRepository.findAllBingoByUser(userEmail);
+    public List<FindBingoResDto> findAllBingo(String userEmail, int page, int limit) {
+        List<Bingo> bingos = bingoQueryRepository.findPageByUser(userEmail, page, limit);
+        List<FindBingoResDto> response = new ArrayList<>();
+        for(Bingo bingo : bingos){
+            response.add(new FindBingoResDto(bingo));
+        }
         return response;
     }
 
     public FindBingoResDto findBingo(Long code){
-        FindBingoResDto response = bingoQueryRepository.findBingo(code);
-        List<Comment> comments = commentQueryRepository.findAllByBingoCode(code);
-        response.addComments(comments);
-        return response;
+        Bingo bingo = bingoQueryRepository.findBingo(code);
+        return new FindBingoResDto(bingo);
     }
 
     public void updateTitle(String seq, UpdateTitleReqDto reqDto) {

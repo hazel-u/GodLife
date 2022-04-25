@@ -23,9 +23,9 @@ public class BingoController {
 
     private final BingoService bingoService;
 
-    @GetMapping
-    public ResponseEntity<List<FindBingoResDto>> findAllByUser(@Auth User user){
-        List<FindBingoResDto> response = bingoService.findAllBingo(user.getEmail());
+    @GetMapping("/{page}/{limit}")
+    public ResponseEntity<List<FindBingoResDto>> findAllByUser(@Auth User user, @PathVariable int page, @PathVariable int limit){
+        List<FindBingoResDto> response = bingoService.findAllBingo(user.getEmail(), page, limit);
         return ResponseEntity.ok().body(response);
     }
 
