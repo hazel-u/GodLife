@@ -14,7 +14,6 @@ import java.util.UUID;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserGoals {
