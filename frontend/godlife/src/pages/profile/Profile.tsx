@@ -1,6 +1,6 @@
 import { Box, Dialog, Tab, Tabs, useMediaQuery, useTheme } from "@mui/material";
 
-import React, { useState } from "react";
+import React from "react";
 
 import { OutlinedButton } from "../../components/common/Button";
 import ProfileChangePassword from "./ProfileChangePassword";
@@ -13,9 +13,13 @@ interface TabPanelProps {
   value: number;
 }
 
-const Profile = () => {
-  // Dialog
-  const [open, setOpen] = useState(true);
+const Profile = ({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const handleClose = () => {
     setOpen(false);
   };

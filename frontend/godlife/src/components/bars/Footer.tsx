@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 import { Box, Stack } from "@mui/material";
+
 import React from "react";
+
 import Logo from "../../assets/logo/Godlife/logo.svg";
 
 const Footer = () => {
@@ -8,7 +10,11 @@ const Footer = () => {
     <Container>
       <FooterWrapper>
         <Stack>
-          <img src={Logo} alt="logo" style={{ width: "50px", marginBottom: "10px" }} />
+          <img
+            src={Logo}
+            alt="logo"
+            style={{ width: "50px", marginBottom: "10px" }}
+          />
           <Box sx={{ fontSize: "12px", margin: "15px 0" }}>
             <span>문의</span>
             <Stack>
@@ -24,15 +30,13 @@ const Footer = () => {
         </Stack>
       </FooterWrapper>
     </Container>
-  )
-}
+  );
+};
 
 const Container = styled.footer`
-  position: fixed;
-  bottom: 0;
   flex-direction: column;
-  justifyContent: center;
-  alignItems: center;
+  justifycontent: center;
+  alignitems: center;
   width: 100%;
   margin-top: 70px;
   border-top: 1px solid #f1f1f1;
@@ -47,4 +51,4 @@ const FooterWrapper = styled.div`
   padding: 48px 16px;
 `;
 
-export default Footer
+export default Footer;
