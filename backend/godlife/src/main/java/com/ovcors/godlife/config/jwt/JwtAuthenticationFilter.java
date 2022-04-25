@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ovcors.godlife.api.dto.request.LoginReqDto;
 import com.ovcors.godlife.api.exception.ErrorCode;
 import com.ovcors.godlife.config.auth.PrincipalDetails;
-import com.ovcors.godlife.core.domain.user.User;
 import com.ovcors.godlife.core.repository.UserRepository;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,7 +17,6 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -60,7 +58,6 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
     }
 
     private void sendErrorResponse(HttpServletResponse response, String message) throws IOException {
-        System.out.println("잘못된 로그인 정보입니다.");
         // Todo: ErrorCode만들어지면 주석 해제
         response.setCharacterEncoding("UTF-8");
         response.setStatus(ErrorCode.USER_NOT_FOUND.getStatus().value());
@@ -80,7 +77,7 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
         String jwtToken = JWT.create()
                 .withSubject(principalDetails.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
-                .withClaim("id", principalDetails.getUser().getSeq())
+                .withClaim("id", principalDetails.getUser().getSeq().toString())
                 .withClaim("email", principalDetails.getUser().getEmail())
                 .sign(Algorithm.HMAC512(secret));
 
