@@ -37,8 +37,7 @@ public class BingoController {
 
     @PostMapping
     public ResponseEntity<BaseResponseEntity> saveBingo(@Auth User user, @RequestBody @Valid SaveBingoReqDto reqDto){
-        Bingo bingo= bingoService.createBingo(user.getEmail(), reqDto);
-        bingoService.addBingoGoals(bingo, reqDto);
+        bingoService.createBingo(user.getEmail(), reqDto);
         return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
     }
 
