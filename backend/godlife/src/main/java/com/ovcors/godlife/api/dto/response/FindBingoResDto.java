@@ -45,7 +45,7 @@ public class FindBingoResDto {
         List<BingoGoals> bingoGoals = bingo.getBingoGoals();
         for(BingoGoals bingoGoal: bingoGoals){
             this.goals.add(BingoGoalResDto.builder()
-                            .seq(bingoGoal.getGoals().getSeq())
+                            .seq(bingoGoal.getSeq())
                             .category(bingoGoal.getGoals().getCategory())
                             .content(bingoGoal.getGoals().getContent())
                             .completed(bingoGoal.isCompleted())
