@@ -7,6 +7,7 @@ import com.ovcors.godlife.api.dto.response.FindBingoResDto;
 import com.ovcors.godlife.api.exception.CustomException;
 import com.ovcors.godlife.api.exception.ErrorCode;
 import com.ovcors.godlife.core.domain.bingo.Bingo;
+import com.ovcors.godlife.core.domain.bingo.BingoCode;
 import com.ovcors.godlife.core.domain.bingo.Comment;
 import com.ovcors.godlife.core.domain.goals.BingoGoals;
 import com.ovcors.godlife.core.domain.goals.Goals;
@@ -36,9 +37,11 @@ public class BingoServiceImpl implements BingoService{
 
     public Long createBingo(String userEmail, SaveBingoReqDto reqDto) {
         User user =  userRepository.findByEmailAndDeletedFalse(userEmail);
+        BingoCode bingoCode = BingoCode.builder().build();
 
         Bingo bingo = reqDto.toEntity();
         bingo.setUser(user);
+        bingo.setBingoCode(bingoCode);
 
         Collections.shuffle(reqDto.getGoals());
 
@@ -50,9 +53,9 @@ public class BingoServiceImpl implements BingoService{
                     .goals(goal)
                     .build());
         }
+
         Bingo savedBingo = bingoRepository.save(bingo);
         return savedBingo.getBingoCode().getCode();
-
     }
 
     public List<FindBingoResDto> findAllBingo(String userEmail, int page, int limit) {

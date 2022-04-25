@@ -4,6 +4,7 @@ import com.ovcors.godlife.api.dto.request.SaveBingoReqDto;
 import com.ovcors.godlife.api.dto.request.UpdateTitleReqDto;
 import com.ovcors.godlife.api.dto.response.FindBingoResDto;
 import com.ovcors.godlife.core.domain.bingo.Bingo;
+import com.ovcors.godlife.core.domain.bingo.BingoCode;
 import com.ovcors.godlife.core.domain.user.User;
 import com.ovcors.godlife.core.queryrepository.BingoQueryRepository;
 import com.ovcors.godlife.core.repository.BingoRepository;
@@ -93,13 +94,9 @@ class BingoServiceTest {
         given(bingoRepository.save(any(Bingo.class))).willReturn(bingo());
 
         // when
-        Bingo result = bingoService.createBingo(userEmail, reqDto);
+        Long result = bingoService.createBingo(userEmail, reqDto);
 
         // then
-        assertThat(result.getTitle()).isEqualTo("Hello world");
-        assertThat(result.getUser().getName()).isEqualTo("정음");
-
-        // verify
         verify(userRepository, times(1)).findByEmailAndDeletedFalse(userEmail);
         verify(bingoRepository, times(1)).save(any(Bingo.class));
     }
@@ -129,6 +126,7 @@ class BingoServiceTest {
                 .title("Hello world")
                 .user(user())
                 .activate(true)
+                .bingoCode(new BingoCode())
                 .startDate(LocalDate.now())
                 .godlife(false)
                 .likeCnt(0)
