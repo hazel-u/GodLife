@@ -44,5 +44,9 @@ export default function Router() {
         },
       ],
     },
+    {
+      path: "/*",
+      element: <NotFound />,
+    },
   ]);
 }
