@@ -5,9 +5,9 @@ import React, { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
 import Bingo from "../../../components/common/Bingo/Bingo";
-import BingoTitle from "../../../components/common/Bingo/BingoTitle";
 import { setBingo } from "../../../store/bingo";
 import { useAppDispatch } from "../../../store/hooks";
+import BingoTitle from "./BingoTitle";
 import CommentList from "./CommentList";
 import Interaction from "./Interaction";
 import Share from "./Share";

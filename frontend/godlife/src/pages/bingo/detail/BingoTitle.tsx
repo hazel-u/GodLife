@@ -82,6 +82,7 @@ const BingoTitle = ({ id, title }: { id: string; title: string }) => {
                   minWidth: "20px",
                 },
               }}
+              autoFocus={true}
               sx={{
                 width: "100%",
                 "& .MuiInput-root": {
