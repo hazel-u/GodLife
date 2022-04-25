@@ -1,12 +1,8 @@
-import EditIcon from "@mui/icons-material/Edit";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
 
 import { useEffect, useState } from "react";
 
-import { OutlinedInput } from "../Input";
 import BingoCell from "./BingoCell";
 
 interface BingoProps {
@@ -74,6 +70,7 @@ export const Bingo = ({ size, goals, mode, date, createdBy }: BingoProps) => {
     }
   };
 
+  // 2.
   const completeGoal = (index: number) => {
     let updatedGoals = state.goals.slice();
     const updatedGoal: any = state.goals[index];
@@ -87,8 +84,6 @@ export const Bingo = ({ size, goals, mode, date, createdBy }: BingoProps) => {
 
   const computeTimeLeft = () => {};
 
-  let inputValue = "";
-  // countBingos();
   return (
     <Box
       sx={{
