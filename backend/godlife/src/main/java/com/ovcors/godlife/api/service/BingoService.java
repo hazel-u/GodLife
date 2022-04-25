@@ -9,7 +9,7 @@ import com.ovcors.godlife.core.domain.bingo.Bingo;
 import java.util.List;
 
 public interface BingoService {
-    Bingo createBingo(String userEmail, SaveBingoReqDto reqDto);
+    Long createBingo(String userEmail, SaveBingoReqDto reqDto);
     List<FindBingoResDto> findAllBingo(String userEmail, int page, int limit);
     FindBingoResDto findBingo(Long code);
     void updateTitle(String seq, UpdateTitleReqDto reqDto);

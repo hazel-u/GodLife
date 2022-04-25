@@ -34,7 +34,7 @@ public class BingoServiceImpl implements BingoService{
     private final BingoGoalsRepository bingoGoalsRepository;
     private final GoalsRepository goalsRepository;
 
-    public Bingo createBingo(String userEmail, SaveBingoReqDto reqDto) {
+    public Long createBingo(String userEmail, SaveBingoReqDto reqDto) {
         User user =  userRepository.findByEmailAndDeletedFalse(userEmail);
 
         Bingo bingo = reqDto.toEntity();
@@ -50,8 +50,8 @@ public class BingoServiceImpl implements BingoService{
                     .goals(goal)
                     .build());
         }
-
-        return bingoRepository.save(bingo);
+        Bingo savedBingo = bingoRepository.save(bingo);
+        return savedBingo.getBingoCode().getCode();
 
     }
 

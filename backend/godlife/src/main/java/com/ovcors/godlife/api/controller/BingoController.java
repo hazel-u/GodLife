@@ -5,6 +5,7 @@ import com.ovcors.godlife.api.dto.request.SaveCommentReqDto;
 import com.ovcors.godlife.api.dto.request.UpdateTitleReqDto;
 import com.ovcors.godlife.api.dto.response.BaseResponseEntity;
 import com.ovcors.godlife.api.dto.response.FindBingoResDto;
+import com.ovcors.godlife.api.dto.response.SaveBingoResDto;
 import com.ovcors.godlife.api.resolver.Auth;
 import com.ovcors.godlife.api.service.BingoService;
 import com.ovcors.godlife.core.domain.bingo.Bingo;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,9 +38,9 @@ public class BingoController {
     }
 
     @PostMapping
-    public ResponseEntity<BaseResponseEntity> saveBingo(@Auth User user, @RequestBody @Valid SaveBingoReqDto reqDto){
-        bingoService.createBingo(user.getEmail(), reqDto);
-        return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
+    public ResponseEntity<SaveBingoResDto> saveBingo(@Auth User user, @RequestBody @Valid SaveBingoReqDto reqDto){
+        Long code = bingoService.createBingo(user.getEmail(), reqDto);
+        return ResponseEntity.ok().body(new SaveBingoResDto(code));
     }
 
     @PutMapping("/{seq}")
