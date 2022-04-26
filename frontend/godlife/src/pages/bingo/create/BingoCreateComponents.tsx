@@ -1,8 +1,6 @@
 import EditIcon from "@mui/icons-material/Edit";
 import {
-  Box, Button,
-  Chip,
-  IconButton,
+  Box, Button, Chip, Grid, IconButton,
   InputAdornment, Stack, SvgIcon,
   TextField,
   Typography
@@ -10,7 +8,7 @@ import {
 import { styled } from "@mui/material/styles";
 import React, { useState } from "react";
 import { ReactComponent as StarIcon } from "../../../assets/icon/star.svg";
-
+import Goal from "./Goal";
 
 
 const BingoCreateComponents = () => {
@@ -36,7 +34,7 @@ const BingoCreateComponents = () => {
     "건강한삶",
     "미라클모닝",
     "자기개발",
-    "삶의 질",
+    "삶의질",
     "습관개선",
     "환경",
     "즐겨찾기"
@@ -46,75 +44,98 @@ const BingoCreateComponents = () => {
   const dummyGoalList = [
     {
       category: "환경",
-      content: "물 1L 이상 마시기",
+      content: "환경1",
       seq: 0,
     },
     {
       category: "습관개선",
-      content: "물 1.1L 이상 마시기",
+      content: "습관 개선1",
       seq: 1,
     },
     {
-      category: "건강한 삶",
-      content: "물 1.2L 이상 마시기",
+      category: "건강한삶",
+      content: "건강한 삶1",
       seq: 2,
     },
     {
-      category: "건강한 삶",
-      content: "물 1.3L 이상 마시기",
+      category: "건강한삶",
+      content: "건강한 삶2",
       seq: 3,
     },
     {
-      category: "건강한 삶",
-      content: "물 1.4L 이상 마시기",
+      category: "건강한삶",
+      content: "건강한 삶3",
       seq: 4,
     },
     {
       category: "환경",
-      content: "물 1.5L 이상 마시기",
+      content: "환경2",
       seq: 5,
     },
     {
       category: "자기개발",
-      content: "물 1.6L 이상 마시기",
+      content: "자기개발1",
       seq: 6,
     },
     {
-      category: "미라클 모닝",
-      content: "물 1.7L 이상 마시기",
+      category: "미라클모닝",
+      content: "미라클모닝1",
       seq: 7,
     },
     {
-      category: "미라클 모닝",
-      content: "물 1.8L 이상 마시기",
+      category: "미라클모닝",
+      content: "미라클모닝2",
       seq: 8,
     },
     {
       category: "환경",
-      content: "물 1.9L 이상 마시기",
+      content: "환경3",
       seq: 9,
     },
     {
-      category: "삶의 질",
-      content: "물 2L 이상 마시기",
+      category: "삶의질",
+      content: "삶의 질1",
       seq: 10,
     },
     {
-      category: "삶의 질",
-      content: "물 2.1L 이상 마시기",
-      seq: 10,
+      category: "삶의질",
+      content: "삶의 질2",
+      seq: 11,
     },
   ]
 
   const [goalList, setGoalList] = useState(dummyGoalList);
-  const [favorites, setFavorites] = useState([]);
-
+  const [favorites, setFavorites] = useState<any[]>([]);
+  
   const changeCategory = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const category = (e.target as HTMLLIElement).textContent;
-    if (category) {
-      setSelectedCategory(category);
+    const selectedCategory = (e.target as HTMLLIElement).textContent;
+    
+    if (selectedCategory === '전체') {
+      setSelectedCategory(selectedCategory);
+      setGoalList(dummyGoalList);
+    }
+    else if (selectedCategory === '즐겨찾기') {
+      setSelectedCategory(selectedCategory);
+      setGoalList(favorites);
+    }
+    else if (selectedCategory !== null && selectedCategory !== '즐겨찾기') {
+      setSelectedCategory(selectedCategory);
+      changeCategoryGoalList(selectedCategory);
     }
   };
+
+  const changeCategoryGoalList = (selectedCategory: string) => {
+    const classifiedGoalList = dummyGoalList.filter(goal => goal.category === selectedCategory);
+    setGoalList(classifiedGoalList);
+  };
+
+  const manageFavorites = (e: any) => {
+    console.log(e);
+    const favoritesList: Array<any> = [];
+    setFavorites([...favoritesList, e])
+    setStarClick(!starClick); 
+  }
+
 
   const BingoTitleInput = styled(TextField)(({ theme }) => ({
     width: "100%",
@@ -143,7 +164,7 @@ const BingoCreateComponents = () => {
 
   const GoalBox = styled(Box)(({ theme }) => ({
     position: "relative",
-    width: "208px",
+    width: "24%",
     height: "50px",
     outline: "2px solid #5A5A5A",
     outlineOffset: "-2px",
@@ -156,7 +177,7 @@ const BingoCreateComponents = () => {
     backgroundColor: click ? "#FFEEEE" : "white",
     "&::before": {
       content: "''",
-      width: "185px",
+      width: "70%",
       height: "4px",
       background: click ? "#FFEEEE" : "white",
       top: "0px",
@@ -166,7 +187,7 @@ const BingoCreateComponents = () => {
 
   const GoalButton = styled(Button)(({ theme }) => ({
     position: "relative",
-    width: "208px",
+    width: "100%",
     height: "50px",
     outline: "2px solid #5A5A5A",
     outlineOffset: "-2px",
@@ -179,7 +200,7 @@ const BingoCreateComponents = () => {
     backgroundColor: click ? "#FFEEEE" : "white",
     "&:before": {
       content: "''",
-      width: "185px",
+      width: "70%",
       height: "4px",
       background: click ? "#FFEEEE" : "white",
       top: "0px",
@@ -226,9 +247,10 @@ const BingoCreateComponents = () => {
             key={index}
             label={c}
             sx={{
-              width: "100px",
+              width: "15%",
               height: "30px",
               marginTop: "20px",
+              marginX: "5px",
               fontSize: "14px",
               border: "1px solid #6D6D6D",
               color: selectedCategory === c ? "black" : "#6D6D6D",
@@ -238,34 +260,41 @@ const BingoCreateComponents = () => {
           />
         ))}
       </Stack>
-      <Box sx={{ width: "80%", padding: "30px" }}>
-        <GoalBox
-          onClick={() => {
-            setClick(!click);
-          }}
-        >
-          <BookmarkButton>
-            <SvgIcon component={StarIcon} />
-          </BookmarkButton>
-          <Typography>물 1.5L 이상 마시기</Typography>
-        </GoalBox>
-      </Box>
-      <Box sx={{ width: "80%", padding: "30px" }}>
-        <GoalButton
-          onClick={() => {
-            setClick(!click);
-          }}
-        >
-          <BookmarkButton
-            onClick={(e) => {
-              e.stopPropagation();
-              setStarClick(!starClick);
+      <Box sx={{ padding: "40px 10px" }}>
+        {favorites && favorites.map((goal, index) => (
+          <GoalBox
+            onClick={() => {
+              setClick(!click);
             }}
+            >
+            <BookmarkButton>
+              <SvgIcon 
+                component={StarIcon}
+              />
+            </BookmarkButton>
+            <Typography>{goal.content}</Typography>
+          </GoalBox>
+        ))}
+      </Box>
+      <Box sx={{ padding: "10px" }}>
+        <Grid
+          container
+          spacing={2}
+        >
+        {goalList.map((goal, index) => (
+          <Grid 
+            item 
+            xs={3} 
+            key={index}
           >
-            <SvgIcon component={StarIcon} />
-          </BookmarkButton>
-          <Typography>물 1.5L 이상 마시기</Typography>
-        </GoalButton>
+            <Goal 
+              seq={goal.seq}
+              content={goal.content}
+              category={goal.category}
+            />
+          </Grid>
+          ))}
+        </Grid>
       </Box>
       <Stack direction="row" justifyContent="center">
         <p>1/9개 선택중</p>
