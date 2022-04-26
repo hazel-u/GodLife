@@ -62,7 +62,7 @@ const BingoTitle = ({
         setCount({ ...count, godCount: res.data.godCount });
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [count]);
 
   return (
     <Box

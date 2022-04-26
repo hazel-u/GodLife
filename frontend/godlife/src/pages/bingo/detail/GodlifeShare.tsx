@@ -2,7 +2,7 @@ import { Container, Stack } from "@mui/material";
 import axios from "axios";
 
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Bingo from "../../../components/common/Bingo/Bingo";
 import { selectBingo, setBingo } from "../../../store/bingo";
@@ -18,20 +18,35 @@ const GodlifeShare = () => {
 
   useEffect(() => {
     getBingo();
-  }, []);
+  });
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const getBingo = () => {
-    axios.get(`bingo/${params.bingoId}`).then((res) => {
-      dispatch(setBingo(res.data));
-    });
+    axios
+      .get(`bingo/${params.bingoId}`)
+      .then((res) => {
+        dispatch(setBingo(res.data));
+      })
+      .catch(() => {
+        navigate("/404");
+      });
   };
 
   const bingo = useAppSelector(selectBingo);
   const { email } = useAppSelector(selectUser);
 
+  // const isValidRequest = () => {
+  //   if (bingo.userEmail !== email) {
+  //     return false;
+  //   // } else if (bingo.startDate !== new Date()) {
+  //     // return false;
+  //   // }
+  //   return true;
+  // };
+
   return (
-    <Stack direction="column" alignItems="center">
+    <Stack direction="column" alignItems="center" m={5}>
       {bingo.code && (
         <Container sx={{ width: "500px" }}>
           {/* 
@@ -48,7 +63,7 @@ const GodlifeShare = () => {
             size={3}
             goals={bingo.goals}
             mode={"Active"}
-            date={new Date()}
+            startDate={new Date()}
           />
         </Container>
       )}

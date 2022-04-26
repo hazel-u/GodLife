@@ -14,7 +14,8 @@ import BingoCreateGoalList from "./BingoCreateGoalList";
 const BingoCreate = () => {
   const selectedGoals = useAppSelector(selectGoal);
   const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState("임시 제목");
+  const title = "임시제목";
+
   const dispatch = useAppDispatch();
   const [goals, setGoals] = useState<any[]>([]);
 

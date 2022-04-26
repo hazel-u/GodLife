@@ -10,20 +10,29 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import axios from "axios";
 
 import React, { useEffect, useRef, useState } from "react";
 
 import { OutlinedButton } from "../../../components/common/Button";
 import { OutlinedInput } from "../../../components/common/Input";
 import { selectBingo } from "../../../store/bingo";
-import { useAppSelector } from "../../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { setSnackbar } from "../../../store/snackbar";
 import { selectUser } from "../../../store/user";
 import { CommentType } from "../../../types/comment";
 
-const Comment = ({ comment }: { comment: CommentType }) => {
+const Comment = ({
+  comment,
+  getBingo,
+}: {
+  comment: CommentType;
+  getBingo: () => void;
+}) => {
   const { userEmail } = useAppSelector(selectBingo);
   const { email } = useAppSelector(selectUser);
   const [open, setOpen] = React.useState(false);
+  const [password, setPassword] = useState("");
 
   // 비밀번호 input 수동 autofocus
   const passwordInput = useRef<HTMLInputElement | null>(null);
@@ -32,14 +41,62 @@ const Comment = ({ comment }: { comment: CommentType }) => {
     passwordInput.current && passwordInput.current.focus();
   }, [refVisible]);
 
+  const handleClose = () => {
+    setOpen(false);
+    setPassword("");
+  };
+
+  const dispatch = useAppDispatch();
+  const deleteComment = () => {
+    let deleteRequest;
+    if (userEmail === email) {
+      deleteRequest = axios.delete(`bingo/comment/${comment.seq}`, {
+        headers: {
+          Authorization: `${localStorage.getItem("token")}`,
+        },
+      });
+    } else {
+      deleteRequest = axios.post(
+        `bingo/comment/${comment.seq}`,
+        { password },
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        }
+      );
+    }
+
+    deleteRequest
+      .then(() => {
+        getBingo();
+        dispatch(
+          setSnackbar({
+            open: true,
+            message: "댓글이 삭제되었습니다.",
+            severity: "success",
+          })
+        );
+        handleClose();
+      })
+      .catch((err) => {
+        let message = "다시 시도해주세요";
+        if (err.response.data.code === "WRONG_PASSWORD") {
+          message = err.response.data.message;
+        }
+        dispatch(
+          setSnackbar({
+            open: true,
+            message: message,
+            severity: "error",
+          })
+        );
+      });
+  };
+
   return (
     <>
-      <Dialog
-        open={open}
-        onClose={() => {
-          setOpen(false);
-        }}
-      >
+      <Dialog open={open} onClose={handleClose}>
         <DialogTitle>댓글 삭제</DialogTitle>
         <DialogContent>
           {userEmail === email ? (
@@ -54,25 +111,15 @@ const Comment = ({ comment }: { comment: CommentType }) => {
                 }}
                 autoFocus={true}
                 size="small"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </>
           )}
         </DialogContent>
         <DialogActions>
-          <OutlinedButton
-            onClick={() => {
-              setOpen(false);
-            }}
-          >
-            취소
-          </OutlinedButton>
-          <OutlinedButton
-            onClick={() => {
-              setOpen(false);
-            }}
-          >
-            확인
-          </OutlinedButton>
+          <OutlinedButton onClick={handleClose}>취소</OutlinedButton>
+          <OutlinedButton onClick={deleteComment}>확인</OutlinedButton>
         </DialogActions>
       </Dialog>
 
