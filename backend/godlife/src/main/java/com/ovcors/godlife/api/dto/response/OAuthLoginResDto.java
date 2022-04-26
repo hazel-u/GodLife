@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class GoogleLoginResDto {
+public class OAuthLoginResDto {
     String jwtToken;
     String refreshToken;
     boolean newUser;

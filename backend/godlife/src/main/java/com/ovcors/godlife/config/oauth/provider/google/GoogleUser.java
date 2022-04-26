@@ -1,4 +1,6 @@
-package com.ovcors.godlife.config.oauth.provider;
+package com.ovcors.godlife.config.oauth.provider.google;
+
+import com.ovcors.godlife.config.oauth.provider.google.GoogleOAuthUserInfo;
 
 import java.util.Map;
 

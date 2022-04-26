@@ -1,6 +1,6 @@
 package com.ovcors.godlife.api.service;
 
-import com.ovcors.godlife.api.dto.response.GoogleLoginResDto;
+import com.ovcors.godlife.api.dto.response.OAuthLoginResDto;
 import com.ovcors.godlife.core.domain.user.JoinType;
 import com.ovcors.godlife.core.domain.user.User;
 import com.ovcors.godlife.core.repository.UserRepository;
@@ -49,14 +49,6 @@ public class OAuthServiceTest {
         return user;
     }
 
-    private GoogleLoginResDto googleLoginResDto() {
-        return GoogleLoginResDto.builder()
-                .jwtToken("jwtToken")
-                .refreshToken("refreshToken")
-                .newUser(true)
-                .build();
-    }
-
     @Test
     void googleLogin() {
         // given
@@ -71,10 +63,9 @@ public class OAuthServiceTest {
         attribute.put("name", "googleTest");
         attribute.put("imageUrl", "testImg");
         data.put("profileObj", attribute);
-        final GoogleLoginResDto googleLoginResDto = oAuthService.googleLogin(data);
+        final OAuthLoginResDto googleLoginResDto = oAuthService.googleLogin(data);
 
         // then
         assertThat(googleLoginResDto).isNotNull();
     }
-
 }

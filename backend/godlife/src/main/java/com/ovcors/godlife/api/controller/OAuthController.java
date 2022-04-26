@@ -1,6 +1,7 @@
 package com.ovcors.godlife.api.controller;
 
-import com.ovcors.godlife.api.dto.response.GoogleLoginResDto;
+import com.ovcors.godlife.api.dto.request.KakaoLoginReqDto;
+import com.ovcors.godlife.api.dto.response.OAuthLoginResDto;
 import com.ovcors.godlife.api.service.OAuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,14 @@ public class OAuthController {
     OAuthService oAuthService;
 
     @PostMapping("/google")
-    public ResponseEntity<GoogleLoginResDto> googleLogin(@RequestBody Map<String,Object> data) {
-        GoogleLoginResDto googleLoginResDto = oAuthService.googleLogin(data);
+    public ResponseEntity<OAuthLoginResDto> googleLogin(@RequestBody Map<String,Object> data) {
+        OAuthLoginResDto googleLoginResDto = oAuthService.googleLogin(data);
         return ResponseEntity.ok().body(googleLoginResDto);
+    }
+
+    @PostMapping("/kakao")
+    public ResponseEntity<OAuthLoginResDto> kakaoLogin(@RequestBody KakaoLoginReqDto kakaoLoginReqDto) {
+        OAuthLoginResDto kakaoLoginResDto = oAuthService.kakaoLogin(kakaoLoginReqDto);
+        return ResponseEntity.ok().body(kakaoLoginResDto);
     }
 }
