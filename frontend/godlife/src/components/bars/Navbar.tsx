@@ -49,7 +49,7 @@ const Navbar = () => {
           container
           alignItems="end"
           sx={{
-            padding: "10px",
+            padding: "10px 10px 40px 10px",
           }}
         >
           <Grid item sm={5}>
