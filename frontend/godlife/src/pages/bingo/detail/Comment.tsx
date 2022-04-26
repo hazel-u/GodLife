@@ -22,12 +22,17 @@ import { setSnackbar } from "../../../store/snackbar";
 import { selectUser } from "../../../store/user";
 import { CommentType } from "../../../types/comment";
 
-const Comment = ({ comment }: { comment: CommentType }) => {
+const Comment = ({
+  comment,
+  getBingo,
+}: {
+  comment: CommentType;
+  getBingo: () => void;
+}) => {
   const { userEmail } = useAppSelector(selectBingo);
   const { email } = useAppSelector(selectUser);
   const [open, setOpen] = React.useState(false);
   const [password, setPassword] = useState("");
-  console.log(comment);
 
   // 비밀번호 input 수동 autofocus
   const passwordInput = useRef<HTMLInputElement | null>(null);
@@ -35,6 +40,11 @@ const Comment = ({ comment }: { comment: CommentType }) => {
   useEffect(() => {
     passwordInput.current && passwordInput.current.focus();
   }, [refVisible]);
+
+  const handleClose = () => {
+    setOpen(false);
+    setPassword("");
+  };
 
   const dispatch = useAppDispatch();
   const deleteComment = () => {
@@ -59,6 +69,7 @@ const Comment = ({ comment }: { comment: CommentType }) => {
 
     deleteRequest
       .then(() => {
+        getBingo();
         dispatch(
           setSnackbar({
             open: true,
@@ -66,12 +77,17 @@ const Comment = ({ comment }: { comment: CommentType }) => {
             severity: "success",
           })
         );
+        handleClose();
       })
-      .catch(() => {
+      .catch((err) => {
+        let message = "다시 시도해주세요";
+        if (err.response.data.code === "WRONG_PASSWORD") {
+          message = err.response.data.message;
+        }
         dispatch(
           setSnackbar({
             open: true,
-            message: "다시 시도해주세요.",
+            message: message,
             severity: "error",
           })
         );
@@ -80,13 +96,7 @@ const Comment = ({ comment }: { comment: CommentType }) => {
 
   return (
     <>
-      <Dialog
-        open={open}
-        onClose={() => {
-          setOpen(false);
-          setPassword("");
-        }}
-      >
+      <Dialog open={open} onClose={handleClose}>
         <DialogTitle>댓글 삭제</DialogTitle>
         <DialogContent>
           {userEmail === email ? (
@@ -108,14 +118,7 @@ const Comment = ({ comment }: { comment: CommentType }) => {
           )}
         </DialogContent>
         <DialogActions>
-          <OutlinedButton
-            onClick={() => {
-              setOpen(false);
-              setPassword("");
-            }}
-          >
-            취소
-          </OutlinedButton>
+          <OutlinedButton onClick={handleClose}>취소</OutlinedButton>
           <OutlinedButton onClick={deleteComment}>확인</OutlinedButton>
         </DialogActions>
       </Dialog>
