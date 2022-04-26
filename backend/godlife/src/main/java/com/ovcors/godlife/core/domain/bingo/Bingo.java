@@ -1,6 +1,7 @@
 package com.ovcors.godlife.core.domain.bingo;
 
 import com.ovcors.godlife.core.domain.goals.BingoGoals;
+import com.ovcors.godlife.core.domain.goals.Goals;
 import com.ovcors.godlife.core.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -18,6 +19,7 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Bingo {
+
     @Builder
     public Bingo(BingoCode bingoCode, User user, String title, LocalDate startDate, Integer likeCnt, Integer surpriseCnt, Integer heartCnt, Boolean activate, Boolean godlife) {
         this.bingoCode = bingoCode;
@@ -52,7 +54,7 @@ public class Bingo {
     private Boolean activate;
     private Boolean godlife;
 
-    @OneToMany(mappedBy = "bingo")
+    @OneToMany(mappedBy = "bingo", fetch = FetchType.EAGER)
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "bingo")
@@ -65,6 +67,7 @@ public class Bingo {
     public void setUser(User user){
         this.user = user;
     }
+
     public void changeTitle(String title) {
         this.title = title;
     }
@@ -77,8 +80,13 @@ public class Bingo {
     public void changeLike() {
         this.likeCnt++;
     }
+
     public void addComment(Comment comment) {
         this.comments.add(comment);
         comment.setBingo(this);
+    }
+    public void addGoal(BingoGoals goal){
+        this.bingoGoals.add(goal);
+        goal.setBingo(this);
     }
 }

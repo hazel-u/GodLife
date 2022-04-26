@@ -3,8 +3,13 @@ package com.ovcors.godlife.core.queryrepository;
 import com.ovcors.godlife.api.dto.response.FindBingoResDto;
 import com.ovcors.godlife.core.domain.bingo.Bingo;
 import com.ovcors.godlife.core.domain.bingo.BingoCode;
+import com.ovcors.godlife.core.domain.bingo.Comment;
+import com.ovcors.godlife.core.domain.goals.BingoGoals;
+import com.ovcors.godlife.core.domain.goals.Goals;
 import com.ovcors.godlife.core.domain.user.User;
+import com.ovcors.godlife.core.repository.BingoGoalsRepository;
 import com.ovcors.godlife.core.repository.BingoRepository;
+import com.ovcors.godlife.core.repository.GoalsRepository;
 import com.ovcors.godlife.core.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +34,14 @@ class BingoQueryRepositoryTest {
     @Autowired
     BingoQueryRepository bingoQueryRepository;
 
+    @Autowired
+    GoalsRepository goalsRepository;
+
+    @Autowired
+    BingoGoalsRepository bingoGoalsRepository;
+
+
     @Test
-    @Commit
     void findAllBingoByUser() {
         // given
         User user = User.builder()
@@ -42,18 +53,26 @@ class BingoQueryRepositoryTest {
                 .build();
         BingoCode bingoCode = new BingoCode();
 
+        Goals goals = goalsRepository.save(new Goals());
+        BingoGoals bingoGoals = BingoGoals.builder()
+                .goals(goals)
+                .bingo(bingo)
+                .build();
+        BingoGoals savedBingoGoals = bingoGoalsRepository.save(bingoGoals);
+
         bingo.setBingoCode(bingoCode);
         bingo.setUser(savedUser);
+        bingo.addGoal(savedBingoGoals);
 
         Bingo savedBingo = bingoRepository.save(bingo);
 
         // when
-        System.out.println(bingoRepository.count());
-        List<FindBingoResDto> result = bingoQueryRepository.findAllBingoByUser(savedUser.getEmail());
+        List<Bingo> result = bingoQueryRepository.findPageByUser(savedUser.getEmail(), 0, 5);
 
         // then
         assertThat(result.size()).isEqualTo(1);
-        assertThat(result.get(0).getId()).isEqualTo(savedBingo.getSeq());
+        assertThat(result.get(0).getSeq()).isEqualTo(savedBingo.getSeq());
+        assertThat(result.get(0).getBingoGoals().size()).isEqualTo(1);
     }
 
     @Test
@@ -74,11 +93,11 @@ class BingoQueryRepositoryTest {
         Bingo savedBingo = bingoRepository.save(bingo);
 
         // when
-        FindBingoResDto result = bingoQueryRepository.findBingo(savedBingo.getBingoCode().getCode());
+        Bingo result = bingoQueryRepository.findBingo(savedBingo.getBingoCode().getCode());
 
         // then
-        assertThat(result.getId()).isEqualTo(savedBingo.getSeq());
-        assertThat(result.getCode()).isEqualTo(savedBingo.getBingoCode().getCode());
+        assertThat(result.getSeq()).isEqualTo(savedBingo.getSeq());
+        assertThat(result.getBingoCode().getCode()).isEqualTo(savedBingo.getBingoCode().getCode());
         assertThat(result.getTitle()).isEqualTo(savedBingo.getTitle());
     }
 }

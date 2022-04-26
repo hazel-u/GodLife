@@ -1,6 +1,9 @@
 package com.ovcors.godlife.core.queryrepository;
 
 import com.ovcors.godlife.api.dto.response.FindBingoResDto;
+import com.ovcors.godlife.core.domain.bingo.Bingo;
+import com.ovcors.godlife.core.domain.goals.Goals;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -8,8 +11,15 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.ovcors.godlife.core.domain.bingo.QBingo.bingo;
+import static com.ovcors.godlife.core.domain.goals.QBingoGoals.bingoGoals;
+import static com.ovcors.godlife.core.domain.goals.QGoals.goals;
+import static com.querydsl.core.group.GroupBy.groupBy;
+import static com.querydsl.core.group.GroupBy.list;
+
 
 @Repository
 @Transactional(readOnly = true)
@@ -19,38 +29,20 @@ public class BingoQueryRepositoryImpl implements BingoQueryRepository{
     private final JPAQueryFactory query;
 
     @Override
-    public List<FindBingoResDto> findAllBingoByUser(String userEmail) {
+    public List<Bingo> findPageByUser(String userEmail, int page, int limit) {
         return query
-                .select(Projections.constructor(FindBingoResDto.class,
-                        bingo.seq,
-                        bingo.bingoCode.code,
-                        bingo.title,
-                        bingo.user.email,
-                        bingo.activate,
-                        bingo.godlife,
-                        bingo.startDate,
-                        bingo.likeCnt,
-                        bingo.comments.size()
-                ))
-                .from(bingo)
+                .selectFrom(bingo)
                 .where(bingo.user.email.eq(userEmail))
+                .orderBy(bingo.startDate.desc())
+                .offset(page)
+                .limit(limit)
                 .fetch();
     }
 
     @Override
-    public FindBingoResDto findBingo(Long code) {
+    public Bingo findBingo(Long code) {
         return query
-                .select(Projections.constructor(FindBingoResDto.class,
-                        bingo.seq,
-                        bingo.bingoCode.code,
-                        bingo.title,
-                        bingo.user.email,
-                        bingo.activate,
-                        bingo.godlife,
-                        bingo.startDate,
-                        bingo.likeCnt,
-                        bingo.comments.size()))
-                .from(bingo)
+                .selectFrom(bingo)
                 .where(bingo.bingoCode.code.eq(code))
                 .fetchOne();
     }

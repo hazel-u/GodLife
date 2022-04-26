@@ -1,0 +1,16 @@
+package com.ovcors.godlife.api.dto.response;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class CommentResDto {
+    String nickname;
+    String password;
+    String content;
+}

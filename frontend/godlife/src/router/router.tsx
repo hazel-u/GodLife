@@ -1,12 +1,13 @@
 import { Navigate, useRoutes } from "react-router-dom";
+
 import MainLayout from "../layouts/MainLayout";
 import ShareLayout from "../layouts/ShareLayout";
+import NotFound from "../pages/NotFound";
 import BingoCreate from "../pages/bingo/create/BingoCreate";
 import GodlifeShare from "../pages/bingo/detail/GodlifeShare";
 import PreviousBingoList from "../pages/bingo/list/PreviousBingoList";
 import Join from "../pages/join/Join";
 import Login from "../pages/login/Login";
-
 
 export default function Router() {
   const isAuth = localStorage.getItem("token");
@@ -43,6 +44,10 @@ export default function Router() {
           element: <GodlifeShare />,
         },
       ],
+    },
+    {
+      path: "/*",
+      element: <NotFound />,
     },
   ]);
 }

@@ -22,7 +22,7 @@ public class SaveBingoReqDto {
 
     @NotNull
     String title;
-    List<Integer> goals = new ArrayList<>();
+    List<Long> goals = new ArrayList<>();
 
     public Bingo toEntity() {
         return Bingo.builder()

@@ -14,6 +14,7 @@ const initialState: BingoType = {
   startDate: "",
   title: "",
   userEmail: "",
+  goals: [],
 };
 
 export const bingoSlice = createSlice({

@@ -69,7 +69,6 @@ const Profile = ({
       PaperProps={{
         style: !fullScreen ? { minWidth: "min(60%, 600px)", width: "60%" } : {},
       }}
-      sx={{ fontFamily: "Noto Sans KR" }}
       fullScreen={fullScreen}
     >
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
