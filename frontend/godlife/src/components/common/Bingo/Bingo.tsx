@@ -89,12 +89,7 @@ export const Bingo = ({
   };
 
   return (
-    <Box
-      sx={{
-        flexGrow: 1,
-        height: 800,
-      }}
-    >
+    <Box>
       {/* 빙고 박스 */}
       <Grid
         container

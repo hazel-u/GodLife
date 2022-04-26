@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { OutlinedButton } from "../../components/common/Button";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
-import { selectUser } from "../../store/user";
+import { selectUser, setLoggedUser } from "../../store/user";
 import NicknameController from "./NicknameController";
 
 const ProfileEdit = ({ handleClose }: { handleClose: () => void }) => {
@@ -25,6 +25,15 @@ const ProfileEdit = ({ handleClose }: { handleClose: () => void }) => {
       })
       .then(() => {
         handleClose();
+        axios
+          .get("user/info", {
+            headers: {
+              Authorization: `${localStorage.getItem("token")}`,
+            },
+          })
+          .then((res) => {
+            dispatch(setLoggedUser(res.data));
+          });
         dispatch(
           setSnackbar({
             open: true,

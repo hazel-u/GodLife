@@ -8,6 +8,7 @@ import { OutlinedButton } from "../../components/common/Button";
 import { OutlinedInput } from "../../components/common/Input";
 import { useAppDispatch } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
+import { setLoggedUser } from "../../store/user";
 import { ChangePasswordInput } from "../../types/user";
 import PasswordContoller from "./PasswordContoller";
 
@@ -27,6 +28,15 @@ const ProfileChangePassword = ({
       })
       .then(() => {
         handleClose();
+        axios
+          .get("user/info", {
+            headers: {
+              Authorization: `${localStorage.getItem("token")}`,
+            },
+          })
+          .then((res) => {
+            dispatch(setLoggedUser(res.data));
+          });
         dispatch(
           setSnackbar({
             open: true,

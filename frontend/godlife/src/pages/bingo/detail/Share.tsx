@@ -1,12 +1,14 @@
 import ImageIcon from "@mui/icons-material/Image";
 import LinkIcon from "@mui/icons-material/Link";
-import { IconButton, Stack } from "@mui/material";
+import { IconButton, Stack, SvgIcon } from "@mui/material";
 import domtoimage from "dom-to-image";
 
 import React from "react";
 
-import FacebookLogo from "../../../assets/logo/Brand/facebook.png";
-import TwitterLogo from "../../../assets/logo/Brand/twitter.png";
+import { ReactComponent as FacebookLogo } from "../../../assets/logo/Brand/facebook.svg";
+import { ReactComponent as TwitterLogo } from "../../../assets/logo/Brand/twitter.svg";
+import { useAppDispatch } from "../../../store/hooks";
+import { setSnackbar } from "../../../store/snackbar";
 import KakaoShare from "./KakaoShare";
 
 const Share = () => {
@@ -28,21 +30,32 @@ const Share = () => {
     }
   };
 
+  const dispatch = useAppDispatch();
+
   return (
     <Stack direction="column" alignItems="center">
-      <p>공유하기</p>
-      <p>아이콘 수정 예정</p>
+      <p>함께 갓생살기</p>
       <Stack direction="row" spacing={2}>
         <IconButton
           onClick={() => {
             navigator.clipboard.writeText(window.location.href);
+            dispatch(
+              setSnackbar({
+                open: true,
+                message: "빙고 링크가 클립보드에 복사되었습니다.",
+                severity: "success",
+              })
+            );
           }}
           sx={{ backgroundColor: "#cacaca" }}
         >
           <LinkIcon />
         </IconButton>
 
-        <IconButton onClick={saveImage} sx={{ backgroundColor: "#cacaca" }}>
+        <IconButton
+          onClick={saveImage}
+          sx={{ backgroundColor: "#A11803", color: "white" }}
+        >
           <ImageIcon />
         </IconButton>
 
@@ -56,7 +69,11 @@ const Share = () => {
           }}
           sx={{ padding: 0, height: "40px" }}
         >
-          <img src={TwitterLogo} alt="Twitter Logo" style={{ width: "40px" }} />
+          <SvgIcon
+            component={TwitterLogo}
+            inheritViewBox
+            sx={{ width: "40px", height: "40px" }}
+          />
         </IconButton>
 
         <IconButton
@@ -67,10 +84,10 @@ const Share = () => {
           }}
           sx={{ padding: 0, height: "40px" }}
         >
-          <img
-            src={FacebookLogo}
-            alt="Facebook Logo"
-            style={{ width: "40px" }}
+          <SvgIcon
+            component={FacebookLogo}
+            inheritViewBox
+            sx={{ width: "40px", height: "40px" }}
           />
         </IconButton>
       </Stack>

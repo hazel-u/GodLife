@@ -45,9 +45,7 @@ const BingoCell = ({
           padding: 1,
         }}
       >
-        <Typography align="center" variant="h3">
-          {content}
-        </Typography>
+        <Typography align="center">{content}</Typography>
       </Paper>
     </Grid>
   );

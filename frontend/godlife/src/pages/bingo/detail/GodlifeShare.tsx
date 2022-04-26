@@ -2,7 +2,7 @@ import { Container, Stack } from "@mui/material";
 import axios from "axios";
 
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Bingo from "../../../components/common/Bingo/Bingo";
 import { selectBingo, setBingo } from "../../../store/bingo";
@@ -21,10 +21,16 @@ const GodlifeShare = () => {
   });
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const getBingo = () => {
-    axios.get(`bingo/${params.bingoId}`).then((res) => {
-      dispatch(setBingo(res.data));
-    });
+    axios
+      .get(`bingo/${params.bingoId}`)
+      .then((res) => {
+        dispatch(setBingo(res.data));
+      })
+      .catch(() => {
+        navigate("/404");
+      });
   };
 
   const bingo = useAppSelector(selectBingo);
@@ -40,7 +46,7 @@ const GodlifeShare = () => {
   // };
 
   return (
-    <Stack direction="column" alignItems="center">
+    <Stack direction="column" alignItems="center" m={5}>
       {bingo.code && (
         <Container sx={{ width: "500px" }}>
           {/* 
