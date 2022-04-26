@@ -5,6 +5,7 @@ import com.ovcors.godlife.api.dto.request.SaveCommentReqDto;
 import com.ovcors.godlife.api.dto.request.UpdateTitleReqDto;
 import com.ovcors.godlife.api.dto.response.FindBingoResDto;
 import com.ovcors.godlife.core.domain.bingo.Bingo;
+import com.ovcors.godlife.core.domain.user.User;
 
 import java.util.List;
 
@@ -17,5 +18,6 @@ public interface BingoService {
     void updateGodlife(String seq);
     void updateLikeCnt(String seq);
     void addComment(String seq, SaveCommentReqDto reqDto);
+    Long findBingoCount(User user);
 
 }

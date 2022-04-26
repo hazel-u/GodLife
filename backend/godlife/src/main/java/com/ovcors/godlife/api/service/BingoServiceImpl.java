@@ -101,4 +101,10 @@ public class BingoServiceImpl implements BingoService{
 
         commentRepository.save(comment);
     }
+
+    public Long findBingoCount(User user){
+        return bingoRepository.countByUser(user);
+    }
+
+
 }
