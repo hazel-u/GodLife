@@ -29,43 +29,21 @@ public class BingoQueryRepositoryImpl implements BingoQueryRepository{
     private final JPAQueryFactory query;
 
     @Override
-    public List<FindBingoResDto> findAllBingoByUser(String userEmail) {
-        Map<Bingo, List<Goals>> transform = query
-                .from(bingo)
-                .leftJoin(bingo.bingoGoals, bingoGoals)
-                .leftJoin(bingoGoals.goals, goals)
+    public List<Bingo> findPageByUser(String userEmail, int page, int limit) {
+        return query
+                .selectFrom(bingo)
                 .where(bingo.user.email.eq(userEmail))
-                .transform(groupBy(bingo).as(list(goals)));
-
-        return extractFindBingoResDto(transform);
+                .orderBy(bingo.startDate.desc())
+                .offset(page)
+                .limit(limit)
+                .fetch();
     }
 
     @Override
-    public FindBingoResDto findBingo(Long code) {
-        Map<Bingo, List<Goals>> transform = query
-                .from(bingo)
-                .leftJoin(bingo.bingoGoals, bingoGoals)
-                .leftJoin(bingoGoals.goals, goals)
+    public Bingo findBingo(Long code) {
+        return query
+                .selectFrom(bingo)
                 .where(bingo.bingoCode.code.eq(code))
-                .transform(groupBy(bingo).as(list(goals)));
-
-        return extractFindBingoResDto(transform).get(0);
-    }
-
-    private List<FindBingoResDto> extractFindBingoResDto(Map<Bingo, List<Goals>> transform) {
-        return transform.entrySet().stream()
-                .map(entry -> FindBingoResDto.builder()
-                        .id(entry.getKey().getSeq())
-                        .code(entry.getKey().getBingoCode().getCode())
-                        .title(entry.getKey().getTitle())
-                        .userEmail(entry.getKey().getUser().getEmail())
-                        .activate(entry.getKey().getActivate())
-                        .godlife(entry.getKey().getGodlife())
-                        .startDate(entry.getKey().getStartDate())
-                        .likeCnt(entry.getKey().getLikeCnt())
-                        .commentCnt(entry.getKey().getCommentCnt())
-                        .goals(entry.getValue())
-                        .build())
-                .collect(Collectors.toList());
+                .fetchOne();
     }
 }

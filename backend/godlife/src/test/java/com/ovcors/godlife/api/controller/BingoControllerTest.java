@@ -54,7 +54,7 @@ class BingoControllerTest {
     public void findAllByUser() throws Exception {
         // given
         // when
-        ResultActions resultActions = mockMvc.perform(get(url)
+        ResultActions resultActions = mockMvc.perform(get(url+"/{page}/{limit}", 0, 1)
                         .header("Authorization", "Bearer" + jwtToken)
                         .contentType(MediaType.APPLICATION_JSON));
 

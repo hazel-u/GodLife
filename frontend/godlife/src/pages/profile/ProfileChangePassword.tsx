@@ -36,7 +36,7 @@ const ProfileChangePassword = ({
         );
       })
       .catch((err) => {
-        if (err.response.data.code == "WRONG_PASSWORD") {
+        if (err.response.data.code === "WRONG_PASSWORD") {
           setError("oldPassword", {
             type: "manual",
             message: err.response.data.message,

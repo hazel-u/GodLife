@@ -3,7 +3,7 @@ import { Navigate, useRoutes } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import ShareLayout from "../layouts/ShareLayout";
 import NotFound from "../pages/NotFound";
-import BingoCreate from "../pages/bingo/create/BingoCreateComponents";
+import BingoCreate from "../pages/bingo/create/BingoCreate";
 import GodlifeShare from "../pages/bingo/detail/GodlifeShare";
 import PreviousBingoList from "../pages/bingo/list/PreviousBingoList";
 import Join from "../pages/join/Join";

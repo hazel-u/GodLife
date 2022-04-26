@@ -1,6 +1,8 @@
 package com.ovcors.godlife.api.dto.response;
 
+import com.ovcors.godlife.core.domain.bingo.Bingo;
 import com.ovcors.godlife.core.domain.bingo.Comment;
+import com.ovcors.godlife.core.domain.goals.BingoGoals;
 import com.ovcors.godlife.core.domain.goals.Goals;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,35 +16,49 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class FindBingoResDto {
     UUID id;
     Long code;
     String title;
-    List<Goals> goals = new ArrayList<>();
     String userEmail;
+    String userName;
     Boolean activate;
     Boolean godlife;
     LocalDate startDate;
     Integer likeCnt;
-    Integer commentCnt;
-    List<Comment> comments = new ArrayList<>();
+    List<BingoGoalResDto> goals = new ArrayList<>();
+    List<CommentResDto> comments = new ArrayList<>();
 
-    @Builder
-    public FindBingoResDto(UUID id, Long code, String title, List<Goals> goals, String userEmail, Boolean activate, Boolean godlife, LocalDate startDate, Integer likeCnt, List<Comment> comments, Integer commentCnt) {
-        this.id = id;
-        this.code = code;
-        this.title = title;
-        this.goals = goals;
-        this.userEmail = userEmail;
-        this.activate = activate;
-        this.godlife = godlife;
-        this.startDate = startDate;
-        this.likeCnt = likeCnt;
-        this.comments = comments;
-        this.commentCnt = commentCnt;
-    }
+    public FindBingoResDto (Bingo bingo){
+        this.id = bingo.getSeq();
+        this.code = bingo.getBingoCode().getCode();
+        this.title = bingo.getTitle();
+        this.userEmail = bingo.getUser().getEmail();
+        this.userName = bingo.getUser().getName();
+        this.activate = bingo.getActivate();
+        this.godlife = bingo.getGodlife();
+        this.startDate = bingo.getStartDate();
+        this.likeCnt = bingo.getLikeCnt();
 
-    public void addComments(List<Comment> comments) {
-        this.comments.addAll(comments);
+        List<BingoGoals> bingoGoals = bingo.getBingoGoals();
+        for(BingoGoals bingoGoal: bingoGoals){
+            this.goals.add(BingoGoalResDto.builder()
+                            .seq(bingoGoal.getSeq())
+                            .category(bingoGoal.getGoals().getCategory())
+                            .content(bingoGoal.getGoals().getContent())
+                            .completed(bingoGoal.isCompleted())
+                            .build());
+        }
+
+        List<Comment> comments = bingo.getComments();
+        for(Comment comment:comments){
+            this.comments.add(CommentResDto.builder()
+                    .content(comment.getContent())
+                    .nickname(comment.getNickname())
+                    .password(comment.getPassword())
+                    .build());
+        }
     }
 }

@@ -1,4 +1,4 @@
-import { IconButton, Stack } from "@mui/material";
+import { Box, IconButton, Stack, Typography } from "@mui/material";
 import axios from "axios";
 
 import { useState } from "react";
@@ -43,10 +43,12 @@ const Interaction = ({ code, likeCnt, seq, getBingo }: InteractionProps) => {
       sx={{ width: "500px" }}
     >
       <Stack direction="row" alignItems="center">
-        <IconButton disabled={clickLike} size="small" onClick={like}>
-          👍
-        </IconButton>
-        <span>{likeCnt}</span>
+        <Box>
+          <IconButton disabled={clickLike} size="small" onClick={like}>
+            👍
+          </IconButton>
+        </Box>
+        <Typography sx={{ mt: 0.5 }}>{likeCnt}</Typography>
       </Stack>
       <TextButton onClick={copyBingoCode}>빙고 복사</TextButton>
     </Stack>

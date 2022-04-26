@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { OutlinedButton } from "../../../components/common/Button";
 import { OutlinedInput } from "../../../components/common/Input";
@@ -25,17 +25,21 @@ const Comment = ({ comment }: { comment: CommentType }) => {
   const { email } = useAppSelector(selectUser);
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // 비밀번호 input 수동 autofocus
+  const passwordInput = useRef<HTMLInputElement | null>(null);
+  const [refVisible, setRefVisible] = useState(false);
+  useEffect(() => {
+    passwordInput.current && passwordInput.current.focus();
+  }, [refVisible]);
 
   return (
     <>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog
+        open={open}
+        onClose={() => {
+          setOpen(false);
+        }}
+      >
         <DialogTitle>댓글 삭제</DialogTitle>
         <DialogContent>
           {userEmail === email ? (
@@ -43,13 +47,30 @@ const Comment = ({ comment }: { comment: CommentType }) => {
           ) : (
             <>
               <DialogContentText>비밀번호를 입력해주세요.</DialogContentText>
-              <OutlinedInput size="small" />
+              <OutlinedInput
+                inputRef={(el) => {
+                  passwordInput.current = el;
+                  setRefVisible(!!el);
+                }}
+                autoFocus={true}
+                size="small"
+              />
             </>
           )}
         </DialogContent>
         <DialogActions>
-          <OutlinedButton onClick={handleClose}>취소</OutlinedButton>
-          <OutlinedButton onClick={handleClose} autoFocus>
+          <OutlinedButton
+            onClick={() => {
+              setOpen(false);
+            }}
+          >
+            취소
+          </OutlinedButton>
+          <OutlinedButton
+            onClick={() => {
+              setOpen(false);
+            }}
+          >
             확인
           </OutlinedButton>
         </DialogActions>
@@ -58,7 +79,7 @@ const Comment = ({ comment }: { comment: CommentType }) => {
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <p>{comment.nickname}</p>
         <Box>
-          <IconButton onClick={handleClickOpen}>
+          <IconButton onClick={() => setOpen(true)}>
             <ClearIcon />
           </IconButton>
         </Box>
