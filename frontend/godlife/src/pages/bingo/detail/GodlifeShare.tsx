@@ -30,6 +30,15 @@ const GodlifeShare = () => {
   const bingo = useAppSelector(selectBingo);
   const { email } = useAppSelector(selectUser);
 
+  // const isValidRequest = () => {
+  //   if (bingo.userEmail !== email) {
+  //     return false;
+  //   // } else if (bingo.startDate !== new Date()) {
+  //     // return false;
+  //   // }
+  //   return true;
+  // };
+
   return (
     <Stack direction="column" alignItems="center">
       {bingo.code && (
@@ -48,7 +57,7 @@ const GodlifeShare = () => {
             size={3}
             goals={bingo.goals}
             mode={"Active"}
-            date={new Date()}
+            startDate={new Date()}
           />
         </Container>
       )}
