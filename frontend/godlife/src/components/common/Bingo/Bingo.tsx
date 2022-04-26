@@ -85,12 +85,7 @@ export const Bingo = ({ size, goals, mode, date, createdBy }: BingoProps) => {
   const computeTimeLeft = () => {};
 
   return (
-    <Box
-      sx={{
-        flexGrow: 1,
-        height: 800,
-      }}
-    >
+    <Box>
       {/* 빙고 박스 */}
       <Grid
         container

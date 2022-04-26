@@ -3,7 +3,6 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 
 import React from "react";
-import { useState } from "react";
 
 interface BingoCellProp {
   content: String;
@@ -46,9 +45,7 @@ const BingoCell = ({
           padding: 1,
         }}
       >
-        <Typography align="center" variant="h3">
-          {content}
-        </Typography>
+        <Typography align="center">{content}</Typography>
       </Paper>
     </Grid>
   );
