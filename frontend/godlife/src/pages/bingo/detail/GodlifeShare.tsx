@@ -18,7 +18,7 @@ const GodlifeShare = () => {
 
   useEffect(() => {
     getBingo();
-  }, []);
+  });
 
   const dispatch = useAppDispatch();
   const getBingo = () => {

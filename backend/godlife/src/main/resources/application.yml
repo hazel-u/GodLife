@@ -57,7 +57,7 @@ spring:
 
 server:
   # 프로젝트 환경의 포트 설정
-  port: 8080 # 포트 수정 필요
+  port: 8000 # 포트 수정 필요
   domain: http:127.0.0.1
   servlet:
     session:
