@@ -1,8 +1,11 @@
 import { Button, IconButton, SvgIcon, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import axios from "axios";
+
 import React, { useState } from "react";
+
 import { ReactComponent as StarIcon } from "../../../assets/icon/star.svg";
+import { deleteGoal, selectGoal, setGoal } from "../../../store/goal";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 
 interface GoalProps {
   seq: number;
@@ -10,28 +13,41 @@ interface GoalProps {
   category: string;
 }
 
-
-const Goal = ({ seq, content, category }: GoalProps) => {
+const Goal = (goal: GoalProps) => {
+  const dispatch = useAppDispatch();
+  // const [selectedGoals, setSelectedGoals] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
   const [click, setClick] = useState(false);
 
-  const manageFavorites = () => {
-    if (isFavorite) {
-      axios
-      .put(
-        "goal",
-        {seq: seq},
-        {
-          headers: {
-            Authorization: `${localStorage.getItem("token")}`,
-          },
-        }  
-      )
-      .then(() => console.log('즐겨찾기 추가'))
-      .catch((err) => console.log(err));
-    }
-  }
+  // const manageFavorites = () => {
+  //   if (isFavorite) {
+  //     axios
+  //     .put(
+  //       "goal",
+  //       {seq: seq},
+  //       {
+  //         headers: {
+  //           Authorization: `${localStorage.getItem("token")}`,
+  //         },
+  //       }
+  //     )
+  //     .then(() => console.log('즐겨찾기 추가'))
+  //     .catch((err) => console.log(err));
+  //   }
+  // };
 
+  const nowSelected = useAppSelector(selectGoal);
+
+  const manageSelectedGoals = () => {
+    const found = nowSelected.some((el) => el.seq === goal.seq);
+    if (nowSelected.length < 9 && !found) {
+      dispatch(setGoal([goal]));
+      setClick(true);
+    } else if (nowSelected.length < 9 && found) {
+      dispatch(deleteGoal(goal));
+      setClick(false);
+    }
+  };
 
   const GoalButton = styled(Button)(({ theme }) => ({
     position: "relative",
@@ -75,16 +91,14 @@ const Goal = ({ seq, content, category }: GoalProps) => {
     },
   }));
 
-
-
   return (
-    <GoalButton>
+    <GoalButton onClick={manageSelectedGoals}>
       <BookmarkButton>
-        <SvgIcon component={StarIcon}/>
+        <SvgIcon component={StarIcon} />
       </BookmarkButton>
-      <Typography>{content}</Typography>
+      <Typography>{goal.content}</Typography>
     </GoalButton>
-  )
-}
+  );
+};
 
-export default Goal
+export default Goal;
