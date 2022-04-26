@@ -1,5 +1,6 @@
 package com.ovcors.godlife.api.service;
 
+import com.ovcors.godlife.api.dto.request.DeleteCommentDto;
 import com.ovcors.godlife.api.dto.request.SaveBingoReqDto;
 import com.ovcors.godlife.api.dto.request.SaveCommentReqDto;
 import com.ovcors.godlife.api.dto.request.UpdateTitleReqDto;
@@ -19,8 +20,9 @@ public interface BingoService {
     void updateGodlife(String seq);
     void updateLikeCnt(String seq);
     void addComment(String seq, SaveCommentReqDto reqDto);
+    void deletemyBingoComment(String seq, String userEmail);
+    void deleteCommentByPassword(String seq, DeleteCommentDto reqDto);
     Long findBingoCount(User user);
-
     FindBingoResDto findBingoBydate(String date, User user)  throws ParseException;
 
 }
