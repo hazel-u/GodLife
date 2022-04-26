@@ -3,7 +3,6 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 
 import React from "react";
-import { useState } from "react";
 
 interface BingoCellProp {
   content: String;

@@ -10,17 +10,13 @@ import { setSnackbar } from "../../../store/snackbar";
 import BingoCopy from "./BingoCopy";
 import BingoCreateComponents from "./BingoCreateComponents";
 
-interface Goal {
-  seq: number;
-  content: string;
-  category: string;
-}
-
 const BingoCreate = () => {
   const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState("임시 제목");
+  const title = "임시제목";
+
   const dispatch = useAppDispatch();
-  const [selectedGoals, setSelectedGoals] = useState<Goal[]>([
+
+  const selectedGoals = [
     {
       seq: 41,
       content: "대중교통 이용하기",
@@ -61,8 +57,8 @@ const BingoCreate = () => {
       content: "밥 먹고 눕지 않기 ",
       category: "건강한삶",
     },
-  ]);
-  const [goals, setGoals] = useState<Goal[]>([
+  ];
+  const goals = [
     {
       seq: 1,
       content: "물 1.5L 이상 마시기",
@@ -133,7 +129,7 @@ const BingoCreate = () => {
       content: "대중교통 이용하기",
       category: "환경",
     },
-  ]);
+  ];
 
   const shuffle = (array: number[]) => {
     for (let i = array.length - 1; i > 0; i--) {

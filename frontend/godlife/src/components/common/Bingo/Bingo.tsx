@@ -82,8 +82,6 @@ export const Bingo = ({ size, goals, mode, date, createdBy }: BingoProps) => {
     countBingos();
   };
 
-  const computeTimeLeft = () => {};
-
   return (
     <Box
       sx={{
