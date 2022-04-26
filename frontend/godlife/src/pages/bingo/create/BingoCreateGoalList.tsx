@@ -1,19 +1,18 @@
-import { Box, Button, Chip, Grid, IconButton, Stack } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Box, Chip, Grid, Stack } from "@mui/material";
 import axios from "axios";
 
 import React, { useEffect, useState } from "react";
 
 import { selectGoal } from "../../../store/goal";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { useAppSelector } from "../../../store/hooks";
 import BingoTitle from "./BingoTitle";
 import Goal from "./Goal";
 
 const BingoCreateGoalList = () => {
-  const dispatch = useAppDispatch();
   const [selectedCategory, setSelectedCategory] = useState("전체");
   const [goalList, setGoalList] = useState<any[]>([]);
   const [allGoalList, setAllGoalList] = useState<any[]>([]);
+  const [userFavorites, setUserFavorites] = useState([]);
 
   const getGoals = () => {
     axios
@@ -25,8 +24,18 @@ const BingoCreateGoalList = () => {
       .catch((err) => console.log(err));
   };
 
+  const getFavorites = () => {
+    axios
+      .get("goal/usergoals")
+      .then((res) => {
+        setUserFavorites(res.data.goals);
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     getGoals();
+    getFavorites();
   }, []);
 
   const category = [
@@ -41,7 +50,6 @@ const BingoCreateGoalList = () => {
   ];
 
   const selectedGoals = useAppSelector(selectGoal);
-  const [favorites, setFavorites] = useState<any[]>([]);
 
   const changeCategory = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const selectedCategory = (e.target as HTMLLIElement).textContent;
@@ -51,7 +59,7 @@ const BingoCreateGoalList = () => {
       setGoalList(allGoalList);
     } else if (selectedCategory === "즐겨찾기") {
       setSelectedCategory(selectedCategory);
-      setGoalList(favorites);
+      setGoalList(userFavorites);
     } else if (selectedCategory !== null && selectedCategory !== "즐겨찾기") {
       setSelectedCategory(selectedCategory);
       changeCategoryGoalList(selectedCategory);
@@ -65,80 +73,73 @@ const BingoCreateGoalList = () => {
     setGoalList(classifiedGoalList);
   };
 
-  const manageFavorites = (e: any) => {
-    console.log(e);
-    const favoritesList: Array<any> = [];
-    setFavorites([...favoritesList, e]);
-    setStarClick(!starClick);
-  };
+  // const [click, setClick] = useState(false);
+  // const [starClick, setStarClick] = useState(false);
 
-  const [click, setClick] = useState(false);
-  const [starClick, setStarClick] = useState(false);
+  // const GoalBox = styled(Box)(({ theme }) => ({
+  //   position: "relative",
+  //   width: "24%",
+  //   height: "50px",
+  //   outline: "2px solid #5A5A5A",
+  //   outlineOffset: "-2px",
+  //   display: "flex",
+  //   flexDirection: "row",
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   borderRadius: "10px",
+  //   cursor: "pointer",
+  //   backgroundColor: click ? "#FFEEEE" : "white",
+  //   "&::before": {
+  //     content: "''",
+  //     width: "70%",
+  //     height: "4px",
+  //     background: click ? "#FFEEEE" : "white",
+  //     top: "0px",
+  //     position: "absolute",
+  //   },
+  // }));
 
-  const GoalBox = styled(Box)(({ theme }) => ({
-    position: "relative",
-    width: "24%",
-    height: "50px",
-    outline: "2px solid #5A5A5A",
-    outlineOffset: "-2px",
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: "10px",
-    cursor: "pointer",
-    backgroundColor: click ? "#FFEEEE" : "white",
-    "&::before": {
-      content: "''",
-      width: "70%",
-      height: "4px",
-      background: click ? "#FFEEEE" : "white",
-      top: "0px",
-      position: "absolute",
-    },
-  }));
+  // const GoalButton = styled(Button)(({ theme }) => ({
+  //   position: "relative",
+  //   width: "100%",
+  //   height: "50px",
+  //   outline: "2px solid #5A5A5A",
+  //   outlineOffset: "-2px",
+  //   display: "flex",
+  //   flexDirection: "row",
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   borderRadius: "10px",
+  //   color: "#5A5A5A",
+  //   backgroundColor: click ? "#FFEEEE" : "white",
+  //   "&:before": {
+  //     content: "''",
+  //     width: "70%",
+  //     height: "4px",
+  //     background: click ? "#FFEEEE" : "white",
+  //     top: "0px",
+  //     position: "absolute",
+  //     transition: "all 0.3s",
+  //   },
+  //   "&:hover": {
+  //     color: "black",
+  //     backgroundColor: "#FFEEEE",
+  //   },
+  //   "&:hover:before": {
+  //     background: "#FFEEEE",
+  //   },
+  // }));
 
-  const GoalButton = styled(Button)(({ theme }) => ({
-    position: "relative",
-    width: "100%",
-    height: "50px",
-    outline: "2px solid #5A5A5A",
-    outlineOffset: "-2px",
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: "10px",
-    color: "#5A5A5A",
-    backgroundColor: click ? "#FFEEEE" : "white",
-    "&:before": {
-      content: "''",
-      width: "70%",
-      height: "4px",
-      background: click ? "#FFEEEE" : "white",
-      top: "0px",
-      position: "absolute",
-      transition: "all 0.3s",
-    },
-    "&:hover": {
-      color: "black",
-      backgroundColor: "#FFEEEE",
-    },
-    "&:hover:before": {
-      background: "#FFEEEE",
-    },
-  }));
-
-  const BookmarkButton = styled(IconButton)(({ theme }) => ({
-    position: "absolute",
-    top: 8,
-    left: 8,
-    padding: 0,
-    "& svg": {
-      fontSize: 15,
-      color: starClick ? "#FFE812" : "white",
-    },
-  }));
+  // const BookmarkButton = styled(IconButton)(({ theme }) => ({
+  //   position: "absolute",
+  //   top: 8,
+  //   left: 8,
+  //   padding: 0,
+  //   "& svg": {
+  //     fontSize: 15,
+  //     color: starClick ? "#FFE812" : "white",
+  //   },
+  // }));
 
   return (
     <Box sx={{ width: "80%", padding: "30px" }}>

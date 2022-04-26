@@ -1,5 +1,6 @@
 import { Button, IconButton, SvgIcon, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import axios from "axios";
 
 import React, { useState } from "react";
 
@@ -15,26 +16,39 @@ interface GoalProps {
 
 const Goal = (goal: GoalProps) => {
   const dispatch = useAppDispatch();
-  // const [selectedGoals, setSelectedGoals] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
   const [click, setClick] = useState(false);
 
-  // const manageFavorites = () => {
-  //   if (isFavorite) {
-  //     axios
-  //     .put(
-  //       "goal",
-  //       {seq: seq},
-  //       {
-  //         headers: {
-  //           Authorization: `${localStorage.getItem("token")}`,
-  //         },
-  //       }
-  //     )
-  //     .then(() => console.log('즐겨찾기 추가'))
-  //     .catch((err) => console.log(err));
-  //   }
-  // };
+  const manageFavorites = () => {
+    if (!isFavorite) {
+      axios
+        .put(
+          "goal",
+          { seq: goal.seq },
+          {
+            headers: {
+              Authorization: `${localStorage.getItem("token")}`,
+            },
+          }
+        )
+        .then(() => console.log("즐겨찾기 추가"))
+        .catch((err) => console.log(err));
+
+      setIsFavorite(true);
+    } else {
+      axios
+        .delete("goal", {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+          data: { seq: goal.seq },
+        })
+        .then(() => console.log("즐겨찾기 삭제"))
+        .catch((err) => console.log(err));
+
+      setIsFavorite(false);
+    }
+  };
 
   const nowSelected = useAppSelector(selectGoal);
 
@@ -93,7 +107,7 @@ const Goal = (goal: GoalProps) => {
 
   return (
     <GoalButton onClick={manageSelectedGoals}>
-      <BookmarkButton>
+      <BookmarkButton onClick={manageFavorites}>
         <SvgIcon component={StarIcon} />
       </BookmarkButton>
       <Typography>{goal.content}</Typography>
