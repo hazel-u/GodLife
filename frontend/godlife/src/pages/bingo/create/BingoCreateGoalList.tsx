@@ -34,8 +34,11 @@ const BingoCreateGoalList = () => {
   };
 
   useEffect(() => {
-    getGoals();
     getFavorites();
+  }, [setUserFavorites]);
+
+  useEffect(() => {
+    getGoals();
   }, []);
 
   const category = [
