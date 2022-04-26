@@ -7,7 +7,7 @@ import { selectBingo } from "../../../store/bingo";
 import { useAppSelector } from "../../../store/hooks";
 
 const KakaoShare = () => {
-  const { likeCnt, commentCnt } = useAppSelector(selectBingo);
+  const { likeCnt, comments } = useAppSelector(selectBingo);
 
   useEffect(() => {
     if (!window.Kakao.isInitialized())
@@ -19,7 +19,7 @@ const KakaoShare = () => {
       objectType: "feed",
       content: {
         title: "갓생살기",
-        description: "갓생을 함께 살자는 유도문구",
+        description: "쉽게만 살아가면 재미없어 빙고!",
         imageUrl:
           "https://mud-kage.kakao.com/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg",
         link: {
@@ -29,7 +29,7 @@ const KakaoShare = () => {
       },
       social: {
         likeCount: likeCnt,
-        commentCount: commentCnt,
+        commentCount: comments.length,
         // sharedCount: 30,
       },
     });
