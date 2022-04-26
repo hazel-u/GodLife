@@ -3,7 +3,7 @@ import axios from "axios";
 
 import React, { useEffect, useState } from "react";
 
-import Bingo from "../../../components/common/Bingo/Bingo";
+import Bingo from "../../../components/Bingo/Bingo";
 import { BingoType } from "../../../types/bingo";
 
 const PreviousBingoList = () => {
@@ -28,11 +28,12 @@ const PreviousBingoList = () => {
         <Grid item xs={12} sm={6} md={4} key={bingo.id}>
           <Box sx={{ maxWidth: "300px", margin: "auto" }}>
             <Bingo
-              createdBy={"백우민"}
+              createdBy={bingo.userName}
               size={3}
               goals={bingo.goals}
               mode={"Active"}
-              startDate={new Date()}
+              startDate={bingo.startDate}
+              godlife={bingo.godlife}
             />
           </Box>
         </Grid>

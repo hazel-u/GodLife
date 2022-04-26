@@ -9,8 +9,14 @@ import {
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+import dayjs from "dayjs";
 
 import React, { useState } from "react";
+
+import { ReactComponent as Stamp } from "../../assets/images/stamp.svg";
+import { selectBingo } from "../../store/bingo";
+import { useAppSelector } from "../../store/hooks";
+import { selectUser } from "../../store/user";
 
 interface BingoCellProp {
   content: String;
@@ -23,10 +29,17 @@ const BingoCell = ({
   isCompleted,
   customClickEvent,
 }: BingoCellProp) => {
+  const { startDate, userEmail } = useAppSelector(selectBingo);
+  const { email } = useAppSelector(selectUser);
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
-    setOpen(true);
+    if (
+      email === userEmail &&
+      dayjs().format("YYYY-M-D") === startDate.join("-")
+    ) {
+      setOpen(true);
+    }
   };
 
   const handleClose = () => {
@@ -51,9 +64,7 @@ const BingoCell = ({
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>취소</Button>
-          <Button onClick={handleComplete} autoFocus>
-            확인
-          </Button>
+          <Button onClick={handleComplete}>확인</Button>
         </DialogActions>
       </Dialog>
 
@@ -74,7 +85,6 @@ const BingoCell = ({
         <Paper
           elevation={3}
           sx={{
-            bgcolor: isCompleted ? "primary.dark" : "primary.light",
             position: "absolute",
             display: "flex",
             justifyContent: "center",
@@ -83,9 +93,12 @@ const BingoCell = ({
             left: 5,
             right: 5,
             bottom: 5,
-            padding: 1,
+            padding: 3,
           }}
         >
+          {isCompleted && (
+            <Stamp style={{ position: "absolute", height: "100%" }} />
+          )}
           <Typography align="center">{content}</Typography>
         </Paper>
       </Grid>

@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Grid";
 import axios from "axios";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 
 import BingoCell from "./BingoCell";
 
@@ -9,9 +9,11 @@ interface BingoProps {
   size: number;
   goals: Array<Object>;
   mode: String;
-  startDate: Date;
+  startDate: number[];
   createdBy: String;
+  godlife: boolean;
   getBingo?: () => void;
+  id?: string;
 }
 
 export const Bingo = ({
@@ -21,25 +23,14 @@ export const Bingo = ({
   startDate,
   createdBy,
   getBingo,
+  godlife,
+  id,
 }: BingoProps) => {
-  const [state, setState] = useState({
-    size: size,
-    goals: goals,
-    mode: mode,
-    startDate: startDate,
-    bingoCounts: 0,
-  });
-  useEffect(() => {
-    countBingos();
-  }, []);
-
   // 1. 빙고 수 세기.
-  const countBingos = () => {
+  const countBingos = useCallback(() => {
     interface goal {
       [key: string]: any;
     }
-
-    const size = state.size;
 
     let bingoCounts = 0;
     let downBingo = true;
@@ -47,21 +38,21 @@ export const Bingo = ({
 
     for (let i = 0; i < size; i++) {
       // 1-1). 대각 빙고 확인
-      const upCell: goal = state.goals[size * (i + 1) - i - 1];
-      const downCell: goal = state.goals[size * i + i];
+      const upCell: goal = goals[size * (i + 1) - i - 1];
+      const downCell: goal = goals[size * i + i];
 
-      upBingo &&= upCell.isCompleted;
-      downBingo &&= downCell.isCompleted;
+      upBingo &&= upCell.completed;
+      downBingo &&= downCell.completed;
 
       // 2-1). 가로/세로 빙고 확인
       let rowBingo = true;
       let colBingo = true;
 
       for (let j = 0; j < size; j++) {
-        const rowCell: goal = state.goals[i + j * size];
-        const colCell: goal = state.goals[i * size + j];
-        rowBingo &&= rowCell.isCompleted;
-        colBingo &&= colCell.isCompleted;
+        const rowCell: goal = goals[i + j * size];
+        const colCell: goal = goals[i * size + j];
+        rowBingo &&= rowCell.completed;
+        colBingo &&= colCell.completed;
       }
       // 2-2). 가로 / 세로 빙고 합산
       for (let bingo of [rowBingo, colBingo]) {
@@ -72,12 +63,23 @@ export const Bingo = ({
     for (let bingo of [upBingo, downBingo]) {
       bingoCounts = bingo ? bingoCounts + 1 : bingoCounts;
     }
-    // 빙고 수 갱신
-    if (state.bingoCounts !== bingoCounts) {
-      setState({ ...state, bingoCounts: bingoCounts });
+
+    if (3 <= bingoCounts) {
+      axios
+        .put(`bingo/${id}/godlife`, null, {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        })
+        .then(() => getBingo && getBingo());
     }
-    console.log(bingoCounts);
-  };
+  }, [goals, size, id, getBingo]);
+
+  useEffect(() => {
+    if (!godlife) {
+      countBingos();
+    }
+  }, [goals, godlife, countBingos]);
 
   // 2.
   const completeGoal = (goal: {
@@ -105,11 +107,11 @@ export const Bingo = ({
         }
       })
       .catch((err) => console.log(err));
-    countBingos();
   };
 
   return (
     <>
+      <p style={{ textAlign: "center" }}>{godlife ? "⭐⭐⭐⭐⭐" : "🔥🔥🔥"}</p>
       {/* 빙고 박스 */}
       <Grid
         container
@@ -119,13 +121,13 @@ export const Bingo = ({
         }}
         id="bingo"
       >
-        {goals.map(function (goal: any, index: number) {
+        {goals.map(function (goal: any) {
           return (
             <BingoCell
               customClickEvent={() => completeGoal(goal)}
               content={goal.content}
               isCompleted={goal.completed}
-              key={index}
+              key={goal.seq}
             />
           );
         })}
