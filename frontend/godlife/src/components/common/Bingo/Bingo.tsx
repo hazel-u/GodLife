@@ -1,3 +1,11 @@
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Slide,
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
@@ -9,16 +17,22 @@ interface BingoProps {
   size: number;
   goals: Array<Object>;
   mode: String;
-  date: Date;
+  startDate: Date;
   createdBy: String;
 }
 
-export const Bingo = ({ size, goals, mode, date, createdBy }: BingoProps) => {
+export const Bingo = ({
+  size,
+  goals,
+  mode,
+  startDate,
+  createdBy,
+}: BingoProps) => {
   const [state, setState] = useState({
     size: size,
     goals: goals,
     mode: mode,
-    date: date,
+    startDate: startDate,
     bingoCounts: 0,
   });
   useEffect(() => {

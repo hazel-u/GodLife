@@ -32,7 +32,7 @@ const PreviousBingoList = () => {
               size={3}
               goals={bingo.goals}
               mode={"Active"}
-              date={new Date()}
+              startDate={new Date()}
             />
           </Box>
         </Grid>
