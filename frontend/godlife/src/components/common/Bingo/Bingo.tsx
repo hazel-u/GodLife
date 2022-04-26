@@ -1,5 +1,5 @@
-import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import axios from "axios";
 
 import { useEffect, useState } from "react";
 
@@ -11,6 +11,7 @@ interface BingoProps {
   mode: String;
   startDate: Date;
   createdBy: String;
+  getBingo?: () => void;
 }
 
 export const Bingo = ({
@@ -19,6 +20,7 @@ export const Bingo = ({
   mode,
   startDate,
   createdBy,
+  getBingo,
 }: BingoProps) => {
   const [state, setState] = useState({
     size: size,
@@ -29,7 +31,7 @@ export const Bingo = ({
   });
   useEffect(() => {
     countBingos();
-  });
+  }, []);
 
   // 1. 빙고 수 세기.
   const countBingos = () => {
@@ -74,22 +76,40 @@ export const Bingo = ({
     if (state.bingoCounts !== bingoCounts) {
       setState({ ...state, bingoCounts: bingoCounts });
     }
+    console.log(bingoCounts);
   };
 
   // 2.
-  const completeGoal = (index: number) => {
-    let updatedGoals = state.goals.slice();
-    const updatedGoal: any = state.goals[index];
-
-    updatedGoal.isCompleted = !updatedGoal.isCompleted;
-    updatedGoals[index] = updatedGoal;
-
-    setState({ ...state, goals: updatedGoals });
+  const completeGoal = (goal: {
+    category: string;
+    completed: boolean;
+    content: string;
+    seq: string;
+  }) => {
+    axios
+      .post(
+        "goal",
+        {
+          completed: !goal.completed,
+          seq: goal.seq,
+        },
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then(() => {
+        if (getBingo) {
+          getBingo();
+        }
+      })
+      .catch((err) => console.log(err));
     countBingos();
   };
 
   return (
-    <Box>
+    <>
       {/* 빙고 박스 */}
       <Grid
         container
@@ -102,15 +122,15 @@ export const Bingo = ({
         {goals.map(function (goal: any, index: number) {
           return (
             <BingoCell
-              customClickEvent={() => completeGoal(index)}
+              customClickEvent={() => completeGoal(goal)}
               content={goal.content}
-              isCompleted={goal.isCompleted}
+              isCompleted={goal.completed}
               key={index}
-            ></BingoCell>
+            />
           );
         })}
       </Grid>
-    </Box>
+    </>
   );
 };
 

@@ -18,7 +18,7 @@ const GodlifeShare = () => {
 
   useEffect(() => {
     getBingo();
-  });
+  }, []);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -64,6 +64,7 @@ const GodlifeShare = () => {
             goals={bingo.goals}
             mode={"Active"}
             startDate={new Date()}
+            getBingo={getBingo}
           />
         </Container>
       )}
