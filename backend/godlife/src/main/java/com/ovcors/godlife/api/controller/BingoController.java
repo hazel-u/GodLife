@@ -4,6 +4,7 @@ import com.ovcors.godlife.api.dto.request.SaveBingoReqDto;
 import com.ovcors.godlife.api.dto.request.SaveCommentReqDto;
 import com.ovcors.godlife.api.dto.request.UpdateTitleReqDto;
 import com.ovcors.godlife.api.dto.response.BaseResponseEntity;
+import com.ovcors.godlife.api.dto.response.BingoCountResDto;
 import com.ovcors.godlife.api.dto.response.FindBingoResDto;
 import com.ovcors.godlife.api.dto.response.SaveBingoResDto;
 import com.ovcors.godlife.api.resolver.Auth;
@@ -72,4 +73,11 @@ public class BingoController {
         bingoService.addComment(seq, reqDto);
         return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
     }
+
+    @GetMapping("/count")
+    public ResponseEntity<BingoCountResDto> findBingoCountByUser(@Auth User user){
+        Long count = bingoService.findBingoCount(user);
+        return ResponseEntity.ok().body(new BingoCountResDto(count));
+    }
+
 }

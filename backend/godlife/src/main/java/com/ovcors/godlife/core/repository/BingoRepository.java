@@ -9,4 +9,6 @@ import java.util.UUID;
 
 public interface BingoRepository extends JpaRepository<Bingo, UUID> {
     List<Bingo> findAllByUser(User user);
+
+    Long countByUser(User user);
 }
