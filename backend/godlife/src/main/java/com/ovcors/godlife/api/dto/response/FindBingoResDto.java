@@ -55,6 +55,7 @@ public class FindBingoResDto {
         List<Comment> comments = bingo.getComments();
         for(Comment comment:comments){
             this.comments.add(CommentResDto.builder()
+                    .seq(comment.getSeq())
                     .content(comment.getContent())
                     .nickname(comment.getNickname())
                     .password(comment.getPassword())
