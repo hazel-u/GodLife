@@ -7,6 +7,7 @@ import com.ovcors.godlife.api.dto.response.FindBingoResDto;
 import com.ovcors.godlife.core.domain.bingo.Bingo;
 import com.ovcors.godlife.core.domain.user.User;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface BingoService {
@@ -19,5 +20,7 @@ public interface BingoService {
     void updateLikeCnt(String seq);
     void addComment(String seq, SaveCommentReqDto reqDto);
     Long findBingoCount(User user);
+
+    FindBingoResDto findBingoBydate(String date, User user)  throws ParseException;
 
 }

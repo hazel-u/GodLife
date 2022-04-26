@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.ParseException;
 import java.util.List;
 import java.util.UUID;
 
@@ -78,6 +79,11 @@ public class BingoController {
     public ResponseEntity<BingoCountResDto> findBingoCountByUser(@Auth User user){
         Long count = bingoService.findBingoCount(user);
         return ResponseEntity.ok().body(new BingoCountResDto(count));
+    }
+    @GetMapping("/date/{date}")
+    public ResponseEntity<FindBingoResDto> findBingByDate(@Auth User user, @PathVariable String date) throws ParseException {
+        FindBingoResDto response = bingoService.findBingoBydate(date,user);
+        return ResponseEntity.ok().body(response);
     }
 
 }

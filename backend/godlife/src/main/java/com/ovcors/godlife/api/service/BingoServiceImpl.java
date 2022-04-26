@@ -18,6 +18,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -104,6 +108,13 @@ public class BingoServiceImpl implements BingoService{
 
     public Long findBingoCount(User user){
         return bingoRepository.countByUser(user);
+    }
+
+    @Override
+    public FindBingoResDto findBingoBydate(String date, User user) throws ParseException {
+        LocalDate startdate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        Bingo bingo = bingoRepository.findByStartDateAndUser(startdate, user);
+        return new FindBingoResDto(bingo);
     }
 
 
