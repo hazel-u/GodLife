@@ -1,8 +1,8 @@
-import { IconButton } from "@mui/material";
+import { IconButton, SvgIcon } from "@mui/material";
 
 import React, { useEffect } from "react";
 
-import KakaotalkLogo from "../../../assets/logo/Brand/kakaotalk.png";
+import { ReactComponent as KakaotalkLogo } from "../../../assets/logo/Brand/kakaotalk.svg";
 import { selectBingo } from "../../../store/bingo";
 import { useAppSelector } from "../../../store/hooks";
 
@@ -36,7 +36,11 @@ const KakaoShare = () => {
   };
   return (
     <IconButton onClick={shareKakao} sx={{ padding: 0, height: "40px" }}>
-      <img src={KakaotalkLogo} alt="Kakaotalk Logo" style={{ width: "40px" }} />
+      <SvgIcon
+        component={KakaotalkLogo}
+        inheritViewBox
+        sx={{ width: "40px", height: "40px" }}
+      />
     </IconButton>
   );
 };

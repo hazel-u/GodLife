@@ -37,7 +37,7 @@ const GodlifeShare = () => {
   const { email } = useAppSelector(selectUser);
 
   return (
-    <Stack direction="column" alignItems="center">
+    <Stack direction="column" alignItems="center" m={5}>
       {bingo.code && (
         <Container sx={{ width: "500px" }}>
           {/* 
