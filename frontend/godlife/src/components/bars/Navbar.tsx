@@ -1,14 +1,13 @@
 import { Grid, Hidden, Stack } from "@mui/material";
-import axios from "axios";
-import dayjs from "dayjs";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { ReactComponent as Logo } from "../../assets/logo/Godlife/logo.svg";
 import Profile from "../../pages/profile/Profile";
-import { useAppDispatch } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
+import { selectTodayBingo } from "../../store/todayBingo";
 import { clearLoggedUser } from "../../store/user";
 import { TextButton } from "../common/Button";
 import MobileNavbarDialog from "./MobileNavbarDialog";
@@ -42,17 +41,7 @@ const Navbar = () => {
     );
   };
 
-  const [todayBingo, setTodayBingo] = useState(0);
-  useEffect(() => {
-    axios
-      .get(`bingo/date/${dayjs().format("YYYY-MM-DD")}`, {
-        headers: {
-          Authorization: `${localStorage.getItem("token")}`,
-        },
-      })
-      .then((res) => setTodayBingo(res.data.code))
-      .catch((err) => console.log(err));
-  }, []);
+  const { code } = useAppSelector(selectTodayBingo);
 
   return (
     <>
@@ -70,7 +59,11 @@ const Navbar = () => {
             <Stack direction="row" justifyContent="space-around">
               <TextButton
                 onClick={() => {
-                  navigate(`/bingo/${todayBingo}`);
+                  if (code) {
+                    navigate(`/bingo/${code}`);
+                  } else {
+                    navigate("create");
+                  }
                 }}
               >
                 오늘의 갓생
