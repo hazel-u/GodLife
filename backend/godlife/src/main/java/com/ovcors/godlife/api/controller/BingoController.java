@@ -82,11 +82,13 @@ public class BingoController {
         bingoService.deletemyBingoComment(seq, user.getEmail());
         return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
     }
+
     @PostMapping("/comment/{seq}")
-    public ResponseEntity<BaseResponseEntity> deletemyBingoComment(@PathVariable String seq, @RequestBody DeleteCommentDto reqDto) {
+    public ResponseEntity<BaseResponseEntity> deleteCommentByPassword(@PathVariable String seq, @RequestBody DeleteCommentDto reqDto) {
         bingoService.deleteCommentByPassword(seq, reqDto);
         return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
     }
+
     @GetMapping("/count")
     public ResponseEntity<BingoCountResDto> findBingoCountByUser(@Auth User user) {
         Long count = bingoService.findBingoCount(user);
