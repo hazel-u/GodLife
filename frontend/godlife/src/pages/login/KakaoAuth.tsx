@@ -5,8 +5,6 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
-  const REDIRECT_URI = "http://localhost:3000/oauth/kakao/callback";
-
   const config = {
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -15,12 +13,12 @@ const Auth = () => {
 
   const code = new URL(window.location.href).searchParams.get("code");
 
-  const history = useNavigate();
+  const navigate = useNavigate();
   const getToken = async () => {
     const payload = qs.stringify({
       grant_type: "authorization_code",
       client_id: process.env.REACT_APP_KAKAO_REST_API_KEY,
-      redirect_uri: REDIRECT_URI,
+      redirect_uri: process.env.REACT_APP_KAKAO_REDIRECT_URI,
       code: code,
       client_secret: process.env.REACT_APP_KAKAO_CLIENT_SECRET,
     });
@@ -31,19 +29,19 @@ const Auth = () => {
         payload
       );
 
-      console.log(res.data.access_token);
-      const payloadToServer = JSON.stringify({});
-
-      const res2 = await axios.post(
-        "http://localhost:8080/api/oauth/kakao",
-        {
-          accessToken: res.data.access_token,
-          refreshToken: res.data.refresh_token,
-        },
-        config
-      );
-
-      console.log("res2->", res2);
+      await axios
+        .post(
+          "oauth/kakao",
+          {
+            accessToken: res.data.access_token,
+            refreshToken: res.data.refresh_token,
+          },
+          config
+        )
+        .then((res) => {
+          localStorage.setItem("token", res.data.jwtToken);
+          navigate("");
+        });
     } catch (err) {
       console.log(err);
     }

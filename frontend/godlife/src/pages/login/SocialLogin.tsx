@@ -3,26 +3,26 @@ import axios from "axios";
 
 import React from "react";
 import GoogleLogin from "react-google-login";
+import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as GoogleLoginImage } from "../../assets/logo/Brand/oAuth/google/google.svg";
 import { ReactComponent as KakaoLoginImage } from "../../assets/logo/Brand/oAuth/kakao/kakao.svg";
 
 const SocialLogin = () => {
+  const navigate = useNavigate();
   const responseGoogle = async (res: any) => {
-    console.log(1, res);
     let jwtToken = await axios.post("oauth/google", JSON.stringify(res), {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
       },
     });
     if (jwtToken.status === 200) {
-      console.log(2, jwtToken.data);
       localStorage.setItem("token", jwtToken.data);
+      navigate("");
     }
   };
 
-  const REDIRECT_URI = "http://localhost:3000/oauth/kakao/callback";
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`;
 
   return (
     <Stack direction="column" alignItems="center" spacing={2}>

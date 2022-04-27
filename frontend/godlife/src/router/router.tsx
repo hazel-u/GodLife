@@ -7,7 +7,7 @@ import BingoCreate from "../pages/bingo/create/BingoCreateComponents";
 import GodlifeShare from "../pages/bingo/detail/GodlifeShare";
 import PreviousBingoList from "../pages/bingo/list/PreviousBingoList";
 import Join from "../pages/join/Join";
-import Auth from "../pages/login/Auth";
+import KakaoAuth from "../pages/login/KakaoAuth";
 import Login from "../pages/login/Login";
 
 export default function Router() {
@@ -24,7 +24,7 @@ export default function Router() {
     },
     {
       path: "/oauth/kakao/callback",
-      element: <Auth />,
+      element: <KakaoAuth />,
     },
     {
       path: "/",
