@@ -12,7 +12,9 @@ import { useDispatch } from "react-redux";
 
 import menu from "../../assets/icon/menu.png";
 import { setDialog } from "../../store/dialog";
+import { useAppSelector } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
+import { selectUser } from "../../store/user";
 import { TextButton } from "../common/Button";
 import "./bars.css";
 
@@ -55,6 +57,7 @@ export default function SwipeableEdgeDrawer({
     setDrawerOpen(newOpen);
   };
   const dispatch = useDispatch();
+  const { name } = useAppSelector(selectUser);
 
   return (
     <Root>
@@ -100,7 +103,7 @@ export default function SwipeableEdgeDrawer({
             height="100%"
           >
             <Stack>
-              <h4>갓생러님, 갓생사세요!</h4>
+              <h4>{name}님, 갓생사세요!</h4>
               <div className="division-line" />
             </Stack>
             <Box sx={{ height: "80%" }}>
