@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import bingoReducer from "./bingo";
 import dialogReducer from "./dialog";
+import loadingReducer from "./loading";
 import snackbarReducer from "./snackbar";
 import todayBingoReducer from "./todayBingo";
 import userReducer from "./user";
@@ -13,6 +14,7 @@ export const store = configureStore({
     dialog: dialogReducer,
     bingo: bingoReducer,
     todayBingo: todayBingoReducer,
+    loading: loadingReducer,
   },
 });
 

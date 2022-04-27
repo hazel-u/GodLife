@@ -3,6 +3,7 @@ import axios from "axios";
 import dayjs from "dayjs";
 
 import CommonDialog from "./components/common/CommonDialog";
+import CommonLoading from "./components/common/CommonLoading";
 import CommonSnackbar from "./components/common/CommonSnackbar";
 import { theme } from "./components/common/theme";
 import Router from "./router/router";
@@ -39,6 +40,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CommonDialog />
       <CommonSnackbar />
+      <CommonLoading />
       <Router />
     </ThemeProvider>
   );
