@@ -1,15 +1,20 @@
 import { Button, Stack } from "@mui/material";
 import axios from "axios";
+import dayjs from "dayjs";
 
 import React from "react";
 import GoogleLogin from "react-google-login";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as GoogleLoginImage } from "../../assets/logo/Brand/oAuth/google/google.svg";
 import { ReactComponent as KakaoLoginImage } from "../../assets/logo/Brand/oAuth/kakao/kakao.svg";
+import { setTodayBingo } from "../../store/todayBingo";
+import { setLoggedUser } from "../../store/user";
 
 const SocialLogin = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const responseGoogle = async (res: any) => {
     let jwtToken = await axios.post("oauth/google", JSON.stringify(res), {
       headers: {
@@ -18,6 +23,23 @@ const SocialLogin = () => {
     });
     if (jwtToken.status === 200) {
       localStorage.setItem("token", jwtToken.data.jwtToken);
+      axios
+        .get("user/info", {
+          headers: {
+            Authorization: jwtToken.data.jwtToken,
+          },
+        })
+        .then((res) => {
+          dispatch(setLoggedUser(res.data));
+          axios
+            .get(`bingo/date/${dayjs().format("YYYY-MM-DD")}`, {
+              headers: {
+                Authorization: jwtToken.data.jwtToken,
+              },
+            })
+            .then((res) => dispatch(setTodayBingo(res.data.code)))
+            .catch((err) => console.log(err));
+        });
       navigate("/");
     }
   };

@@ -1,14 +1,19 @@
 import axios from "axios";
+import dayjs from "dayjs";
 import qs from "qs";
 
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
+import { setTodayBingo } from "../../store/todayBingo";
+import { setLoggedUser } from "../../store/user";
 
 const Auth = () => {
   const code = new URL(window.location.href).searchParams.get("code");
 
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   useEffect(() => {
     const payload = qs.stringify({
       grant_type: "authorization_code",
@@ -35,6 +40,23 @@ const Auth = () => {
           )
           .then((res) => {
             localStorage.setItem("token", res.data.jwtToken);
+            axios
+              .get("user/info", {
+                headers: {
+                  Authorization: res.data.jwtToken,
+                },
+              })
+              .then((res) => {
+                dispatch(setLoggedUser(res.data));
+                axios
+                  .get(`bingo/date/${dayjs().format("YYYY-MM-DD")}`, {
+                    headers: {
+                      Authorization: res.data.jwtToken,
+                    },
+                  })
+                  .then((res) => dispatch(setTodayBingo(res.data.code)))
+                  .catch((err) => console.log(err));
+              });
             navigate("/");
           });
       });
