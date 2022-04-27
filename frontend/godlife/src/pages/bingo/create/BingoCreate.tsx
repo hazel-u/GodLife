@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import axios from "axios";
 
 import React, { useEffect, useState } from "react";
@@ -10,11 +10,12 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
 import BingoCopy from "./BingoCopy";
 import BingoCreateGoalList from "./BingoCreateGoalList";
+import BingoTitle from "./BingoTitle";
 
 const BingoCreate = () => {
   const selectedGoals = useAppSelector(selectGoal);
   const [open, setOpen] = useState(false);
-  const title = "임시제목";
+  const [title, setTitle] = useState("");
 
   const dispatch = useAppDispatch();
   const [goals, setGoals] = useState<any[]>([]);
@@ -92,9 +93,19 @@ const BingoCreate = () => {
   return (
     <>
       <BingoCopy open={open} setOpen={setOpen} title={title} />
-      <Stack direction="column" alignItems="center">
+      <Stack
+        direction="column"
+        alignItems="center"
+        sx={{ maxWidth: "1000px", margin: "0 auto" }}
+      >
+        <BingoTitle title={title} setTitle={setTitle} />
         <BingoCreateGoalList />
-        <Box sx={{ textAlign: "center", padding: "20px" }}>
+        <Stack
+          direction="row"
+          justifyContent="center"
+          spacing={3}
+          sx={{ padding: "20px", width: "100%" }}
+        >
           <OutlinedButton
             variant="outlined"
             onClick={() => {
@@ -116,7 +127,7 @@ const BingoCreate = () => {
           <OutlinedButton variant="outlined" onClick={startBingo}>
             시작하기
           </OutlinedButton>
-        </Box>
+        </Stack>
       </Stack>
     </>
   );

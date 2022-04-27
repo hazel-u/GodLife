@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 
 import { selectGoal } from "../../../store/goal";
 import { useAppSelector } from "../../../store/hooks";
-import BingoTitle from "./BingoTitle";
 import Goal from "./Goal";
 
 const BingoCreateGoalList = () => {
@@ -146,7 +145,6 @@ const BingoCreateGoalList = () => {
 
   return (
     <Box sx={{ width: "80%", padding: "30px" }}>
-      <BingoTitle />
       <Stack direction="row" justifyContent="center">
         {category.map((c, index) => (
           <Chip
