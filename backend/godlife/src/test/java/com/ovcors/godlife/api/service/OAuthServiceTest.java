@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
@@ -52,13 +53,14 @@ public class OAuthServiceTest {
     @Test
     void googleLogin() {
         // given
-        doReturn(googleUser()).when(userRepository).findByEmailAndDeletedFalse(googleEmail);
+        doReturn(googleUser()).when(userRepository).findByEmailAndDeletedFalse(any(String.class));
         ReflectionTestUtils.setField(oAuthService, "secret", "12345");
 
         // when
         Map<String, Object> data = new HashMap<>();
         Map<String, String> attribute = new HashMap<>();
-        attribute.put("googleId", "google453242");
+        attribute.put("providerId", "google453242");
+        attribute.put("provider", "google");
         attribute.put("email", "google@gmail.com");
         attribute.put("name", "googleTest");
         attribute.put("imageUrl", "testImg");
