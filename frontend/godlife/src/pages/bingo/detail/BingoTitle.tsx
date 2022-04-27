@@ -68,6 +68,7 @@ const BingoTitle = ({
         justifyContent="center"
         sx={{ height: "65px" }}
       >
+        {id && <Box sx={{ width: "40px" }} />}
         {clickEdit ? (
           <TextField
             variant="standard"
@@ -130,11 +131,10 @@ const BingoTitle = ({
           </Box>
         )}
       </Stack>
-      <p>제목 글자수로 input 너비를 정해져 고정폭 글씨체를 쓰는게 좋다</p>
       {dayjs().format("YYYY-M-D") === startDate.join("-") && (
         <Box sx={{ mt: 2 }}>
           <Typography>
-            {godCount}일 째 갓생 중 | {100}일 연속 갓생 중
+            {godCount}일 째 갓생 중{/* | {100}일 연속 갓생 중 */}
           </Typography>
         </Box>
       )}
