@@ -1,10 +1,10 @@
-import { Container, Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import axios from "axios";
 
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useCallback, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-import Bingo from "../../../components/common/Bingo/Bingo";
+import Bingo from "../../../components/Bingo/Bingo";
 import { selectBingo, setBingo } from "../../../store/bingo";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { selectUser } from "../../../store/user";
@@ -15,42 +15,48 @@ import Share from "./Share";
 
 const GodlifeShare = () => {
   const params = useParams();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const getBingo = useCallback(() => {
+    axios
+      .get(`bingo/${params.bingoId}`)
+      .then((res) => {
+        dispatch(setBingo(res.data));
+      })
+      .catch(() => {
+        navigate("/404");
+      });
+  }, [params, dispatch, navigate]);
 
   useEffect(() => {
     getBingo();
-  });
-
-  const dispatch = useAppDispatch();
-  const getBingo = () => {
-    axios.get(`bingo/${params.bingoId}`).then((res) => {
-      dispatch(setBingo(res.data));
-    });
-  };
+  }, [getBingo]);
 
   const bingo = useAppSelector(selectBingo);
   const { email } = useAppSelector(selectUser);
 
   return (
-    <Stack direction="column" alignItems="center">
+    <Stack direction="column" alignItems="center" m={5}>
       {bingo.code && (
-        <Container sx={{ width: "500px" }}>
-          {/* 
-          본인의 bingo일 경우에만 실제 id 넘겨주고 
-          그렇지 않다면 "" 빈 문자열 넘기기
-         */}
+        <Box sx={{ width: "500px" }}>
+          {/* 본인의 bingo일 경우에만 실제 id 넘겨주고 그렇지 않다면 빈 문자열 넘기기*/}
           <BingoTitle
             id={bingo.userEmail === email ? bingo.id : ""}
             title={bingo.title}
             getBingo={getBingo}
           />
           <Bingo
-            createdBy={"백우민"}
+            createdBy={bingo.userName}
             size={3}
             goals={bingo.goals}
             mode={"Active"}
-            date={new Date()}
+            startDate={bingo.startDate}
+            getBingo={getBingo}
+            godlife={bingo.godlife}
+            id={bingo.id}
           />
-        </Container>
+        </Box>
       )}
 
       <Interaction

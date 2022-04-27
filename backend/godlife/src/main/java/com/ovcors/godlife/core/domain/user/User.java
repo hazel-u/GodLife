@@ -75,4 +75,9 @@ public class User {
     public void changePW(String newPassword) {
         this.password = newPassword;
     }
+
+    public void setSeq() {
+        UUID seq = UUID.randomUUID();
+        this.seq = seq;
+    }
 }
