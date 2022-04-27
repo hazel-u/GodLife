@@ -17,15 +17,16 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   const pageNameList: { [key: string]: string } = {
-    "/": "메인",
-    "/today": "오늘의 갓생",
-    "/list": "이전의 갓생",
-    "/group": "내 그룹",
-    "/item": "아이템 샵",
+    list: "이전의 갓생",
+    group: "내 그룹",
+    item: "아이템 샵",
+    create: "갓생 만들기",
+    bingo: "오늘의 빙고",
   };
 
   const location = useLocation();
 
+  console.log(location.pathname.split("/")[1]);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const logout = () => {
@@ -153,7 +154,7 @@ const Navbar = () => {
             alignItems: "center",
           }}
         >
-          <p>{pageNameList[location.pathname]}</p>
+          <p>{pageNameList[location.pathname.split("/")[1]]}</p>
         </Grid>
         <Grid item xs>
           <MobileNavbarDialog logout={logout} setOpen={setOpen} />
