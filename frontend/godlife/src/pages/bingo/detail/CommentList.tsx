@@ -64,7 +64,7 @@ const CommentList = ({ getBingo }: { getBingo: () => void }) => {
   };
 
   return (
-    <Box sx={{ maxWidth: "500px", margin: "30px" }}>
+    <Box sx={{ maxWidth: "500px" }}>
       <p>댓글 {comments.length}개</p>
       <Divider />
       {!comments.length && <p>댓글이 없습니다.</p>}
@@ -109,7 +109,7 @@ const CommentList = ({ getBingo }: { getBingo: () => void }) => {
             <OutlinedButton
               variant="outlined"
               type="submit"
-              sx={{ width: "100%", minWidth: "100%" }}
+              sx={{ width: "100%", minWidth: "100%", height: "39.99px" }}
             >
               작성
             </OutlinedButton>

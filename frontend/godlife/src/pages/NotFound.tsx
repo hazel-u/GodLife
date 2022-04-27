@@ -13,13 +13,23 @@ const NotFound = () => {
       alignItems="center"
       sx={{ height: "100vh" }}
     >
-      <img src={NotFoundImage} alt="404 Not Found" style={{ width: "404px" }} />
+      <img src={NotFoundImage} alt="404 Not Found" style={{ width: "44%" }} />
       <Typography
-        sx={{ fontFamily: "BMEULJIRO", fontSize: "44px", margin: "44px" }}
+        sx={(theme) => ({
+          fontFamily: "BMEULJIRO",
+          fontSize: "36px",
+          margin: "44px",
+          [theme.breakpoints.down("md")]: {
+            fontSize: "24px",
+          },
+          [theme.breakpoints.down("sm")]: {
+            fontSize: "18px",
+          },
+        })}
       >
         쉽게만 살아가면 재미없어 빙고
       </Typography>
-      <OutlinedButton variant="outlined" href="/">
+      <OutlinedButton variant="outlined" href="/" sx={{ width: "44%" }}>
         돌아가기
       </OutlinedButton>
     </Stack>

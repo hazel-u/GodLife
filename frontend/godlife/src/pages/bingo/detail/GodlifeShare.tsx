@@ -37,9 +37,9 @@ const GodlifeShare = () => {
   const { email } = useAppSelector(selectUser);
 
   return (
-    <Stack direction="column" alignItems="center" m={5}>
+    <Stack direction="column" alignItems="center" sx={{ margin: "3%" }}>
       {bingo.code && (
-        <Box sx={{ width: "500px" }}>
+        <Box sx={{ maxWidth: "500px" }}>
           {/* 본인의 bingo일 경우에만 실제 id 넘겨주고 그렇지 않다면 빈 문자열 넘기기*/}
           <BingoTitle
             id={bingo.userEmail === email ? bingo.id : ""}

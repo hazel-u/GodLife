@@ -40,7 +40,7 @@ const Interaction = ({ code, likeCnt, seq, getBingo }: InteractionProps) => {
     <Stack
       direction="row"
       justifyContent="space-between"
-      sx={{ width: "500px" }}
+      sx={{ maxWidth: "500px", width: "100%" }}
     >
       <Stack direction="row" alignItems="center">
         <Box>

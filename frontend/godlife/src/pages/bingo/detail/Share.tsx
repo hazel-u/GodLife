@@ -1,10 +1,10 @@
-import ImageIcon from "@mui/icons-material/Image";
-import LinkIcon from "@mui/icons-material/Link";
 import { IconButton, Stack, SvgIcon } from "@mui/material";
 import domtoimage from "dom-to-image";
 
 import React from "react";
 
+import { ReactComponent as Image } from "../../../assets/images/image.svg";
+import { ReactComponent as Link } from "../../../assets/images/link.svg";
 import { ReactComponent as FacebookLogo } from "../../../assets/logo/Brand/facebook.svg";
 import { ReactComponent as TwitterLogo } from "../../../assets/logo/Brand/twitter.svg";
 import { useAppDispatch } from "../../../store/hooks";
@@ -47,16 +47,21 @@ const Share = () => {
               })
             );
           }}
-          sx={{ backgroundColor: "#cacaca" }}
+          sx={{ padding: 0, height: "40px" }}
         >
-          <LinkIcon />
+          <SvgIcon
+            component={Link}
+            inheritViewBox
+            sx={{ width: "40px", height: "40px" }}
+          />
         </IconButton>
 
-        <IconButton
-          onClick={saveImage}
-          sx={{ backgroundColor: "#A11803", color: "white" }}
-        >
-          <ImageIcon />
+        <IconButton onClick={saveImage} sx={{ padding: 0, height: "40px" }}>
+          <SvgIcon
+            component={Image}
+            inheritViewBox
+            sx={{ width: "40px", height: "40px" }}
+          />
         </IconButton>
 
         <KakaoShare />
