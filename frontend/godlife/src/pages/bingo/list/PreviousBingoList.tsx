@@ -4,26 +4,28 @@ import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 
 import Bingo from "../../../components/Bingo/Bingo";
+import { useAppDispatch } from "../../../store/hooks";
+import { setLoading } from "../../../store/loading";
 import { BingoType } from "../../../types/bingo";
 
 const PreviousBingoList = () => {
   const [bingoList, setBingoList] = useState<BingoType[]>([]);
-  const [bingoCount, setBingoCount] = useState(0);
+  const [bingoCount, setBingoCount] = useState(-1);
   const [page, setPage] = useState(0);
 
   const limit = 6;
-
+  const dispatch = useAppDispatch();
   const getBingoList = useCallback(() => {
+    dispatch(setLoading(true));
     axios
       .get(`bingo/${page}/${limit}`, {
         headers: { Authorization: `${localStorage.getItem("token")}` },
       })
       .then((res) => {
-        console.log(res);
         setBingoList(res.data);
       })
       .catch((err) => console.log(err));
-  }, [page]);
+  }, [page, dispatch]);
 
   useEffect(() => {
     axios
@@ -41,9 +43,13 @@ const PreviousBingoList = () => {
     getBingoList();
   }, [page, getBingoList]);
 
+  useEffect(() => {
+    dispatch(setLoading(false));
+  }, [bingoList, dispatch]);
+
   return (
     <Stack direction="column" justifyContent="center" alignItems="center" p={3}>
-      {!bingoList.length ? (
+      {bingoCount === 0 ? (
         <>
           <Box sx={{ width: "50vh", height: "50vh", backgroundColor: "beige" }}>
             빙고가 없다는걸 알려주는 이미지
