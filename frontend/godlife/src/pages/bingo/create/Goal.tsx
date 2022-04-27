@@ -1,4 +1,4 @@
-import { Button, IconButton, SvgIcon, Typography } from "@mui/material";
+import { Box, Button, IconButton, SvgIcon, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
 
@@ -88,7 +88,7 @@ const Goal = (goal: GoalProps) => {
 
   const GoalButton = styled(Button)(({ theme }) => ({
     position: "relative",
-    width: "100%",
+    width: "208px",
     height: "50px",
     outline: "2px solid #5A5A5A",
     outlineOffset: "-2px",
@@ -99,6 +99,9 @@ const Goal = (goal: GoalProps) => {
     borderRadius: "10px",
     color: "#5A5A5A",
     backgroundColor: click ? "#FFEEEE" : "white",
+    "& p": {
+      fontSize: "14px",
+    },
     "&:before": {
       content: "''",
       width: "70%",
@@ -122,6 +125,7 @@ const Goal = (goal: GoalProps) => {
     top: 8,
     left: 8,
     padding: 0,
+    zIndex: 2,
     "& svg": {
       fontSize: 15,
       color: isFavorite ? "#FFE812" : "white",
@@ -129,12 +133,14 @@ const Goal = (goal: GoalProps) => {
   }));
 
   return (
-    <GoalButton onClick={manageSelectedGoals}>
+    <Box sx={{ position: "relative" }}>
       <BookmarkButton onClick={manageFavorites}>
         <SvgIcon component={StarIcon} />
       </BookmarkButton>
-      <Typography>{goal.content}</Typography>
-    </GoalButton>
+      <GoalButton onClick={manageSelectedGoals}>
+        <Typography>{goal.content}</Typography>
+      </GoalButton>
+    </Box>
   );
 };
 

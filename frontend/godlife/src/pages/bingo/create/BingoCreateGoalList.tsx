@@ -1,4 +1,4 @@
-import { Box, Chip, Grid, Stack } from "@mui/material";
+import { Box, Chip, Grid, Stack, Typography } from "@mui/material";
 import axios from "axios";
 
 import React, { useEffect, useState } from "react";
@@ -48,13 +48,13 @@ const BingoCreateGoalList = () => {
 
   const category = [
     "전체",
+    "즐겨찾기",
     "건강한삶",
     "미라클모닝",
     "자기개발",
     "삶의질",
     "습관개선",
     "환경",
-    "즐겨찾기",
   ];
 
   const selectedGoals = useAppSelector(selectGoal);
@@ -85,18 +85,35 @@ const BingoCreateGoalList = () => {
   };
 
   return (
-    <Box sx={{ width: "80%", padding: "30px" }}>
-      <Stack direction="row" justifyContent="center">
+    <>
+      <Box
+        sx={(theme) => ({
+          width: "100%",
+          display: "grid",
+          gridTemplateColumns: "repeat(8, 100px)",
+          columnGap: "10px",
+          justifyContent: "center",
+          [theme.breakpoints.down(980)]: {
+            gridTemplateColumns: "repeat(4, 100px)",
+          },
+          [theme.breakpoints.down("sm")]: {
+            gridTemplateColumns: "repeat(2, 100px)",
+          },
+          margin: "20px 0 10px 0",
+        })}
+      >
         {category.map((c, index) => (
           <Chip
             key={index}
             label={c}
             sx={{
-              width: "15%",
+              width: "100px",
               height: "30px",
-              marginTop: "20px",
-              marginX: "5px",
-              fontSize: "14px",
+              fontSize: "16px",
+              "& span": {
+                padding: 0,
+              },
+              marginBottom: "10px",
               border: "1px solid #6D6D6D",
               color: selectedCategory === c ? "black" : "#6D6D6D",
               backgroundColor: selectedCategory === c ? "#D8D8D8" : "white",
@@ -104,7 +121,7 @@ const BingoCreateGoalList = () => {
             onClick={(e) => changeCategory(e)}
           />
         ))}
-      </Stack>
+      </Box>
       <Box sx={{ padding: "50px 10px" }}>
         {isActive ? (
           <>
@@ -135,10 +152,29 @@ const BingoCreateGoalList = () => {
           </>
         )}
       </Box>
+
+      <Grid container spacing={2} py={3} justifyContent="center">
+        {goalList.length ? (
+          <>
+            {goalList.map(
+              (goal: { seq: number; content: string; category: string }) => (
+                <Grid item key={goal.seq}>
+                  <Goal {...goal} />
+                </Grid>
+              )
+            )}
+          </>
+        ) : (
+          <Typography sx={{ textAlign: "center" }}>
+            즐겨찾는 목표가 없습니다. <br /> 자주 찾는 목표의 별을 눌러보세요!
+          </Typography>
+        )}
+      </Grid>
+
       <Stack direction="row" justifyContent="center">
         <p>{selectedGoals.length} / 9 개 선택중</p>
       </Stack>
-    </Box>
+    </>
   );
 };
 

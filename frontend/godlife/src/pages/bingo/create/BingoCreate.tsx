@@ -42,6 +42,16 @@ const BingoCreate = () => {
   };
 
   const startBingo = () => {
+    if (!title) {
+      dispatch(
+        setSnackbar({
+          open: true,
+          message: "빙고의 제목을 입력해주세요.",
+          severity: "warning",
+        })
+      );
+      return;
+    }
     const goalsCount = selectedGoals.length;
     const selectedGoalsSeqs: number[] = selectedGoals.map(
       (goal: { seq: number }) => goal.seq
@@ -96,7 +106,7 @@ const BingoCreate = () => {
       <Stack
         direction="column"
         alignItems="center"
-        sx={{ maxWidth: "1000px", margin: "0 auto" }}
+        sx={{ maxWidth: "1000px", padding: "50px", margin: "0 auto" }}
       >
         <BingoTitle title={title} setTitle={setTitle} />
         <BingoCreateGoalList />
