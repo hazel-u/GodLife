@@ -34,14 +34,13 @@ const BingoCreateGoalList = () => {
     })
       .then((res) => {
         setUserFavorites(res.data.userGoals);
-        console.log(res.data.userGoals);
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
     getFavorites();
-  }, [setUserFavorites]);
+  }, []);
 
   useEffect(() => {
     getGoals();

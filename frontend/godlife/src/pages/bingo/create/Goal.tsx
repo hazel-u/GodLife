@@ -2,7 +2,7 @@ import { Button, IconButton, SvgIcon, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { ReactComponent as StarIcon } from "../../../assets/icon/star.svg";
 import { deleteGoal, selectGoal, setGoal } from "../../../store/goal";
@@ -18,9 +18,35 @@ const Goal = (goal: GoalProps) => {
   const dispatch = useAppDispatch();
   const [isFavorite, setIsFavorite] = useState(false);
   const [click, setClick] = useState(false);
+  const [userFavorites, setUserFavorites] = useState<any[]>([]);
+
+  const getFavorites = () => {
+    axios({
+      method: "get",
+      url: "goal/usergoal",
+      headers: {
+        Authorization: `${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => {
+        setUserFavorites(res.data.userGoals);
+        console.log(res.data.userGoals);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getFavorites();
+  }, []);
 
   const manageFavorites = () => {
-    if (!isFavorite) {
+    const findElement = userFavorites.some((el) => el.goals.seq === goal.seq);
+    const findElementSeq = userFavorites.find(
+      (el) => el.goals.seq === goal.seq
+    );
+    console.log(findElementSeq);
+    if (!findElement) {
+      setIsFavorite(true);
       axios
         .put(
           "goal",
@@ -33,20 +59,17 @@ const Goal = (goal: GoalProps) => {
         )
         .then(() => console.log("즐겨찾기 추가"))
         .catch((err) => console.log(err));
-
-      setIsFavorite(true);
     } else {
+      setIsFavorite(false);
       axios
         .delete("goal", {
           headers: {
             Authorization: `${localStorage.getItem("token")}`,
           },
-          data: { seq: goal.seq },
+          data: { seq: findElementSeq.seq },
         })
         .then(() => console.log("즐겨찾기 삭제"))
         .catch((err) => console.log(err));
-
-      setIsFavorite(false);
     }
   };
 
