@@ -1,4 +1,4 @@
-import { Box, Chip, Grid, Stack } from "@mui/material";
+import { Box, Chip, Grid, Stack, Typography } from "@mui/material";
 import axios from "axios";
 
 import React, { useEffect, useState } from "react";
@@ -42,13 +42,13 @@ const BingoCreateGoalList = () => {
 
   const category = [
     "전체",
+    "즐겨찾기",
     "건강한삶",
     "미라클모닝",
     "자기개발",
     "삶의질",
     "습관개선",
     "환경",
-    "즐겨찾기",
   ];
 
   const selectedGoals = useAppSelector(selectGoal);
@@ -75,87 +75,36 @@ const BingoCreateGoalList = () => {
     setGoalList(classifiedGoalList);
   };
 
-  // const [click, setClick] = useState(false);
-  // const [starClick, setStarClick] = useState(false);
-
-  // const GoalBox = styled(Box)(({ theme }) => ({
-  //   position: "relative",
-  //   width: "24%",
-  //   height: "50px",
-  //   outline: "2px solid #5A5A5A",
-  //   outlineOffset: "-2px",
-  //   display: "flex",
-  //   flexDirection: "row",
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  //   borderRadius: "10px",
-  //   cursor: "pointer",
-  //   backgroundColor: click ? "#FFEEEE" : "white",
-  //   "&::before": {
-  //     content: "''",
-  //     width: "70%",
-  //     height: "4px",
-  //     background: click ? "#FFEEEE" : "white",
-  //     top: "0px",
-  //     position: "absolute",
-  //   },
-  // }));
-
-  // const GoalButton = styled(Button)(({ theme }) => ({
-  //   position: "relative",
-  //   width: "100%",
-  //   height: "50px",
-  //   outline: "2px solid #5A5A5A",
-  //   outlineOffset: "-2px",
-  //   display: "flex",
-  //   flexDirection: "row",
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  //   borderRadius: "10px",
-  //   color: "#5A5A5A",
-  //   backgroundColor: click ? "#FFEEEE" : "white",
-  //   "&:before": {
-  //     content: "''",
-  //     width: "70%",
-  //     height: "4px",
-  //     background: click ? "#FFEEEE" : "white",
-  //     top: "0px",
-  //     position: "absolute",
-  //     transition: "all 0.3s",
-  //   },
-  //   "&:hover": {
-  //     color: "black",
-  //     backgroundColor: "#FFEEEE",
-  //   },
-  //   "&:hover:before": {
-  //     background: "#FFEEEE",
-  //   },
-  // }));
-
-  // const BookmarkButton = styled(IconButton)(({ theme }) => ({
-  //   position: "absolute",
-  //   top: 8,
-  //   left: 8,
-  //   padding: 0,
-  //   "& svg": {
-  //     fontSize: 15,
-  //     color: starClick ? "#FFE812" : "white",
-  //   },
-  // }));
-
   return (
-    <Box sx={{ width: "80%", padding: "30px" }}>
-      <Stack direction="row" justifyContent="center">
+    <>
+      <Box
+        sx={(theme) => ({
+          width: "100%",
+          display: "grid",
+          gridTemplateColumns: "repeat(8, 100px)",
+          columnGap: "10px",
+          justifyContent: "center",
+          [theme.breakpoints.down(980)]: {
+            gridTemplateColumns: "repeat(4, 100px)",
+          },
+          [theme.breakpoints.down("sm")]: {
+            gridTemplateColumns: "repeat(2, 100px)",
+          },
+          margin: "20px 0 10px 0",
+        })}
+      >
         {category.map((c, index) => (
           <Chip
             key={index}
             label={c}
             sx={{
-              width: "15%",
+              width: "100px",
               height: "30px",
-              marginTop: "20px",
-              marginX: "5px",
-              fontSize: "14px",
+              fontSize: "16px",
+              "& span": {
+                padding: 0,
+              },
+              marginBottom: "10px",
               border: "1px solid #6D6D6D",
               color: selectedCategory === c ? "black" : "#6D6D6D",
               backgroundColor: selectedCategory === c ? "#D8D8D8" : "white",
@@ -163,22 +112,30 @@ const BingoCreateGoalList = () => {
             onClick={(e) => changeCategory(e)}
           />
         ))}
-      </Stack>
-      <Box sx={{ padding: "50px 10px" }}>
-        <Grid container spacing={2}>
-          {goalList.map(
-            (goal: { seq: number; content: string; category: string }) => (
-              <Grid item xs={3} key={goal.seq}>
-                <Goal {...goal} />
-              </Grid>
-            )
-          )}
-        </Grid>
       </Box>
+
+      <Grid container spacing={2} py={3} justifyContent="center">
+        {goalList.length ? (
+          <>
+            {goalList.map(
+              (goal: { seq: number; content: string; category: string }) => (
+                <Grid item key={goal.seq}>
+                  <Goal {...goal} />
+                </Grid>
+              )
+            )}
+          </>
+        ) : (
+          <Typography sx={{ textAlign: "center" }}>
+            즐겨찾는 목표가 없습니다. <br /> 자주 찾는 목표의 별을 눌러보세요!
+          </Typography>
+        )}
+      </Grid>
+
       <Stack direction="row" justifyContent="center">
         <p>{selectedGoals.length} / 9 개 선택중</p>
       </Stack>
-    </Box>
+    </>
   );
 };
 

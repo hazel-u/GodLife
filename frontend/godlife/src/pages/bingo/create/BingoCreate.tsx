@@ -96,7 +96,7 @@ const BingoCreate = () => {
       <Stack
         direction="column"
         alignItems="center"
-        sx={{ maxWidth: "1000px", margin: "0 auto" }}
+        sx={{ maxWidth: "1000px", padding: "50px", margin: "0 auto" }}
       >
         <BingoTitle title={title} setTitle={setTitle} />
         <BingoCreateGoalList />
