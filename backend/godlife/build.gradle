@@ -49,6 +49,11 @@ dependencies {
 	// gson 추가
 	implementation 'com.google.code.gson:gson:2.8.7'
 
+	// kakao - WebClient
+//	compile 'org.springframework.boot:spring-boot-starter-webflux'
+//	compile 'org.projectreactor:reactor-spring:1.0.1.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
 	//annotationProcessror
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
@@ -59,6 +64,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+
 }
 
 tasks.named('test') {

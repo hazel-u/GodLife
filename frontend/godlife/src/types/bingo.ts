@@ -8,9 +8,10 @@ export interface BingoType {
   godlife: boolean;
   id: string;
   likeCnt: number;
-  startDate: string;
+  startDate: number[];
   title: string;
   userEmail: string;
+  userName: string;
   goals: {
     seq: number;
     content: string;

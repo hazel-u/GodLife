@@ -2,7 +2,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Box, IconButton, Stack, TextField, Typography } from "@mui/material";
 import axios from "axios";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { useAppDispatch } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
@@ -49,20 +49,7 @@ const BingoTitle = ({
     }
   };
 
-  const [count, setCount] = useState({ godCount: 100, totalGodCount: 100 });
-
-  useEffect(() => {
-    axios
-      .get("user/god-life", {
-        headers: {
-          Authorization: `${localStorage.getItem("token")}`,
-        },
-      })
-      .then((res) => {
-        setCount({ ...count, godCount: res.data.godCount });
-      })
-      .catch((err) => console.log(err));
-  }, [count]);
+  const count = { godCount: 100, totalGodCount: 100 };
 
   return (
     <Box

@@ -11,7 +11,7 @@ const KakaoShare = () => {
 
   useEffect(() => {
     if (!window.Kakao.isInitialized())
-      window.Kakao.init(process.env.REACT_APP_KAKAO_CLIENT_SECRET);
+      window.Kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
   }, []);
 
   const shareKakao = () => {
