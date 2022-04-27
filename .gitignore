@@ -65,6 +65,8 @@ local.properties
 #.project
 
 ### Eclipse Patch ###
+*.pid
+
 # Spring Boot Tooling
 .sts4-cache/
 

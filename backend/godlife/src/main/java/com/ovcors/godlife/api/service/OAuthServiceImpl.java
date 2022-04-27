@@ -20,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -37,19 +39,32 @@ public class OAuthServiceImpl implements OAuthService{
     @Value("${spring.jwt.secret}")
     public String secret;
 
+    public String getRandomStr() {
+        Random random = new Random();
+        random.setSeed(System.currentTimeMillis());
+
+        return random.nextInt(10000000)+"";
+    }
+
     @Override
     public OAuthLoginResDto googleLogin(Map<String, Object> data) {
         GoogleOAuthUserInfo googleUser = new GoogleUser((Map<String, Object>) data.get("profileObj"));
-
-        User userEntity = userRepository.findByEmailAndDeletedFalse(googleUser.getEmail());
+        User userEntity = userRepository.findByEmailAndDeletedFalse("GoogleUser"+googleUser.getProviderId());
 
         boolean newUser = false;
 
         if(userEntity == null) {
+            String randomStr = getRandomStr();
+
+            // 아이디어가 생각나면 수정
+            while(userRepository.findByNameAndDeletedFalse(googleUser.getName() + randomStr.toString()) != null) {
+                randomStr = getRandomStr();
+            }
+
             User userRequest = User.builder()
-                    .email(googleUser.getEmail())
+                    .email("GoogleUser"+googleUser.getProviderId())
                     .password(bCryptPasswordEncoder.encode("godLifeGoogleUserPassword4324235487"))
-                    .name(googleUser.getName())
+                    .name(googleUser.getName() + randomStr.toString())
                     .oauth_type(JoinType.GOOGLE)
                     .deleted(false)
                     .recentDate(null)
@@ -70,15 +85,21 @@ public class OAuthServiceImpl implements OAuthService{
     public OAuthLoginResDto kakaoLogin(KakaoLoginReqDto kakaoLoginReqDto) {
         // kakao에 접근해서 유저 프로필 끌어옴
         KakaoOAuthResponse profile = oAuthClient.getInfo(kakaoLoginReqDto.getAccessToken());
-        User userEntity = userRepository.findByEmailAndDeletedFalse(profile.getOAuthEmail());
+        User userEntity = userRepository.findByEmailAndDeletedFalse("KakaoUser"+profile.getId());
 
-        // 로그인 로직
         boolean newUser = false;
         if(userEntity == null) {
+            String randomStr = getRandomStr();
+
+            // 아이디어가 생각나면 수정
+            while(userRepository.findByNameAndDeletedFalse(profile.getOAuthNickname() + randomStr.toString()) != null) {
+                randomStr = getRandomStr();
+            }
+
             User requestUser = User.builder()
-                    .email(profile.getOAuthEmail())
+                    .email("KakaoUser"+profile.getId())
                     .password(bCryptPasswordEncoder.encode("godLifeKakaoLoginUserPW78123487"))
-                    .name(profile.getOAuthNickname())
+                    .name(profile.getOAuthNickname()+randomStr.toString())
                     .oauth_type(JoinType.KAKAO)
                     .deleted(false)
                     .recentDate(null)
