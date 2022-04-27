@@ -2,6 +2,7 @@ import { Box, Grid, Pagination, Stack, Typography } from "@mui/material";
 import axios from "axios";
 
 import React, { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Bingo from "../../../components/Bingo/Bingo";
 import { useAppDispatch } from "../../../store/hooks";
@@ -47,6 +48,8 @@ const PreviousBingoList = () => {
     dispatch(setLoading(false));
   }, [bingoList, dispatch]);
 
+  const navigate = useNavigate();
+
   return (
     <Stack direction="column" justifyContent="center" alignItems="center" p={3}>
       {bingoCount === 0 ? (
@@ -64,7 +67,15 @@ const PreviousBingoList = () => {
             sx={{ maxWidth: "1000px", padding: "40px 0" }}
           >
             {bingoList.map((bingo) => (
-              <Grid item xs={12} sm={6} md={4} key={bingo.id}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                key={bingo.id}
+                onClick={() => navigate(`/bingo/${bingo.code}`)}
+                sx={{ cursor: "pointer" }}
+              >
                 <p>{bingo.startDate.join("-")}</p>
                 <Bingo
                   createdBy={bingo.userName}
