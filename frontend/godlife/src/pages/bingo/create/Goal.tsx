@@ -2,7 +2,7 @@ import { Box, Button, IconButton, SvgIcon, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { ReactComponent as StarIcon } from "../../../assets/icon/star.svg";
 import { deleteGoal, selectGoal, setGoal } from "../../../store/goal";
@@ -12,41 +12,17 @@ interface GoalProps {
   seq: number;
   content: string;
   category: string;
+  favoriteSeq?: string;
+  isFavorite: boolean;
+  getFavorites: () => void;
 }
 
 const Goal = (goal: GoalProps) => {
   const dispatch = useAppDispatch();
-  const [isFavorite, setIsFavorite] = useState(false);
   const [click, setClick] = useState(false);
-  const [userFavorites, setUserFavorites] = useState<any[]>([]);
-
-  const getFavorites = () => {
-    axios({
-      method: "get",
-      url: "goal/usergoal",
-      headers: {
-        Authorization: `${localStorage.getItem("token")}`,
-      },
-    })
-      .then((res) => {
-        setUserFavorites(res.data.userGoals);
-        console.log(res.data.userGoals);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  useEffect(() => {
-    getFavorites();
-  }, []);
 
   const manageFavorites = () => {
-    const findElement = userFavorites.some((el) => el.goals.seq === goal.seq);
-    const findElementSeq = userFavorites.find(
-      (el) => el.goals.seq === goal.seq
-    );
-    console.log(findElementSeq);
-    if (!findElement) {
-      setIsFavorite(true);
+    if (!goal.isFavorite) {
       axios
         .put(
           "goal",
@@ -57,18 +33,21 @@ const Goal = (goal: GoalProps) => {
             },
           }
         )
-        .then(() => console.log("즐겨찾기 추가"))
+        .then(() => {
+          goal.getFavorites();
+        })
         .catch((err) => console.log(err));
     } else {
-      setIsFavorite(false);
       axios
         .delete("goal", {
           headers: {
             Authorization: `${localStorage.getItem("token")}`,
           },
-          data: { seq: findElementSeq.seq },
+          data: { seq: goal.favoriteSeq },
         })
-        .then(() => console.log("즐겨찾기 삭제"))
+        .then(() => {
+          goal.getFavorites();
+        })
         .catch((err) => console.log(err));
     }
   };
@@ -128,7 +107,7 @@ const Goal = (goal: GoalProps) => {
     zIndex: 2,
     "& svg": {
       fontSize: 15,
-      color: isFavorite ? "#FFE812" : "white",
+      color: goal.isFavorite ? "#FFE812" : "white",
     },
   }));
 
