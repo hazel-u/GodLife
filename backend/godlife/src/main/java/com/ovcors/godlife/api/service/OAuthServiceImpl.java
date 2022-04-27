@@ -55,6 +55,12 @@ public class OAuthServiceImpl implements OAuthService{
 
         if(userEntity == null) {
             String randomStr = getRandomStr();
+
+            // 아이디어가 생각나면 수정
+            while(userRepository.findByNameAndDeletedFalse(googleUser.getName() + randomStr.toString()) != null) {
+                randomStr = getRandomStr();
+            }
+
             User userRequest = User.builder()
                     .email("GoogleUser"+googleUser.getProviderId())
                     .password(bCryptPasswordEncoder.encode("godLifeGoogleUserPassword4324235487"))
@@ -80,10 +86,16 @@ public class OAuthServiceImpl implements OAuthService{
         // kakao에 접근해서 유저 프로필 끌어옴
         KakaoOAuthResponse profile = oAuthClient.getInfo(kakaoLoginReqDto.getAccessToken());
         User userEntity = userRepository.findByEmailAndDeletedFalse("KakaoUser"+profile.getId());
-        // 로그인 로직
+
         boolean newUser = false;
         if(userEntity == null) {
             String randomStr = getRandomStr();
+
+            // 아이디어가 생각나면 수정
+            while(userRepository.findByNameAndDeletedFalse(profile.getOAuthNickname() + randomStr.toString()) != null) {
+                randomStr = getRandomStr();
+            }
+
             User requestUser = User.builder()
                     .email("KakaoUser"+profile.getId())
                     .password(bCryptPasswordEncoder.encode("godLifeKakaoLoginUserPW78123487"))
