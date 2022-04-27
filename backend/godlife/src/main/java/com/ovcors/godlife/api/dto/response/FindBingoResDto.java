@@ -30,8 +30,11 @@ public class FindBingoResDto {
     Integer likeCnt;
     List<BingoGoalResDto> goals = new ArrayList<>();
     List<CommentResDto> comments = new ArrayList<>();
+    LocalDate recentDate;
+    int godCount;
 
-    public FindBingoResDto (Bingo bingo){
+
+    public FindBingoResDto(Bingo bingo) {
         this.id = bingo.getSeq();
         this.code = bingo.getBingoCode().getCode();
         this.title = bingo.getTitle();
@@ -42,23 +45,27 @@ public class FindBingoResDto {
         this.startDate = bingo.getStartDate();
         this.likeCnt = bingo.getLikeCnt();
 
+        this.godCount = bingo.getUser().getGodCount();
+        this.recentDate = bingo.getUser().getRecentDate();
+
         List<BingoGoals> bingoGoals = bingo.getBingoGoals();
-        for(BingoGoals bingoGoal: bingoGoals){
+        for (BingoGoals bingoGoal : bingoGoals) {
             this.goals.add(BingoGoalResDto.builder()
-                            .seq(bingoGoal.getSeq())
-                            .category(bingoGoal.getGoals().getCategory())
-                            .content(bingoGoal.getGoals().getContent())
-                            .completed(bingoGoal.isCompleted())
-                            .build());
+                    .seq(bingoGoal.getSeq())
+                    .category(bingoGoal.getGoals().getCategory())
+                    .content(bingoGoal.getGoals().getContent())
+                    .completed(bingoGoal.isCompleted())
+                    .build());
         }
 
         List<Comment> comments = bingo.getComments();
-        for(Comment comment:comments){
+        for (Comment comment : comments) {
             this.comments.add(CommentResDto.builder()
                     .seq(comment.getSeq())
                     .content(comment.getContent())
                     .nickname(comment.getNickname())
                     .password(comment.getPassword())
+                    .date(comment.getDate())
                     .build());
         }
     }
