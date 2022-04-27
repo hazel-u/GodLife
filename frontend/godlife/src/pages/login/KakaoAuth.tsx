@@ -5,16 +5,11 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-    },
-  };
-
   const code = new URL(window.location.href).searchParams.get("code");
 
   const navigate = useNavigate();
-  const getToken = async () => {
+
+  useEffect(() => {
     const payload = qs.stringify({
       grant_type: "authorization_code",
       client_id: process.env.REACT_APP_KAKAO_REST_API_KEY,
@@ -24,30 +19,30 @@ const Auth = () => {
     });
     try {
       // access token 가져오기
-      await axios
-        .post("https://kauth.kakao.com/oauth/token", payload)
-        .then((res) => {
-          axios
-            .post(
-              "oauth/kakao",
-              {
-                accessToken: res.data.access_token,
-                refreshToken: res.data.refresh_token,
+      axios.post("https://kauth.kakao.com/oauth/token", payload).then((res) => {
+        axios
+          .post(
+            "oauth/kakao",
+            {
+              accessToken: res.data.access_token,
+              refreshToken: res.data.refresh_token,
+            },
+            {
+              headers: {
+                "Content-Type": "application/json; charset=utf-8",
               },
-              config
-            )
-            .then((res) => {
-              localStorage.setItem("token", res.data.jwtToken);
-              navigate("/");
-            });
-        });
+            }
+          )
+          .then((res) => {
+            localStorage.setItem("token", res.data.jwtToken);
+            navigate("/");
+          });
+      });
     } catch (err) {
       console.log(err);
     }
-  };
-  useEffect(() => {
-    getToken();
-  }, []);
+  }, [code, navigate]);
+
   return null;
 };
 
