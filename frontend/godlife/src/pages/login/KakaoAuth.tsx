@@ -63,7 +63,7 @@ const Auth = () => {
     } catch (err) {
       console.log(err);
     }
-  }, [code, navigate]);
+  }, [code, navigate, dispatch]);
 
   return null;
 };
