@@ -1,17 +1,20 @@
 import EditIcon from "@mui/icons-material/Edit";
 import {
-  Box, Button,
+  Box,
+  Button,
   Chip,
   IconButton,
-  InputAdornment, Stack, SvgIcon,
+  InputAdornment,
+  Stack,
+  SvgIcon,
   TextField,
-  Typography
+  Typography,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+
 import React, { useState } from "react";
+
 import { ReactComponent as StarIcon } from "../../../assets/icon/star.svg";
-
-
 
 const BingoCreateComponents = () => {
   const [selectedCategory, setSelectedCategory] = useState("전체");
@@ -39,75 +42,8 @@ const BingoCreateComponents = () => {
     "삶의 질",
     "습관개선",
     "환경",
-    "즐겨찾기"
+    "즐겨찾기",
   ];
-
-
-  const dummyGoalList = [
-    {
-      category: "환경",
-      content: "물 1L 이상 마시기",
-      seq: 0,
-    },
-    {
-      category: "습관개선",
-      content: "물 1.1L 이상 마시기",
-      seq: 1,
-    },
-    {
-      category: "건강한 삶",
-      content: "물 1.2L 이상 마시기",
-      seq: 2,
-    },
-    {
-      category: "건강한 삶",
-      content: "물 1.3L 이상 마시기",
-      seq: 3,
-    },
-    {
-      category: "건강한 삶",
-      content: "물 1.4L 이상 마시기",
-      seq: 4,
-    },
-    {
-      category: "환경",
-      content: "물 1.5L 이상 마시기",
-      seq: 5,
-    },
-    {
-      category: "자기개발",
-      content: "물 1.6L 이상 마시기",
-      seq: 6,
-    },
-    {
-      category: "미라클 모닝",
-      content: "물 1.7L 이상 마시기",
-      seq: 7,
-    },
-    {
-      category: "미라클 모닝",
-      content: "물 1.8L 이상 마시기",
-      seq: 8,
-    },
-    {
-      category: "환경",
-      content: "물 1.9L 이상 마시기",
-      seq: 9,
-    },
-    {
-      category: "삶의 질",
-      content: "물 2L 이상 마시기",
-      seq: 10,
-    },
-    {
-      category: "삶의 질",
-      content: "물 2.1L 이상 마시기",
-      seq: 10,
-    },
-  ]
-
-  const [goalList, setGoalList] = useState(dummyGoalList);
-  const [favorites, setFavorites] = useState([]);
 
   const changeCategory = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const category = (e.target as HTMLLIElement).textContent;

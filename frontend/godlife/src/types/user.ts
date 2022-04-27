@@ -22,3 +22,7 @@ export interface ChangePasswordInput {
   newPassword: string;
   newPasswordCheck: string;
 }
+
+export interface TodayBingo {
+  code: number;
+}

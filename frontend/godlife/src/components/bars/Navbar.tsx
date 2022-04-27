@@ -5,8 +5,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { ReactComponent as Logo } from "../../assets/logo/Godlife/logo.svg";
 import Profile from "../../pages/profile/Profile";
-import { useAppDispatch } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
+import { selectTodayBingo } from "../../store/todayBingo";
 import { clearLoggedUser } from "../../store/user";
 import { TextButton } from "../common/Button";
 import MobileNavbarDialog from "./MobileNavbarDialog";
@@ -40,6 +41,8 @@ const Navbar = () => {
     );
   };
 
+  const { code } = useAppSelector(selectTodayBingo);
+
   return (
     <>
       <Profile open={open} setOpen={setOpen} />
@@ -54,7 +57,17 @@ const Navbar = () => {
         >
           <Grid item sm={5}>
             <Stack direction="row" justifyContent="space-around">
-              <TextButton href="/bingo/123">오늘의 갓생</TextButton>
+              <TextButton
+                onClick={() => {
+                  if (code) {
+                    navigate(`/bingo/${code}`);
+                  } else {
+                    navigate("create");
+                  }
+                }}
+              >
+                오늘의 갓생
+              </TextButton>
               <TextButton href="/list">이전의 갓생</TextButton>
 
               <TextButton

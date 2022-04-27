@@ -70,7 +70,7 @@ const CommentList = ({ getBingo }: { getBingo: () => void }) => {
       {!comments.length && <p>댓글이 없습니다.</p>}
       {comments.map((comment: any, index: number) => (
         <React.Fragment key={index}>
-          <Comment comment={comment} />
+          <Comment comment={comment} getBingo={getBingo} />
           {index !== comments.length - 1 && <Divider />}
         </React.Fragment>
       ))}
