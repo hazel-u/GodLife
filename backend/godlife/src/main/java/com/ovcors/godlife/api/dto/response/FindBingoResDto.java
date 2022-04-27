@@ -30,6 +30,9 @@ public class FindBingoResDto {
     Integer likeCnt;
     List<BingoGoalResDto> goals = new ArrayList<>();
     List<CommentResDto> comments = new ArrayList<>();
+    LocalDate recentDate;
+    int godCount;
+
 
     public FindBingoResDto(Bingo bingo) {
         this.id = bingo.getSeq();
@@ -41,6 +44,9 @@ public class FindBingoResDto {
         this.godlife = bingo.getGodlife();
         this.startDate = bingo.getStartDate();
         this.likeCnt = bingo.getLikeCnt();
+
+        this.godCount = bingo.getUser().getGodCount();
+        this.recentDate = bingo.getUser().getRecentDate();
 
         List<BingoGoals> bingoGoals = bingo.getBingoGoals();
         for (BingoGoals bingoGoal : bingoGoals) {
