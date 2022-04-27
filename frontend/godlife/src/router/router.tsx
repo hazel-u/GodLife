@@ -23,7 +23,7 @@ export default function Router() {
       element: isAuth ? <Navigate to="/" /> : <Login />,
     },
     {
-      path: "/oauth/kakao/callback",
+      path: process.env.REACT_APP_KAKAO_REDIRECT_PATH,
       element: <KakaoAuth />,
     },
     {

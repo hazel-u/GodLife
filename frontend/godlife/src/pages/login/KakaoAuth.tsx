@@ -24,23 +24,22 @@ const Auth = () => {
     });
     try {
       // access token 가져오기
-      const res = await axios.post(
-        "https://kauth.kakao.com/oauth/token",
-        payload
-      );
-
       await axios
-        .post(
-          "oauth/kakao",
-          {
-            accessToken: res.data.access_token,
-            refreshToken: res.data.refresh_token,
-          },
-          config
-        )
+        .post("https://kauth.kakao.com/oauth/token", payload)
         .then((res) => {
-          localStorage.setItem("token", res.data.jwtToken);
-          navigate("");
+          axios
+            .post(
+              "oauth/kakao",
+              {
+                accessToken: res.data.access_token,
+                refreshToken: res.data.refresh_token,
+              },
+              config
+            )
+            .then((res) => {
+              localStorage.setItem("token", res.data.jwtToken);
+              navigate("/");
+            });
         });
     } catch (err) {
       console.log(err);
