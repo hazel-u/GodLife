@@ -10,9 +10,12 @@ import PreviousBingoList from "../pages/bingo/list/PreviousBingoList";
 import Join from "../pages/join/Join";
 import KakaoAuth from "../pages/login/KakaoAuth";
 import Login from "../pages/login/Login";
+import { useAppSelector } from "../store/hooks";
+import { selectTodayBingo } from "../store/todayBingo";
 
 export default function Router() {
   const isAuth = localStorage.getItem("token");
+  const code = useAppSelector(selectTodayBingo);
 
   return useRoutes([
     {
@@ -37,7 +40,7 @@ export default function Router() {
         },
         {
           path: "/create",
-          element: <BingoCreate />,
+          element: code ? <Navigate to={`/bingo/${code}`} /> : <BingoCreate />,
         },
         {
           path: "/list",
