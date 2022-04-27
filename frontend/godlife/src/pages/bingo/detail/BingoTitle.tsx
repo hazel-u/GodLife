@@ -1,10 +1,12 @@
 import EditIcon from "@mui/icons-material/Edit";
 import { Box, IconButton, Stack, TextField, Typography } from "@mui/material";
 import axios from "axios";
+import dayjs from "dayjs";
 
 import React, { useState } from "react";
 
-import { useAppDispatch } from "../../../store/hooks";
+import { selectBingo } from "../../../store/bingo";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
 
 const BingoTitle = ({
@@ -49,7 +51,7 @@ const BingoTitle = ({
     }
   };
 
-  const count = { godCount: 100, totalGodCount: 100 };
+  const { startDate, godCount } = useAppSelector(selectBingo);
 
   return (
     <Box
@@ -129,11 +131,13 @@ const BingoTitle = ({
         )}
       </Stack>
       <p>제목 글자수로 input 너비를 정해져 고정폭 글씨체를 쓰는게 좋다</p>
-      <Box sx={{ mt: 2 }}>
-        <Typography>
-          {count.totalGodCount}일 째 갓생 중 | {count.godCount}일 연속 갓생 중
-        </Typography>
-      </Box>
+      {dayjs().format("YYYY-M-D") === startDate.join("-") && (
+        <Box sx={{ mt: 2 }}>
+          <Typography>
+            {godCount}일 째 갓생 중 | {100}일 연속 갓생 중
+          </Typography>
+        </Box>
+      )}
     </Box>
   );
 };

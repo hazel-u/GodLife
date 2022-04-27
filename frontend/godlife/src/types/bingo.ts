@@ -18,4 +18,5 @@ export interface BingoType {
     category: string;
     completed: boolean;
   }[];
+  godCount: number;
 }
