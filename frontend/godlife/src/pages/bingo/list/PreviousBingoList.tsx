@@ -1,10 +1,12 @@
-import { Box, Grid, Pagination, Stack, Typography } from "@mui/material";
+import { Grid, Pagination, Stack, Typography } from "@mui/material";
 import axios from "axios";
 
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import BingoJson from "../../../assets/json/bingo.json";
 import Bingo from "../../../components/Bingo/Bingo";
+import Lottie from "../../../components/common/Lottie";
 import { useAppDispatch } from "../../../store/hooks";
 import { setLoading } from "../../../store/loading";
 import { BingoType } from "../../../types/bingo";
@@ -53,12 +55,14 @@ const PreviousBingoList = () => {
   return (
     <Stack direction="column" justifyContent="center" alignItems="center" p={3}>
       {bingoCount === 0 ? (
-        <>
-          <Box sx={{ width: "50vh", height: "50vh", backgroundColor: "beige" }}>
-            빙고가 없다는걸 알려주는 이미지
-          </Box>
+        <Stack
+          direction="column"
+          justifyContent="center"
+          sx={{ minHeight: "500px" }}
+        >
+          <Lottie animationData={BingoJson} width={200} height={200} />
           <Typography>아직 생성된 빙고가 없습니다.</Typography>
-        </>
+        </Stack>
       ) : (
         <>
           <Grid
