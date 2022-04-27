@@ -59,7 +59,7 @@ const Goal = (goal: GoalProps) => {
     if (nowSelected.length < 9 && !found) {
       dispatch(setGoal([goal]));
       setClick(true);
-    } else if (nowSelected.length < 9 && found) {
+    } else if (nowSelected.length <= 9 && found) {
       dispatch(deleteGoal(goal));
       setClick(false);
     }
