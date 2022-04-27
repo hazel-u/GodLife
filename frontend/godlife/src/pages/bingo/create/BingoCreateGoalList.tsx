@@ -12,6 +12,7 @@ const BingoCreateGoalList = () => {
   const [goalList, setGoalList] = useState<any[]>([]);
   const [allGoalList, setAllGoalList] = useState<any[]>([]);
   const [userFavorites, setUserFavorites] = useState([]);
+  const [isActive, setIsActive] = useState(false);
 
   const getGoals = () => {
     axios
@@ -19,16 +20,21 @@ const BingoCreateGoalList = () => {
       .then((res) => {
         setGoalList(res.data.goals);
         setAllGoalList(res.data.goals);
-        console.log(res);
       })
       .catch((err) => console.log(err));
   };
 
   const getFavorites = () => {
-    axios
-      .get("goal/usergoals")
+    axios({
+      method: "get",
+      url: "goal/usergoal",
+      headers: {
+        Authorization: `${localStorage.getItem("token")}`,
+      },
+    })
       .then((res) => {
-        setUserFavorites(res.data.goals);
+        setUserFavorites(res.data.userGoals);
+        console.log(res.data.userGoals);
       })
       .catch((err) => console.log(err));
   };
@@ -58,12 +64,15 @@ const BingoCreateGoalList = () => {
     const selectedCategory = (e.target as HTMLLIElement).textContent;
 
     if (selectedCategory === "전체") {
+      setIsActive(false);
       setSelectedCategory(selectedCategory);
       setGoalList(allGoalList);
     } else if (selectedCategory === "즐겨찾기") {
+      setIsActive(true);
       setSelectedCategory(selectedCategory);
       setGoalList(userFavorites);
-    } else if (selectedCategory !== null && selectedCategory !== "즐겨찾기") {
+    } else if (selectedCategory !== null && selectedCategory !== "전체") {
+      setIsActive(false);
       setSelectedCategory(selectedCategory);
       changeCategoryGoalList(selectedCategory);
     }
@@ -75,74 +84,6 @@ const BingoCreateGoalList = () => {
     );
     setGoalList(classifiedGoalList);
   };
-
-  // const [click, setClick] = useState(false);
-  // const [starClick, setStarClick] = useState(false);
-
-  // const GoalBox = styled(Box)(({ theme }) => ({
-  //   position: "relative",
-  //   width: "24%",
-  //   height: "50px",
-  //   outline: "2px solid #5A5A5A",
-  //   outlineOffset: "-2px",
-  //   display: "flex",
-  //   flexDirection: "row",
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  //   borderRadius: "10px",
-  //   cursor: "pointer",
-  //   backgroundColor: click ? "#FFEEEE" : "white",
-  //   "&::before": {
-  //     content: "''",
-  //     width: "70%",
-  //     height: "4px",
-  //     background: click ? "#FFEEEE" : "white",
-  //     top: "0px",
-  //     position: "absolute",
-  //   },
-  // }));
-
-  // const GoalButton = styled(Button)(({ theme }) => ({
-  //   position: "relative",
-  //   width: "100%",
-  //   height: "50px",
-  //   outline: "2px solid #5A5A5A",
-  //   outlineOffset: "-2px",
-  //   display: "flex",
-  //   flexDirection: "row",
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  //   borderRadius: "10px",
-  //   color: "#5A5A5A",
-  //   backgroundColor: click ? "#FFEEEE" : "white",
-  //   "&:before": {
-  //     content: "''",
-  //     width: "70%",
-  //     height: "4px",
-  //     background: click ? "#FFEEEE" : "white",
-  //     top: "0px",
-  //     position: "absolute",
-  //     transition: "all 0.3s",
-  //   },
-  //   "&:hover": {
-  //     color: "black",
-  //     backgroundColor: "#FFEEEE",
-  //   },
-  //   "&:hover:before": {
-  //     background: "#FFEEEE",
-  //   },
-  // }));
-
-  // const BookmarkButton = styled(IconButton)(({ theme }) => ({
-  //   position: "absolute",
-  //   top: 8,
-  //   left: 8,
-  //   padding: 0,
-  //   "& svg": {
-  //     fontSize: 15,
-  //     color: starClick ? "#FFE812" : "white",
-  //   },
-  // }));
 
   return (
     <Box sx={{ width: "80%", padding: "30px" }}>
@@ -166,15 +107,34 @@ const BingoCreateGoalList = () => {
         ))}
       </Stack>
       <Box sx={{ padding: "50px 10px" }}>
-        <Grid container spacing={2}>
-          {goalList.map(
-            (goal: { seq: number; content: string; category: string }) => (
-              <Grid item xs={3} key={goal.seq}>
-                <Goal {...goal} />
-              </Grid>
-            )
-          )}
-        </Grid>
+        {isActive ? (
+          <>
+            <Grid container spacing={2}>
+              {goalList.map(
+                (goal: {
+                  seq: string;
+                  goals: { seq: number; content: string; category: string };
+                }) => (
+                  <Grid item xs={3} key={goal.seq}>
+                    <Goal {...goal.goals} />
+                  </Grid>
+                )
+              )}
+            </Grid>
+          </>
+        ) : (
+          <>
+            <Grid container spacing={2}>
+              {goalList.map(
+                (goal: { seq: number; content: string; category: string }) => (
+                  <Grid item xs={3} key={goal.seq}>
+                    <Goal {...goal} />
+                  </Grid>
+                )
+              )}
+            </Grid>
+          </>
+        )}
       </Box>
       <Stack direction="row" justifyContent="center">
         <p>{selectedGoals.length} / 9 개 선택중</p>
