@@ -6,4 +6,29 @@ export const theme = createTheme({
       fontFamily: "Noto Sans KR",
     },
   },
+  palette: {
+    mode: "light",
+    primary: {
+      main: "#A11803",
+    },
+    secondary: {
+      main: "#e5e5e5",
+    },
+    info: {
+      main: "#038ca1",
+    },
+    success: {
+      main: "#8ca103",
+    },
+    error: {
+      main: "#a1033d",
+    },
+    warning: {
+      main: "#a16703",
+    },
+    text: {
+      primary: "#000000",
+    },
+    divider: "#e5e5e5",
+  },
 });
