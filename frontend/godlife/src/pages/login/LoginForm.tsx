@@ -19,7 +19,7 @@ const LoginForm = () => {
   const { handleSubmit, control } = useForm<LoginInput>();
   const onSubmit: SubmitHandler<LoginInput> = async (data) => {
     await axios
-      .post("/user/login", data)
+      .post("user/login", data)
       .then((res) => {
         localStorage.setItem("refreshtoken", res.headers["refreshtoken"]);
         localStorage.setItem("token", res.headers["authorization"]);
