@@ -11,9 +11,10 @@ const initialState: BingoType = {
   godlife: false,
   id: "",
   likeCnt: 0,
-  startDate: "",
+  startDate: [],
   title: "",
   userEmail: "",
+  userName: "",
   goals: [],
 };
 

@@ -19,6 +19,7 @@ const BingoCreateGoalList = () => {
       .then((res) => {
         setGoalList(res.data.goals);
         setAllGoalList(res.data.goals);
+        console.log(res);
       })
       .catch((err) => console.log(err));
   };
