@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Box, Stack, useMediaQuery, useTheme } from "@mui/material";
 import axios from "axios";
 
 import React, { useEffect, useState } from "react";
@@ -100,15 +100,36 @@ const BingoCreate = () => {
       );
   };
 
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <>
       <BingoCopy open={open} setOpen={setOpen} title={title} />
       <Stack
         direction="column"
         alignItems="center"
+        justifyContent="center"
         sx={{ maxWidth: "1000px", padding: "50px", margin: "0 auto" }}
       >
-        <BingoTitle title={title} setTitle={setTitle} />
+        <Stack
+          direction={fullScreen ? "column" : "row"}
+          justifyContent="center"
+          sx={{ width: "100%" }}
+          spacing={5}
+        >
+          <BingoTitle title={title} setTitle={setTitle} />
+          <Box sx={{ textAlign: "center" }}>
+            <OutlinedButton
+              variant="outlined"
+              onClick={startBingo}
+              sx={{ width: "200px" }}
+            >
+              시작하기
+            </OutlinedButton>
+          </Box>
+        </Stack>
+
         <BingoCreateGoalList />
         <Stack
           direction="row"
@@ -133,9 +154,6 @@ const BingoCreate = () => {
             }}
           >
             빙고 복사
-          </OutlinedButton>
-          <OutlinedButton variant="outlined" onClick={startBingo}>
-            시작하기
           </OutlinedButton>
         </Stack>
       </Stack>

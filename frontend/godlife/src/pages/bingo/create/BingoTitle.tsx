@@ -21,11 +21,12 @@ const BingoTitle = ({
           </InputAdornment>
         ),
       }}
-      inputProps={{ maxLength: 25 }}
+      inputProps={{ maxLength: 20 }}
       value={title}
       onChange={(e) => setTitle(e.target.value)}
       sx={{
         width: "100%",
+        maxWidth: "500px",
         "& .MuiInput-root": {
           fontSize: "24px",
           "& fieldset": {

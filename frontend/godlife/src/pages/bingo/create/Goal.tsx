@@ -1,10 +1,18 @@
-import { Box, Button, IconButton, SvgIcon, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Stack,
+  SvgIcon,
+  Typography,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
 
 import React, { useState } from "react";
 
 import { ReactComponent as StarIcon } from "../../../assets/icon/star.svg";
+import { ReactComponent as Stamp } from "../../../assets/images/stamp70.svg";
 import { deleteGoal, selectGoal, setGoal } from "../../../store/goal";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 
@@ -15,6 +23,12 @@ interface GoalProps {
   favoriteSeq?: string;
   isFavorite: boolean;
   getFavorites: () => void;
+  userFavorites: {
+    seq: number;
+    content: string;
+    category: string;
+    favoriteSeq: string;
+  }[];
 }
 
 const Goal = (goal: GoalProps) => {
@@ -22,34 +36,31 @@ const Goal = (goal: GoalProps) => {
   const [click, setClick] = useState(false);
 
   const manageFavorites = () => {
-    if (!goal.isFavorite) {
-      axios
-        .put(
-          "goal",
-          { seq: goal.seq },
-          {
-            headers: {
-              Authorization: `${localStorage.getItem("token")}`,
-            },
-          }
-        )
-        .then(() => {
-          goal.getFavorites();
-        })
-        .catch((err) => console.log(err));
+    let request;
+    const clickedGoal = goal.userFavorites.find((el) => el.seq === goal.seq);
+    if (clickedGoal) {
+      request = axios.delete("goal", {
+        headers: {
+          Authorization: `${localStorage.getItem("token")}`,
+        },
+        data: { seq: clickedGoal.favoriteSeq },
+      });
     } else {
-      axios
-        .delete("goal", {
+      request = axios.put(
+        "goal",
+        { seq: goal.seq },
+        {
           headers: {
             Authorization: `${localStorage.getItem("token")}`,
           },
-          data: { seq: goal.favoriteSeq },
-        })
-        .then(() => {
-          goal.getFavorites();
-        })
-        .catch((err) => console.log(err));
+        }
+      );
     }
+    request
+      .then(() => {
+        goal.getFavorites();
+      })
+      .catch((err) => console.log(err));
   };
 
   const nowSelected = useAppSelector(selectGoal);
@@ -77,7 +88,6 @@ const Goal = (goal: GoalProps) => {
     justifyContent: "center",
     borderRadius: "10px",
     color: "#5A5A5A",
-    backgroundColor: click ? "#FFEEEE" : "white",
     "& p": {
       fontSize: "14px",
     },
@@ -85,17 +95,14 @@ const Goal = (goal: GoalProps) => {
       content: "''",
       width: "70%",
       height: "4px",
-      background: click ? "#FFEEEE" : "white",
+      background: "white",
       top: "0px",
       position: "absolute",
       transition: "all 0.3s",
     },
     "&:hover": {
       color: "black",
-      backgroundColor: "#FFEEEE",
-    },
-    "&:hover:before": {
-      background: "#FFEEEE",
+      backgroundColor: "#ffffff",
     },
   }));
 
@@ -112,14 +119,23 @@ const Goal = (goal: GoalProps) => {
   }));
 
   return (
-    <Box sx={{ position: "relative" }}>
+    <Stack
+      direction="row"
+      justifyContent="center"
+      sx={{ position: "relative" }}
+    >
+      {click && (
+        <Box sx={{ position: "absolute", height: "100%", zIndex: 2 }}>
+          <Stamp />
+        </Box>
+      )}
       <BookmarkButton onClick={manageFavorites}>
         <SvgIcon component={StarIcon} />
       </BookmarkButton>
       <GoalButton onClick={manageSelectedGoals}>
         <Typography>{goal.content}</Typography>
       </GoalButton>
-    </Box>
+    </Stack>
   );
 };
 

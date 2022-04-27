@@ -1,14 +1,14 @@
 import { Box, Chip, Grid, Stack, Typography } from "@mui/material";
 import axios from "axios";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import { selectGoal } from "../../../store/goal";
 import { useAppSelector } from "../../../store/hooks";
 import Goal from "./Goal";
 
 const BingoCreateGoalList = () => {
-  const [selectedCategory, setSelectedCategory] = useState("전체");
+  const [selectedCategory, setSelectedCategory] = useState("건강한삶");
   const [goalList, setGoalList] = useState<any[]>([]);
   const [allGoalList, setAllGoalList] = useState<any[]>([]);
   const [userFavorites, setUserFavorites] = useState<
@@ -16,61 +16,19 @@ const BingoCreateGoalList = () => {
       seq: number;
       content: string;
       category: string;
-      favoriteSeq?: string;
+      favoriteSeq: string;
     }[]
   >([]);
 
-  const getGoals = () => {
-    axios
-      .get("goal")
-      .then((res) => {
-        setGoalList(res.data.goals);
-        setAllGoalList(res.data.goals);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  const getFavorites = () => {
-    axios
-      .get("goal/usergoal", {
-        headers: {
-          Authorization: `${localStorage.getItem("token")}`,
-        },
-      })
-      .then((res) => {
-        console.log("fav", res.data);
-        const favoriteGoals: {
-          seq: number;
-          content: string;
-          category: string;
-          favoriteSeq?: string;
-        }[] = [];
-        res.data.userGoals.forEach((goal: { goals: any; seq: string }) => {
-          console.log({ ...goal.goals, favoriteSeq: goal.seq });
-          favoriteGoals.push({ ...goal.goals, favoriteSeq: goal.seq });
-        });
-        setUserFavorites(favoriteGoals);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  useEffect(() => {
-    getGoals();
-    getFavorites();
-  }, []);
-
-  const category = [
-    "전체",
-    "즐겨찾기",
-    "건강한삶",
-    "미라클모닝",
-    "자기개발",
-    "삶의질",
-    "습관개선",
-    "환경",
-  ];
-
-  const selectedGoals = useAppSelector(selectGoal);
+  const changeCategoryGoalList = useCallback(
+    (selectedCategory: string) => {
+      const classifiedGoalList = allGoalList.filter(
+        (goal) => goal.category === selectedCategory
+      );
+      setGoalList(classifiedGoalList);
+    },
+    [allGoalList]
+  );
 
   const changeCategory = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const selectedCategory = (e.target as HTMLLIElement).textContent;
@@ -85,12 +43,59 @@ const BingoCreateGoalList = () => {
     }
   };
 
-  const changeCategoryGoalList = (selectedCategory: string) => {
-    const classifiedGoalList = allGoalList.filter(
-      (goal) => goal.category === selectedCategory
-    );
-    setGoalList(classifiedGoalList);
+  const getGoals = () => {
+    axios
+      .get("goal")
+      .then((res) => {
+        setGoalList(res.data.goals);
+        setAllGoalList(res.data.goals);
+      })
+      .catch((err) => console.log(err));
   };
+
+  useEffect(() => {
+    changeCategoryGoalList("건강한삶");
+  }, [goalList, changeCategoryGoalList]);
+
+  const getFavorites = () => {
+    axios
+      .get("goal/usergoal", {
+        headers: {
+          Authorization: `${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        const favoriteGoals: {
+          seq: number;
+          content: string;
+          category: string;
+          favoriteSeq: string;
+        }[] = [];
+        res.data.userGoals.forEach((goal: { goals: any; seq: string }) => {
+          favoriteGoals.push({ ...goal.goals, favoriteSeq: goal.seq });
+        });
+        setUserFavorites(favoriteGoals);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getGoals();
+    getFavorites();
+  }, []);
+
+  const category = [
+    "건강한삶",
+    "미라클모닝",
+    "자기개발",
+    "삶의질",
+    "습관개선",
+    "환경",
+    "즐겨찾기",
+    "전체",
+  ];
+
+  const selectedGoals = useAppSelector(selectGoal);
 
   return (
     <>
@@ -117,7 +122,7 @@ const BingoCreateGoalList = () => {
             sx={{
               width: "100px",
               height: "30px",
-              fontSize: "16px",
+              fontSize: "14px",
               "& span": {
                 padding: 0,
               },
@@ -146,6 +151,7 @@ const BingoCreateGoalList = () => {
                     {...goal}
                     isFavorite={userFavorites.some((el) => el.seq === goal.seq)}
                     getFavorites={getFavorites}
+                    userFavorites={userFavorites}
                   />
                 </Grid>
               )
