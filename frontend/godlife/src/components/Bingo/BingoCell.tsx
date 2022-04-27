@@ -11,7 +11,7 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import dayjs from "dayjs";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { ReactComponent as Stamp } from "../../assets/images/stamp.svg";
 import { selectBingo } from "../../store/bingo";
@@ -50,6 +50,18 @@ const BingoCell = ({
     customClickEvent();
     setOpen(false);
   };
+
+  const cell = useRef<HTMLDivElement | null>(null);
+  const [cellSize, setCellSize] = useState(160);
+
+  const getCellSize = () => {
+    cell.current && setCellSize(cell.current.clientWidth);
+  };
+
+  useEffect(() => {
+    cell.current && setCellSize(cell.current.clientWidth);
+    window.addEventListener("resize", getCellSize);
+  }, []);
 
   return (
     <>
@@ -95,11 +107,20 @@ const BingoCell = ({
             bottom: 5,
             padding: 3,
           }}
+          ref={cell}
         >
           {isCompleted && (
             <Stamp style={{ position: "absolute", height: "100%" }} />
           )}
-          <Typography align="center">{content}</Typography>
+          <Typography
+            align="center"
+            sx={{
+              fontSize: cellSize / 10,
+              display: cellSize < 85 ? "none" : "block",
+            }}
+          >
+            {content}
+          </Typography>
         </Paper>
       </Grid>
     </>
