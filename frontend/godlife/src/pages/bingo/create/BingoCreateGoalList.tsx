@@ -55,7 +55,7 @@ const BingoCreateGoalList = () => {
 
   useEffect(() => {
     changeCategoryGoalList("건강한삶");
-  }, [goalList, changeCategoryGoalList]);
+  }, [changeCategoryGoalList]);
 
   const getFavorites = () => {
     axios

@@ -16,6 +16,36 @@ import { ReactComponent as Stamp } from "../../../assets/images/stamp70.svg";
 import { deleteGoal, selectGoal, setGoal } from "../../../store/goal";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 
+const GoalButton = styled(Button)(({ theme }) => ({
+  position: "relative",
+  width: "208px",
+  height: "50px",
+  outline: "2px solid #5A5A5A",
+  outlineOffset: "-2px",
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "center",
+  borderRadius: "10px",
+  color: "#5A5A5A",
+  "& p": {
+    fontSize: "14px",
+  },
+  "&:before": {
+    content: "''",
+    width: "70%",
+    height: "4px",
+    background: "white",
+    top: "0px",
+    position: "absolute",
+    transition: "all 0.3s",
+  },
+  "&:hover": {
+    color: "black",
+    backgroundColor: "#ffffff",
+  },
+}));
+
 interface GoalProps {
   seq: number;
   content: string;
@@ -32,6 +62,18 @@ interface GoalProps {
 }
 
 const Goal = (goal: GoalProps) => {
+  const BookmarkButton = styled(IconButton)(({ theme }) => ({
+    position: "absolute",
+    top: 8,
+    left: 8,
+    padding: 0,
+    zIndex: 2,
+    "& svg": {
+      fontSize: 15,
+      color: goal.isFavorite ? "#FFE812" : "white",
+    },
+  }));
+
   const dispatch = useAppDispatch();
   const [click, setClick] = useState(false);
 
@@ -68,55 +110,23 @@ const Goal = (goal: GoalProps) => {
   const manageSelectedGoals = () => {
     const found = nowSelected.some((el) => el.seq === goal.seq);
     if (nowSelected.length < 9 && !found) {
-      dispatch(setGoal([goal]));
+      dispatch(
+        setGoal([
+          { seq: goal.seq, content: goal.content, category: goal.category },
+        ])
+      );
       setClick(true);
     } else if (nowSelected.length <= 9 && found) {
-      dispatch(deleteGoal(goal));
+      dispatch(
+        deleteGoal({
+          seq: goal.seq,
+          content: goal.content,
+          category: goal.category,
+        })
+      );
       setClick(false);
     }
   };
-
-  const GoalButton = styled(Button)(({ theme }) => ({
-    position: "relative",
-    width: "208px",
-    height: "50px",
-    outline: "2px solid #5A5A5A",
-    outlineOffset: "-2px",
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: "10px",
-    color: "#5A5A5A",
-    "& p": {
-      fontSize: "14px",
-    },
-    "&:before": {
-      content: "''",
-      width: "70%",
-      height: "4px",
-      background: "white",
-      top: "0px",
-      position: "absolute",
-      transition: "all 0.3s",
-    },
-    "&:hover": {
-      color: "black",
-      backgroundColor: "#ffffff",
-    },
-  }));
-
-  const BookmarkButton = styled(IconButton)(({ theme }) => ({
-    position: "absolute",
-    top: 8,
-    left: 8,
-    padding: 0,
-    zIndex: 2,
-    "& svg": {
-      fontSize: 15,
-      color: goal.isFavorite ? "#FFE812" : "white",
-    },
-  }));
 
   return (
     <Stack
@@ -125,7 +135,15 @@ const Goal = (goal: GoalProps) => {
       sx={{ position: "relative" }}
     >
       {click && (
-        <Box sx={{ position: "absolute", height: "100%", zIndex: 2 }}>
+        <Box
+          sx={{
+            position: "absolute",
+            height: "100%",
+            zIndex: 2,
+            cursor: "pointer",
+          }}
+          onClick={manageSelectedGoals}
+        >
           <Stamp />
         </Box>
       )}
