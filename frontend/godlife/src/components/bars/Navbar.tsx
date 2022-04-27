@@ -26,7 +26,6 @@ const Navbar = () => {
 
   const location = useLocation();
 
-  console.log(location.pathname.split("/")[1]);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const logout = () => {
