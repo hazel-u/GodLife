@@ -3,8 +3,9 @@ import { Box, IconButton, Stack, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import dayjs from "dayjs";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
+import useCountDown from "../../../hooks/useCountDown";
 import { selectBingo } from "../../../store/bingo";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
@@ -52,6 +53,16 @@ const BingoTitle = ({
   };
 
   const { startDate, godCount } = useAppSelector(selectBingo);
+  const countDown = useCountDown();
+
+  const [leftHours, setLeftHours] = useState<number>();
+  const [leftMinutes, setLeftMinutes] = useState<number>();
+  useEffect(() => {
+    setLeftHours(
+      Math.floor((countDown % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+    );
+    setLeftMinutes(Math.floor((countDown % (1000 * 60 * 60)) / (1000 * 60)));
+  }, [countDown]);
 
   return (
     <Box
@@ -135,6 +146,7 @@ const BingoTitle = ({
         <Box sx={{ mt: 2 }}>
           <Typography>
             {godCount}일 째 갓생 중{/* | {100}일 연속 갓생 중 */}
+            <br />⏱ {leftHours} : {leftMinutes}
           </Typography>
         </Box>
       )}
