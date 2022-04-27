@@ -63,15 +63,16 @@ const ProfileDelete = ({ handleClose }: { handleClose: () => void }) => {
         지금까지 {name}님께서 만드신 갓생 빙고는 사라지지 않습니다. <br />
         탈퇴를 원하시면 {name}님의 이메일을 입력해주세요.
       </p>
-      <OutlinedInput
-        placeholder="이메일"
-        size="small"
-        value={emailInput}
-        onChange={(e) => {
-          setEmailInput(e.target.value);
-        }}
-      />
       <Box sx={{ textAlign: "center", margin: "20px 0" }}>
+        <OutlinedInput
+          placeholder="이메일"
+          size="small"
+          value={emailInput}
+          onChange={(e) => {
+            setEmailInput(e.target.value);
+          }}
+          sx={{ marginBottom: "20px" }}
+        />
         <OutlinedButton
           variant="outlined"
           type="submit"
