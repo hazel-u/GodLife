@@ -21,7 +21,7 @@ const KakaoShare = () => {
         title: "갓생살기",
         description: "쉽게만 살아가면 재미없어 빙고!",
         imageUrl:
-          "https://mud-kage.kakao.com/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg",
+          "https://sayeon.s3.ap-northeast-2.amazonaws.com/upload/Group+333.png",
         link: {
           mobileWebUrl: window.location.href,
           webUrl: window.location.href,
