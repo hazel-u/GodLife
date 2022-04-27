@@ -1,10 +1,11 @@
-import { Grid, Hidden, Stack } from "@mui/material";
+import { Grid, Hidden, Stack, Tooltip } from "@mui/material";
 
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { ReactComponent as Logo } from "../../assets/logo/Godlife/logo.svg";
 import Profile from "../../pages/profile/Profile";
+import { setDialog } from "../../store/dialog";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
 import { selectTodayBingo } from "../../store/todayBingo";
@@ -52,7 +53,7 @@ const Navbar = () => {
           container
           alignItems="end"
           sx={{
-            padding: "10px 10px 40px 10px",
+            padding: "20px 10px 40px 10px",
           }}
         >
           <Grid item sm={5}>
@@ -70,19 +71,21 @@ const Navbar = () => {
               </TextButton>
               <TextButton href="/list">이전의 갓생</TextButton>
 
-              <TextButton
-                onClick={() => {
-                  dispatch(
-                    setSnackbar({
-                      open: true,
-                      message: "서비스 준비중입니다.",
-                      severity: "info",
-                    })
-                  );
-                }}
-              >
-                내 그룹
-              </TextButton>
+              <Tooltip title={"서비스 준비중입니다."}>
+                <TextButton
+                  onClick={() => {
+                    dispatch(
+                      setSnackbar({
+                        open: true,
+                        message: "서비스 준비중입니다.",
+                        severity: "info",
+                      })
+                    );
+                  }}
+                >
+                  내 그룹
+                </TextButton>
+              </Tooltip>
             </Stack>
           </Grid>
           <Grid
@@ -92,17 +95,22 @@ const Navbar = () => {
               textAlign: "center",
             }}
           >
-            <Logo width="100px" height="100px" />
+            <Logo
+              width="100px"
+              height="100px"
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/")}
+            />
           </Grid>
           <Grid item sm={5}>
             <Stack direction="row" justifyContent="space-around">
               <TextButton
                 onClick={() => {
                   dispatch(
-                    setSnackbar({
+                    setDialog({
                       open: true,
-                      message: "서비스 준비중입니다.",
-                      severity: "info",
+                      title: "아이템샵",
+                      content: "서비스 준비중입니다.",
                     })
                   );
                 }}

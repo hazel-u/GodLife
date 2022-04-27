@@ -1,6 +1,6 @@
 import { Global } from "@emotion/react";
 import customStyled from "@emotion/styled";
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, Tooltip } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import { grey } from "@mui/material/colors";
@@ -8,8 +8,11 @@ import { styled } from "@mui/material/styles";
 
 import * as React from "react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import menu from "../../assets/icon/menu.png";
+import { setDialog } from "../../store/dialog";
+import { setSnackbar } from "../../store/snackbar";
 import { TextButton } from "../common/Button";
 import "./bars.css";
 
@@ -51,6 +54,7 @@ export default function SwipeableEdgeDrawer({
   const toggleDrawer = (newOpen: boolean) => () => {
     setDrawerOpen(newOpen);
   };
+  const dispatch = useDispatch();
 
   return (
     <Root>
@@ -107,8 +111,34 @@ export default function SwipeableEdgeDrawer({
               >
                 <TextButton href="/today">오늘의 갓생</TextButton>
                 <TextButton href="/list">이전의 갓생</TextButton>
-                <TextButton href="/group">내 그룹</TextButton>
-                <TextButton href="/item">아이템 샵</TextButton>
+                <Tooltip title={"서비스 준비중입니다."}>
+                  <TextButton
+                    onClick={() => {
+                      dispatch(
+                        setSnackbar({
+                          open: true,
+                          message: "서비스 준비중입니다.",
+                          severity: "info",
+                        })
+                      );
+                    }}
+                  >
+                    내 그룹
+                  </TextButton>
+                </Tooltip>
+                <TextButton
+                  onClick={() => {
+                    dispatch(
+                      setDialog({
+                        open: true,
+                        title: "아이템샵",
+                        content: "서비스 준비중입니다.",
+                      })
+                    );
+                  }}
+                >
+                  아이템 샵
+                </TextButton>
                 <TextButton
                   onClick={() => {
                     setDrawerOpen(false);
