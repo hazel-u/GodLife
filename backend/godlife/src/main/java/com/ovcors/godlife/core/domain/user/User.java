@@ -80,4 +80,10 @@ public class User {
         UUID seq = UUID.randomUUID();
         this.seq = seq;
     }
+    public void setRecentDate(){
+        this.recentDate = LocalDate.now();
+    }
+    public void addgodCount(){
+        this.godCount++;
+    }
 }

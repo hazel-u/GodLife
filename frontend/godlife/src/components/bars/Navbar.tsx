@@ -41,7 +41,7 @@ const Navbar = () => {
     );
   };
 
-  const { code } = useAppSelector(selectTodayBingo);
+  const code = useAppSelector(selectTodayBingo);
 
   return (
     <>

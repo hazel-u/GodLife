@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -71,7 +72,7 @@ public class BingoServiceImpl implements BingoService {
 
     public FindBingoResDto findBingo(Long code) {
         Bingo bingo = bingoQueryRepository.findBingo(code);
-        if(bingo == null){
+        if (bingo == null) {
             throw new CustomException(ErrorCode.BINGO_NOT_FOUND);
         }
         return new FindBingoResDto(bingo);
@@ -92,7 +93,21 @@ public class BingoServiceImpl implements BingoService {
     public void updateGodlife(String seq) {
         Bingo bingo = bingoRepository.findById(UUID.fromString(seq))
                 .orElseThrow(() -> new CustomException(ErrorCode.BINGO_NOT_FOUND));
+        User user = bingo.getUser();
+
+        user.addgodCount();
         bingo.changeGodlife();
+
+        LocalDate date = user.getRecentDate();
+        if (date == null) {
+            user.setRecentDate();
+        } else {
+            LocalDate current = LocalDate.now();
+            Period period = Period.between(date, current);
+            if (period.getDays() > 1) {
+                user.setRecentDate();
+            }
+        }
     }
 
     public void updateLikeCnt(String seq) {
@@ -115,9 +130,9 @@ public class BingoServiceImpl implements BingoService {
         Comment comment = commentRepository.findById(UUID.fromString(seq))
                 .orElseThrow(() -> new CustomException(ErrorCode.COMMENT_NOT_FOUND));
         Bingo bingo = comment.getBingo();
-        if(bingo.getUser().getEmail().equals(userEmail)){
+        if (bingo.getUser().getEmail().equals(userEmail)) {
             commentRepository.deleteById(UUID.fromString(seq));
-        }else{
+        } else {
             throw new CustomException(ErrorCode.INVALID_AUTH_TOKEN);
         }
     }
@@ -126,9 +141,9 @@ public class BingoServiceImpl implements BingoService {
     public void deleteCommentByPassword(String seq, DeleteCommentDto reqDto) {
         Comment comment = commentRepository.findById(UUID.fromString(seq))
                 .orElseThrow(() -> new CustomException(ErrorCode.COMMENT_NOT_FOUND));
-        if(comment.getPassword().equals(reqDto.getPassword())){
+        if (comment.getPassword().equals(reqDto.getPassword())) {
             commentRepository.deleteById(UUID.fromString(seq));
-        }else{
+        } else {
             throw new CustomException(ErrorCode.WRONG_PASSWORD);
         }
     }
@@ -141,7 +156,8 @@ public class BingoServiceImpl implements BingoService {
     public FindBingoResDto findBingoBydate(String date, User user) throws ParseException {
         LocalDate startdate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         Bingo bingo = bingoRepository.findTopByStartDateAndUser(startdate, user)
-                .orElseThrow(() -> new CustomException(ErrorCode.BINGO_DATE_NOT_FOUND));;
+                .orElseThrow(() -> new CustomException(ErrorCode.BINGO_DATE_NOT_FOUND));
+        ;
         return new FindBingoResDto(bingo);
     }
 

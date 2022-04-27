@@ -6,7 +6,7 @@ import { selectTodayBingo } from "../store/todayBingo";
 
 const Main = () => {
   const navigate = useNavigate();
-  const { code } = useAppSelector(selectTodayBingo);
+  const code = useAppSelector(selectTodayBingo);
   useEffect(() => {
     if (code) {
       navigate(`/bingo/${code}`);
