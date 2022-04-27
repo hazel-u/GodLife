@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -14,10 +16,11 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comment {
     @Builder
-    public Comment(String nickname, String password, String content) {
+    public Comment(String nickname, String password, String content, LocalDateTime date) {
         this.nickname = nickname;
         this.password = password;
         this.content = content;
+        this.date = date;
     }
 
     @Id
@@ -33,6 +36,7 @@ public class Comment {
     private String nickname;
     private String password;
     private String content;
+    private LocalDateTime date;
 
     /* Setter 를 대신한 change Methods */
     public void setBingo(Bingo bingo) {

@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -25,6 +27,7 @@ public class SaveCommentReqDto {
                 .content(content)
                 .nickname(nickname)
                 .password(password)
+                .date(LocalDateTime.now())
                 .build();
     }
 }

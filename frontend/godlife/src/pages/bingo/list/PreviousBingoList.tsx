@@ -1,7 +1,7 @@
 import { Box, Grid, Pagination, Stack, Typography } from "@mui/material";
 import axios from "axios";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import Bingo from "../../../components/Bingo/Bingo";
 import { BingoType } from "../../../types/bingo";
@@ -13,7 +13,7 @@ const PreviousBingoList = () => {
 
   const limit = 6;
 
-  const getBingoList = () => {
+  const getBingoList = useCallback(() => {
     axios
       .get(`bingo/${page}/${limit}`, {
         headers: { Authorization: `${localStorage.getItem("token")}` },
@@ -23,7 +23,7 @@ const PreviousBingoList = () => {
         setBingoList(res.data);
       })
       .catch((err) => console.log(err));
-  };
+  }, [page]);
 
   useEffect(() => {
     axios
@@ -35,11 +35,11 @@ const PreviousBingoList = () => {
         getBingoList();
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [getBingoList]);
 
   useEffect(() => {
     getBingoList();
-  }, [page]);
+  }, [page, getBingoList]);
 
   return (
     <>

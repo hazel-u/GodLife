@@ -8,6 +8,7 @@ import BingoCreate from "../pages/bingo/create/BingoCreate";
 import GodlifeShare from "../pages/bingo/detail/GodlifeShare";
 import PreviousBingoList from "../pages/bingo/list/PreviousBingoList";
 import Join from "../pages/join/Join";
+import KakaoAuth from "../pages/login/KakaoAuth";
 import Login from "../pages/login/Login";
 
 export default function Router() {
@@ -21,6 +22,10 @@ export default function Router() {
     {
       path: "/login",
       element: isAuth ? <Navigate to="/" /> : <Login />,
+    },
+    {
+      path: process.env.REACT_APP_KAKAO_REDIRECT_PATH,
+      element: <KakaoAuth />,
     },
     {
       path: "/",

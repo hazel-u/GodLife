@@ -71,6 +71,9 @@ public class BingoServiceImpl implements BingoService {
 
     public FindBingoResDto findBingo(Long code) {
         Bingo bingo = bingoQueryRepository.findBingo(code);
+        if(bingo == null){
+            throw new CustomException(ErrorCode.BINGO_NOT_FOUND);
+        }
         return new FindBingoResDto(bingo);
     }
 

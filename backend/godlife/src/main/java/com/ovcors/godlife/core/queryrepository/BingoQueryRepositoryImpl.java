@@ -34,7 +34,7 @@ public class BingoQueryRepositoryImpl implements BingoQueryRepository{
                 .selectFrom(bingo)
                 .where(bingo.user.email.eq(userEmail))
                 .orderBy(bingo.startDate.desc())
-                .offset(page)
+                .offset(page*limit)
                 .limit(limit)
                 .fetch();
     }
