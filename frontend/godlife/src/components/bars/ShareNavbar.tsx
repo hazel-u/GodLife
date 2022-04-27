@@ -10,7 +10,7 @@ const DivStyle = styled.div`
   justify-content: center;
   align-items: center;
   box-shadow: none;
-  padding: 10px 0px;
+  padding: 10px 10px 40px 10px;
   height: 10%;
 `;
 
