@@ -17,7 +17,7 @@ const SocialLogin = () => {
       },
     });
     if (jwtToken.status === 200) {
-      localStorage.setItem("token", jwtToken.data);
+      localStorage.setItem("token", jwtToken.data.jwtToken);
       navigate("/");
     }
   };
