@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -30,8 +31,9 @@ public class FindBingoResDto {
     Integer likeCnt;
     List<BingoGoalResDto> goals = new ArrayList<>();
     List<CommentResDto> comments = new ArrayList<>();
-    LocalDate recentDate;
+    //    LocalDate recentDate;
     int godCount;
+    int serialGodCount;
 
 
     public FindBingoResDto(Bingo bingo) {
@@ -46,7 +48,15 @@ public class FindBingoResDto {
         this.likeCnt = bingo.getLikeCnt();
 
         this.godCount = bingo.getUser().getGodCount();
-        this.recentDate = bingo.getUser().getRecentDate();
+        LocalDate recentDate = bingo.getUser().getRecentDate();
+        if (recentDate == null)
+            this.serialGodCount = 0;
+        else {
+            LocalDate current = LocalDate.now();
+            Period period = Period.between(recentDate, current);
+            this.serialGodCount = period.getDays();
+        }
+
 
         List<BingoGoals> bingoGoals = bingo.getBingoGoals();
         for (BingoGoals bingoGoal : bingoGoals) {
