@@ -15,6 +15,7 @@ import java.util.UUID;
 @Builder
 public class BingoGoalResDto {
     UUID seq;
+    Long goalSeq;
     String content;
     Category category;
     Boolean completed;

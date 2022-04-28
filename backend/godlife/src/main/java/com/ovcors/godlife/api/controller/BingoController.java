@@ -30,14 +30,14 @@ public class BingoController {
     }
 
     @GetMapping("/{code}")
-    public ResponseEntity<FindBingoResDto> findByCode(@PathVariable Long code) {
+    public ResponseEntity<FindBingoResDto> findByCode(@PathVariable String code) {
         FindBingoResDto response = bingoService.findBingo(code);
         return ResponseEntity.ok().body(response);
     }
 
     @PostMapping
     public ResponseEntity<SaveBingoResDto> saveBingo(@Auth User user, @RequestBody @Valid SaveBingoReqDto reqDto) {
-        Long code = bingoService.createBingo(user.getEmail(), reqDto);
+        String code = bingoService.createBingo(user.getEmail(), reqDto);
         return ResponseEntity.ok().body(new SaveBingoResDto(code));
     }
 

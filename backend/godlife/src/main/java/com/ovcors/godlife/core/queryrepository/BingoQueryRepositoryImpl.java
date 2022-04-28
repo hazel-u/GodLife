@@ -36,7 +36,7 @@ public class BingoQueryRepositoryImpl implements BingoQueryRepository{
     }
 
     @Override
-    public Bingo findBingo(Long code) {
+    public Bingo findBingo(String code) {
         return query
                 .selectFrom(bingo)
                 .where(bingo.bingoCode.code.eq(code))

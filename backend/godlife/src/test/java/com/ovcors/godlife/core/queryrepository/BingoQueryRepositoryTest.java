@@ -11,6 +11,7 @@ import com.ovcors.godlife.core.repository.BingoGoalsRepository;
 import com.ovcors.godlife.core.repository.BingoRepository;
 import com.ovcors.godlife.core.repository.GoalsRepository;
 import com.ovcors.godlife.core.repository.UserRepository;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -86,7 +87,9 @@ class BingoQueryRepositoryTest {
         Bingo bingo = Bingo.builder()
                 .title("Hello world")
                 .build();
-        BingoCode bingoCode = new BingoCode();
+        BingoCode bingoCode = BingoCode.builder()
+                .code(makeCode())
+                .build();
 
         bingo.setBingoCode(bingoCode);
         bingo.setUser(savedUser);
@@ -100,5 +103,14 @@ class BingoQueryRepositoryTest {
         assertThat(result.getSeq()).isEqualTo(savedBingo.getSeq());
         assertThat(result.getBingoCode().getCode()).isEqualTo(savedBingo.getBingoCode().getCode());
         assertThat(result.getTitle()).isEqualTo(savedBingo.getTitle());
+    }
+
+    private String makeCode() {
+        String code = "";
+        while(true) {
+            code = RandomStringUtils.random(8, "0123456789abcdefABCDEF");
+            if (bingoQueryRepository.findBingo(code) == null) break;
+        }
+        return code;
     }
 }

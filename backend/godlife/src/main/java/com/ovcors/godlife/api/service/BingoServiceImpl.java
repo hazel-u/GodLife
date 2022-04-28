@@ -13,6 +13,7 @@ import com.ovcors.godlife.core.domain.user.User;
 import com.ovcors.godlife.core.queryrepository.BingoQueryRepository;
 import com.ovcors.godlife.core.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.tomcat.jni.Local;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -38,9 +39,11 @@ public class BingoServiceImpl implements BingoService {
     private final CommentRepository commentRepository;
 
     @Override
-    public Long createBingo(String userEmail, SaveBingoReqDto reqDto) {
+    public String createBingo(String userEmail, SaveBingoReqDto reqDto) {
         User user = userRepository.findByEmailAndDeletedFalse(userEmail);
-        BingoCode bingoCode = BingoCode.builder().build();
+        BingoCode bingoCode = BingoCode.builder()
+                .code(makeCode())
+                .build();
 
         Bingo bingo = reqDto.toEntity();
         bingo.setUser(user);
@@ -61,6 +64,15 @@ public class BingoServiceImpl implements BingoService {
         return savedBingo.getBingoCode().getCode();
     }
 
+    private String makeCode() {
+        String code = "";
+        while(true) {
+            code = RandomStringUtils.random(8, "0123456789abcdefABCDEF");
+            if (bingoQueryRepository.findBingo(code) == null) break;
+        }
+        return code;
+    }
+
     @Override
     public List<FindBingoResDto> findAllBingo(String userEmail, int page, int limit) {
         List<Bingo> bingos = bingoQueryRepository.findPageByUser(userEmail, page, limit);
@@ -72,7 +84,7 @@ public class BingoServiceImpl implements BingoService {
     }
 
     @Override
-    public FindBingoResDto findBingo(Long code) {
+    public FindBingoResDto findBingo(String code) {
         Bingo bingo = bingoQueryRepository.findBingo(code);
         if (bingo == null) {
             throw new CustomException(ErrorCode.BINGO_NOT_FOUND);
