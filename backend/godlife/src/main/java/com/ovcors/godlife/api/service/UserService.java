@@ -17,5 +17,6 @@ public interface UserService {
     Boolean duplicatedEmail(String email);
     Boolean duplicatedName(String name);
     Boolean changePassword(UUID seq, ChangePasswordReqDto changePasswordReqDto);
+    String newToken(String expiredAuthorization);
     GodLifeResDto getGodLife(UUID seq);
 }

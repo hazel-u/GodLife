@@ -1,5 +1,9 @@
 package com.ovcors.godlife.api.service;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.SignatureVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.ovcors.godlife.api.dto.request.ChangePasswordReqDto;
 import com.ovcors.godlife.api.dto.request.ChangeUserInfoReqDto;
 import com.ovcors.godlife.api.dto.request.JoinReqDto;
@@ -7,14 +11,18 @@ import com.ovcors.godlife.api.dto.response.GodLifeResDto;
 import com.ovcors.godlife.api.dto.response.UserInfoResDto;
 import com.ovcors.godlife.api.exception.CustomException;
 import com.ovcors.godlife.api.exception.ErrorCode;
+import com.ovcors.godlife.config.jwt.JwtProperties;
 import com.ovcors.godlife.core.domain.user.JoinType;
 import com.ovcors.godlife.core.domain.user.User;
 import com.ovcors.godlife.core.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -26,6 +34,12 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RedisTemplate redisTemplate;;
+
+    @Value("${spring.jwt.secret}")
+    public String secret;
 
     @Override
     public User join(JoinReqDto joinReqDto) {
@@ -69,6 +83,7 @@ public class UserServiceImpl implements UserService{
                 .name(user.getName())
                 .recentDate(user.getRecentDate())
                 .godCount(user.getGodCount())
+                .joinType(user.getOauth_type().getCompanyName())
                 .build();
 
         return userInfoResDto;
@@ -137,6 +152,42 @@ public class UserServiceImpl implements UserService{
         userRepository.save(user);
 
         return true;
+    }
+
+    @Override
+    public String newToken(String expiredAuthorization) {
+        if(expiredAuthorization != null && expiredAuthorization.startsWith(JwtProperties.TOKEN_PREFIX)) {
+            try{
+                String refreshToken = expiredAuthorization.replace(JwtProperties.TOKEN_PREFIX, "");
+                String email = JWT.require(Algorithm.HMAC512(secret)).build().verify(refreshToken)
+                        .getClaim("email").asString();
+
+                String storedRefreshToken = redisTemplate.opsForValue().get(email).toString();
+
+                // user의 refreshToken과 저장된 refreshToken이 동일한지 확인
+                if(!refreshToken.equals(storedRefreshToken)) {
+                    throw new CustomException(ErrorCode.INVALID_AUTH_TOKEN);
+                }
+
+                User user = userRepository.findByEmailAndDeletedFalse(email);
+                String newToken = JWT.create()
+                        .withSubject(user.getEmail())
+                        .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
+                        .withClaim("id", user.getSeq().toString())
+                        .withClaim("email", user.getEmail())
+                        .sign(Algorithm.HMAC512(secret));
+
+                return JwtProperties.TOKEN_PREFIX+newToken;
+            } catch (TokenExpiredException e) {
+                // Refresh Token이 만료되었을 때 (Expired Refresh Token 에러코드 만들기)
+                throw new CustomException(ErrorCode.EXPIRED_REFRESH_TOKEN);
+            } catch (SignatureVerificationException e) {
+                // Refresh Token 값이 잘못되었을 때
+                throw new CustomException(ErrorCode.INVALID_AUTH_TOKEN);
+            }
+        }
+        // 토큰이 없거나, 정해진 형식을 따르지 않는 토큰일 때
+        throw new CustomException(ErrorCode.TOKEN_NOT_FOUND);
     }
 
     @Override

@@ -50,9 +50,10 @@ dependencies {
 	implementation 'com.google.code.gson:gson:2.8.7'
 
 	// kakao - WebClient
-//	compile 'org.springframework.boot:spring-boot-starter-webflux'
-//	compile 'org.projectreactor:reactor-spring:1.0.1.RELEASE'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	// Redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
 	//annotationProcessror
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"

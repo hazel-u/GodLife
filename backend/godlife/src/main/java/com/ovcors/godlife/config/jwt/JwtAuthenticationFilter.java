@@ -7,6 +7,8 @@ import com.ovcors.godlife.api.dto.request.LoginReqDto;
 import com.ovcors.godlife.api.exception.ErrorCode;
 import com.ovcors.godlife.config.auth.PrincipalDetails;
 import com.ovcors.godlife.core.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -21,18 +23,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
     private final AuthenticationManager authenticationManager;
     private final String secret;
     private UserRepository userRepository;
+    private RedisTemplate redisTemplate;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, String secret, UserRepository userRepository) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, String secret, UserRepository userRepository, RedisTemplate redisTemplate) {
         super("/user/login");
         this.authenticationManager = authenticationManager;
         this.secret = secret;
         this.userRepository = userRepository;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
@@ -88,10 +93,9 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
                 .withClaim("email", principalDetails.getUser().getEmail())
                 .sign(Algorithm.HMAC512(secret));
 
-        // Todo : Refresh Token - Redis에 저장하는걸로 바꾸기
-//        User userEntity = userRepository.findByEmailAndActivateTrue(principalDetails.getUsername());
-//        userEntity.saveRefreshToken(refreshToken);
-//        userRepository.save(userEntity);
+        // Refresh Token - Redis에 저장
+        redisTemplate.opsForValue()
+                        .set(principalDetails.getUser().getEmail(), refreshToken, JwtProperties.REFRESH_EXPIRATION_TIME, TimeUnit.MILLISECONDS);
 
         System.out.println("success!! -> " + jwtToken);
         // response의 header로 Access Token 보내기

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -25,6 +26,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {return new BCryptPasswordEncoder();}
@@ -44,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                 .and()
 
-                .addFilterBefore(new JwtAuthenticationFilter(authenticationManager(), secret, userRepository), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(authenticationManager(), secret, userRepository, redisTemplate), UsernamePasswordAuthenticationFilter.class)
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository, secret))
 
                 .httpBasic().disable()
