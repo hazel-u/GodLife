@@ -61,7 +61,7 @@ const PreviousBingoList = () => {
           sx={{ minHeight: "500px" }}
         >
           <Lottie animationData={BingoJson} width={200} height={200} />
-          <Typography>아직 생성된 빙고가 없습니다.</Typography>
+          <Typography>아직 생성된 갓생이 없습니다.</Typography>
         </Stack>
       ) : (
         <>
@@ -80,7 +80,13 @@ const PreviousBingoList = () => {
                 onClick={() => navigate(`/bingo/${bingo.code}`)}
                 sx={{ cursor: "pointer" }}
               >
-                <p>{bingo.startDate.join("-")}</p>
+                <p>
+                  {bingo.startDate[0]}년 {bingo.startDate[1]}월{" "}
+                  {bingo.startDate[2]}일의 갓생
+                </p>
+                <Typography textAlign={"center"} fontFamily={"BMEULJIRO"}>
+                  {bingo.title}
+                </Typography>
                 <Bingo
                   createdBy={bingo.userName}
                   size={3}
