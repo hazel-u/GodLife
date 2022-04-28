@@ -8,6 +8,7 @@ import { OutlinedButton } from "../../../components/common/Button";
 import { selectGoal } from "../../../store/goal";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
+import BingoConfirm from "./BingoConfirm";
 import BingoCopy from "./BingoCopy";
 import BingoCreateGoalList from "./BingoCreateGoalList";
 import BingoTitle from "./BingoTitle";
@@ -42,16 +43,6 @@ const BingoCreate = () => {
   };
 
   const startBingo = () => {
-    if (!title) {
-      dispatch(
-        setSnackbar({
-          open: true,
-          message: "빙고의 제목을 입력해주세요.",
-          severity: "warning",
-        })
-      );
-      return;
-    }
     const goalsCount = selectedGoals.length;
     const selectedGoalsSeqs: number[] = selectedGoals.map(
       (goal: { seq: number }) => goal.seq
@@ -88,7 +79,16 @@ const BingoCreate = () => {
           },
         }
       )
-      .then((res) => navigate(`/bingo/${res.data.code}`))
+      .then((res) => {
+        dispatch(
+          setSnackbar({
+            open: true,
+            message: "갓생이 시작되었습니다.",
+            severity: "success",
+          })
+        );
+        navigate(`/bingo/${res.data.code}`);
+      })
       .catch(() =>
         dispatch(
           setSnackbar({
@@ -103,8 +103,28 @@ const BingoCreate = () => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const confirmBingo = () => {
+    if (!title) {
+      dispatch(
+        setSnackbar({
+          open: true,
+          message: "빙고의 제목을 입력해주세요.",
+          severity: "warning",
+        })
+      );
+      return;
+    }
+    setConfirmOpen(true);
+  };
+
   return (
     <>
+      <BingoConfirm
+        confirmOpen={confirmOpen}
+        setConfirmOpen={setConfirmOpen}
+        startBingo={startBingo}
+      />
       <BingoCopy open={open} setOpen={setOpen} title={title} />
       <Stack
         direction="column"
@@ -122,7 +142,7 @@ const BingoCreate = () => {
           <Box sx={{ textAlign: "center" }}>
             <OutlinedButton
               variant="outlined"
-              onClick={startBingo}
+              onClick={confirmBingo}
               sx={{ width: "200px" }}
             >
               시작하기
