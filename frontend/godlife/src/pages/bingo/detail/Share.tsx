@@ -1,5 +1,5 @@
 import { IconButton, Stack, SvgIcon } from "@mui/material";
-import domtoimage from "dom-to-image";
+import * as htmlToImage from "html-to-image";
 
 import React from "react";
 
@@ -21,13 +21,11 @@ const Share = () => {
     const bingo = document.getElementById("bingo");
 
     if (bingo) {
-      domtoimage.toPng(bingo).then(function (dataUrl: string) {
-        domtoimage.toPng(bingo).then(function (dataUrl: string) {
-          const link = document.createElement("a");
-          link.download = `${month}월_${date}일의_갓생.png`;
-          link.href = dataUrl;
-          link.click();
-        });
+      htmlToImage.toPng(bingo).then(function (dataUrl: string) {
+        const link = document.createElement("a");
+        link.download = `${month}월_${date}일의_갓생.jpeg`;
+        link.href = dataUrl;
+        link.click();
       });
     }
   };
