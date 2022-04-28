@@ -21,12 +21,14 @@ const Share = () => {
     const bingo = document.getElementById("bingo");
 
     if (bingo) {
-      domtoimage.toPng(bingo).then(function (dataUrl: string) {
-        const link = document.createElement("a");
-        link.download = `${month}월_${date}일의_갓생.png`;
-        link.href = dataUrl;
-        link.click();
-      });
+      domtoimage
+        .toJpeg(bingo, { quality: 0.95 })
+        .then(function (dataUrl: string) {
+          const link = document.createElement("a");
+          link.download = `${month}월_${date}일의_갓생.jpeg`;
+          link.href = dataUrl;
+          link.click();
+        });
     }
   };
 
