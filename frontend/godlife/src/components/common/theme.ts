@@ -12,7 +12,7 @@ export const theme = createTheme({
       main: "#A11803",
     },
     secondary: {
-      main: "#e5e5e5",
+      main: "#939393",
     },
     info: {
       main: "#038ca1",
@@ -29,6 +29,6 @@ export const theme = createTheme({
     text: {
       primary: "#000000",
     },
-    divider: "#e5e5e5",
+    divider: "#939393",
   },
 });
