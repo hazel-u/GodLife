@@ -83,6 +83,7 @@ public class UserServiceImpl implements UserService{
                 .name(user.getName())
                 .recentDate(user.getRecentDate())
                 .godCount(user.getGodCount())
+                .joinType(user.getOauth_type().getCompanyName())
                 .build();
 
         return userInfoResDto;
