@@ -64,7 +64,7 @@ const CommentList = ({ getBingo }: { getBingo: () => void }) => {
   };
 
   return (
-    <Box sx={{ maxWidth: "500px" }}>
+    <Box sx={{ maxWidth: "500px", margin: "3% 0" }}>
       <p>댓글 {comments.length}개</p>
       <Divider />
       {!comments.length && <p>댓글이 없습니다.</p>}

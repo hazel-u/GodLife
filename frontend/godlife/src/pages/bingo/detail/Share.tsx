@@ -33,7 +33,7 @@ const Share = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <Stack direction="column" alignItems="center">
+    <Stack direction="column" alignItems="center" sx={{ margin: "3% 0" }}>
       <p>함께 갓생살기</p>
       <Stack direction="row" spacing={2}>
         <IconButton
