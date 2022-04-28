@@ -87,6 +87,7 @@ const BingoCell = ({
         sx={{
           position: "relative",
           width: 120,
+          cursor: "pointer",
           "&::before": {
             display: "block",
             content: "''",
