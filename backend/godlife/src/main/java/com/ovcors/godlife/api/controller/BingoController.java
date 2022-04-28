@@ -1,26 +1,20 @@
 package com.ovcors.godlife.api.controller;
 
-import com.ovcors.godlife.api.dto.request.DeleteCommentDto;
-import com.ovcors.godlife.api.dto.request.SaveBingoReqDto;
-import com.ovcors.godlife.api.dto.request.SaveCommentReqDto;
-import com.ovcors.godlife.api.dto.request.UpdateTitleReqDto;
+import com.ovcors.godlife.api.dto.request.*;
 import com.ovcors.godlife.api.dto.response.BaseResponseEntity;
 import com.ovcors.godlife.api.dto.response.BingoCountResDto;
 import com.ovcors.godlife.api.dto.response.FindBingoResDto;
 import com.ovcors.godlife.api.dto.response.SaveBingoResDto;
 import com.ovcors.godlife.api.resolver.Auth;
 import com.ovcors.godlife.api.service.BingoService;
-import com.ovcors.godlife.core.domain.bingo.Bingo;
 import com.ovcors.godlife.core.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -60,8 +54,8 @@ public class BingoController {
     }
 
     @PutMapping("/{seq}/godlife")
-    public ResponseEntity<BaseResponseEntity> updateGodlife(@PathVariable String seq) {
-        bingoService.updateGodlife(seq);
+    public ResponseEntity<BaseResponseEntity> updateGodlife(@PathVariable String seq, @RequestBody UpdateGodlifeReqDto reqDto) {
+        bingoService.updateGodlife(seq, reqDto);
         return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
     }
 
@@ -79,7 +73,7 @@ public class BingoController {
 
     @DeleteMapping("/comment/{seq}")
     public ResponseEntity<BaseResponseEntity> deletemyBingoComment(@Auth User user,@PathVariable String seq) {
-        bingoService.deletemyBingoComment(seq, user.getEmail());
+        bingoService.deleteMyBingoComment(seq, user.getEmail());
         return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
     }
 
