@@ -58,7 +58,7 @@ function App() {
           .catch(() => {
             logout();
           });
-      }, 30000);
+      }, 600000 - 60000);
     }
     return () => clearInterval(intervalId);
   }, [logout, email]);
