@@ -137,6 +137,7 @@ export const Bingo = ({
         sx={{
           stretch: { height: "100%" },
           maxWidth: 750,
+          backgroundColor: "white",
         }}
         id="bingo"
       >
