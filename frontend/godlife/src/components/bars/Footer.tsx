@@ -18,7 +18,7 @@ const Footer = () => {
           <Box sx={{ fontSize: "12px", margin: "15px 0" }}>
             <span>문의</span>
             <Stack>
-              <span>godlife@gmail.com</span>
+              <span>today.godlife@gmail.com</span>
             </Stack>
             <Stack>
               <span>서울특별시 강남구 테헤란로 212길</span>
