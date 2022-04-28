@@ -42,21 +42,26 @@ function App() {
   const logout = useLogout();
 
   useEffect(() => {
-    setInterval(() => {
-      axios
-        .get("user/refresh-token", {
-          headers: {
-            RefreshToken: `${localStorage.getItem("refreshtoken")}`,
-          },
-        })
-        .then((res) =>
-          localStorage.setItem("token", res.headers["authorization"])
-        )
-        .catch(() => {
-          logout();
-        });
-    }, 600000 - 60000);
-  }, [logout]);
+    let intervalId: ReturnType<typeof setInterval>;
+    if (email) {
+      intervalId = setInterval(() => {
+        axios
+          .get("user/refresh-token", {
+            headers: {
+              RefreshToken: `${localStorage.getItem("refreshtoken")}`,
+            },
+          })
+          .then((res) => {
+            console.log(res);
+            localStorage.setItem("token", res.headers["authorization"]);
+          })
+          .catch(() => {
+            logout();
+          });
+      }, 30000);
+    }
+    return () => clearInterval(intervalId);
+  }, [logout, email]);
 
   return (
     <ThemeProvider theme={theme}>
