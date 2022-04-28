@@ -16,8 +16,8 @@ const Footer = () => {
             style={{ width: "50px", marginBottom: "20px" }}
           />
           <span>문의</span>
-          <a href="mailto:godlife.bingo@gmail.com?subject=갓생살기">
-            godlife.bingo@gmail.com
+          <a href="mailto:today.godlife@gmail.com?subject=갓생살기">
+            today.godlife@gmail.com
           </a>
           <span>서울특별시 강남구 테헤란로 212길</span>
 
