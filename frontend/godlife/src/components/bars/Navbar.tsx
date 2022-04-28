@@ -5,7 +5,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { ReactComponent as Logo } from "../../assets/logo/Godlife/logo.svg";
 import Profile from "../../pages/profile/Profile";
-import { setDialog } from "../../store/dialog";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
 import { selectTodayBingo } from "../../store/todayBingo";
@@ -104,19 +103,21 @@ const Navbar = () => {
           </Grid>
           <Grid item sm={5}>
             <Stack direction="row" justifyContent="space-around">
-              <TextButton
-                onClick={() => {
-                  dispatch(
-                    setDialog({
-                      open: true,
-                      title: "아이템샵",
-                      content: "서비스 준비중입니다.",
-                    })
-                  );
-                }}
-              >
-                아이템 샵
-              </TextButton>
+              <Tooltip title={"서비스 준비중입니다."}>
+                <TextButton
+                  onClick={() => {
+                    dispatch(
+                      setSnackbar({
+                        open: true,
+                        message: "서비스 준비중입니다.",
+                        severity: "info",
+                      })
+                    );
+                  }}
+                >
+                  아이템 샵
+                </TextButton>
+              </Tooltip>
               <TextButton onClick={() => setOpen(true)}>내 정보</TextButton>
               <TextButton onClick={logout}>로그아웃</TextButton>
             </Stack>

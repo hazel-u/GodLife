@@ -109,7 +109,7 @@ const BingoCreate = () => {
       dispatch(
         setSnackbar({
           open: true,
-          message: "빙고의 제목을 입력해주세요.",
+          message: "갓생의 제목을 입력해주세요.",
           severity: "warning",
         })
       );
@@ -166,14 +166,14 @@ const BingoCreate = () => {
                 dispatch(
                   setSnackbar({
                     open: true,
-                    message: "빙고의 제목을 먼저 입력해주세요.",
+                    message: "갓생의 제목을 먼저 입력해주세요.",
                     severity: "warning",
                   })
                 );
               }
             }}
           >
-            빙고 복사
+            갓생 복사
           </OutlinedButton>
         </Stack>
       </Stack>

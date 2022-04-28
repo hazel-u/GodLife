@@ -38,7 +38,7 @@ const BingoConfirm = ({
         <DialogContentText>
           총 {selectedGoals.length}개의 목표를 선택하셨습니다.
         </DialogContentText>
-        <List dense={true}>
+        <List dense={true} sx={{ padding: "30px 0" }}>
           {selectedGoals.map((goal) => (
             <ListItem key={goal.seq}>
               <ListItemText>✔ {goal.content}</ListItemText>

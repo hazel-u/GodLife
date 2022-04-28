@@ -46,16 +46,18 @@ const GodlifeShare = () => {
             title={bingo.title}
             getBingo={getBingo}
           />
-          <Bingo
-            createdBy={bingo.userName}
-            size={3}
-            goals={bingo.goals}
-            mode={"Active"}
-            startDate={bingo.startDate}
-            getBingo={getBingo}
-            godlife={bingo.godlife}
-            id={bingo.id}
-          />
+          <Box sx={{ marginTop: "5%" }}>
+            <Bingo
+              createdBy={bingo.userName}
+              size={3}
+              goals={bingo.goals}
+              mode={"Active"}
+              startDate={bingo.startDate}
+              getBingo={getBingo}
+              godlife={bingo.godlife}
+              id={bingo.id}
+            />
+          </Box>
         </Box>
       )}
 

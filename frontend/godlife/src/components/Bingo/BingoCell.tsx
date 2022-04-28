@@ -106,7 +106,7 @@ const BingoCell = ({
             left: 5,
             right: 5,
             bottom: 5,
-            padding: 3,
+            padding: cellSize < 85 ? 1 : 3,
           }}
           ref={cell}
         >
@@ -117,7 +117,7 @@ const BingoCell = ({
             align="center"
             sx={{
               fontSize: cellSize / 10,
-              display: cellSize < 85 ? "none" : "block",
+              wordBreak: "keep-all",
             }}
           >
             {content}

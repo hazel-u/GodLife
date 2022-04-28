@@ -1,4 +1,4 @@
-import { Box, Divider, Grid } from "@mui/material";
+import { Box, Divider, Stack } from "@mui/material";
 import axios from "axios";
 
 import React from "react";
@@ -64,7 +64,7 @@ const CommentList = ({ getBingo }: { getBingo: () => void }) => {
   };
 
   return (
-    <Box sx={{ maxWidth: "500px", margin: "3% 0" }}>
+    <Box sx={{ maxWidth: "500px", margin: "3% 0", width: "100%" }}>
       <p>댓글 {comments.length}개</p>
       <Divider />
       {!comments.length && <p>댓글이 없습니다.</p>}
@@ -75,16 +75,8 @@ const CommentList = ({ getBingo }: { getBingo: () => void }) => {
         </React.Fragment>
       ))}
       <form onSubmit={handleSubmit}>
-        <OutlinedInput
-          placeholder="내용"
-          value={newComment.content}
-          sx={{ width: "100%", maxWidth: "500px" }}
-          onChange={(e) => {
-            setNewComment({ ...newComment, content: e.target.value });
-          }}
-        />
-        <Grid container spacing={2} sx={{ padding: "10px 0" }}>
-          <Grid item xs={6} sm={4}>
+        <Stack spacing={1}>
+          <Stack direction="row" spacing={1}>
             <OutlinedInput
               placeholder="닉네임"
               size="small"
@@ -92,9 +84,8 @@ const CommentList = ({ getBingo }: { getBingo: () => void }) => {
               onChange={(e) => {
                 setNewComment({ ...newComment, nickname: e.target.value });
               }}
+              sx={{ maxWidth: "150px" }}
             />
-          </Grid>
-          <Grid item xs={6} sm={4}>
             <OutlinedInput
               placeholder="비밀번호"
               size="small"
@@ -103,18 +94,29 @@ const CommentList = ({ getBingo }: { getBingo: () => void }) => {
               onChange={(e) => {
                 setNewComment({ ...newComment, password: e.target.value });
               }}
+              sx={{ maxWidth: "150px" }}
             />
-          </Grid>
-          <Grid item xs={12} sm={4}>
+          </Stack>
+
+          <OutlinedInput
+            placeholder="내용"
+            value={newComment.content}
+            sx={{ width: "100%", maxWidth: "500px" }}
+            onChange={(e) => {
+              setNewComment({ ...newComment, content: e.target.value });
+            }}
+          />
+
+          <Box sx={{ textAlign: "end" }}>
             <OutlinedButton
               variant="outlined"
               type="submit"
-              sx={{ width: "100%", minWidth: "100%", height: "39.99px" }}
+              sx={{ width: "50px", height: "39.99px" }}
             >
               작성
             </OutlinedButton>
-          </Grid>
-        </Grid>
+          </Box>
+        </Stack>
       </form>
     </Box>
   );

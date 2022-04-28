@@ -59,7 +59,7 @@ const ProfileDelete = ({ handleClose }: { handleClose: () => void }) => {
     <Box>
       <h3>정말 탈퇴하시겠습니까?</h3>
       <p>
-        지금까지 {name}님께서 만드신 갓생 빙고는 사라지지 않습니다. <br />
+        지금까지 {name}님께서 만드신 갓생은 사라지지 않습니다. <br />
         탈퇴를 원하시면 닉네임을 입력해주세요.
       </p>
       <Box sx={{ textAlign: "center", margin: "20px 0" }}>

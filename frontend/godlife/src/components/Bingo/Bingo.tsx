@@ -1,9 +1,12 @@
 import Grid from "@mui/material/Grid";
 import axios from "axios";
 
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 
+import { setDialog } from "../../store/dialog";
+import { useAppDispatch } from "../../store/hooks";
 import BingoCell from "./BingoCell";
+import BingoProgress from "./BingoProgress";
 
 interface BingoProps {
   size: number;
@@ -26,6 +29,9 @@ export const Bingo = ({
   godlife,
   id,
 }: BingoProps) => {
+  const dispatch = useAppDispatch();
+  const [bingoCounts, setBingoCounts] = useState(0);
+
   // 1. 빙고 수 세기.
   const countBingos = useCallback(() => {
     interface goal {
@@ -64,22 +70,31 @@ export const Bingo = ({
       bingoCounts = bingo ? bingoCounts + 1 : bingoCounts;
     }
 
-    if (3 <= bingoCounts) {
+    setBingoCounts(bingoCounts);
+
+    if (3 <= bingoCounts && !godlife) {
       axios
         .put(`bingo/${id}/godlife`, null, {
           headers: {
             Authorization: `${localStorage.getItem("token")}`,
           },
         })
-        .then(() => getBingo && getBingo());
+        .then(() => {
+          dispatch(
+            setDialog({
+              open: true,
+              title: "갓생 달성!",
+              content: "세 빙고를 달성하셨습니다!",
+            })
+          );
+          getBingo && getBingo();
+        });
     }
-  }, [goals, size, id, getBingo]);
+  }, [goals, size, id, getBingo, dispatch, godlife]);
 
   useEffect(() => {
-    if (!godlife) {
-      countBingos();
-    }
-  }, [goals, godlife, countBingos]);
+    countBingos();
+  }, [countBingos]);
 
   // 2.
   const completeGoal = (goal: {
@@ -111,7 +126,7 @@ export const Bingo = ({
 
   return (
     <>
-      <p style={{ textAlign: "center" }}>{godlife ? "⭐⭐⭐⭐⭐" : "🔥🔥🔥"}</p>
+      <BingoProgress value={Math.min(3, bingoCounts)} />
       {/* 빙고 박스 */}
       <Grid
         container

@@ -13,13 +13,14 @@ const BingoTitle = ({
   return (
     <TextField
       variant="standard"
-      placeholder="빙고 제목을 입력해주세요!"
+      placeholder="갓생 제목을 입력해주세요!"
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
             <EditIcon />
           </InputAdornment>
         ),
+        style: { fontSize: "18px" },
       }}
       inputProps={{ maxLength: 20 }}
       value={title}

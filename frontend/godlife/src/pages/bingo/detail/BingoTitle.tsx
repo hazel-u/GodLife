@@ -9,6 +9,7 @@ import useCountDown from "../../../hooks/useCountDown";
 import { selectBingo } from "../../../store/bingo";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
+import { selectUser } from "../../../store/user";
 
 const BingoTitle = ({
   id,
@@ -52,9 +53,11 @@ const BingoTitle = ({
     }
   };
 
-  const { startDate, godCount, serialGodCount } = useAppSelector(selectBingo);
-  const countDown = useCountDown();
+  const { startDate, godCount, serialGodCount, userEmail } =
+    useAppSelector(selectBingo);
+  const { email, name } = useAppSelector(selectUser);
 
+  const countDown = useCountDown();
   const [leftHours, setLeftHours] = useState<number>();
   const [leftMinutes, setLeftMinutes] = useState<number>();
   useEffect(() => {
@@ -142,14 +145,25 @@ const BingoTitle = ({
           </Box>
         )}
       </Stack>
+
+      <Box sx={{ mt: 2 }}>
+        <Typography>
+          {startDate[0]}년 {startDate[1]}월 {startDate[2]}일 {name}의 갓생
+        </Typography>
+      </Box>
+
       {dayjs().format("YYYY-M-D") === startDate.join("-") && (
         <Box sx={{ mt: 2 }}>
           <Typography>
-            {godCount}일 째 갓생 중 | {serialGodCount}일 연속 갓생 중
-            <br />⏱ {leftHours && leftHours < 10 && "0"}
-            {leftHours} : {leftMinutes && leftMinutes < 10 && "0"}
-            {leftMinutes}
+            {godCount}일째 갓생 달성 중 | {serialGodCount}일 연속 갓생 달성 중
           </Typography>
+          {userEmail === email && (
+            <Typography>
+              ⏱ {leftHours && leftHours < 10 && "0"}
+              {leftHours} : {leftMinutes && leftMinutes < 10 && "0"}
+              {leftMinutes}
+            </Typography>
+          )}
         </Box>
       )}
     </Box>
