@@ -1,7 +1,6 @@
 package com.ovcors.godlife.core.queryrepository;
 
 import com.ovcors.godlife.api.dto.response.FindBingoResDto;
-import com.ovcors.godlife.api.dto.response.UserWithGodlifeResDto;
 import com.ovcors.godlife.core.domain.bingo.Bingo;
 import com.ovcors.godlife.core.domain.bingo.BingoCode;
 import com.ovcors.godlife.core.domain.bingo.Comment;
