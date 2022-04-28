@@ -88,7 +88,7 @@ const BingoCell = ({
         sx={{
           position: "relative",
           width: 120,
-          cursor: "pointer",
+          cursor: email === userEmail ? "pointer" : "default",
           "&::before": {
             display: "block",
             content: "''",
