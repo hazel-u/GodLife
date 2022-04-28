@@ -34,7 +34,7 @@ const Share = () => {
 
   return (
     <Stack direction="column" alignItems="center" sx={{ margin: "3% 0" }}>
-      <p>함께 갓생살기</p>
+      <p>함께 갓생 살기</p>
       <Stack direction="row" spacing={2}>
         <IconButton
           onClick={() => {
@@ -42,7 +42,7 @@ const Share = () => {
             dispatch(
               setSnackbar({
                 open: true,
-                message: "빙고 링크가 클립보드에 복사되었습니다.",
+                message: "갓생 링크가 클립보드에 복사되었습니다.",
                 severity: "success",
               })
             );

@@ -76,11 +76,11 @@ const BingoCopy = ({
       }}
       open={open}
     >
-      <DialogTitle>빙고 복사</DialogTitle>
+      <DialogTitle>갓생 복사</DialogTitle>
       <DialogContent sx={{ textAlign: "center" }}>
         <p>
-          복사하려는 빙고의 코드를 입력해주세요. <br /> 일치하는 빙고와 같은
-          목표를 갖는 빙고가 생성됩니다.
+          복사하려는 갓생의 코드를 입력해주세요. <br /> 일치하는 갓생과 같은
+          목표를 갖는 갓생이 생성됩니다.
         </p>
         <OutlinedInput
           value={code}

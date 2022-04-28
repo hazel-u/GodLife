@@ -21,9 +21,9 @@ const Interaction = ({ code, likeCnt, seq, getBingo }: InteractionProps) => {
     dispatch(
       setDialog({
         open: true,
-        title: "빙고 코드 복사 완료!",
+        title: "갓생 코드 복사 완료!",
         content:
-          "빙고 코드가 클립보드에 복사되었습니다. 빙고 만들기에서 코드를 입력해 똑같은 빙고를 만들 수 있습니다.",
+          "갓생 코드가 클립보드에 복사되었습니다. 갓생 만들기에서 코드를 입력해 똑같은 갓생을 만들 수 있습니다.",
       })
     );
   };
@@ -50,7 +50,7 @@ const Interaction = ({ code, likeCnt, seq, getBingo }: InteractionProps) => {
         </Box>
         <Typography sx={{ mt: 0.5 }}>{likeCnt}</Typography>
       </Stack>
-      <TextButton onClick={copyBingoCode}>빙고 복사</TextButton>
+      <TextButton onClick={copyBingoCode}>갓생 복사</TextButton>
     </Stack>
   );
 };
