@@ -1,13 +1,13 @@
 import { Grid, Hidden, Stack, Tooltip } from "@mui/material";
 
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { ReactComponent as Logo } from "../../assets/logo/Godlife/logo.svg";
 import Profile from "../../pages/profile/Profile";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
-import { selectTodayBingo } from "../../store/todayBingo";
+import { selectTodayBingo, setTodayBingo } from "../../store/todayBingo";
 import { clearLoggedUser } from "../../store/user";
 import { TextButton } from "../common/Button";
 import MobileNavbarDialog from "./MobileNavbarDialog";
@@ -15,15 +15,17 @@ import MobileNavbarDialog from "./MobileNavbarDialog";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
 
+  const location = useLocation();
+  const params = useParams();
+
+  const code = useAppSelector(selectTodayBingo);
   const pageNameList: { [key: string]: string } = {
     list: "이전의 갓생",
     group: "내 그룹",
     item: "아이템 샵",
     create: "갓생 만들기",
-    bingo: "하루 갓생",
+    bingo: `${code}` === params.bingoId ? "오늘의 갓생" : "갓생",
   };
-
-  const location = useLocation();
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -31,6 +33,7 @@ const Navbar = () => {
     navigate("login");
     localStorage.removeItem("token");
     localStorage.removeItem("refreshtoken");
+    dispatch(setTodayBingo(0));
     dispatch(clearLoggedUser());
     dispatch(
       setSnackbar({
@@ -40,8 +43,6 @@ const Navbar = () => {
       })
     );
   };
-
-  const code = useAppSelector(selectTodayBingo);
 
   return (
     <>

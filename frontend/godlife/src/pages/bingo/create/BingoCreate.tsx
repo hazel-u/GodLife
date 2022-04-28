@@ -8,6 +8,7 @@ import { OutlinedButton } from "../../../components/common/Button";
 import { selectGoal } from "../../../store/goal";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
+import { setTodayBingo } from "../../../store/todayBingo";
 import BingoConfirm from "./BingoConfirm";
 import BingoCopy from "./BingoCopy";
 import BingoCreateGoalList from "./BingoCreateGoalList";
@@ -88,6 +89,7 @@ const BingoCreate = () => {
           })
         );
         navigate(`/bingo/${res.data.code}`);
+        dispatch(setTodayBingo(res.data.code));
       })
       .catch(() =>
         dispatch(
