@@ -7,12 +7,13 @@ import {
   DialogTitle,
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+import { Box } from "@mui/system";
 import dayjs from "dayjs";
 
 import React, { useEffect, useRef, useState } from "react";
 
+import BackgroundImage from "../../assets/images/bingoCell.svg";
 import { ReactComponent as Stamp } from "../../assets/images/stamp.svg";
 import { selectBingo } from "../../store/bingo";
 import { useAppSelector } from "../../store/hooks";
@@ -95,8 +96,7 @@ const BingoCell = ({
           },
         }}
       >
-        <Paper
-          elevation={3}
+        <Box
           sx={{
             position: "absolute",
             display: "flex",
@@ -107,6 +107,8 @@ const BingoCell = ({
             right: 5,
             bottom: 5,
             padding: cellSize < 85 ? 1 : 3,
+            backgroundImage: `url(${BackgroundImage})`,
+            backgroundSize: "cover",
           }}
           ref={cell}
         >
@@ -122,7 +124,7 @@ const BingoCell = ({
           >
             {content}
           </Typography>
-        </Paper>
+        </Box>
       </Grid>
     </>
   );
