@@ -19,4 +19,5 @@ export interface BingoType {
     completed: boolean;
   }[];
   godCount: number;
+  serialGodCount: number;
 }

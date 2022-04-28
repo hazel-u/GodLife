@@ -52,7 +52,7 @@ const BingoTitle = ({
     }
   };
 
-  const { startDate, godCount } = useAppSelector(selectBingo);
+  const { startDate, godCount, serialGodCount } = useAppSelector(selectBingo);
   const countDown = useCountDown();
 
   const [leftHours, setLeftHours] = useState<number>();
@@ -145,8 +145,10 @@ const BingoTitle = ({
       {dayjs().format("YYYY-M-D") === startDate.join("-") && (
         <Box sx={{ mt: 2 }}>
           <Typography>
-            {godCount}일 째 갓생 중{/* | {100}일 연속 갓생 중 */}
-            <br />⏱ {leftHours} : {leftMinutes}
+            {godCount}일 째 갓생 중 | {serialGodCount}일 연속 갓생 중
+            <br />⏱ {leftHours && leftHours < 10 && "0"}
+            {leftHours} : {leftMinutes && leftMinutes < 10 && "0"}
+            {leftMinutes}
           </Typography>
         </Box>
       )}

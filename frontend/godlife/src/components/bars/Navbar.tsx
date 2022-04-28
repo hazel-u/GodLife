@@ -21,7 +21,7 @@ const Navbar = () => {
     group: "내 그룹",
     item: "아이템 샵",
     create: "갓생 만들기",
-    bingo: "오늘의 빙고",
+    bingo: "하루 갓생",
   };
 
   const location = useLocation();
@@ -141,7 +141,12 @@ const Navbar = () => {
             textAlign: "left",
           }}
         >
-          <Logo width="70px" height="70px" />
+          <Logo
+            width="70px"
+            height="70px"
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate("/")}
+          />
         </Grid>
         <Grid
           item

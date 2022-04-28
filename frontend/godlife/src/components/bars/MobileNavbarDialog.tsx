@@ -112,7 +112,7 @@ export default function SwipeableEdgeDrawer({
                 justifyContent="space-around"
                 sx={{ height: "100%" }}
               >
-                <TextButton href="/today">오늘의 갓생</TextButton>
+                <TextButton href="/">오늘의 갓생</TextButton>
                 <TextButton href="/list">이전의 갓생</TextButton>
                 <Tooltip title={"서비스 준비중입니다."}>
                   <TextButton

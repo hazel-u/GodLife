@@ -17,6 +17,7 @@ const initialState: BingoType = {
   userName: "",
   goals: [],
   godCount: 0,
+  serialGodCount: 0,
 };
 
 export const bingoSlice = createSlice({

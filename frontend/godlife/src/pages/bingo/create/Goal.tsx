@@ -9,7 +9,7 @@ import {
 import { styled } from "@mui/material/styles";
 import axios from "axios";
 
-import React, { useState } from "react";
+import React from "react";
 
 import { ReactComponent as StarIcon } from "../../../assets/icon/star.svg";
 import { ReactComponent as Stamp } from "../../../assets/images/stamp70.svg";
@@ -75,7 +75,6 @@ const Goal = (goal: GoalProps) => {
   }));
 
   const dispatch = useAppDispatch();
-  const [click, setClick] = useState(false);
 
   const manageFavorites = () => {
     let request;
@@ -115,7 +114,6 @@ const Goal = (goal: GoalProps) => {
           { seq: goal.seq, content: goal.content, category: goal.category },
         ])
       );
-      setClick(true);
     } else if (nowSelected.length <= 9 && found) {
       dispatch(
         deleteGoal({
@@ -124,8 +122,12 @@ const Goal = (goal: GoalProps) => {
           category: goal.category,
         })
       );
-      setClick(false);
     }
+  };
+
+  const selectedGoals = useAppSelector(selectGoal);
+  const isSelected = () => {
+    return selectedGoals.find((el) => el.seq === goal.seq);
   };
 
   return (
@@ -134,7 +136,7 @@ const Goal = (goal: GoalProps) => {
       justifyContent="center"
       sx={{ position: "relative" }}
     >
-      {click && (
+      {isSelected() && (
         <Box
           sx={{
             position: "absolute",

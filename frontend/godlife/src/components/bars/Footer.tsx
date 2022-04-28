@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Box, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 
 import React from "react";
 
@@ -9,24 +9,19 @@ const Footer = () => {
   return (
     <Container>
       <FooterWrapper>
-        <Stack>
+        <Stack direction="column" sx={{ fontSize: "14px", margin: "15px 0" }}>
           <img
             src={Logo}
             alt="logo"
-            style={{ width: "50px", marginBottom: "10px" }}
+            style={{ width: "50px", marginBottom: "20px" }}
           />
-          <Box sx={{ fontSize: "12px", margin: "15px 0" }}>
-            <span>문의</span>
-            <Stack>
-              <span>today.godlife@gmail.com</span>
-            </Stack>
-            <Stack>
-              <span>서울특별시 강남구 테헤란로 212길</span>
-            </Stack>
-            <Stack>
-              <p>CopyRight 2022 갓생살기 All rights reserved.</p>
-            </Stack>
-          </Box>
+          <span>문의</span>
+          <a href="mailto:today.godlife@gmail.com?subject=갓생살기">
+            today.godlife@gmail.com
+          </a>
+          <span>서울특별시 강남구 테헤란로 212길</span>
+
+          <p>CopyRight 2022 갓생살기 All rights reserved.</p>
         </Stack>
       </FooterWrapper>
     </Container>
