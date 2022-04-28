@@ -2,6 +2,7 @@ import Grid from "@mui/material/Grid";
 import axios from "axios";
 
 import { useCallback, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import { setDialog } from "../../store/dialog";
 import { useAppDispatch } from "../../store/hooks";
@@ -31,6 +32,7 @@ export const Bingo = ({
 }: BingoProps) => {
   const dispatch = useAppDispatch();
   const [bingoCounts, setBingoCounts] = useState(0);
+  const location = useLocation();
 
   // 1. 빙고 수 세기.
   const countBingos = useCallback(() => {
@@ -72,28 +74,29 @@ export const Bingo = ({
 
     setBingoCounts(bingoCounts);
 
-    axios
-      .put(
-        `bingo/${id}/godlife`,
-        { complete: 3 <= bingoCounts },
-        {
-          headers: {
-            Authorization: `${localStorage.getItem("token")}`,
-          },
-        }
-      )
-      .then(() => {
-        if (3 <= bingoCounts && !godlife) {
-          dispatch(
-            setDialog({
-              open: true,
-              title: "갓생 달성!",
-              content: "세 빙고를 달성하셨습니다!",
-            })
-          );
-        }
-        // getBingo && getBingo();
-      });
+    id &&
+      axios
+        .put(
+          `bingo/${id}/godlife`,
+          { complete: 3 <= bingoCounts },
+          {
+            headers: {
+              Authorization: `${localStorage.getItem("token")}`,
+            },
+          }
+        )
+        .then(() => {
+          if (3 <= bingoCounts && !godlife) {
+            dispatch(
+              setDialog({
+                open: true,
+                title: "갓생 달성!",
+                content: "세 빙고를 달성하셨습니다!",
+              })
+            );
+          }
+          // getBingo && getBingo();
+        });
   }, [goals, size, id, dispatch, godlife]);
 
   useEffect(() => {
