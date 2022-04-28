@@ -66,6 +66,7 @@ public class Bingo {
     }
     public void setUser(User user){
         this.user = user;
+        user.addBingo(this);
     }
 
     public void changeTitle(String title) {
@@ -74,8 +75,8 @@ public class Bingo {
     public void changeActivate() {
         this.activate = false;
     }
-    public void changeGodlife() {
-        this.godlife = true;
+    public void changeGodlife(Boolean godlife) {
+        this.godlife = godlife;
     }
     public void changeLike() {
         this.likeCnt++;

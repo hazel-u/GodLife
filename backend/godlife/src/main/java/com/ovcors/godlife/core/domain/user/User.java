@@ -10,6 +10,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,7 +47,10 @@ public class User {
     private LocalDate recentDate;
 
     @Column
-    private int godCount;
+    private Integer godCount;
+
+    @Column
+    private Integer serialGodCount;
 
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Bingo> bingos = new ArrayList<>();
@@ -80,10 +84,26 @@ public class User {
         UUID seq = UUID.randomUUID();
         this.seq = seq;
     }
-    public void setRecentDate(){
-        this.recentDate = LocalDate.now();
+    public void changeGodCount(int godCount){
+        this.godCount = godCount;
     }
-    public void addgodCount(){
-        this.godCount++;
+    public void changeSerialGodCount(int serialGodCount){
+        this.serialGodCount = serialGodCount;
+    }
+
+    public LocalDate getRecentGodLife(){
+        for(int i  = this.bingos.size()-1 ; i >= 0 ; i--){
+            System.out.println("Here-------------------------------------------------------------------");
+            Bingo bingo = this.bingos.get(i);
+            System.out.println(bingo.getStartDate());
+            if(bingo.getGodlife()){
+                return bingo.getStartDate();
+            }
+        }
+        return null;
+    }
+
+    public void addBingo(Bingo bingo) {
+        this.bingos.add(bingo);
     }
 }

@@ -1,9 +1,6 @@
 package com.ovcors.godlife.api.service;
 
-import com.ovcors.godlife.api.dto.request.DeleteCommentDto;
-import com.ovcors.godlife.api.dto.request.SaveBingoReqDto;
-import com.ovcors.godlife.api.dto.request.SaveCommentReqDto;
-import com.ovcors.godlife.api.dto.request.UpdateTitleReqDto;
+import com.ovcors.godlife.api.dto.request.*;
 import com.ovcors.godlife.api.dto.response.FindBingoResDto;
 import com.ovcors.godlife.api.exception.CustomException;
 import com.ovcors.godlife.api.exception.ErrorCode;
@@ -16,6 +13,8 @@ import com.ovcors.godlife.core.domain.user.User;
 import com.ovcors.godlife.core.queryrepository.BingoQueryRepository;
 import com.ovcors.godlife.core.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.jni.Local;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +37,7 @@ public class BingoServiceImpl implements BingoService {
     private final GoalsRepository goalsRepository;
     private final CommentRepository commentRepository;
 
+    @Override
     public Long createBingo(String userEmail, SaveBingoReqDto reqDto) {
         User user = userRepository.findByEmailAndDeletedFalse(userEmail);
         BingoCode bingoCode = BingoCode.builder().build();
@@ -61,6 +61,7 @@ public class BingoServiceImpl implements BingoService {
         return savedBingo.getBingoCode().getCode();
     }
 
+    @Override
     public List<FindBingoResDto> findAllBingo(String userEmail, int page, int limit) {
         List<Bingo> bingos = bingoQueryRepository.findPageByUser(userEmail, page, limit);
         List<FindBingoResDto> response = new ArrayList<>();
@@ -70,6 +71,7 @@ public class BingoServiceImpl implements BingoService {
         return response;
     }
 
+    @Override
     public FindBingoResDto findBingo(Long code) {
         Bingo bingo = bingoQueryRepository.findBingo(code);
         if (bingo == null) {
@@ -78,44 +80,35 @@ public class BingoServiceImpl implements BingoService {
         return new FindBingoResDto(bingo);
     }
 
+    @Override
     public void updateTitle(String seq, UpdateTitleReqDto reqDto) {
         Bingo bingo = bingoRepository.findById(UUID.fromString(seq))
                 .orElseThrow(() -> new CustomException(ErrorCode.BINGO_NOT_FOUND));
         bingo.changeTitle(reqDto.getTitle());
     }
 
+    @Override
     public void updateActivate(String seq) {
         Bingo bingo = bingoRepository.findById(UUID.fromString(seq))
                 .orElseThrow(() -> new CustomException(ErrorCode.BINGO_NOT_FOUND));
         bingo.changeActivate();
     }
 
-    public void updateGodlife(String seq) {
+    @Override
+    public void updateGodlife(String seq, UpdateGodlifeReqDto reqDto) {
         Bingo bingo = bingoRepository.findById(UUID.fromString(seq))
                 .orElseThrow(() -> new CustomException(ErrorCode.BINGO_NOT_FOUND));
-        User user = bingo.getUser();
-
-        user.addgodCount();
-        bingo.changeGodlife();
-
-        LocalDate date = user.getRecentDate();
-        if (date == null) {
-            user.setRecentDate();
-        } else {
-            LocalDate current = LocalDate.now();
-            Period period = Period.between(date, current);
-            if (period.getDays() > 1) {
-                user.setRecentDate();
-            }
-        }
+        bingo.changeGodlife(reqDto.getComplete());
     }
 
+    @Override
     public void updateLikeCnt(String seq) {
         Bingo bingo = bingoRepository.findById(UUID.fromString(seq))
                 .orElseThrow(() -> new CustomException(ErrorCode.BINGO_NOT_FOUND));
         bingo.changeLike();
     }
 
+    @Override
     public void addComment(String seq, SaveCommentReqDto reqDto) {
         Bingo bingo = bingoRepository.findById(UUID.fromString(seq))
                 .orElseThrow(() -> new CustomException(ErrorCode.BINGO_NOT_FOUND));
@@ -126,7 +119,7 @@ public class BingoServiceImpl implements BingoService {
     }
 
     @Override
-    public void deletemyBingoComment(String seq, String userEmail) {
+    public void deleteMyBingoComment(String seq, String userEmail) {
         Comment comment = commentRepository.findById(UUID.fromString(seq))
                 .orElseThrow(() -> new CustomException(ErrorCode.COMMENT_NOT_FOUND));
         Bingo bingo = comment.getBingo();
@@ -148,6 +141,7 @@ public class BingoServiceImpl implements BingoService {
         }
     }
 
+    @Override
     public Long findBingoCount(User user) {
         return bingoRepository.countByUser(user);
     }
@@ -161,5 +155,18 @@ public class BingoServiceImpl implements BingoService {
         return new FindBingoResDto(bingo);
     }
 
+    @Scheduled(cron = "1 0 0 * * *")
+    public void updateUserGodlife(){
+        List<User> users = userRepository.findAll();
+        for(User user : users){
+            LocalDate recentDate = user.getRecentGodLife();
+            if(recentDate==null || !recentDate.equals(LocalDate.now().minusDays(1))){
 
+                user.changeSerialGodCount(0);
+            } else{
+                user.changeGodCount(user.getGodCount()+1);
+                user.changeSerialGodCount(user.getSerialGodCount()+1);
+            }
+        }
+    }
 }
