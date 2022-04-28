@@ -4,11 +4,11 @@ import React, { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { ReactComponent as Logo } from "../../assets/logo/Godlife/logo.svg";
+import { useLogout } from "../../hooks/useAuth";
 import Profile from "../../pages/profile/Profile";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
-import { selectTodayBingo, setTodayBingo } from "../../store/todayBingo";
-import { clearLoggedUser } from "../../store/user";
+import { selectTodayBingo } from "../../store/todayBingo";
 import { TextButton } from "../common/Button";
 import MobileNavbarDialog from "./MobileNavbarDialog";
 
@@ -29,20 +29,8 @@ const Navbar = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const logout = () => {
-    navigate("login");
-    localStorage.removeItem("token");
-    localStorage.removeItem("refreshtoken");
-    dispatch(setTodayBingo(0));
-    dispatch(clearLoggedUser());
-    dispatch(
-      setSnackbar({
-        open: true,
-        message: "로그아웃 되었습니다.",
-        severity: "success",
-      })
-    );
-  };
+
+  const logout = useLogout();
 
   return (
     <>

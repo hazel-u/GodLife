@@ -2,10 +2,13 @@ import { ThemeProvider } from "@mui/material";
 import axios from "axios";
 import dayjs from "dayjs";
 
+import { useEffect } from "react";
+
 import CommonDialog from "./components/common/CommonDialog";
 import CommonLoading from "./components/common/CommonLoading";
 import CommonSnackbar from "./components/common/CommonSnackbar";
 import { theme } from "./components/common/theme";
+import { useLogout } from "./hooks/useAuth";
 import Router from "./router/router";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { setTodayBingo } from "./store/todayBingo";
@@ -35,6 +38,25 @@ function App() {
           .catch((err) => console.log(err));
       });
   }
+
+  const logout = useLogout();
+
+  useEffect(() => {
+    setInterval(() => {
+      axios
+        .get("user/refresh-token", {
+          headers: {
+            RefreshToken: `${localStorage.getItem("refreshtoken")}`,
+          },
+        })
+        .then((res) =>
+          localStorage.setItem("token", res.headers["authorization"])
+        )
+        .catch(() => {
+          logout();
+        });
+    }, 600000 - 60000);
+  }, [logout]);
 
   return (
     <ThemeProvider theme={theme}>

@@ -2,44 +2,31 @@ import { FormControl, Stack } from "@mui/material";
 import axios from "axios";
 
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 
 import { OutlinedButton } from "../../components/common/Button";
+import { useLogin } from "../../hooks/useAuth";
 import { useAppDispatch } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
-import { setLoggedUser } from "../../store/user";
 import { LoginInput } from "../../types/user";
 import EmailController from "./EmailController";
 import PasswordController from "./PasswordController";
 
 const LoginForm = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const login = useLogin();
 
   const { handleSubmit, control } = useForm<LoginInput>();
   const onSubmit: SubmitHandler<LoginInput> = async (data) => {
     await axios
       .post("user/login", data)
       .then((res) => {
-        localStorage.setItem("refreshtoken", res.headers["refreshtoken"]);
-        localStorage.setItem("token", res.headers["authorization"]);
-        navigate("/");
-        dispatch(
-          setSnackbar({
-            open: true,
-            message: "로그인이 완료되었습니다.",
-            severity: "success",
+        Promise.resolve()
+          .then(() => {
+            localStorage.setItem("token", res.headers["authorization"]);
+            localStorage.setItem("refreshtoken", res.headers["refreshtoken"]);
           })
-        );
-
-        axios
-          .get("user/info", {
-            headers: {
-              Authorization: res.headers["refreshtoken"],
-            },
-          })
-          .then((res) => {
-            dispatch(setLoggedUser(res.data));
+          .then(() => {
+            login();
           });
       })
       .catch(() => {
