@@ -27,6 +27,8 @@ const GoalButton = styled(Button)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "center",
   borderRadius: "10px",
+  webkitBorderRadius: "10px",
+  mozBorderRadius: "10px",
   color: "#5A5A5A",
   "& p": {
     fontSize: "14px",
