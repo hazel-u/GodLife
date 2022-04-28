@@ -55,6 +55,9 @@ dependencies {
 	// Redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
+	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+	implementation 'org.apache.commons:commons-lang3:3.0'
+
 	//annotationProcessror
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 

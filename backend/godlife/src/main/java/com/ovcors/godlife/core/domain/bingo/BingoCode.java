@@ -14,7 +14,9 @@ import javax.persistence.*;
 @Builder
 public class BingoCode {
     @Id @GeneratedValue
-    private Long code;
+    private Long seq;
+
+    private String code;
 
     @OneToOne
     @JoinColumn(name="bingo_seq")

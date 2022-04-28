@@ -66,13 +66,13 @@ class BingoControllerTest {
     public void findByCode() throws Exception {
         // given
         // when
-        ResultActions resultActions = mockMvc.perform(get(url+"/{code}", 1L)
+        ResultActions resultActions = mockMvc.perform(get(url+"/{code}", "1L")
                 .header("Authorization", "Bearer" + jwtToken)
                 .contentType(MediaType.APPLICATION_JSON));
 
         // then
         resultActions.andExpect(status().isOk());
-        verify(bingoService, times(1)).findBingo(1L);
+        verify(bingoService, times(1)).findBingo("1L");
     }
 
     @Test

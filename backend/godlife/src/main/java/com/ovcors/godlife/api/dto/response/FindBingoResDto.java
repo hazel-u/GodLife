@@ -21,7 +21,7 @@ import java.util.UUID;
 @Builder
 public class FindBingoResDto {
     UUID id;
-    Long code;
+    String code;
     String title;
     String userEmail;
     String userName;
@@ -62,6 +62,7 @@ public class FindBingoResDto {
         for (BingoGoals bingoGoal : bingoGoals) {
             this.goals.add(BingoGoalResDto.builder()
                     .seq(bingoGoal.getSeq())
+                    .goalSeq(bingoGoal.getGoals().getSeq())
                     .category(bingoGoal.getGoals().getCategory())
                     .content(bingoGoal.getGoals().getContent())
                     .completed(bingoGoal.isCompleted())

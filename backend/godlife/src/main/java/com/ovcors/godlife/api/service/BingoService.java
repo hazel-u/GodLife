@@ -9,9 +9,9 @@ import java.text.ParseException;
 import java.util.List;
 
 public interface BingoService {
-    Long createBingo(String userEmail, SaveBingoReqDto reqDto);
+    String createBingo(String userEmail, SaveBingoReqDto reqDto);
     List<FindBingoResDto> findAllBingo(String userEmail, int page, int limit);
-    FindBingoResDto findBingo(Long code);
+    FindBingoResDto findBingo(String code);
     void updateTitle(String seq, UpdateTitleReqDto reqDto);
     void updateActivate(String seq);
     void updateGodlife(String seq, UpdateGodlifeReqDto reqDto);

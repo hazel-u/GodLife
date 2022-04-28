@@ -74,14 +74,14 @@ class BingoServiceTest {
         Bingo resDto = Bingo.builder()
                 .title("Hello world")
                 .build();
-        given(bingoQueryRepository.findBingo(1L)).willReturn(resDto);
+        given(bingoQueryRepository.findBingo("1L")).willReturn(resDto);
 
         // when
-        Bingo result = bingoQueryRepository.findBingo(1L);
+        Bingo result = bingoQueryRepository.findBingo("1L");
 
         // then
         assertThat(result.getTitle()).isEqualTo("Hello world");
-        verify(bingoQueryRepository, times(1)).findBingo(1L);
+        verify(bingoQueryRepository, times(1)).findBingo("1L");
     }
 
     @Test
@@ -94,7 +94,7 @@ class BingoServiceTest {
         given(bingoRepository.save(any(Bingo.class))).willReturn(bingo());
 
         // when
-        Long result = bingoService.createBingo(userEmail, reqDto);
+        String result = bingoService.createBingo(userEmail, reqDto);
 
         // then
         verify(userRepository, times(1)).findByEmailAndDeletedFalse(userEmail);

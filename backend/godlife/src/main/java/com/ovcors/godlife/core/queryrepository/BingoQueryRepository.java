@@ -8,5 +8,5 @@ import java.util.UUID;
 
 public interface BingoQueryRepository {
     List<Bingo> findPageByUser(String userEmail, int page, int limit);
-    Bingo findBingo(Long code);
+    Bingo findBingo(String code);
 }
