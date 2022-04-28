@@ -3,4 +3,5 @@ export interface CommentType {
   nickname: string;
   password: string;
   seq: string;
+  date: number[];
 }

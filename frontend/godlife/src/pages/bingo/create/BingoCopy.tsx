@@ -31,7 +31,7 @@ const BingoCopy = ({
       .get(`bingo/${code}`)
       .then((res) => {
         const goals: number[] = res.data.goals.map(
-          (goal: { seq: number }) => goal.seq
+          (goal: { goalSeq: number }) => goal.goalSeq
         );
 
         axios

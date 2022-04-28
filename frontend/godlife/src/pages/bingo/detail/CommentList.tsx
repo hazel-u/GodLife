@@ -68,12 +68,22 @@ const CommentList = ({ getBingo }: { getBingo: () => void }) => {
       <p>댓글 {comments.length}개</p>
       <Divider />
       {!comments.length && <p>댓글이 없습니다.</p>}
-      {comments.map((comment: any, index: number) => (
-        <React.Fragment key={index}>
-          <Comment comment={comment} getBingo={getBingo} />
-          {index !== comments.length - 1 && <Divider />}
-        </React.Fragment>
-      ))}
+      {comments
+        .slice()
+        .sort(function (a, b) {
+          for (let i = 0; i < a.date.length; i++) {
+            if (a.date[i] !== b.date[i]) {
+              return a.date[i] - b.date[i];
+            }
+          }
+          return 0;
+        })
+        .map((comment: any, index: number) => (
+          <React.Fragment key={index}>
+            <Comment comment={comment} getBingo={getBingo} />
+            {index !== comments.length - 1 && <Divider />}
+          </React.Fragment>
+        ))}
       <form onSubmit={handleSubmit}>
         <Stack spacing={1}>
           <Stack direction="row" spacing={1}>

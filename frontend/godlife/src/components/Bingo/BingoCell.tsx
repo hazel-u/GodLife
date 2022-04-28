@@ -88,7 +88,7 @@ const BingoCell = ({
         sx={{
           position: "relative",
           width: 120,
-          cursor: "pointer",
+          cursor: email === userEmail ? "pointer" : "default",
           "&::before": {
             display: "block",
             content: "''",
@@ -113,7 +113,9 @@ const BingoCell = ({
           ref={cell}
         >
           {isCompleted && (
-            <Stamp style={{ position: "absolute", height: "100%" }} />
+            <Stamp
+              style={{ position: "absolute", width: "100%", opacity: "50%" }}
+            />
           )}
           <Typography
             align="center"
