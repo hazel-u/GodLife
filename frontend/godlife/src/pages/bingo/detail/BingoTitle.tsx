@@ -146,7 +146,9 @@ const BingoTitle = ({
         <Box sx={{ mt: 2 }}>
           <Typography>
             {godCount}일 째 갓생 중 | {serialGodCount}일 연속 갓생 중
-            <br />⏱ {leftHours} : {leftMinutes}
+            <br />⏱ {leftHours && leftHours < 10 && "0"}
+            {leftHours} : {leftMinutes && leftMinutes < 10 && "0"}
+            {leftMinutes}
           </Typography>
         </Box>
       )}
