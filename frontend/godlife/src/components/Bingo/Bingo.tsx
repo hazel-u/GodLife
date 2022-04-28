@@ -2,7 +2,6 @@ import Grid from "@mui/material/Grid";
 import axios from "axios";
 
 import { useCallback, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 
 import { setDialog } from "../../store/dialog";
 import { useAppDispatch } from "../../store/hooks";
@@ -32,7 +31,6 @@ export const Bingo = ({
 }: BingoProps) => {
   const dispatch = useAppDispatch();
   const [bingoCounts, setBingoCounts] = useState(0);
-  const location = useLocation();
 
   // 1. 빙고 수 세기.
   const countBingos = useCallback(() => {
