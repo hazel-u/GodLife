@@ -5,7 +5,7 @@ import { BingoType } from "../types/bingo";
 
 const initialState: BingoType = {
   activate: false,
-  code: 0,
+  code: "",
   commentCnt: 0,
   comments: [],
   godlife: false,
