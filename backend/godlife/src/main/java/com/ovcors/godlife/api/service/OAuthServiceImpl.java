@@ -14,6 +14,7 @@ import com.ovcors.godlife.core.domain.user.User;
 import com.ovcors.godlife.core.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Transactional
@@ -32,6 +34,9 @@ public class OAuthServiceImpl implements OAuthService{
 
     @Autowired
     OAuthClient oAuthClient;
+
+    @Autowired
+    RedisTemplate redisTemplate;
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -124,7 +129,18 @@ public class OAuthServiceImpl implements OAuthService{
                 .sign(Algorithm.HMAC512(secret));
 
         // Refresh Token 발급
-        OAuthLoginResDto googleLoginResDto = new OAuthLoginResDto(JwtProperties.TOKEN_PREFIX+jwtToken, null, newUser);
+        String refreshToken = JWT.create()
+                .withSubject(userEntity.getEmail())
+                .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.REFRESH_EXPIRATION_TIME))
+                .withClaim("email", userEntity.getEmail())
+                .sign(Algorithm.HMAC512(secret));
+
+        // Refresh Token - Redis에 저장
+        redisTemplate.opsForValue()
+                .set(userEntity.getEmail(), refreshToken, JwtProperties.REFRESH_EXPIRATION_TIME, TimeUnit.MILLISECONDS);
+
+
+        OAuthLoginResDto googleLoginResDto = new OAuthLoginResDto(JwtProperties.TOKEN_PREFIX+jwtToken, JwtProperties.TOKEN_PREFIX+refreshToken, newUser);
 
         return googleLoginResDto;
     }
