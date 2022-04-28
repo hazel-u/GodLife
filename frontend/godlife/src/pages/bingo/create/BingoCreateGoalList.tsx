@@ -47,7 +47,10 @@ const BingoCreateGoalList = () => {
     axios
       .get("goal")
       .then((res) => {
-        setGoalList(res.data.goals);
+        const classifiedGoalList = res.data.goals.filter(
+          (goal: { category: string }) => goal.category === "건강한삶"
+        );
+        setGoalList(classifiedGoalList);
         setAllGoalList(res.data.goals);
       })
       .catch((err) => console.log(err));
