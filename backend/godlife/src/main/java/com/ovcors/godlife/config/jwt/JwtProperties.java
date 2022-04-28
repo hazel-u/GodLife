@@ -1,8 +1,8 @@
 package com.ovcors.godlife.config.jwt;
 
 public interface JwtProperties {
-    int EXPIRATION_TIME = 1000*60*60*24*7*2; // 2주
-//    int EXPIRATION_TIME = 1000; // 1초
+//    int EXPIRATION_TIME = 1000*60*60*24*7*2; // 2주
+    int EXPIRATION_TIME = 1000*60*10; // 10분
     String TOKEN_PREFIX = "Bearer ";
     String HEADER_STRING = "Authorization";
 
