@@ -39,7 +39,7 @@ const LoginForm = () => {
             localStorage.setItem("refreshtoken", res.headers["refreshtoken"]);
             localStorage.setItem(
               "expired",
-              `${new Date().getTime() + 60000 * 9}`
+              `${new Date().getTime() + 60000 * 5}`
             );
           })
           .then(() => {

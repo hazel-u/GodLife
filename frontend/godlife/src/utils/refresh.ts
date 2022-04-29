@@ -31,7 +31,7 @@ const refresh = async (
         config.headers["Authorization"] = res.headers["authorization"];
 
         localStorage.setItem("token", res.headers["authorization"]);
-        localStorage.setItem("expired", `${new Date().getTime() + 60000 * 9}`);
+        localStorage.setItem("expired", `${new Date().getTime() + 60000 * 5}`);
       })
       .catch(() => {
         localStorage.removeItem("token");
