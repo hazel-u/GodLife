@@ -1,8 +1,6 @@
 import { ThemeProvider } from "@mui/material";
 import dayjs from "dayjs";
 
-import { useEffect } from "react";
-
 import CommonDialog from "./components/common/CommonDialog";
 import CommonLoading from "./components/common/CommonLoading";
 import CommonSnackbar from "./components/common/CommonSnackbar";
@@ -19,7 +17,7 @@ function App() {
   const { email } = useAppSelector(selectUser);
   const token = localStorage.getItem("token");
 
-  if (!email && token) {
+  if (!email && token && axiosWithToken.defaults.headers) {
     axiosWithToken
       .get("user/info")
       .then((res) => {
@@ -37,25 +35,6 @@ function App() {
   }
 
   const logout = useLogout();
-
-  useEffect(() => {
-    let intervalId: ReturnType<typeof setInterval>;
-    if (email) {
-      intervalId = setInterval(() => {
-        axiosWithToken
-          .get("user/refresh-token")
-          .then((res) => {
-            console.log(res);
-            localStorage.setItem("token", res.headers["authorization"]);
-          })
-          .catch(() => {
-            console.log("만료");
-            logout();
-          });
-      }, 600000 - 120000);
-    }
-    return () => clearInterval(intervalId);
-  }, [logout, email]);
 
   return (
     <ThemeProvider theme={theme}>

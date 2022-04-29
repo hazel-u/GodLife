@@ -51,10 +51,10 @@ export const useLogin = () => {
           navigate(`/bingo/${res.data.code}`);
         })
         .catch(() => {
-          console.log("useAuth");
           dispatch(setTodayBingo("none"));
           navigate("/create");
         });
     });
+    // .catch(() => console.log("useAuth"));
   };
 };

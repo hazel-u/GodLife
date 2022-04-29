@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { BlackButton } from "../../components/common/Button";
+import { OutlinedButton } from "../../components/common/Button";
 import { useLogin } from "../../hooks/useAuth";
 import { useAppDispatch } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
@@ -31,15 +31,15 @@ const LoginForm = () => {
     await axios
       .post("user/login", data)
       .then((res) => {
-        axiosWithToken.defaults.headers.common["Authorization"] =
-          res.headers["authorization"];
         Promise.resolve()
           .then(() => {
+            axiosWithToken.defaults.headers.common["Authorization"] =
+              res.headers["authorization"];
             localStorage.setItem("token", res.headers["authorization"]);
             localStorage.setItem("refreshtoken", res.headers["refreshtoken"]);
             localStorage.setItem(
               "expired",
-              `${new Date().getTime() + 60000 * 0.1}`
+              `${new Date().getTime() + 60000 * 9}`
             );
           })
           .then(() => {
@@ -68,7 +68,9 @@ const LoginForm = () => {
         >
           <EmailController control={control} />
           <PasswordController control={control} />
-          <BlackButton type="submit">갓생살러 가기</BlackButton>
+          <OutlinedButton variant="outlined" type="submit">
+            갓생살러 가기
+          </OutlinedButton>
         </Stack>
       </FormControl>
     </form>

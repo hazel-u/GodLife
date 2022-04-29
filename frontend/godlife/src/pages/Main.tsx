@@ -20,22 +20,20 @@ const Main = () => {
   useEffect(() => {
     dispatch(setLoading(true));
     if (!email && token) {
-      axiosWithToken
-        .get("user/info")
-        .then((res) => {
-          dispatch(setLoggedUser(res.data));
-          axiosWithToken
-            .get(`bingo/date/${dayjs().format("YYYY-MM-DD")}`)
-            .then((res) => {
-              dispatch(setTodayBingo(res.data.code));
-              navigate(`/bingo/${res.data.code}`);
-            })
-            .catch(() => {
-              dispatch(setTodayBingo("none"));
-              navigate("/create");
-            });
-        })
-        .catch(() => console.log("Main"));
+      axiosWithToken.get("user/info").then((res) => {
+        dispatch(setLoggedUser(res.data));
+        axiosWithToken
+          .get(`bingo/date/${dayjs().format("YYYY-MM-DD")}`)
+          .then((res) => {
+            dispatch(setTodayBingo(res.data.code));
+            navigate(`/bingo/${res.data.code}`);
+          })
+          .catch(() => {
+            dispatch(setTodayBingo("none"));
+            navigate("/create");
+          });
+      });
+      // .catch(() => console.log("Main"));
     } else if (code && code !== "none") {
       navigate(`/bingo/${code}`);
     } else {
