@@ -20,7 +20,6 @@ const PreviousBingoList = () => {
   const limit = 6;
   const dispatch = useAppDispatch();
   const getBingoList = useCallback(() => {
-    dispatch(setLoading(true));
     axiosWithToken
       .get(`bingo/${page}/${limit}`)
       .then((res) => {
@@ -30,21 +29,27 @@ const PreviousBingoList = () => {
   }, [page, dispatch]);
 
   useEffect(() => {
+    dispatch(setLoading(true));
     axiosWithToken
       .get("bingo/count")
       .then((res) => {
         setBingoCount(res.data.count);
-        getBingoList();
+        if (res.data.count) {
+          getBingoList();
+        }
       })
       .catch((err) => console.log(err));
   }, [getBingoList]);
 
   useEffect(() => {
+    dispatch(setLoading(true));
     getBingoList();
   }, [page, getBingoList]);
 
   useEffect(() => {
-    dispatch(setLoading(false));
+    if (-1 < bingoCount) {
+      dispatch(setLoading(false));
+    }
   }, [bingoList, dispatch]);
 
   const navigate = useNavigate();
