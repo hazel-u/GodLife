@@ -22,6 +22,10 @@ const SocialLogin = () => {
         .then(() => {
           localStorage.setItem("token", jwtToken.data.jwtToken);
           localStorage.setItem("refreshtoken", jwtToken.data.refreshToken);
+          localStorage.setItem(
+            "expired",
+            `${new Date().getTime() + 60000 * 9}`
+          );
         })
         .then(() => {
           login();

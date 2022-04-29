@@ -24,6 +24,10 @@ const LoginForm = () => {
           .then(() => {
             localStorage.setItem("token", res.headers["authorization"]);
             localStorage.setItem("refreshtoken", res.headers["refreshtoken"]);
+            localStorage.setItem(
+              "expired",
+              `${new Date().getTime() + 60000 * 0.1}`
+            );
           })
           .then(() => {
             login();

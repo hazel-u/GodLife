@@ -43,6 +43,10 @@ const Auth = () => {
               .then(() => {
                 localStorage.setItem("token", res.data.jwtToken);
                 localStorage.setItem("refreshtoken", res.data.refreshToken);
+                localStorage.setItem(
+                  "expired",
+                  `${new Date().getTime() + 60000 * 9}`
+                );
               })
               .then(() => {
                 login();

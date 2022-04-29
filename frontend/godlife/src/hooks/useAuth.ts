@@ -16,6 +16,7 @@ export const useLogout = () => {
     navigate("/login");
     localStorage.removeItem("token");
     localStorage.removeItem("refreshtoken");
+    localStorage.removeItem("expired");
     dispatch(setTodayBingo(0));
     dispatch(clearLoggedUser());
     dispatch(
@@ -57,6 +58,7 @@ export const useLogin = () => {
           navigate("/login");
           localStorage.removeItem("token");
           localStorage.removeItem("refreshtoken");
+          localStorage.removeItem("expired");
           dispatch(setTodayBingo(0));
           dispatch(clearLoggedUser());
           dispatch(
