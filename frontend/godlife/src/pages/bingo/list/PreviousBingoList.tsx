@@ -26,7 +26,7 @@ const PreviousBingoList = () => {
         setBingoList(res.data);
       })
       .catch((err) => console.log(err));
-  }, [page, dispatch]);
+  }, [page]);
 
   useEffect(() => {
     dispatch(setLoading(true));
@@ -39,18 +39,18 @@ const PreviousBingoList = () => {
         }
       })
       .catch((err) => console.log(err));
-  }, [getBingoList]);
+  }, [getBingoList, dispatch]);
 
   useEffect(() => {
     dispatch(setLoading(true));
     getBingoList();
-  }, [page, getBingoList]);
+  }, [page, getBingoList, dispatch]);
 
   useEffect(() => {
     if (-1 < bingoCount) {
       dispatch(setLoading(false));
     }
-  }, [bingoList, dispatch]);
+  }, [bingoList, dispatch, bingoCount]);
 
   const navigate = useNavigate();
 
