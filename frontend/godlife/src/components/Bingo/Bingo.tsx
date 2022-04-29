@@ -72,20 +72,21 @@ export const Bingo = ({
 
     setBingoCounts(bingoCounts);
 
-    axiosWithToken
-      .put(`bingo/${id}/godlife`, { complete: 3 <= bingoCounts })
-      .then(() => {
-        if (3 <= bingoCounts && !godlife) {
-          dispatch(
-            setDialog({
-              open: true,
-              title: "갓생 달성!",
-              content: "세 빙고를 달성하셨습니다!",
-            })
-          );
-        }
-        // getBingo && getBingo();
-      });
+    id &&
+      axiosWithToken
+        .put(`bingo/${id}/godlife`, { complete: 3 <= bingoCounts })
+        .then(() => {
+          if (3 <= bingoCounts && !godlife) {
+            dispatch(
+              setDialog({
+                open: true,
+                title: "갓생 달성!",
+                content: "세 빙고를 달성하셨습니다!",
+              })
+            );
+          }
+          // getBingo && getBingo();
+        });
   }, [goals, size, id, dispatch, godlife]);
 
   useEffect(() => {

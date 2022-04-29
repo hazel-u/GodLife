@@ -2,13 +2,13 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { RootState } from ".";
 
-const initialState: number = 0;
+const initialState: string = "";
 
 export const todayBingoSlice = createSlice({
   name: "todayBingo",
   initialState,
   reducers: {
-    setTodayBingo: (state, action: PayloadAction<number>) => {
+    setTodayBingo: (state, action: PayloadAction<string>) => {
       return action.payload;
     },
   },

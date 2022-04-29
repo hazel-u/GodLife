@@ -8,7 +8,7 @@ import { setDialog } from "../../../store/dialog";
 import { useAppDispatch } from "../../../store/hooks";
 
 interface InteractionProps {
-  code: number;
+  code: string;
   likeCnt: number;
   seq: string;
   getBingo: () => void;

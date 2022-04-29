@@ -20,13 +20,20 @@ function App() {
   const token = localStorage.getItem("token");
 
   if (!email && token) {
-    axiosWithToken.get("user/info").then((res) => {
-      dispatch(setLoggedUser(res.data));
-      axiosWithToken
-        .get(`bingo/date/${dayjs().format("YYYY-MM-DD")}`)
-        .then((res) => dispatch(setTodayBingo(res.data.code)))
-        .catch((err) => console.log(err));
-    });
+    axiosWithToken
+      .get("user/info")
+      .then((res) => {
+        dispatch(setLoggedUser(res.data));
+        axiosWithToken
+          .get(`bingo/date/${dayjs().format("YYYY-MM-DD")}`)
+          .then((res) => dispatch(setTodayBingo(res.data.code)))
+          .catch(() => dispatch(setTodayBingo("none")));
+      })
+      .catch((err) => {
+        if (err.response.data.code === "EXPIRED_TOKEN") {
+          logout();
+        }
+      });
   }
 
   const logout = useLogout();
@@ -42,9 +49,10 @@ function App() {
             localStorage.setItem("token", res.headers["authorization"]);
           })
           .catch(() => {
+            console.log("만료");
             logout();
           });
-      }, 600000 - 60000);
+      }, 600000 - 120000);
     }
     return () => clearInterval(intervalId);
   }, [logout, email]);

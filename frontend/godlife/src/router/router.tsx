@@ -40,7 +40,12 @@ export default function Router() {
         },
         {
           path: "/create",
-          element: code ? <Navigate to={`/bingo/${code}`} /> : <BingoCreate />,
+          element:
+            code && code !== "none" ? (
+              <Navigate to={`/bingo/${code}`} />
+            ) : (
+              <BingoCreate />
+            ),
         },
         {
           path: "/list",
