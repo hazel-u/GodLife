@@ -90,7 +90,11 @@ const BingoCell = ({
         onClick={handleClickOpen}
         sx={{
           position: "relative",
-          cursor: email === userEmail ? "pointer" : "default",
+          cursor:
+            email === userEmail &&
+            dayjs().format("YYYY-M-D") === startDate.join("-")
+              ? "pointer"
+              : "default",
           "&::before": {
             display: "block",
             content: "''",
