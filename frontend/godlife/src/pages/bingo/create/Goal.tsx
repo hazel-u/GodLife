@@ -1,3 +1,4 @@
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 import {
   Box,
   Button,
@@ -10,7 +11,6 @@ import { styled } from "@mui/material/styles";
 
 import React from "react";
 
-import { ReactComponent as StarIcon } from "../../../assets/icon/star.svg";
 import { ReactComponent as Stamp } from "../../../assets/images/stamp70.svg";
 import { deleteGoal, selectGoal, setGoal } from "../../../store/goal";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
@@ -20,7 +20,7 @@ const GoalButton = styled(Button)(({ theme }) => ({
   position: "relative",
   width: "208px",
   height: "50px",
-  border: "2px solid #5A5A5A",
+  border: "1px solid #5A5A5A",
   display: "flex",
   flexDirection: "row",
   alignItems: "center",
@@ -31,15 +31,6 @@ const GoalButton = styled(Button)(({ theme }) => ({
   color: "#5A5A5A",
   "& p": {
     fontSize: "14px",
-  },
-  "&:before": {
-    content: "''",
-    width: "70%",
-    height: "4px",
-    background: "white",
-    top: "-2px",
-    position: "absolute",
-    transition: "all 0.3s",
   },
   "&:hover": {
     color: "black",
@@ -71,7 +62,7 @@ const Goal = (goal: GoalProps) => {
     zIndex: 2,
     "& svg": {
       fontSize: 15,
-      color: goal.isFavorite ? "#FFE812" : "white",
+      color: goal.isFavorite ? "#A11803" : "#939393",
     },
   }));
 
@@ -140,7 +131,7 @@ const Goal = (goal: GoalProps) => {
         </Box>
       )}
       <BookmarkButton onClick={manageFavorites}>
-        <SvgIcon component={StarIcon} />
+        <SvgIcon component={BookmarkIcon} />
       </BookmarkButton>
       <GoalButton onClick={manageSelectedGoals}>
         <Typography>{goal.content}</Typography>

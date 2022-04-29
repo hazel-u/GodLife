@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import Logo from "../../assets/logo/Godlife/logo.svg";
-import { OutlinedButton } from "../../components/common/Button";
+import { BlackButton, OutlinedButton } from "../../components/common/Button";
 import { useAppDispatch } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
 import { JoinInput } from "../../types/user";
@@ -70,10 +70,8 @@ const Join = () => {
           />
           <PasswordContoller control={control} watch={watch} />
 
-          <OutlinedButton variant="outlined" type="submit">
-            회원가입
-          </OutlinedButton>
-          <OutlinedButton variant="outlined" href="/">
+          <BlackButton type="submit">회원가입</BlackButton>
+          <OutlinedButton variant="outlined" href="/login">
             로그인하러 가기
           </OutlinedButton>
         </Stack>

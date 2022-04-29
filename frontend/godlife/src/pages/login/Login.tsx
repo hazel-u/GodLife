@@ -22,16 +22,6 @@ const Login = () => {
         <LoginBanner />
       </Grid>
 
-      <Divider
-        orientation="vertical"
-        flexItem
-        sx={(theme) => ({
-          [theme.breakpoints.down(900)]: {
-            display: "none",
-          },
-        })}
-      />
-
       <Grid item xs={10} md={3}>
         <Box sx={{ maxWidth: "300px", margin: "auto" }}>
           <Box sx={{ textAlign: "center" }}>

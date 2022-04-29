@@ -1,8 +1,9 @@
-import { Grid, Pagination, Stack, Typography } from "@mui/material";
+import { Box, Grid, Pagination, Stack, Typography } from "@mui/material";
 
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import BorderImage from "../../../assets/images/border.svg";
 import BingoJson from "../../../assets/json/bingo.json";
 import Bingo from "../../../components/Bingo/Bingo";
 import Lottie from "../../../components/common/Lottie";
@@ -19,7 +20,6 @@ const PreviousBingoList = () => {
   const limit = 6;
   const dispatch = useAppDispatch();
   const getBingoList = useCallback(() => {
-    dispatch(setLoading(true));
     axiosWithToken
       .get(`bingo/${page}/${limit}`)
       .then((res) => {
@@ -29,21 +29,27 @@ const PreviousBingoList = () => {
   }, [page, dispatch]);
 
   useEffect(() => {
+    dispatch(setLoading(true));
     axiosWithToken
       .get("bingo/count")
       .then((res) => {
         setBingoCount(res.data.count);
-        getBingoList();
+        if (res.data.count) {
+          getBingoList();
+        }
       })
       .catch((err) => console.log(err));
   }, [getBingoList]);
 
   useEffect(() => {
+    dispatch(setLoading(true));
     getBingoList();
   }, [page, getBingoList]);
 
   useEffect(() => {
-    dispatch(setLoading(false));
+    if (-1 < bingoCount) {
+      dispatch(setLoading(false));
+    }
   }, [bingoList, dispatch]);
 
   const navigate = useNavigate();
@@ -74,23 +80,43 @@ const PreviousBingoList = () => {
                 md={4}
                 key={bingo.id}
                 onClick={() => navigate(`/bingo/${bingo.code}`)}
-                sx={{ cursor: "pointer" }}
+                sx={{
+                  cursor: "pointer",
+                }}
               >
-                <p>
-                  {bingo.startDate[0]}년 {bingo.startDate[1]}월{" "}
-                  {bingo.startDate[2]}일의 갓생
-                </p>
-                <Typography textAlign={"center"} fontFamily={"BMEULJIRO"}>
-                  {bingo.title}
-                </Typography>
-                <Bingo
-                  createdBy={bingo.userName}
-                  size={3}
-                  goals={bingo.goals}
-                  mode={"Active"}
-                  startDate={bingo.startDate}
-                  godlife={bingo.godlife}
-                />
+                <Box
+                  sx={{
+                    cursor: "pointer",
+                    backgroundColor: "white",
+                    border: "20px solid white",
+                    borderImageSource: `url(${BorderImage})`,
+                    borderImageSlice: "50 104 39 103",
+                    borderImageWidth: "14px 20px 14px 13px",
+                    borderImageOutset: "13px 13px 13px 11px",
+                    borderImageRepeat: "repeat repeat",
+                  }}
+                >
+                  <Typography fontSize={12}>
+                    {bingo.startDate[0]}년 {bingo.startDate[1]}월{" "}
+                    {bingo.startDate[2]}일의 갓생
+                  </Typography>
+                  <Typography
+                    textAlign={"center"}
+                    fontFamily={"BMEULJIRO"}
+                    fontSize={16}
+                    mt={1}
+                  >
+                    {bingo.title}
+                  </Typography>
+                  <Bingo
+                    createdBy={bingo.userName}
+                    size={3}
+                    goals={bingo.goals}
+                    mode={"Active"}
+                    startDate={bingo.startDate}
+                    godlife={bingo.godlife}
+                  />
+                </Box>
               </Grid>
             ))}
           </Grid>

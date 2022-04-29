@@ -123,16 +123,19 @@ export const Bingo = ({
           stretch: { height: "100%" },
           maxWidth: 750,
           backgroundColor: "white",
+          // backgroundImage: `url(${BackgroundImage})`,
+          // backgroundSize: "cover",
         }}
         id="bingo"
       >
-        {goals.map(function (goal: any) {
+        {goals.map(function (goal: any, index: number) {
           return (
             <BingoCell
               customClickEvent={() => completeGoal(goal)}
               content={goal.content}
               isCompleted={goal.completed}
               key={goal.seq}
+              index={index}
             />
           );
         })}

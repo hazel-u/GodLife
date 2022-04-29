@@ -54,7 +54,6 @@ const Profile = ({
           height: "100%",
           minHeight: "450px",
           padding: "20px",
-          width: fullScreen ? "80%" : "60%",
           margin: "0 auto",
         }}
         {...other}

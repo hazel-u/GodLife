@@ -39,9 +39,13 @@ const Navbar = () => {
       <Hidden smDown>
         <Grid
           container
-          alignItems="end"
+          alignItems="center"
           sx={{
             padding: "20px 10px 40px 10px",
+            "& .MuiButton-root": {
+              fontSize: "14px",
+              fontFamily: "BMEULJIRO",
+            },
           }}
         >
           <Grid item sm={5}>
@@ -84,8 +88,8 @@ const Navbar = () => {
             }}
           >
             <Logo
-              width="100px"
-              height="100px"
+              width="70px"
+              height="70px"
               style={{ cursor: "pointer" }}
               onClick={() => navigate("/")}
             />
@@ -121,7 +125,7 @@ const Navbar = () => {
         alignItems="center"
         display={{ sm: "none", md: "none" }}
         sx={{
-          padding: "10px",
+          padding: "20px 10px 40px 10px",
         }}
       >
         <Grid

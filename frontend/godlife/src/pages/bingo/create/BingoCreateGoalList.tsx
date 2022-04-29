@@ -9,6 +9,7 @@ import axiosWithToken from "../../../utils/axios";
 import Goal from "./Goal";
 
 const BingoCreateGoalList = () => {
+  const selectedGoals = useAppSelector(selectGoal);
   const [selectedCategory, setSelectedCategory] = useState("건강한삶");
   const [goalList, setGoalList] = useState<any[]>([]);
   const [allGoalList, setAllGoalList] = useState<any[]>([]);
@@ -39,6 +40,8 @@ const BingoCreateGoalList = () => {
       setGoalList(allGoalList);
     } else if (selectedCategory === "즐겨찾기") {
       setGoalList(userFavorites);
+    } else if (selectedCategory === "선택된목표") {
+      setGoalList(selectedGoals);
     } else if (selectedCategory !== null && selectedCategory !== "전체") {
       changeCategoryGoalList(selectedCategory);
     }
@@ -85,6 +88,7 @@ const BingoCreateGoalList = () => {
   }, []);
 
   const category = [
+    "선택된목표",
     "건강한삶",
     "미라클모닝",
     "자기개발",
@@ -95,77 +99,85 @@ const BingoCreateGoalList = () => {
     "전체",
   ];
 
-  const selectedGoals = useAppSelector(selectGoal);
-
   return (
     <>
-      <Box
-        sx={(theme) => ({
-          width: "100%",
-          display: "grid",
-          gridTemplateColumns: "repeat(8, 100px)",
-          columnGap: "10px",
-          justifyContent: "center",
-          [theme.breakpoints.down(980)]: {
-            gridTemplateColumns: "repeat(4, 100px)",
-          },
-          [theme.breakpoints.down("sm")]: {
-            gridTemplateColumns: "repeat(2, 100px)",
-          },
-          margin: "20px 0 10px 0",
-        })}
-      >
-        {category.map((c, index) => (
-          <Chip
-            key={index}
-            label={c}
-            sx={{
-              width: "100px",
-              height: "30px",
-              fontSize: "14px",
-              "& span": {
-                padding: 0,
+      <Stack direction="row" spacing={2} marginBottom={4}>
+        <Stack>
+          {category.map((c, index) => (
+            <Chip
+              key={index}
+              label={c}
+              sx={{
+                width: "100px",
+                height: "30px",
+                fontSize: "14px",
+                "& span": {
+                  padding: 0,
+                  fontFamily: "NotoSerifKR",
+                },
+                marginBottom: "10px",
+                border: "1px solid #6D6D6D",
+                color: selectedCategory === c ? "black" : "#6D6D6D",
+                backgroundColor: selectedCategory === c ? "#D8D8D8" : "white",
+              }}
+              onClick={(e) => changeCategory(e)}
+            />
+          ))}
+        </Stack>
+
+        <Box>
+          <Grid
+            container
+            spacing={2}
+            sx={(theme) => ({
+              width: "672px",
+              [theme.breakpoints.down(800)]: {
+                width: "448px",
               },
-              marginBottom: "10px",
-              border: "1px solid #6D6D6D",
-              color: selectedCategory === c ? "black" : "#6D6D6D",
-              backgroundColor: selectedCategory === c ? "#D8D8D8" : "white",
-            }}
-            onClick={(e) => changeCategory(e)}
-          />
-        ))}
-      </Box>
-
-      <Grid container spacing={2} py={3} justifyContent="center">
-        {goalList.length ? (
-          <>
-            {goalList.map(
-              (goal: {
-                seq: number;
-                content: string;
-                category: string;
-                favoriteSeq?: string;
-              }) => (
-                <Grid item key={goal.seq}>
-                  <Goal
-                    {...goal}
-                    isFavorite={userFavorites.some((el) => el.seq === goal.seq)}
-                    getFavorites={getFavorites}
-                    userFavorites={userFavorites}
-                  />
-                </Grid>
-              )
+              [theme.breakpoints.down("sm")]: {
+                width: "224px",
+              },
+            })}
+          >
+            {goalList.length ? (
+              <>
+                {goalList.map(
+                  (goal: {
+                    seq: number;
+                    content: string;
+                    category: string;
+                    favoriteSeq?: string;
+                  }) => (
+                    <Grid item key={goal.seq}>
+                      <Goal
+                        {...goal}
+                        isFavorite={userFavorites.some(
+                          (el) => el.seq === goal.seq
+                        )}
+                        getFavorites={getFavorites}
+                        userFavorites={userFavorites}
+                      />
+                    </Grid>
+                  )
+                )}
+              </>
+            ) : (
+              <Stack
+                sx={{ width: "100%", height: "360px" }}
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Typography
+                  sx={{ textAlign: "center", whiteSpace: "pre-line" }}
+                >
+                  {selectedCategory === "즐겨찾기"
+                    ? "즐겨찾는 목표가 없습니다. \n자주 찾는 목표의 별을 눌러보세요!"
+                    : "선택된 목표가 없습니다."}
+                </Typography>
+              </Stack>
             )}
-          </>
-        ) : (
-          <Typography sx={{ textAlign: "center" }}>
-            즐겨찾는 목표가 없습니다. <br /> 자주 찾는 목표의 별을 눌러보세요!
-          </Typography>
-        )}
-      </Grid>
-
-      <Stack direction="row" justifyContent="center">
-        <p>{selectedGoals.length} / 9 개 선택중</p>
+          </Grid>
+        </Box>
       </Stack>
     </>
   );

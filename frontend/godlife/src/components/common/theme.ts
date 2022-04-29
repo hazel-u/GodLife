@@ -3,11 +3,14 @@ import { createTheme } from "@mui/material";
 export const theme = createTheme({
   typography: {
     allVariants: {
-      fontFamily: "Noto Sans KR",
+      fontFamily: "NotoSerifKR",
     },
   },
   palette: {
     mode: "light",
+    background: {
+      default: "#rgb(252,252,252)",
+    },
     primary: {
       main: "#A11803",
     },

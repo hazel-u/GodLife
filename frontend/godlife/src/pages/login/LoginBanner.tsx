@@ -2,14 +2,25 @@ import { Divider, Stack, Typography } from "@mui/material";
 
 import React from "react";
 
+import BorderImage from "../../assets/images/border.svg";
+import { ReactComponent as Stamp } from "../../assets/images/stamp.svg";
+
 const LoginBanner = () => {
   return (
     <Stack
       sx={{
-        height: "90vh",
+        height: "80vh",
         margin: "20px",
-        backgroundColor: "#F3F3F3",
+        backgroundColor: "white",
+        border: "20px solid white",
+        borderImageSource: `url(${BorderImage})`,
+        borderImageSlice: "50 104 39 103",
+        borderImageWidth: "13px 13px 14px 13px",
+        borderImageOutset: "10px 10px 13px 11px",
+        borderImageRepeat: "repeat repeat",
         padding: "20px",
+        borderRadius: "10px",
+        position: "relative",
       }}
       direction="column"
       justifyContent="center"
@@ -18,17 +29,32 @@ const LoginBanner = () => {
         갓생살기
       </Typography>
       <Typography variant="h4" sx={{ fontFamily: "BMEULJIRO" }}>
-        쉽게만 살아가면 재미없어 빙고
+        - 쉽게만 살아가면 재미없어 빙고
       </Typography>
-      <Divider />
-      <h3>갓생살기는 갓생러(God+生+-er)들을 위한 갓생빙고 플랫폼입니다.</h3>
-      <h4>
-        갓생살기에서 매일 매일의 갓생을 작성하고 공유해보세요. <br />
-        사소해도 나를 위한 건강한 생활 습관을 형성할 수 있도록 갓생살기가
-        도와줍니다.
-        <br /> 스스로 꾸준한 동기부여를 통해 현실 생활에 집중하고 성취감을
-        느끼며, 자기 자신을 돌보고, 생산적인 삶을 시작해보세요.
-      </h4>
+
+      <Divider sx={{ margin: "20px 0" }} />
+
+      <Typography fontSize={18} lineHeight={2} whiteSpace="pre-wrap">
+        {"\t"}
+        <b>갓생살기</b>는 갓생러
+        <span style={{ color: "#939393", fontSize: "14px" }}>God+生+-er</span>
+        들을 위한 갓생빙고 플랫폼입니다. <br />
+        40여 개의 갓생 목표 중 9개를 선택해 세 빙고를 달성해보세요.{" "}
+        <b>갓생살기</b>는 매일의 갓생 목표를 달성하고, 친구들과 쉽게 공유할 수
+        있도록 도와드립니다. <br />
+        나를 위한 갓생, 지금 바로 <b>갓생살기</b>와 시작해보세요.
+      </Typography>
+
+      <Typography
+        sx={{ position: "absolute", bottom: 100, right: 130 }}
+        textAlign={"end"}
+        fontSize={18}
+        lineHeight={2.5}
+      >
+        OvCORS 팀 드림
+      </Typography>
+
+      <Stamp style={{ position: "absolute", bottom: "5%", right: "2%" }} />
     </Stack>
   );
 };
