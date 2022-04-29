@@ -31,13 +31,14 @@ const refresh = async (
         config.headers["Authorization"] = res.headers["authorization"];
 
         localStorage.setItem("token", res.headers["authorization"]);
-        localStorage.setItem("expired", `${new Date().getTime() + 60000 * 5}`);
+        localStorage.setItem("expired", `${new Date().getTime() + 60000 * 1}`);
       })
-      .catch(() => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("refreshtoken");
-        localStorage.removeItem("expired");
-        window.location.href = "https://godlife.ssafy.io/login";
+      .catch((err) => {
+        console.log("!!!!!!!!!!!!!!", err);
+        // localStorage.removeItem("token");
+        // localStorage.removeItem("refreshtoken");
+        // localStorage.removeItem("expired");
+        // window.location.href = "https://godlife.ssafy.io/login";
       });
   }
 
