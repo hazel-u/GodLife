@@ -3,20 +3,30 @@ import { Stack } from "@mui/material";
 
 import React from "react";
 
+import WallImage from "../../assets/images/wall.svg";
 import Logo from "../../assets/logo/Godlife/logo.svg";
 
 const Footer = () => {
   return (
     <Container>
       <FooterWrapper>
-        <Stack direction="column" sx={{ fontSize: "14px", margin: "15px 0" }}>
+        <Stack sx={{ fontSize: "14px", color: "#939393" }}>
+          <img
+            src={WallImage}
+            alt="wall"
+            height={"60px"}
+            style={{ objectFit: "cover" }}
+          />
           <img
             src={Logo}
             alt="logo"
-            style={{ width: "50px", marginBottom: "20px" }}
+            style={{ width: "50px", margin: "20px 0" }}
           />
           <span>문의</span>
-          <a href="mailto:today.godlife@gmail.com?subject=갓생살기">
+          <a
+            style={{ textDecoration: "none", color: "black" }}
+            href="mailto:today.godlife@gmail.com?subject=갓생살기"
+          >
             today.godlife@gmail.com
           </a>
           <span>서울특별시 강남구 테헤란로 212길</span>

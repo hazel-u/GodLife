@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import BorderImage from "../../../assets/images/border.svg";
-import { OutlinedButton } from "../../../components/common/Button";
+import { BlackButton, OutlinedButton } from "../../../components/common/Button";
 import { selectGoal } from "../../../store/goal";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
@@ -147,13 +147,9 @@ const BingoCreate = () => {
         >
           <BingoTitle title={title} setTitle={setTitle} />
           <Box sx={{ textAlign: "center" }}>
-            <OutlinedButton
-              variant="outlined"
-              onClick={confirmBingo}
-              sx={{ width: "200px" }}
-            >
+            <BlackButton onClick={confirmBingo} sx={{ width: "200px" }}>
               시작하기
-            </OutlinedButton>
+            </BlackButton>
           </Box>
         </Stack>
 

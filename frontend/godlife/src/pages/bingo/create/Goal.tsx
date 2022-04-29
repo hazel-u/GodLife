@@ -20,7 +20,7 @@ const GoalButton = styled(Button)(({ theme }) => ({
   position: "relative",
   width: "208px",
   height: "50px",
-  border: "2px solid #5A5A5A",
+  border: "1px solid #5A5A5A",
   display: "flex",
   flexDirection: "row",
   alignItems: "center",

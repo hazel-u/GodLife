@@ -13,6 +13,7 @@ import dayjs from "dayjs";
 
 import React, { useEffect, useRef, useState } from "react";
 
+import BackgroundImage2 from "../../assets/images/bingoCell2.svg";
 import BackgroundImage from "../../assets/images/bingoCell.svg";
 import { ReactComponent as Stamp } from "../../assets/images/stamp.svg";
 import { selectBingo } from "../../store/bingo";
@@ -23,12 +24,14 @@ interface BingoCellProp {
   content: String;
   isCompleted: boolean;
   customClickEvent: () => void;
+  index: number;
 }
 
 const BingoCell = ({
   content,
   isCompleted,
   customClickEvent,
+  index,
 }: BingoCellProp) => {
   const { startDate, userEmail } = useAppSelector(selectBingo);
   const { email } = useAppSelector(selectUser);
@@ -106,7 +109,9 @@ const BingoCell = ({
             right: 5,
             bottom: 5,
             padding: cellSize < 85 ? 1 : 3,
-            backgroundImage: `url(${BackgroundImage})`,
+            backgroundImage: `url(${
+              index % 2 ? BackgroundImage : BackgroundImage2
+            })`,
             backgroundSize: "cover",
           }}
           ref={cell}
