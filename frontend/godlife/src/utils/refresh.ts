@@ -3,6 +3,10 @@ import axios, { AxiosRequestConfig } from "axios";
 const refresh = async (
   config: AxiosRequestConfig
 ): Promise<AxiosRequestConfig> => {
+  if (config.headers && !config.headers["Authorization"]) {
+    config.headers["Authorization"] = `${localStorage.getItem("token")}`;
+  }
+
   const refreshToken = localStorage.getItem("refreshtoken");
   const expireAt = localStorage.getItem("expired");
   // console.log("1");
