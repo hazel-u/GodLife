@@ -22,7 +22,7 @@ const BingoTitle = ({
         ),
         style: { fontSize: "18px" },
       }}
-      inputProps={{ maxLength: 20 }}
+      inputProps={{ maxLength: 10 }}
       value={title}
       onChange={(e) => setTitle(e.target.value)}
       sx={{

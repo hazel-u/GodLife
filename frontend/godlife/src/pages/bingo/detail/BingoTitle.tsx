@@ -87,7 +87,7 @@ const BingoTitle = ({
           <TextField
             variant="standard"
             inputProps={{
-              maxLength: 25,
+              maxLength: 10,
               style: {
                 textAlign: "center",
               },
