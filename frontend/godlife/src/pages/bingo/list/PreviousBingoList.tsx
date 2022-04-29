@@ -1,5 +1,4 @@
 import { Grid, Pagination, Stack, Typography } from "@mui/material";
-import axios from "axios";
 
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +9,7 @@ import Lottie from "../../../components/common/Lottie";
 import { useAppDispatch } from "../../../store/hooks";
 import { setLoading } from "../../../store/loading";
 import { BingoType } from "../../../types/bingo";
+import axiosWithToken from "../../../utils/axios";
 
 const PreviousBingoList = () => {
   const [bingoList, setBingoList] = useState<BingoType[]>([]);
@@ -20,10 +20,8 @@ const PreviousBingoList = () => {
   const dispatch = useAppDispatch();
   const getBingoList = useCallback(() => {
     dispatch(setLoading(true));
-    axios
-      .get(`bingo/${page}/${limit}`, {
-        headers: { Authorization: `${localStorage.getItem("token")}` },
-      })
+    axiosWithToken
+      .get(`bingo/${page}/${limit}`)
       .then((res) => {
         setBingoList(res.data);
       })
@@ -31,10 +29,8 @@ const PreviousBingoList = () => {
   }, [page, dispatch]);
 
   useEffect(() => {
-    axios
-      .get("bingo/count", {
-        headers: { Authorization: `${localStorage.getItem("token")}` },
-      })
+    axiosWithToken
+      .get("bingo/count")
       .then((res) => {
         setBingoCount(res.data.count);
         getBingoList();

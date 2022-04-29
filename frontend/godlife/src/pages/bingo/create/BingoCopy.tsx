@@ -13,6 +13,7 @@ import { OutlinedButton } from "../../../components/common/Button";
 import { OutlinedInput } from "../../../components/common/Input";
 import { useAppDispatch } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
+import axiosWithToken from "../../../utils/axios";
 
 const BingoCopy = ({
   open,
@@ -34,16 +35,8 @@ const BingoCopy = ({
           (goal: { goalSeq: number }) => goal.goalSeq
         );
 
-        axios
-          .post(
-            "bingo",
-            { goals, title },
-            {
-              headers: {
-                Authorization: `${localStorage.getItem("token")}`,
-              },
-            }
-          )
+        axiosWithToken
+          .post("bingo", { goals, title })
           .then((res) => {
             navigate(`/bingo/${res.data.code}`);
             setOpen(false);

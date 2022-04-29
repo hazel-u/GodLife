@@ -1,10 +1,10 @@
 import Grid from "@mui/material/Grid";
-import axios from "axios";
 
 import { useCallback, useEffect, useState } from "react";
 
 import { setDialog } from "../../store/dialog";
 import { useAppDispatch } from "../../store/hooks";
+import axiosWithToken from "../../utils/axios";
 import BingoCell from "./BingoCell";
 import BingoProgress from "./BingoProgress";
 
@@ -73,16 +73,8 @@ export const Bingo = ({
     setBingoCounts(bingoCounts);
 
     id &&
-      axios
-        .put(
-          `bingo/${id}/godlife`,
-          { complete: 3 <= bingoCounts },
-          {
-            headers: {
-              Authorization: `${localStorage.getItem("token")}`,
-            },
-          }
-        )
+      axiosWithToken
+        .put(`bingo/${id}/godlife`, { complete: 3 <= bingoCounts })
         .then(() => {
           if (3 <= bingoCounts && !godlife) {
             dispatch(
@@ -108,19 +100,11 @@ export const Bingo = ({
     content: string;
     seq: string;
   }) => {
-    axios
-      .post(
-        "goal",
-        {
-          completed: !goal.completed,
-          seq: goal.seq,
-        },
-        {
-          headers: {
-            Authorization: `${localStorage.getItem("token")}`,
-          },
-        }
-      )
+    axiosWithToken
+      .post("goal", {
+        completed: !goal.completed,
+        seq: goal.seq,
+      })
       .then(() => {
         if (getBingo) {
           getBingo();

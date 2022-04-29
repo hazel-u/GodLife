@@ -1,5 +1,4 @@
 import { Stack } from "@mui/material";
-import axios from "axios";
 
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -10,6 +9,7 @@ import { useAppDispatch } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
 import { setLoggedUser } from "../../store/user";
 import { ChangePasswordInput } from "../../types/user";
+import axiosWithToken from "../../utils/axios";
 import PasswordContoller from "./PasswordContoller";
 
 const ProfileChangePassword = ({
@@ -22,21 +22,13 @@ const ProfileChangePassword = ({
 
   const dispatch = useAppDispatch();
   const onSubmit = (data: ChangePasswordInput) => {
-    axios
-      .post("user/change-pw", data, {
-        headers: { Authorization: `${localStorage.getItem("token")}` },
-      })
+    axiosWithToken
+      .post("user/change-pw", data)
       .then(() => {
         handleClose();
-        axios
-          .get("user/info", {
-            headers: {
-              Authorization: `${localStorage.getItem("token")}`,
-            },
-          })
-          .then((res) => {
-            dispatch(setLoggedUser(res.data));
-          });
+        axiosWithToken.get("user/info").then((res) => {
+          dispatch(setLoggedUser(res.data));
+        });
         dispatch(
           setSnackbar({
             open: true,

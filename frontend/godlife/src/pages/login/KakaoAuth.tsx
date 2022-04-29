@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { useLogin } from "../../hooks/useAuth";
+import axiosWithToken from "../../utils/axios";
 
 const Auth = () => {
   const code = new URL(window.location.href).searchParams.get("code");
@@ -39,10 +40,16 @@ const Auth = () => {
             }
           )
           .then((res) => {
+            axiosWithToken.defaults.headers.common["Authorization"] =
+              res.data.jwtToken;
             Promise.resolve()
               .then(() => {
                 localStorage.setItem("token", res.data.jwtToken);
                 localStorage.setItem("refreshtoken", res.data.refreshToken);
+                localStorage.setItem(
+                  "expired",
+                  `${new Date().getTime() + 60000 * 9}`
+                );
               })
               .then(() => {
                 login();

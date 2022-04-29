@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import axios from "axios";
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -9,16 +8,15 @@ import { OutlinedInput } from "../../components/common/Input";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
 import { selectUser } from "../../store/user";
+import axiosWithToken from "../../utils/axios";
 
 const ProfileDelete = ({ handleClose }: { handleClose: () => void }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const deleteProfile = () => {
     if (name === nameInput) {
-      axios
-        .delete("user", {
-          headers: { Authorization: `${localStorage.getItem("token")}` },
-        })
+      axiosWithToken
+        .delete("user")
         .then(() => {
           handleClose();
           navigate("/login");

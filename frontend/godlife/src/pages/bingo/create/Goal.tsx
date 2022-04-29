@@ -7,7 +7,6 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import axios from "axios";
 
 import React from "react";
 
@@ -15,6 +14,7 @@ import { ReactComponent as StarIcon } from "../../../assets/icon/star.svg";
 import { ReactComponent as Stamp } from "../../../assets/images/stamp70.svg";
 import { deleteGoal, selectGoal, setGoal } from "../../../store/goal";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import axiosWithToken from "../../../utils/axios";
 
 const GoalButton = styled(Button)(({ theme }) => ({
   position: "relative",
@@ -81,22 +81,11 @@ const Goal = (goal: GoalProps) => {
     let request;
     const clickedGoal = goal.userFavorites.find((el) => el.seq === goal.seq);
     if (clickedGoal) {
-      request = axios.delete("goal", {
-        headers: {
-          Authorization: `${localStorage.getItem("token")}`,
-        },
+      request = axiosWithToken.delete("goal", {
         data: { seq: clickedGoal.favoriteSeq },
       });
     } else {
-      request = axios.put(
-        "goal",
-        { seq: goal.seq },
-        {
-          headers: {
-            Authorization: `${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      request = axiosWithToken.put("goal", { seq: goal.seq });
     }
     request
       .then(() => {
