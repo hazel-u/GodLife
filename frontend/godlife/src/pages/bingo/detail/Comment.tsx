@@ -10,7 +10,6 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import axios from "axios";
 
 import React, { useEffect, useRef, useState } from "react";
 
@@ -21,6 +20,7 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
 import { selectUser } from "../../../store/user";
 import { CommentType } from "../../../types/comment";
+import axiosWithToken from "../../../utils/axios";
 
 const Comment = ({
   comment,
@@ -50,21 +50,11 @@ const Comment = ({
   const deleteComment = () => {
     let deleteRequest;
     if (userEmail === email) {
-      deleteRequest = axios.delete(`bingo/comment/${comment.seq}`, {
-        headers: {
-          Authorization: `${localStorage.getItem("token")}`,
-        },
-      });
+      deleteRequest = axiosWithToken.delete(`bingo/comment/${comment.seq}`);
     } else {
-      deleteRequest = axios.post(
-        `bingo/comment/${comment.seq}`,
-        { password },
-        {
-          headers: {
-            Authorization: `${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      deleteRequest = axiosWithToken.post(`bingo/comment/${comment.seq}`, {
+        password,
+      });
     }
 
     deleteRequest

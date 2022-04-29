@@ -1,8 +1,5 @@
 import { ThemeProvider } from "@mui/material";
-import axios from "axios";
 import dayjs from "dayjs";
-
-import { useEffect } from "react";
 
 import CommonDialog from "./components/common/CommonDialog";
 import CommonLoading from "./components/common/CommonLoading";
@@ -13,27 +10,20 @@ import Router from "./router/router";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { setTodayBingo } from "./store/todayBingo";
 import { selectUser, setLoggedUser } from "./store/user";
+import axiosWithToken from "./utils/axios";
 
 function App() {
   const dispatch = useAppDispatch();
   const { email } = useAppSelector(selectUser);
   const token = localStorage.getItem("token");
 
-  if (!email && token) {
-    axios
-      .get("user/info", {
-        headers: {
-          Authorization: token,
-        },
-      })
+  if (!email && token && axiosWithToken.defaults.headers) {
+    axiosWithToken
+      .get("user/info")
       .then((res) => {
         dispatch(setLoggedUser(res.data));
-        axios
-          .get(`bingo/date/${dayjs().format("YYYY-MM-DD")}`, {
-            headers: {
-              Authorization: token,
-            },
-          })
+        axiosWithToken
+          .get(`bingo/date/${dayjs().format("YYYY-MM-DD")}`)
           .then((res) => dispatch(setTodayBingo(res.data.code)))
           .catch(() => dispatch(setTodayBingo("none")));
       })
@@ -45,29 +35,6 @@ function App() {
   }
 
   const logout = useLogout();
-
-  useEffect(() => {
-    let intervalId: ReturnType<typeof setInterval>;
-    if (email) {
-      intervalId = setInterval(() => {
-        axios
-          .get("user/refresh-token", {
-            headers: {
-              RefreshToken: `${localStorage.getItem("refreshtoken")}`,
-            },
-          })
-          .then((res) => {
-            console.log(res);
-            localStorage.setItem("token", res.headers["authorization"]);
-          })
-          .catch(() => {
-            console.log("만료");
-            logout();
-          });
-      }, 600000 - 120000);
-    }
-    return () => clearInterval(intervalId);
-  }, [logout, email]);
 
   return (
     <ThemeProvider theme={theme}>

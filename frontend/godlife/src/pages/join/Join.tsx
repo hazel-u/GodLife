@@ -1,7 +1,9 @@
 import { Stack } from "@mui/material";
 import axios from "axios";
+
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+
 import Logo from "../../assets/logo/Godlife/logo.svg";
 import { OutlinedButton } from "../../components/common/Button";
 import { useAppDispatch } from "../../store/hooks";
@@ -10,7 +12,6 @@ import { JoinInput } from "../../types/user";
 import EmailController from "./EmailController";
 import NicknameController from "./NicknameController";
 import PasswordContoller from "./PasswordContoller";
-
 
 const Join = () => {
   const { control, trigger, getValues, handleSubmit, watch } =
@@ -71,6 +72,9 @@ const Join = () => {
 
           <OutlinedButton variant="outlined" type="submit">
             회원가입
+          </OutlinedButton>
+          <OutlinedButton variant="outlined" href="/">
+            로그인하러 가기
           </OutlinedButton>
         </Stack>
       </form>
