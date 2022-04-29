@@ -3,8 +3,7 @@ import { Grid, Hidden, Stack, Tooltip } from "@mui/material";
 import React, { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-// import { ReactComponent as Logo } from "../../assets/logo/Godlife/logo.svg";
-import { ReactComponent as LogoWide } from "../../assets/logo/Godlife/logoWide.svg";
+import { ReactComponent as Logo } from "../../assets/logo/Godlife/logo.svg";
 import { useLogout } from "../../hooks/useAuth";
 import Profile from "../../pages/profile/Profile";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -44,11 +43,12 @@ const Navbar = () => {
           sx={{
             padding: "20px 10px 40px 10px",
             "& .MuiButton-root": {
-              fontSize: "12px",
+              fontSize: "14px",
+              fontFamily: "BMEULJIRO",
             },
           }}
         >
-          <Grid item sm={4.5}>
+          <Grid item sm={5}>
             <Stack direction="row" justifyContent="space-around">
               <TextButton
                 onClick={() => {
@@ -82,19 +82,19 @@ const Navbar = () => {
           </Grid>
           <Grid
             item
-            sm={3}
+            sm={2}
             sx={{
               textAlign: "center",
             }}
           >
-            <LogoWide
-              width="145px"
-              height="50px"
+            <Logo
+              width="70px"
+              height="70px"
               style={{ cursor: "pointer" }}
               onClick={() => navigate("/")}
             />
           </Grid>
-          <Grid item sm={4.5}>
+          <Grid item sm={5}>
             <Stack direction="row" justifyContent="space-around">
               <Tooltip title={"서비스 준비중입니다."}>
                 <TextButton
@@ -125,7 +125,7 @@ const Navbar = () => {
         alignItems="center"
         display={{ sm: "none", md: "none" }}
         sx={{
-          padding: "10px",
+          padding: "20px 10px 40px 10px",
         }}
       >
         <Grid
@@ -135,7 +135,7 @@ const Navbar = () => {
             textAlign: "left",
           }}
         >
-          <LogoWide
+          <Logo
             width="70px"
             height="70px"
             style={{ cursor: "pointer" }}
