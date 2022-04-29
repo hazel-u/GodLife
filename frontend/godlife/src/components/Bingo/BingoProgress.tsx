@@ -18,9 +18,10 @@ const BingoProgress = (props: LinearProgressProps & { value: number }) => {
         />
       </Box>
       <Box>
-        <Typography variant="body2" color="text.secondary">{`${
-          3 - props.value
-        }/3`}</Typography>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+        >{`${props.value}/3`}</Typography>
       </Box>
     </Stack>
   );
