@@ -1,4 +1,4 @@
-import { Box, Stack, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import axios from "axios";
 
 import React, { useEffect, useState } from "react";
@@ -127,11 +127,10 @@ const BingoCreate = () => {
         alignItems="center"
         justifyContent="center"
         sx={{
-          maxWidth: "1000px",
-          padding: "50px",
+          maxWidth: "900px",
           margin: "0 auto",
           backgroundColor: "white",
-          border: "36px solid white",
+          border: "20px solid white",
           borderImageSource: `url(${BorderImage})`,
           borderImageSlice: "50 104 39 103",
           borderImageWidth: "13px 13px 14px 13px",
@@ -139,46 +138,67 @@ const BingoCreate = () => {
           borderImageRepeat: "repeat repeat",
         }}
       >
-        <Stack
-          direction={fullScreen ? "column" : "row"}
-          justifyContent="center"
-          sx={{ width: "100%" }}
-          spacing={5}
+        <Box
+          sx={(theme) => ({
+            width: "772px",
+            [theme.breakpoints.down(800)]: {
+              width: "548px",
+            },
+            [theme.breakpoints.down("sm")]: {
+              width: "324px",
+            },
+          })}
         >
-          <BingoTitle title={title} setTitle={setTitle} />
-          <Box sx={{ textAlign: "center" }}>
-            <BlackButton onClick={confirmBingo} sx={{ width: "200px" }}>
-              시작하기
-            </BlackButton>
-          </Box>
-        </Stack>
+          <Typography fontSize={36} fontFamily="BMEULJIRO">
+            갓생 만들기
+          </Typography>
+          <Typography sx={{ whiteSpace: "pre-line" }}>
+            {`최대 9개의 목표를 선택해 오늘의 갓생을 만들어보세요. \n현재 ${selectedGoals.length}개의 목표를 선택하셨습니다.`}
+          </Typography>
+
+          <Stack
+            direction={fullScreen ? "column" : "row"}
+            justifyContent="center"
+            sx={{ width: "100%", maxWidth: "772px" }}
+            spacing={5}
+            marginY={5}
+          >
+            <BingoTitle title={title} setTitle={setTitle} />
+
+            <Stack
+              direction="row"
+              justifyContent="center"
+              spacing={2}
+              sx={{ textAlign: "center" }}
+            >
+              <BlackButton onClick={confirmBingo} sx={{ width: "100px" }}>
+                시작하기
+              </BlackButton>
+
+              <OutlinedButton
+                variant="outlined"
+                sx={{ width: "100px" }}
+                onClick={() => {
+                  if (title) {
+                    setOpen(true);
+                  } else {
+                    dispatch(
+                      setSnackbar({
+                        open: true,
+                        message: "갓생의 제목을 먼저 입력해주세요.",
+                        severity: "warning",
+                      })
+                    );
+                  }
+                }}
+              >
+                갓생 복사
+              </OutlinedButton>
+            </Stack>
+          </Stack>
+        </Box>
 
         <BingoCreateGoalList />
-        <Stack
-          direction="row"
-          justifyContent="center"
-          spacing={3}
-          sx={{ padding: "20px", width: "100%" }}
-        >
-          <OutlinedButton
-            variant="outlined"
-            onClick={() => {
-              if (title) {
-                setOpen(true);
-              } else {
-                dispatch(
-                  setSnackbar({
-                    open: true,
-                    message: "갓생의 제목을 먼저 입력해주세요.",
-                    severity: "warning",
-                  })
-                );
-              }
-            }}
-          >
-            갓생 복사
-          </OutlinedButton>
-        </Stack>
       </Stack>
     </>
   );
