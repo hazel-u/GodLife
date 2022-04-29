@@ -54,7 +54,7 @@ const ProfileDelete = ({ handleClose }: { handleClose: () => void }) => {
   const [nameInput, setNameInput] = useState("");
 
   return (
-    <Box>
+    <Box maxWidth={300}>
       <h3>정말 탈퇴하시겠습니까?</h3>
       <p>
         지금까지 {name}님께서 만드신 갓생은 사라지지 않습니다. <br />
