@@ -48,7 +48,7 @@ const Auth = () => {
                 localStorage.setItem("refreshtoken", res.data.refreshToken);
                 localStorage.setItem(
                   "expired",
-                  `${new Date().getTime() + 60000 * 9}`
+                  `${new Date().getTime() + 60000 * 2}`
                 );
               })
               .then(() => {

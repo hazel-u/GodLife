@@ -15,6 +15,7 @@ export interface UserInfo {
   name: string;
   godCount: number;
   recentDate: null;
+  joinType: string;
 }
 
 export interface ChangePasswordInput {

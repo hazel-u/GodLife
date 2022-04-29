@@ -8,6 +8,7 @@ const initialState: UserInfo = {
   name: "",
   godCount: 0,
   recentDate: null,
+  joinType: "",
 };
 
 export const userSlice = createSlice({
