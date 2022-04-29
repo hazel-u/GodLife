@@ -2,7 +2,7 @@ import { CommentType } from "./comment";
 
 export interface BingoType {
   activate: boolean;
-  code: number;
+  code: string;
   commentCnt: number;
   comments: CommentType[];
   godlife: boolean;

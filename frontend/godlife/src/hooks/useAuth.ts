@@ -16,7 +16,7 @@ export const useLogout = () => {
     navigate("/login");
     localStorage.removeItem("token");
     localStorage.removeItem("refreshtoken");
-    dispatch(setTodayBingo(0));
+    dispatch(setTodayBingo(""));
     dispatch(clearLoggedUser());
     dispatch(
       setSnackbar({
@@ -57,7 +57,7 @@ export const useLogin = () => {
           navigate("/login");
           localStorage.removeItem("token");
           localStorage.removeItem("refreshtoken");
-          dispatch(setTodayBingo(0));
+          dispatch(setTodayBingo(""));
           dispatch(clearLoggedUser());
           dispatch(
             setSnackbar({
@@ -69,22 +69,29 @@ export const useLogin = () => {
         });
     }, 600000 - 60000);
 
-    axios
-      .get("user/info", {
-        headers: {
-          Authorization: token!,
-        },
-      })
-      .then((res) => {
-        dispatch(setLoggedUser(res.data));
-        axios
-          .get(`bingo/date/${dayjs().format("YYYY-MM-DD")}`, {
-            headers: {
-              Authorization: res.data.jwtToken,
-            },
-          })
-          .then((res) => dispatch(setTodayBingo(res.data.code)))
-          .catch((err) => console.log(err));
-      });
+    token &&
+      axios
+        .get("user/info", {
+          headers: {
+            Authorization: token,
+          },
+        })
+        .then((res) => {
+          dispatch(setLoggedUser(res.data));
+          axios
+            .get(`bingo/date/${dayjs().format("YYYY-MM-DD")}`, {
+              headers: {
+                Authorization: res.data.jwtToken,
+              },
+            })
+            .then((res) => {
+              dispatch(setTodayBingo(res.data.code));
+              navigate(`/bingo/${res.data.code}`);
+            })
+            .catch(() => {
+              dispatch(setTodayBingo("none"));
+              navigate("/create");
+            });
+        });
   };
 };

@@ -24,7 +24,7 @@ const Navbar = () => {
     group: "내 그룹",
     item: "아이템 샵",
     create: "갓생 만들기",
-    bingo: `${code}` === params.bingoId ? "오늘의 갓생" : "갓생",
+    bingo: `${code}` === params.bingoId ? "오늘의 갓생" : "",
   };
 
   const dispatch = useAppDispatch();
@@ -48,7 +48,7 @@ const Navbar = () => {
             <Stack direction="row" justifyContent="space-around">
               <TextButton
                 onClick={() => {
-                  if (code) {
+                  if (code && code !== "none") {
                     navigate(`/bingo/${code}`);
                   } else {
                     navigate("create");

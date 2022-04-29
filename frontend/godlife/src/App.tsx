@@ -35,7 +35,12 @@ function App() {
             },
           })
           .then((res) => dispatch(setTodayBingo(res.data.code)))
-          .catch((err) => console.log(err));
+          .catch(() => dispatch(setTodayBingo("none")));
+      })
+      .catch((err) => {
+        if (err.response.data.code === "EXPIRED_TOKEN") {
+          logout();
+        }
       });
   }
 
@@ -56,9 +61,10 @@ function App() {
             localStorage.setItem("token", res.headers["authorization"]);
           })
           .catch(() => {
+            console.log("만료");
             logout();
           });
-      }, 600000 - 60000);
+      }, 600000 - 120000);
     }
     return () => clearInterval(intervalId);
   }, [logout, email]);

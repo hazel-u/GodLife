@@ -9,11 +9,13 @@ import { styled } from "@mui/material/styles";
 import * as React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import menu from "../../assets/icon/menu.png";
 import { setDialog } from "../../store/dialog";
 import { useAppSelector } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
+import { selectTodayBingo } from "../../store/todayBingo";
 import { selectUser } from "../../store/user";
 import { TextButton } from "../common/Button";
 import "./bars.css";
@@ -57,7 +59,9 @@ export default function SwipeableEdgeDrawer({
     setDrawerOpen(newOpen);
   };
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { name } = useAppSelector(selectUser);
+  const code = useAppSelector(selectTodayBingo);
 
   return (
     <Root>
@@ -112,7 +116,17 @@ export default function SwipeableEdgeDrawer({
                 justifyContent="space-around"
                 sx={{ height: "100%" }}
               >
-                <TextButton href="/">오늘의 갓생</TextButton>
+                <TextButton
+                  onClick={() => {
+                    if (code && code !== "none") {
+                      navigate(`/bingo/${code}`);
+                    } else {
+                      navigate("create");
+                    }
+                  }}
+                >
+                  오늘의 갓생
+                </TextButton>
                 <TextButton href="/list">이전의 갓생</TextButton>
                 <Tooltip title={"서비스 준비중입니다."}>
                   <TextButton
