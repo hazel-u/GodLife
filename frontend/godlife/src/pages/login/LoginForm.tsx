@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { OutlinedButton } from "../../components/common/Button";
+import { BlackButton } from "../../components/common/Button";
 import { useLogin } from "../../hooks/useAuth";
 import { useAppDispatch } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
@@ -68,9 +68,7 @@ const LoginForm = () => {
         >
           <EmailController control={control} />
           <PasswordController control={control} />
-          <OutlinedButton variant="outlined" type="submit">
-            갓생살러 가기
-          </OutlinedButton>
+          <BlackButton type="submit">갓생살러 가기</BlackButton>
         </Stack>
       </FormControl>
     </form>
