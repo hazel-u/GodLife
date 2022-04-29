@@ -48,15 +48,7 @@ public class FindBingoResDto {
         this.likeCnt = bingo.getLikeCnt();
 
         this.godCount = bingo.getUser().getGodCount();
-        LocalDate recentDate = bingo.getUser().getRecentDate();
-        if (recentDate == null)
-            this.serialGodCount = 0;
-        else {
-            LocalDate current = LocalDate.now();
-            Period period = Period.between(recentDate, current);
-            this.serialGodCount = period.getDays();
-        }
-
+        this.serialGodCount = bingo.getUser().getSerialGodCount();
 
         List<BingoGoals> bingoGoals = bingo.getBingoGoals();
         for (BingoGoals bingoGoal : bingoGoals) {
