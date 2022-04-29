@@ -3,7 +3,8 @@ import { Grid, Hidden, Stack, Tooltip } from "@mui/material";
 import React, { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-import { ReactComponent as Logo } from "../../assets/logo/Godlife/logo.svg";
+// import { ReactComponent as Logo } from "../../assets/logo/Godlife/logo.svg";
+import { ReactComponent as LogoWide } from "../../assets/logo/Godlife/logoWide.svg";
 import { useLogout } from "../../hooks/useAuth";
 import Profile from "../../pages/profile/Profile";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -39,12 +40,15 @@ const Navbar = () => {
       <Hidden smDown>
         <Grid
           container
-          alignItems="end"
+          alignItems="center"
           sx={{
             padding: "20px 10px 40px 10px",
+            "& .MuiButton-root": {
+              fontSize: "12px",
+            },
           }}
         >
-          <Grid item sm={5}>
+          <Grid item sm={4.5}>
             <Stack direction="row" justifyContent="space-around">
               <TextButton
                 onClick={() => {
@@ -78,19 +82,19 @@ const Navbar = () => {
           </Grid>
           <Grid
             item
-            sm={2}
+            sm={3}
             sx={{
               textAlign: "center",
             }}
           >
-            <Logo
-              width="100px"
-              height="100px"
+            <LogoWide
+              width="145px"
+              height="50px"
               style={{ cursor: "pointer" }}
               onClick={() => navigate("/")}
             />
           </Grid>
-          <Grid item sm={5}>
+          <Grid item sm={4.5}>
             <Stack direction="row" justifyContent="space-around">
               <Tooltip title={"서비스 준비중입니다."}>
                 <TextButton
@@ -131,7 +135,7 @@ const Navbar = () => {
             textAlign: "left",
           }}
         >
-          <Logo
+          <LogoWide
             width="70px"
             height="70px"
             style={{ cursor: "pointer" }}

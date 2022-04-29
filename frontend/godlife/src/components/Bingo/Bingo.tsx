@@ -123,6 +123,10 @@ export const Bingo = ({
           stretch: { height: "100%" },
           maxWidth: 750,
           backgroundColor: "white",
+          // backgroundColor: "#f3f3f3",
+          // backgroundImage: `url(
+          //   "https://www.transparenttextures.com/patterns/beige-paper.png"
+          // )`,
         }}
         id="bingo"
       >

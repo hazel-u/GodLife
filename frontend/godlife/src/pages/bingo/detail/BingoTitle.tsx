@@ -63,16 +63,24 @@ const BingoTitle = ({
     <Box
       sx={{
         "& p": {
-          fontFamily: "BMEULJIRO",
           textAlign: "center",
         },
       }}
     >
+      <Typography>
+        {startDate[0]}년 {startDate[1]}월 {startDate[2]}일 {name}의 갓생
+      </Typography>
+
       <Stack
         direction="row"
         alignItems="center"
         justifyContent="center"
-        sx={{ height: "65px" }}
+        sx={{
+          height: "65px",
+          "& p": {
+            fontFamily: "BMEULJIRO",
+          },
+        }}
       >
         {id && <Box sx={{ width: "40px" }} />}
         {clickEdit ? (
@@ -138,22 +146,16 @@ const BingoTitle = ({
         )}
       </Stack>
 
-      <Box sx={{ mt: 2 }}>
-        <Typography>
-          {startDate[0]}년 {startDate[1]}월 {startDate[2]}일 {name}의 갓생
-        </Typography>
-      </Box>
-
       {dayjs().format("YYYY-M-D") === startDate.join("-") && (
-        <Box sx={{ mt: 2 }}>
+        <Box>
           <Typography>
             {godCount}일째 갓생 달성 중 | {serialGodCount}일 연속 갓생 달성 중
           </Typography>
           {userEmail === email && (
             <Typography>
-              ⏱ {leftHours && leftHours < 10 && "0"}
-              {leftHours} : {leftMinutes && leftMinutes < 10 && "0"}
-              {leftMinutes}
+              종료까지 {leftHours && leftHours < 10 && "0"}
+              {leftHours}시간 {leftMinutes && leftMinutes < 10 && "0"}
+              {leftMinutes}분
             </Typography>
           )}
         </Box>

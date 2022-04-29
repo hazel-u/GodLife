@@ -87,7 +87,6 @@ const BingoCell = ({
         onClick={handleClickOpen}
         sx={{
           position: "relative",
-          width: 120,
           cursor: email === userEmail ? "pointer" : "default",
           "&::before": {
             display: "block",

@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import BorderImage from "../../../assets/images/border.svg";
 import { OutlinedButton } from "../../../components/common/Button";
 import { selectGoal } from "../../../store/goal";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
@@ -125,7 +126,18 @@ const BingoCreate = () => {
         direction="column"
         alignItems="center"
         justifyContent="center"
-        sx={{ maxWidth: "1000px", padding: "50px", margin: "0 auto" }}
+        sx={{
+          maxWidth: "1000px",
+          padding: "50px",
+          margin: "0 auto",
+          backgroundColor: "white",
+          border: "36px solid white",
+          borderImageSource: `url(${BorderImage})`,
+          borderImageSlice: "50 104 39 103",
+          borderImageWidth: "13px 13px 14px 13px",
+          borderImageOutset: "13px 13px 13px 11px",
+          borderImageRepeat: "repeat repeat",
+        }}
       >
         <Stack
           direction={fullScreen ? "column" : "row"}

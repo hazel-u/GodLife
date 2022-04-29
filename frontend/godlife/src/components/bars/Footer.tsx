@@ -35,7 +35,6 @@ const Container = styled.footer`
   width: 100%;
   height: 25%;
   margin-top: 70px;
-  border-top: 1px solid #f1f1f1;
   @media (max-width: 899px) {
     margin-top: 40px;
   }
