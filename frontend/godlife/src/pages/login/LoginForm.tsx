@@ -3,11 +3,12 @@ import axios from "axios";
 
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { OutlinedButton } from "../../components/common/Button";
+import { BlackButton } from "../../components/common/Button";
 import { useLogin } from "../../hooks/useAuth";
 import { useAppDispatch } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
 import { LoginInput } from "../../types/user";
+import axiosWithToken from "../../utils/axios";
 import EmailController from "./EmailController";
 import PasswordController from "./PasswordController";
 
@@ -20,6 +21,8 @@ const LoginForm = () => {
     await axios
       .post("user/login", data)
       .then((res) => {
+        axiosWithToken.defaults.headers.common["Authorization"] =
+          res.headers["authorization"];
         Promise.resolve()
           .then(() => {
             localStorage.setItem("token", res.headers["authorization"]);
@@ -55,9 +58,7 @@ const LoginForm = () => {
         >
           <EmailController control={control} />
           <PasswordController control={control} />
-          <OutlinedButton type="submit" variant="outlined">
-            갓생살러 가기
-          </OutlinedButton>
+          <BlackButton type="submit">갓생살러 가기</BlackButton>
         </Stack>
       </FormControl>
     </form>

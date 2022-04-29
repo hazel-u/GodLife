@@ -1,4 +1,3 @@
-import axios from "axios";
 import dayjs from "dayjs";
 
 import { useEffect } from "react";
@@ -8,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { setLoading } from "../store/loading";
 import { selectTodayBingo, setTodayBingo } from "../store/todayBingo";
 import { selectUser, setLoggedUser } from "../store/user";
+import axiosWithToken from "../utils/axios";
 
 const Main = () => {
   const navigate = useNavigate();
@@ -20,20 +20,12 @@ const Main = () => {
   useEffect(() => {
     dispatch(setLoading(true));
     if (!email && token) {
-      axios
-        .get("user/info", {
-          headers: {
-            Authorization: token,
-          },
-        })
+      axiosWithToken
+        .get("user/info")
         .then((res) => {
           dispatch(setLoggedUser(res.data));
-          axios
-            .get(`bingo/date/${dayjs().format("YYYY-MM-DD")}`, {
-              headers: {
-                Authorization: token,
-              },
-            })
+          axiosWithToken
+            .get(`bingo/date/${dayjs().format("YYYY-MM-DD")}`)
             .then((res) => {
               dispatch(setTodayBingo(res.data.code));
               navigate(`/bingo/${res.data.code}`);
@@ -42,7 +34,8 @@ const Main = () => {
               dispatch(setTodayBingo("none"));
               navigate("/create");
             });
-        });
+        })
+        .catch(() => console.log("Main"));
     } else if (code && code !== "none") {
       navigate(`/bingo/${code}`);
     } else {

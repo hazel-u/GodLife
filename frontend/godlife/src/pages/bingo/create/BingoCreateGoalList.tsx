@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import { selectGoal } from "../../../store/goal";
 import { useAppSelector } from "../../../store/hooks";
+import axiosWithToken from "../../../utils/axios";
 import Goal from "./Goal";
 
 const BingoCreateGoalList = () => {
@@ -61,12 +62,8 @@ const BingoCreateGoalList = () => {
   }, [changeCategoryGoalList]);
 
   const getFavorites = () => {
-    axios
-      .get("goal/usergoal", {
-        headers: {
-          Authorization: `${localStorage.getItem("token")}`,
-        },
-      })
+    axiosWithToken
+      .get("goal/usergoal")
       .then((res) => {
         const favoriteGoals: {
           seq: number;

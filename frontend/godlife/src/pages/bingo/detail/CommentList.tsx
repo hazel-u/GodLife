@@ -1,5 +1,4 @@
 import { Box, Divider, Stack } from "@mui/material";
-import axios from "axios";
 
 import React from "react";
 
@@ -8,6 +7,7 @@ import { OutlinedInput } from "../../../components/common/Input";
 import { selectBingo } from "../../../store/bingo";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
+import axiosWithToken from "../../../utils/axios";
 import Comment from "./Comment";
 
 const CommentList = ({ getBingo }: { getBingo: () => void }) => {
@@ -24,10 +24,8 @@ const CommentList = ({ getBingo }: { getBingo: () => void }) => {
     event.preventDefault();
     const { nickname, content, password } = { ...newComment };
     if (nickname && content && password) {
-      axios
-        .post(`bingo/${id}/comment`, newComment, {
-          headers: { Authorization: `${localStorage.getItem("token")}` },
-        })
+      axiosWithToken
+        .post(`bingo/${id}/comment`, newComment)
         .then(() => {
           dispatch(
             setSnackbar({

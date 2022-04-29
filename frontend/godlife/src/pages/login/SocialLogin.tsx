@@ -7,6 +7,7 @@ import GoogleLogin from "react-google-login";
 import { ReactComponent as GoogleLoginImage } from "../../assets/logo/Brand/oAuth/google/google.svg";
 import { ReactComponent as KakaoLoginImage } from "../../assets/logo/Brand/oAuth/kakao/kakao.svg";
 import { useLogin } from "../../hooks/useAuth";
+import axiosWithToken from "../../utils/axios";
 
 const SocialLogin = () => {
   const login = useLogin();
@@ -18,6 +19,8 @@ const SocialLogin = () => {
       },
     });
     if (jwtToken.status === 200) {
+      axiosWithToken.defaults.headers.common["Authorization"] =
+        jwtToken.data.jwtToken;
       Promise.resolve()
         .then(() => {
           localStorage.setItem("token", jwtToken.data.jwtToken);

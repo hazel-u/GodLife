@@ -1,5 +1,4 @@
 import { Box, Divider, Stack } from "@mui/material";
-import axios from "axios";
 
 import { useForm } from "react-hook-form";
 
@@ -7,6 +6,7 @@ import { OutlinedButton } from "../../components/common/Button";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
 import { selectUser, setLoggedUser } from "../../store/user";
+import axiosWithToken from "../../utils/axios";
 import NicknameController from "./NicknameController";
 
 const ProfileEdit = ({ handleClose }: { handleClose: () => void }) => {
@@ -17,23 +17,13 @@ const ProfileEdit = ({ handleClose }: { handleClose: () => void }) => {
 
   const dispatch = useAppDispatch();
   const onSubmit = (data: { name: string }) => {
-    axios
-      .post("user/info", data, {
-        headers: {
-          Authorization: `${localStorage.getItem("token")}`,
-        },
-      })
+    axiosWithToken
+      .post("user/info", data)
       .then(() => {
         handleClose();
-        axios
-          .get("user/info", {
-            headers: {
-              Authorization: `${localStorage.getItem("token")}`,
-            },
-          })
-          .then((res) => {
-            dispatch(setLoggedUser(res.data));
-          });
+        axiosWithToken.get("user/info").then((res) => {
+          dispatch(setLoggedUser(res.data));
+        });
         dispatch(
           setSnackbar({
             open: true,

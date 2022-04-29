@@ -9,6 +9,7 @@ import { selectGoal } from "../../../store/goal";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
 import { setTodayBingo } from "../../../store/todayBingo";
+import axiosWithToken from "../../../utils/axios";
 import BingoConfirm from "./BingoConfirm";
 import BingoCopy from "./BingoCopy";
 import BingoCreateGoalList from "./BingoCreateGoalList";
@@ -70,16 +71,8 @@ const BingoCreate = () => {
 
   const navigate = useNavigate();
   const createBingo = (goals: number[]) => {
-    axios
-      .post(
-        "bingo",
-        { goals: shuffle(goals), title },
-        {
-          headers: {
-            Authorization: `${localStorage.getItem("token")}`,
-          },
-        }
-      )
+    axiosWithToken
+      .post("bingo", { goals: shuffle(goals), title })
       .then((res) => {
         dispatch(
           setSnackbar({

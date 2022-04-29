@@ -1,6 +1,5 @@
 import EditIcon from "@mui/icons-material/Edit";
 import { Box, IconButton, Stack, TextField, Typography } from "@mui/material";
-import axios from "axios";
 import dayjs from "dayjs";
 
 import React, { useEffect, useState } from "react";
@@ -10,6 +9,7 @@ import { selectBingo } from "../../../store/bingo";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
 import { selectUser } from "../../../store/user";
+import axiosWithToken from "../../../utils/axios";
 
 const BingoTitle = ({
   id,
@@ -27,16 +27,8 @@ const BingoTitle = ({
   const dispatch = useAppDispatch();
   const edit = () => {
     if (clickEdit) {
-      axios
-        .put(
-          `bingo/${id}`,
-          { title: newTitle },
-          {
-            headers: {
-              Authorization: `${localStorage.getItem("token")}`,
-            },
-          }
-        )
+      axiosWithToken
+        .put(`bingo/${id}`, { title: newTitle })
         .then(() => getBingo())
         .catch(() =>
           dispatch(

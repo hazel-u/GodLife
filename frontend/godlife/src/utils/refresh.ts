@@ -17,6 +17,13 @@ const refresh = async (
         },
       })
       .then((res) => {
+        if (!config?.headers) {
+          throw new Error(
+            `Expected 'config' and 'config.headers' not to be undefined`
+          );
+        }
+        config.headers["Authorization"] = res.headers["authorization"];
+
         localStorage.setItem("token", res.headers["authorization"]);
         localStorage.setItem(
           "expired",
