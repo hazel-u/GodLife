@@ -18,6 +18,16 @@ const LoginForm = () => {
 
   const { handleSubmit, control } = useForm<LoginInput>();
   const onSubmit: SubmitHandler<LoginInput> = async (data) => {
+    if (data.email === "deleteEmail@delete.com") {
+      dispatch(
+        setSnackbar({
+          open: true,
+          message: "이메일 또는 비밀번호를 확인해주세요.",
+          severity: "error",
+        })
+      );
+      return;
+    }
     await axios
       .post("user/login", data)
       .then((res) => {
