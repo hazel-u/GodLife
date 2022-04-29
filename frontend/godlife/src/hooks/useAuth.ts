@@ -32,7 +32,6 @@ export const useLogout = () => {
 export const useLogin = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const token = localStorage.getItem("token");
 
   return () => {
     dispatch(
