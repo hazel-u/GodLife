@@ -3,6 +3,8 @@ import { Box, Dialog, Tab, Tabs, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
 
 import { OutlinedButton } from "../../components/common/Button";
+import { useAppSelector } from "../../store/hooks";
+import { selectUser } from "../../store/user";
 import ProfileChangePassword from "./ProfileChangePassword";
 import ProfileDelete from "./ProfileDelete";
 import ProfileEdit from "./ProfileEdit";
@@ -62,6 +64,8 @@ const Profile = ({
     );
   }
 
+  const { joinType } = useAppSelector(selectUser);
+
   return (
     <Dialog
       onClose={handleClose}
@@ -74,7 +78,9 @@ const Profile = ({
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs value={value} onChange={handleChange} variant="fullWidth">
           <Tab label="회원정보 수정" {...a11yProps(0)} />
-          <Tab label="비밀번호 변경" {...a11yProps(1)} />
+          {joinType === "NATIVE" && (
+            <Tab label="비밀번호 변경" {...a11yProps(1)} />
+          )}
           <Tab label="회원 탈퇴" {...a11yProps(2)} />
         </Tabs>
       </Box>
