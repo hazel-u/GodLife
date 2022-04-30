@@ -1,6 +1,6 @@
 import { Global } from "@emotion/react";
-import customStyled from "@emotion/styled";
-import { Box, Stack, Tooltip } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import { Box, IconButton, Stack, Tooltip } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import { grey } from "@mui/material/colors";
@@ -11,7 +11,6 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import menu from "../../assets/icon/menu.png";
 import { setDialog } from "../../store/dialog";
 import { useAppSelector } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
@@ -19,11 +18,6 @@ import { selectTodayBingo } from "../../store/todayBingo";
 import { selectUser } from "../../store/user";
 import { TextButton } from "../common/Button";
 import "./bars.css";
-
-const MenuIcon = customStyled.img`
-	width: 48px;
-	height: 48px;
-`;
 
 const drawerBleeding = 56;
 
@@ -75,11 +69,9 @@ export default function SwipeableEdgeDrawer({
         }}
       />
       <Box sx={{ textAlign: "right" }}>
-        <MenuIcon
-          src={menu}
-          style={{ width: "20px", height: "20px" }}
-          onClick={toggleDrawer(true)}
-        ></MenuIcon>
+        <IconButton sx={{ width: "26px" }} onClick={toggleDrawer(true)}>
+          <MenuIcon />
+        </IconButton>
       </Box>
       <SwipeableDrawer
         anchor="bottom"
