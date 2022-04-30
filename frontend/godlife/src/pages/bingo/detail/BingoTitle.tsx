@@ -152,8 +152,8 @@ const BingoTitle = ({
             {godCount}일째 갓생 달성 중 | {serialGodCount}일 연속 갓생 달성 중
           </Typography>
           {userEmail === email && (
-            <Typography>
-              종료까지 {leftHours && leftHours < 10 && "0"}
+            <Typography color={"#939393"}>
+              오늘의 갓생이 끝나기까지 {leftHours && leftHours < 10 && "0"}
               {leftHours}시간 {leftMinutes && leftMinutes < 10 && "0"}
               {leftMinutes}분
             </Typography>

@@ -1,8 +1,8 @@
-import { Box, Divider, Stack } from "@mui/material";
+import { Box, Divider, Stack, Typography } from "@mui/material";
 
 import React from "react";
 
-import { OutlinedButton } from "../../../components/common/Button";
+import { BlackButton } from "../../../components/common/Button";
 import { OutlinedInput } from "../../../components/common/Input";
 import { selectBingo } from "../../../store/bingo";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
@@ -65,7 +65,9 @@ const CommentList = ({ getBingo }: { getBingo: () => void }) => {
     <Box sx={{ maxWidth: "500px", margin: "3% 0", width: "100%" }}>
       <p>댓글 {comments.length}개</p>
       <Divider />
-      {!comments.length && <p>댓글이 없습니다.</p>}
+      {!comments.length && (
+        <Typography marginY={4}>댓글이 없습니다.</Typography>
+      )}
       {comments
         .slice()
         .sort(function (a, b) {
@@ -116,13 +118,12 @@ const CommentList = ({ getBingo }: { getBingo: () => void }) => {
           />
 
           <Box sx={{ textAlign: "end" }}>
-            <OutlinedButton
-              variant="outlined"
+            <BlackButton
               type="submit"
               sx={{ width: "50px", height: "39.99px" }}
             >
               작성
-            </OutlinedButton>
+            </BlackButton>
           </Box>
         </Stack>
       </form>

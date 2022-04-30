@@ -1,10 +1,10 @@
-import { IconButton, Stack, SvgIcon } from "@mui/material";
+import { IconButton, Stack, SvgIcon, Typography } from "@mui/material";
 import * as htmlToImage from "html-to-image";
 
 import React from "react";
 
-import { ReactComponent as Image } from "../../../assets/images/image.svg";
-import { ReactComponent as Link } from "../../../assets/images/link.svg";
+import { ReactComponent as Image } from "../../../assets/icon/image.svg";
+import { ReactComponent as Link } from "../../../assets/icon/link.svg";
 import { ReactComponent as FacebookLogo } from "../../../assets/logo/Brand/facebook.svg";
 import { ReactComponent as TwitterLogo } from "../../../assets/logo/Brand/twitter.svg";
 import { useAppDispatch } from "../../../store/hooks";
@@ -33,8 +33,10 @@ const Share = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <Stack direction="column" alignItems="center" sx={{ margin: "3% 0" }}>
-      <p>함께 갓생 살기</p>
+    <Stack direction="column" alignItems="center" sx={{ margin: "8% 0" }}>
+      <Typography fontSize={20} fontFamily={"BMEULJIRO"} mb={1}>
+        함께 갓생 살기
+      </Typography>
       <Stack direction="row" spacing={2}>
         <IconButton
           onClick={() => {

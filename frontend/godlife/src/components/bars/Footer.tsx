@@ -10,7 +10,7 @@ const Footer = () => {
   return (
     <Container>
       <FooterWrapper>
-        <Stack sx={{ fontSize: "14px", color: "#939393" }}>
+        <Stack sx={{ fontSize: "14px", color: "#BB9B72" }}>
           <img
             src={WallImage}
             alt="wall"

@@ -1,3 +1,4 @@
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { Box, IconButton, Stack, Typography } from "@mui/material";
 import axios from "axios";
 
@@ -40,12 +41,12 @@ const Interaction = ({ code, likeCnt, seq, getBingo }: InteractionProps) => {
     <Stack
       direction="row"
       justifyContent="space-between"
-      sx={{ maxWidth: "500px", width: "100%" }}
+      sx={{ width: "100%" }}
     >
       <Stack direction="row" alignItems="center">
         <Box>
           <IconButton disabled={clickLike} size="small" onClick={like}>
-            👍
+            <ThumbUpIcon style={{ color: "#BB9B72" }} />
           </IconButton>
         </Box>
         <Typography sx={{ mt: 0.5 }}>{likeCnt}</Typography>

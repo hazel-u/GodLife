@@ -3,7 +3,7 @@ import { Stack, Typography } from "@mui/material";
 import React from "react";
 
 import NotFoundImage from "../assets/images/404NotFound.svg";
-import { OutlinedButton } from "../components/common/Button";
+import { BlackButton } from "../components/common/Button";
 
 const NotFound = () => {
   return (
@@ -29,9 +29,9 @@ const NotFound = () => {
       >
         쉽게만 살아가면 재미없어 빙고
       </Typography>
-      <OutlinedButton variant="outlined" href="/" sx={{ width: "44%" }}>
+      <BlackButton href="/" sx={{ width: "44%" }}>
         돌아가기
-      </OutlinedButton>
+      </BlackButton>
     </Stack>
   );
 };

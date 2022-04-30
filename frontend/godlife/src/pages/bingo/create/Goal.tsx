@@ -124,6 +124,7 @@ const Goal = (goal: GoalProps) => {
             height: "100%",
             zIndex: 2,
             cursor: "pointer",
+            top: 2,
           }}
           onClick={manageSelectedGoals}
         >
