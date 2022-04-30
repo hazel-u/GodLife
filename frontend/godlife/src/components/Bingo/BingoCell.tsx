@@ -12,6 +12,7 @@ import { Box } from "@mui/system";
 import dayjs from "dayjs";
 
 import React, { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import BackgroundImage2 from "../../assets/images/bingoCell2.svg";
 import BackgroundImage from "../../assets/images/bingoCell.svg";
@@ -67,6 +68,8 @@ const BingoCell = ({
     window.addEventListener("resize", getCellSize);
   }, []);
 
+  const location = useLocation();
+
   return (
     <>
       <Dialog open={open} onClose={handleClose}>
@@ -91,8 +94,9 @@ const BingoCell = ({
         sx={{
           position: "relative",
           cursor:
-            email === userEmail &&
-            dayjs().format("YYYY-M-D") === startDate.join("-")
+            location.pathname === "/list" ||
+            (email === userEmail &&
+              dayjs().format("YYYY-M-D") === startDate.join("-"))
               ? "pointer"
               : "default",
           "&::before": {
@@ -122,7 +126,11 @@ const BingoCell = ({
         >
           {isCompleted && (
             <Stamp
-              style={{ position: "absolute", width: "100%", opacity: "50%" }}
+              style={{
+                position: "absolute",
+                width: "100%",
+                opacity: "50%",
+              }}
             />
           )}
           <Typography
