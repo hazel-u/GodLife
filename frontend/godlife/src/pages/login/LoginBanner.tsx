@@ -14,7 +14,7 @@ const LoginBanner = () => {
         backgroundColor: "white",
         border: "20px solid white",
         borderImageSource: `url(${BorderImage})`,
-        borderImageSlice: "50 104 39 103",
+        borderImageSlice: "37 51 47 47",
         borderImageWidth: "13px 13px 14px 13px",
         borderImageOutset: "10px 10px 13px 11px",
         borderImageRepeat: "repeat repeat",

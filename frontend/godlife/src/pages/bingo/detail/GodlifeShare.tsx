@@ -47,12 +47,12 @@ const GodlifeShare = () => {
       alignItems="center"
       sx={{
         margin: "3% auto",
-        maxWidth: "600px",
+        maxWidth: "700px",
         width: "100%",
         backgroundColor: "white",
         border: "36px solid white",
         borderImageSource: `url(${BorderImage})`,
-        borderImageSlice: "50 104 39 103",
+        borderImageSlice: "37 51 47 47",
         borderImageWidth: "14px 13px 14px 13px",
         borderImageOutset: "13px 13px 13px 11px",
         borderImageRepeat: "repeat repeat",
@@ -67,7 +67,7 @@ const GodlifeShare = () => {
             getBingo={getBingo}
           />
 
-          <Box sx={{ marginTop: "5%", width: "100%" }}>
+          <Box sx={{ marginTop: "5%", width: "100%", maxWidth: "550px" }}>
             <Bingo
               createdBy={bingo.userName}
               size={3}
@@ -78,14 +78,14 @@ const GodlifeShare = () => {
               godlife={bingo.godlife}
               id={bingo.id}
             />
-          </Box>
 
-          <Interaction
-            code={bingo.code}
-            likeCnt={bingo.likeCnt}
-            seq={bingo.id}
-            getBingo={getBingo}
-          />
+            <Interaction
+              code={bingo.code}
+              likeCnt={bingo.likeCnt}
+              seq={bingo.id}
+              getBingo={getBingo}
+            />
+          </Box>
 
           <Share />
           <CommentList getBingo={getBingo} />

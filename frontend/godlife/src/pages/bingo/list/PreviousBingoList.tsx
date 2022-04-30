@@ -90,7 +90,7 @@ const PreviousBingoList = () => {
                     backgroundColor: "white",
                     border: "20px solid white",
                     borderImageSource: `url(${BorderImage})`,
-                    borderImageSlice: "50 104 39 103",
+                    borderImageSlice: "37 51 47 47",
                     borderImageWidth: "14px 20px 14px 13px",
                     borderImageOutset: "13px 13px 13px 11px",
                     borderImageRepeat: "repeat repeat",
@@ -104,7 +104,7 @@ const PreviousBingoList = () => {
                     textAlign={"center"}
                     fontFamily={"BMEULJIRO"}
                     fontSize={16}
-                    mt={1}
+                    marginY={1}
                   >
                     {bingo.title}
                   </Typography>
