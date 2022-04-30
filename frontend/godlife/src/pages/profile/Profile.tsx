@@ -39,6 +39,7 @@ const Profile = ({
     return {
       id: `simple-tab-${index}`,
       "aria-controls": `simple-tabpanel-${index}`,
+      value: index,
     };
   }
   function TabPanel(props: TabPanelProps) {
