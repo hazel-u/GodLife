@@ -42,16 +42,7 @@ const LoginBanner = () => {
         40여 개의 갓생 목표 중 9개를 선택해 세 빙고를 달성해보세요.{" "}
         <b>갓생살기</b>는 매일의 갓생 목표를 달성하고, 친구들과 쉽게 공유할 수
         있도록 도와드립니다. <br />
-        나를 위한 갓생, 지금 바로 <b>갓생살기</b>와 시작해보세요.
-      </Typography>
-
-      <Typography
-        sx={{ position: "absolute", bottom: 100, right: 130 }}
-        textAlign={"end"}
-        fontSize={18}
-        lineHeight={2.5}
-      >
-        OvCORS 팀 드림
+        {"\t"}나를 위한 갓생, 지금 바로 <b>갓생살기</b>와 시작해보세요.
       </Typography>
 
       <Stamp style={{ position: "absolute", bottom: "5%", right: "2%" }} />

@@ -171,7 +171,7 @@ const BingoCreateGoalList = () => {
                   sx={{ textAlign: "center", whiteSpace: "pre-line" }}
                 >
                   {selectedCategory === "즐겨찾기"
-                    ? "즐겨찾는 목표가 없습니다. \n자주 찾는 목표의 별을 눌러보세요!"
+                    ? "즐겨찾는 목표가 없습니다."
                     : "선택된 목표가 없습니다."}
                 </Typography>
               </Stack>
