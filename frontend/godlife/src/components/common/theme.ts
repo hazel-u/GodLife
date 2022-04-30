@@ -9,25 +9,25 @@ export const theme = createTheme({
   palette: {
     mode: "light",
     background: {
-      default: "#rgb(252,252,252)",
+      default: "rgba(220, 207, 185, 0.3)",
     },
     primary: {
-      main: "#A11803",
+      main: "#BB9B72",
     },
     secondary: {
-      main: "#939393",
+      main: "#DCCFB9",
     },
     info: {
-      main: "#038ca1",
+      main: "#5C79BA",
     },
     success: {
-      main: "#8ca103",
+      main: "#23AA6E",
     },
     error: {
       main: "#a1033d",
     },
     warning: {
-      main: "#a16703",
+      main: "#EC6953",
     },
     text: {
       primary: "#000000",
