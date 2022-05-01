@@ -14,9 +14,9 @@ import dayjs from "dayjs";
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-import BackgroundImage2 from "../../assets/images/bingoCell2.svg";
-import BackgroundImage from "../../assets/images/bingoCell.svg";
-import { ReactComponent as Stamp } from "../../assets/images/stamp.svg";
+import BackgroundImage2 from "../../assets/images/bingoCell2.webp";
+import BackgroundImage from "../../assets/images/bingoCell.webp";
+import Stamp from "../../assets/images/stamp.webp";
 import { selectBingo } from "../../store/bingo";
 import { useAppSelector } from "../../store/hooks";
 import { selectUser } from "../../store/user";
@@ -54,6 +54,7 @@ const BingoCell = ({
   const handleComplete = () => {
     customClickEvent();
     setOpen(false);
+    setStampAnimation(true);
   };
 
   const cell = useRef<HTMLDivElement | null>(null);
@@ -69,6 +70,8 @@ const BingoCell = ({
   }, []);
 
   const location = useLocation();
+
+  const [stampAnimation, setStampAnimation] = useState(false);
 
   return (
     <>
@@ -124,15 +127,18 @@ const BingoCell = ({
           }}
           ref={cell}
         >
-          {isCompleted && (
-            <Stamp
-              style={{
-                position: "absolute",
-                width: "100%",
-                opacity: "50%",
-              }}
-            />
-          )}
+          <img
+            src={Stamp}
+            alt="stamp"
+            style={{
+              position: "absolute",
+              width: "100%",
+              opacity: isCompleted ? "50%" : "0",
+              transition: "opacity 0.2s ease",
+            }}
+            className={isCompleted && stampAnimation ? "stamp" : ""}
+          />
+
           <Typography
             align="center"
             sx={{

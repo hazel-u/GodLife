@@ -9,11 +9,12 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-import React from "react";
+import React, { useState } from "react";
 
-import { ReactComponent as Stamp } from "../../../assets/images/stamp70.svg";
+import Stamp from "../../../assets/images/stamp.webp";
 import { deleteGoal, selectGoal, setGoal } from "../../../store/goal";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { setSnackbar } from "../../../store/snackbar";
 import axiosWithToken from "../../../utils/axios";
 
 const GoalButton = styled(Button)(({ theme }) => ({
@@ -88,6 +89,7 @@ const Goal = (goal: GoalProps) => {
   const nowSelected = useAppSelector(selectGoal);
 
   const manageSelectedGoals = () => {
+    setStampAnimation(true);
     const found = nowSelected.some((el) => el.seq === goal.seq);
     if (nowSelected.length < 9 && !found) {
       dispatch(
@@ -103,6 +105,14 @@ const Goal = (goal: GoalProps) => {
           category: goal.category,
         })
       );
+    } else if (nowSelected.length === 9 && !found) {
+      dispatch(
+        setSnackbar({
+          open: true,
+          message: "최대 9개의 목표를 선택하실 수 있습니다.",
+          severity: "info",
+        })
+      );
     }
   };
 
@@ -111,26 +121,34 @@ const Goal = (goal: GoalProps) => {
     return selectedGoals.find((el) => el.seq === goal.seq);
   };
 
+  const [stampAnimation, setStampAnimation] = useState(false);
+
   return (
     <Stack
       direction="row"
       justifyContent="center"
       sx={{ position: "relative" }}
     >
-      {isSelected() && (
-        <Box
-          sx={{
-            position: "absolute",
-            height: "100%",
-            zIndex: 2,
-            cursor: "pointer",
-            top: 2,
-          }}
-          onClick={manageSelectedGoals}
-        >
-          <Stamp />
-        </Box>
-      )}
+      <Box
+        sx={{
+          position: "absolute",
+          height: "100%",
+          zIndex: 2,
+          cursor: "pointer",
+          top: 1,
+          opacity: isSelected() ? "40%" : "0",
+          transition: "opacity 0.2s ease",
+        }}
+        onClick={manageSelectedGoals}
+        className={isSelected() && stampAnimation ? "stamp" : ""}
+      >
+        <img
+          src={Stamp}
+          alt="stamp"
+          style={{ height: "100%", width: "100%" }}
+        />
+      </Box>
+
       <BookmarkButton onClick={manageFavorites}>
         <SvgIcon component={BookmarkIcon} />
       </BookmarkButton>
