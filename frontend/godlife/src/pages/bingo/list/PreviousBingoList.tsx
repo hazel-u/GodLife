@@ -3,10 +3,9 @@ import { Box, Grid, Pagination, Stack, Typography } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import BorderImage from "../../../assets/images/border.svg";
-import BingoJson from "../../../assets/json/bingo.json";
+import BorderImage from "../../../assets/images/border.webp";
+import Stamp from "../../../assets/images/stamp.webp";
 import Bingo from "../../../components/Bingo/Bingo";
-import Lottie from "../../../components/common/Lottie";
 import { useAppDispatch } from "../../../store/hooks";
 import { setLoading } from "../../../store/loading";
 import { BingoType } from "../../../types/bingo";
@@ -62,7 +61,9 @@ const PreviousBingoList = () => {
           justifyContent="center"
           sx={{ minHeight: "500px" }}
         >
-          <Lottie animationData={BingoJson} width={200} height={200} />
+          <Box textAlign={"center"} m={3}>
+            <img src={Stamp} alt="stamp" />
+          </Box>
           <Typography>아직 생성된 갓생이 없습니다.</Typography>
         </Stack>
       ) : (

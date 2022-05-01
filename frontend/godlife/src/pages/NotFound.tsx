@@ -2,7 +2,7 @@ import { Stack, Typography } from "@mui/material";
 
 import React from "react";
 
-import NotFoundImage from "../assets/images/404NotFound.svg";
+import NotFoundImage from "../assets/images/404NotFound.webp";
 import { BlackButton } from "../components/common/Button";
 
 const NotFound = () => {

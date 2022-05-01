@@ -3,7 +3,7 @@ import { Stack } from "@mui/material";
 
 import React from "react";
 
-import WallImage from "../../assets/images/wall.svg";
+import WallImage from "../../assets/images/wall.webp";
 import Logo from "../../assets/logo/Godlife/logo.svg";
 
 const Footer = () => {
@@ -15,12 +15,13 @@ const Footer = () => {
             src={WallImage}
             alt="wall"
             height={"60px"}
+            width={"100%"}
             style={{ objectFit: "cover" }}
           />
           <img
             src={Logo}
             alt="logo"
-            style={{ width: "50px", margin: "20px 0" }}
+            style={{ width: "50px", height: "50px", margin: "20px 0" }}
           />
           <span>문의</span>
           <a

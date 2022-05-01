@@ -4,7 +4,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import BorderImage from "../../../assets/images/border.svg";
+import BorderImage from "../../../assets/images/border.webp";
 import { BlackButton, OutlinedButton } from "../../../components/common/Button";
 import { selectGoal } from "../../../store/goal";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";

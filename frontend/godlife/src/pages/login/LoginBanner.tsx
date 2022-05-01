@@ -2,8 +2,8 @@ import { Divider, Stack, Typography } from "@mui/material";
 
 import React from "react";
 
-import BorderImage from "../../assets/images/border.svg";
-import { ReactComponent as Stamp } from "../../assets/images/stamp.svg";
+import BorderImage from "../../assets/images/border.webp";
+import Stamp from "../../assets/images/stamp.webp";
 
 const LoginBanner = () => {
   return (
@@ -44,8 +44,11 @@ const LoginBanner = () => {
         있도록 도와드립니다. <br />
         {"\t"}나를 위한 갓생, 지금 바로 <b>갓생살기</b>와 시작해보세요.
       </Typography>
-
-      <Stamp style={{ position: "absolute", bottom: "5%", right: "2%" }} />
+      <img
+        src={Stamp}
+        alt="stamp"
+        style={{ position: "absolute", bottom: "5%", right: "2%" }}
+      />
     </Stack>
   );
 };

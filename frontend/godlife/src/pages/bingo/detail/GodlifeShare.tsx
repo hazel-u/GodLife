@@ -4,7 +4,7 @@ import axios from "axios";
 import React, { useCallback, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import BorderImage from "../../../assets/images/border.svg";
+import BorderImage from "../../../assets/images/border.webp";
 import Bingo from "../../../components/Bingo/Bingo";
 import { selectBingo, setBingo } from "../../../store/bingo";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
