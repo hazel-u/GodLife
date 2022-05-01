@@ -58,10 +58,25 @@ const Navbar = () => {
                     navigate("create");
                   }
                 }}
+                sx={{
+                  color:
+                    location.pathname.split("/")[1] === "bingo" ||
+                    location.pathname.split("/")[1] === "create"
+                      ? "black"
+                      : "",
+                }}
               >
                 오늘의 갓생
               </TextButton>
-              <TextButton href="/list">이전의 갓생</TextButton>
+              <TextButton
+                href="/list"
+                sx={{
+                  color:
+                    location.pathname.split("/")[1] === "list" ? "black" : "",
+                }}
+              >
+                이전의 갓생
+              </TextButton>
 
               <Tooltip title={"서비스 준비중입니다."}>
                 <TextButton
@@ -74,12 +89,19 @@ const Navbar = () => {
                       })
                     );
                   }}
+                  sx={{
+                    color:
+                      location.pathname.split("/")[1] === "group"
+                        ? "black"
+                        : "",
+                  }}
                 >
                   내 그룹
                 </TextButton>
               </Tooltip>
             </Stack>
           </Grid>
+
           <Grid
             item
             sm={2}
@@ -94,6 +116,7 @@ const Navbar = () => {
               onClick={() => navigate("/")}
             />
           </Grid>
+
           <Grid item sm={5}>
             <Stack direction="row" justifyContent="space-around">
               <Tooltip title={"서비스 준비중입니다."}>
@@ -106,6 +129,10 @@ const Navbar = () => {
                         severity: "info",
                       })
                     );
+                  }}
+                  sx={{
+                    color:
+                      location.pathname.split("/")[1] === "item" ? "black" : "",
                   }}
                 >
                   아이템 샵
