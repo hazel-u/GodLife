@@ -65,6 +65,7 @@ public class UserServiceImpl implements UserService{
                 .deleted(false)
                 .recentDate(null)
                 .godCount(0)
+                .serialGodCount(0)
                 .build();
         userRepository.save(user);
 
