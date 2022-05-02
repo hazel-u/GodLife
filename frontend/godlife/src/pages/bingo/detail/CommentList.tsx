@@ -21,7 +21,6 @@ const CommentList = ({ getBingo }: { getBingo: () => void }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { id, comments } = useAppSelector(selectBingo);
-  const isAuth = localStorage.getItem("token");
 
   const goPreviousBingoList = () => {
     navigate("/list");
@@ -125,7 +124,6 @@ const CommentList = ({ getBingo }: { getBingo: () => void }) => {
           />
 
           <Box sx={{ textAlign: "end" }}>
-            {isAuth} ? (
             <BlackButton
               onClick={goPreviousBingoList}
               sx={{ width: "50px", height: "39.99px", margin: "0px 10px" }}
@@ -138,14 +136,6 @@ const CommentList = ({ getBingo }: { getBingo: () => void }) => {
             >
               작성
             </BlackButton>
-            ) : (
-            <BlackButton
-              type="submit"
-              sx={{ width: "50px", height: "39.99px" }}
-            >
-              작성
-            </BlackButton>
-            )
           </Box>
         </Stack>
       </form>
