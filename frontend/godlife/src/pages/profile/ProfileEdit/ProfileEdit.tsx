@@ -2,11 +2,11 @@ import { Box, Divider, Stack } from "@mui/material";
 
 import { useForm } from "react-hook-form";
 
-import { OutlinedButton } from "../../components/common/Button";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { setSnackbar } from "../../store/snackbar";
-import { selectUser, setLoggedUser } from "../../store/user";
-import axiosWithToken from "../../utils/axios";
+import { OutlinedButton } from "../../../components/common/Button";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { setSnackbar } from "../../../store/snackbar";
+import { selectUser, setLoggedUser } from "../../../store/user";
+import axiosWithToken from "../../../utils/axios";
 import NicknameController from "./NicknameController";
 
 const ProfileEdit = ({ handleClose }: { handleClose: () => void }) => {

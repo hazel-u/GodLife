@@ -8,14 +8,19 @@ import { TextButton } from "../../../components/common/Button";
 import { setDialog } from "../../../store/dialog";
 import { useAppDispatch } from "../../../store/hooks";
 
-interface InteractionProps {
+interface BingoDetailInteractionProps {
   code: string;
   likeCnt: number;
   seq: string;
   getBingo: () => void;
 }
 
-const Interaction = ({ code, likeCnt, seq, getBingo }: InteractionProps) => {
+const BingoDetailInteraction = ({
+  code,
+  likeCnt,
+  seq,
+  getBingo,
+}: BingoDetailInteractionProps) => {
   const dispatch = useAppDispatch();
   const copyBingoCode = () => {
     navigator.clipboard.writeText(`${code}`);
@@ -56,4 +61,4 @@ const Interaction = ({ code, likeCnt, seq, getBingo }: InteractionProps) => {
   );
 };
 
-export default Interaction;
+export default BingoDetailInteraction;

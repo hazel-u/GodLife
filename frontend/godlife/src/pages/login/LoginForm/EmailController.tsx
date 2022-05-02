@@ -1,7 +1,8 @@
 import React from "react";
-import { Controller, Control } from "react-hook-form";
-import { OutlinedInput } from "../../components/common/Input";
-import { LoginInput } from "../../types/user";
+import { Control, Controller } from "react-hook-form";
+
+import { OutlinedInput } from "../../../components/common/Input";
+import { LoginInput } from "../../../types/user";
 
 const EmailController: React.FC<{
   control: Control<LoginInput, any>;

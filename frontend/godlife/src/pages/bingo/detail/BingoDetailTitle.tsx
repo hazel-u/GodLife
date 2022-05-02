@@ -11,7 +11,7 @@ import { setSnackbar } from "../../../store/snackbar";
 import { selectUser } from "../../../store/user";
 import axiosWithToken from "../../../utils/axios";
 
-const BingoTitle = ({
+const BingoDetailTitle = ({
   id,
   title,
   getBingo,
@@ -164,4 +164,4 @@ const BingoTitle = ({
   );
 };
 
-export default BingoTitle;
+export default BingoDetailTitle;

@@ -6,7 +6,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { selectGoal } from "../../../store/goal";
 import { useAppSelector } from "../../../store/hooks";
 import axiosWithToken from "../../../utils/axios";
-import Goal from "./Goal";
+import BingoCreateGoalItem from "./BingoCreateGoalItem";
 
 const BingoCreateGoalList = () => {
   const selectedGoals = useAppSelector(selectGoal);
@@ -149,7 +149,7 @@ const BingoCreateGoalList = () => {
                     favoriteSeq?: string;
                   }) => (
                     <Grid item key={goal.seq}>
-                      <Goal
+                      <BingoCreateGoalItem
                         {...goal}
                         isFavorite={userFavorites.some(
                           (el) => el.seq === goal.seq

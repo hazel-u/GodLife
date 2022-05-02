@@ -3,13 +3,13 @@ import { Stack } from "@mui/material";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 
-import { OutlinedButton } from "../../components/common/Button";
-import { OutlinedInput } from "../../components/common/Input";
-import { useAppDispatch } from "../../store/hooks";
-import { setSnackbar } from "../../store/snackbar";
-import { setLoggedUser } from "../../store/user";
-import { ChangePasswordInput } from "../../types/user";
-import axiosWithToken from "../../utils/axios";
+import { OutlinedButton } from "../../../components/common/Button";
+import { OutlinedInput } from "../../../components/common/Input";
+import { useAppDispatch } from "../../../store/hooks";
+import { setSnackbar } from "../../../store/snackbar";
+import { setLoggedUser } from "../../../store/user";
+import { ChangePasswordInput } from "../../../types/user";
+import axiosWithToken from "../../../utils/axios";
 import PasswordContoller from "./PasswordContoller";
 
 const ProfileChangePassword = ({

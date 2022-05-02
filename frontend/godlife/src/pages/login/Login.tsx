@@ -5,8 +5,8 @@ import React from "react";
 import Logo from "../../assets/logo/Godlife/logo.svg";
 import { TextButton } from "../../components/common/Button";
 import LoginBanner from "./LoginBanner";
-import LoginForm from "./LoginForm";
-import SocialLogin from "./SocialLogin";
+import LoginForm from "./LoginForm/LoginForm";
+import LoginOAuth from "./LoginOAuth";
 
 const Login = () => {
   return (
@@ -46,7 +46,7 @@ const Login = () => {
             혹은
           </Divider>
 
-          <SocialLogin />
+          <LoginOAuth />
         </Box>
       </Grid>
     </Grid>

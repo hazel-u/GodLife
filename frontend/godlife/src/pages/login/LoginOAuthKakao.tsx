@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useLogin } from "../../hooks/useAuth";
 import axiosWithToken from "../../utils/axios";
 
-const Auth = () => {
+const LoginOAuthKakao = () => {
   const code = new URL(window.location.href).searchParams.get("code");
 
   const navigate = useNavigate();
@@ -64,4 +64,4 @@ const Auth = () => {
   return null;
 };
 
-export default Auth;
+export default LoginOAuthKakao;

@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 import { Control, Controller, UseFormWatch } from "react-hook-form";
 
-import { OutlinedInput } from "../../components/common/Input";
-import { ChangePasswordInput } from "../../types/user";
+import { OutlinedInput } from "../../../components/common/Input";
+import { ChangePasswordInput } from "../../../types/user";
 
 interface PasswordContollerProps {
   control: Control<ChangePasswordInput, any>;

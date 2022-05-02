@@ -121,7 +121,9 @@ const Comment = ({
           </IconButton>
         </Box>
       </Stack>
-      <Typography sx={{ margin: "0 0 30px 0" }}>{comment.content}</Typography>
+      <Typography sx={{ margin: "0 0 30px 0", wordBreak: "break-all" }}>
+        {comment.content}
+      </Typography>
     </>
   );
 };

@@ -15,7 +15,7 @@ import React from "react";
 import { selectGoal } from "../../../store/goal";
 import { useAppSelector } from "../../../store/hooks";
 
-const BingoConfirm = ({
+const BingoCreateConfirm = ({
   confirmOpen,
   setConfirmOpen,
   startBingo,
@@ -65,4 +65,4 @@ const BingoConfirm = ({
   );
 };
 
-export default BingoConfirm;
+export default BingoCreateConfirm;

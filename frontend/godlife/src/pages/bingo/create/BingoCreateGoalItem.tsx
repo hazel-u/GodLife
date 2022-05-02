@@ -54,7 +54,7 @@ interface GoalProps {
   }[];
 }
 
-const Goal = (goal: GoalProps) => {
+const BingoCreateGoalItem = (goal: GoalProps) => {
   const BookmarkButton = styled(IconButton)(({ theme }) => ({
     position: "absolute",
     top: 8,
@@ -159,4 +159,4 @@ const Goal = (goal: GoalProps) => {
   );
 };
 
-export default Goal;
+export default BingoCreateGoalItem;

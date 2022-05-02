@@ -5,9 +5,9 @@ import React from "react";
 import { OutlinedButton } from "../../components/common/Button";
 import { useAppSelector } from "../../store/hooks";
 import { selectUser } from "../../store/user";
-import ProfileChangePassword from "./ProfileChangePassword";
+import ProfileChangePassword from "./ProfileChangePassword/ProfileChangePassword";
 import ProfileDelete from "./ProfileDelete";
-import ProfileEdit from "./ProfileEdit";
+import ProfileEdit from "./ProfileEdit/ProfileEdit";
 
 interface TabPanelProps {
   children?: React.ReactNode;

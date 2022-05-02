@@ -11,7 +11,7 @@ import { setLoading } from "../../../store/loading";
 import { BingoType } from "../../../types/bingo";
 import axiosWithToken from "../../../utils/axios";
 
-const PreviousBingoList = () => {
+const BingoList = () => {
   const [bingoList, setBingoList] = useState<BingoType[]>([]);
   const [bingoCount, setBingoCount] = useState(-1);
   const [page, setPage] = useState(0);
@@ -133,4 +133,4 @@ const PreviousBingoList = () => {
   );
 };
 
-export default PreviousBingoList;
+export default BingoList;
