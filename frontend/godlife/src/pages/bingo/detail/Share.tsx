@@ -1,5 +1,5 @@
 import { IconButton, Stack, SvgIcon, Typography } from "@mui/material";
-import * as htmlToImage from "html-to-image";
+import html2canvas from "html2canvas";
 
 import React from "react";
 
@@ -21,10 +21,11 @@ const Share = () => {
     const bingo = document.getElementById("bingo");
 
     if (bingo) {
-      htmlToImage.toPng(bingo).then(function (dataUrl: string) {
+      html2canvas(bingo).then((canvas) => {
+        const image = canvas.toDataURL("image/png", 1);
         const link = window.document.createElement("a");
         link.download = `${month}월_${date}일의_갓생.png`;
-        link.href = dataUrl;
+        link.href = image;
         link.click();
       });
     }
