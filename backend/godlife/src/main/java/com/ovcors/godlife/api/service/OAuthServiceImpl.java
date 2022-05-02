@@ -74,6 +74,7 @@ public class OAuthServiceImpl implements OAuthService{
                     .deleted(false)
                     .recentDate(null)
                     .godCount(0)
+                    .serialGodCount(0)
                     .build();
 
             userEntity = userRepository.save(userRequest);
