@@ -9,13 +9,13 @@ export const theme = createTheme({
   palette: {
     mode: "light",
     background: {
-      default: "rgba(220, 207, 185, 0.3)",
+      default: "rgb(252, 252, 252)",
     },
     primary: {
-      main: "#BB9B72",
+      main: "#A11803",
     },
     secondary: {
-      main: "#DCCFB9",
+      main: "#939393",
     },
     info: {
       main: "#5C79BA",
