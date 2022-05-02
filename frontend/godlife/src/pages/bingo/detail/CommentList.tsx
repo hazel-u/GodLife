@@ -1,6 +1,7 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
 
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import { BlackButton } from "../../../components/common/Button";
 import { OutlinedInput } from "../../../components/common/Input";
@@ -18,7 +19,12 @@ const CommentList = ({ getBingo }: { getBingo: () => void }) => {
   });
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { id, comments } = useAppSelector(selectBingo);
+
+  const goPreviousBingoList = () => {
+    navigate("/list");
+  };
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -123,6 +129,12 @@ const CommentList = ({ getBingo }: { getBingo: () => void }) => {
               sx={{ width: "50px", height: "39.99px" }}
             >
               작성
+            </BlackButton>
+            <BlackButton
+              onClick={goPreviousBingoList}
+              sx={{ width: "50px", height: "39.99px" }}
+            >
+              목록
             </BlackButton>
           </Box>
         </Stack>
