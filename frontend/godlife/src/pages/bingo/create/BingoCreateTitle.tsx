@@ -3,7 +3,7 @@ import { InputAdornment, TextField } from "@mui/material";
 
 import React from "react";
 
-const BingoTitle = ({
+const BingoCreateTitle = ({
   title,
   setTitle,
 }: {
@@ -51,4 +51,4 @@ const BingoTitle = ({
   );
 };
 
-export default BingoTitle;
+export default BingoCreateTitle;

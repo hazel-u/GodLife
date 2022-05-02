@@ -3,12 +3,12 @@ import axios from "axios";
 
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { BlackButton } from "../../components/common/Button";
-import { useLogin } from "../../hooks/useAuth";
-import { useAppDispatch } from "../../store/hooks";
-import { setSnackbar } from "../../store/snackbar";
-import { LoginInput } from "../../types/user";
-import axiosWithToken from "../../utils/axios";
+import { BlackButton } from "../../../components/common/Button";
+import { useLogin } from "../../../hooks/useAuth";
+import { useAppDispatch } from "../../../store/hooks";
+import { setSnackbar } from "../../../store/snackbar";
+import { LoginInput } from "../../../types/user";
+import axiosWithToken from "../../../utils/axios";
 import EmailController from "./EmailController";
 import PasswordController from "./PasswordController";
 

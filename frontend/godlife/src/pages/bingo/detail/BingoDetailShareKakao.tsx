@@ -6,7 +6,7 @@ import { ReactComponent as KakaotalkLogo } from "../../../assets/logo/Brand/kaka
 import { selectBingo } from "../../../store/bingo";
 import { useAppSelector } from "../../../store/hooks";
 
-const KakaoShare = () => {
+const BingoDetailShareKakao = () => {
   const { likeCnt, comments } = useAppSelector(selectBingo);
 
   useEffect(() => {
@@ -45,4 +45,4 @@ const KakaoShare = () => {
   );
 };
 
-export default KakaoShare;
+export default BingoDetailShareKakao;

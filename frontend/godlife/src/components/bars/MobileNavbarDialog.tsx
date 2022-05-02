@@ -11,7 +11,6 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { setDialog } from "../../store/dialog";
 import { useAppSelector } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
 import { selectTodayBingo } from "../../store/todayBingo";
@@ -63,7 +62,7 @@ export default function SwipeableEdgeDrawer({
       <Global
         styles={{
           ".MuiDrawer-root > .MuiPaper-root": {
-            height: `calc(60% - ${drawerBleeding}px)`,
+            height: `calc(50% - ${drawerBleeding}px)`,
             overflow: "visible",
           },
         }}
@@ -102,7 +101,7 @@ export default function SwipeableEdgeDrawer({
               <h4>{name}님, 갓생사세요!</h4>
               <div className="division-line" />
             </Stack>
-            <Box sx={{ height: "80%" }}>
+            <Box sx={{ height: "70%" }}>
               <Stack
                 direction="column"
                 justifyContent="space-around"
@@ -120,6 +119,7 @@ export default function SwipeableEdgeDrawer({
                   오늘의 갓생
                 </TextButton>
                 <TextButton href="/list">이전의 갓생</TextButton>
+
                 <Tooltip title={"서비스 준비중입니다."}>
                   <TextButton
                     onClick={() => {
@@ -132,22 +132,10 @@ export default function SwipeableEdgeDrawer({
                       );
                     }}
                   >
-                    내 그룹
+                    모두의 갓생
                   </TextButton>
                 </Tooltip>
-                <TextButton
-                  onClick={() => {
-                    dispatch(
-                      setDialog({
-                        open: true,
-                        title: "아이템샵",
-                        content: "서비스 준비중입니다.",
-                      })
-                    );
-                  }}
-                >
-                  아이템 샵
-                </TextButton>
+
                 <TextButton
                   onClick={() => {
                     setDrawerOpen(false);

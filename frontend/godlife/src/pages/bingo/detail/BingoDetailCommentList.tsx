@@ -1,7 +1,6 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
 
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 import { BlackButton } from "../../../components/common/Button";
 import { OutlinedInput } from "../../../components/common/Input";
@@ -9,9 +8,9 @@ import { selectBingo } from "../../../store/bingo";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
 import axiosWithToken from "../../../utils/axios";
-import Comment from "./Comment";
+import BingoDetailCommentItem from "./BingoDetailCommentItem";
 
-const CommentList = ({ getBingo }: { getBingo: () => void }) => {
+const BingoDetailCommentList = ({ getBingo }: { getBingo: () => void }) => {
   const [newComment, setNewComment] = React.useState({
     nickname: "",
     content: "",
@@ -19,12 +18,7 @@ const CommentList = ({ getBingo }: { getBingo: () => void }) => {
   });
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const { id, comments } = useAppSelector(selectBingo);
-
-  const goPreviousBingoList = () => {
-    navigate("/list");
-  };
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -86,7 +80,7 @@ const CommentList = ({ getBingo }: { getBingo: () => void }) => {
         })
         .map((comment: any, index: number) => (
           <React.Fragment key={index}>
-            <Comment comment={comment} getBingo={getBingo} />
+            <BingoDetailCommentItem comment={comment} getBingo={getBingo} />
             {index !== comments.length - 1 && <Divider />}
           </React.Fragment>
         ))}
@@ -125,7 +119,7 @@ const CommentList = ({ getBingo }: { getBingo: () => void }) => {
 
           <Box sx={{ textAlign: "end" }}>
             <BlackButton
-              onClick={goPreviousBingoList}
+              href="/list"
               sx={{ width: "50px", height: "39.99px", margin: "0px 10px" }}
             >
               목록
@@ -143,4 +137,4 @@ const CommentList = ({ getBingo }: { getBingo: () => void }) => {
   );
 };
 
-export default CommentList;
+export default BingoDetailCommentList;

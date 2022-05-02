@@ -8,8 +8,8 @@ import {
   UseFormTrigger,
 } from "react-hook-form";
 
-import { OutlinedInput } from "../../components/common/Input";
-import { useIsMount } from "../../hooks/useIsMount";
+import { OutlinedInput } from "../../../components/common/Input";
+import { useIsMount } from "../../../hooks/useIsMount";
 
 interface NicknameControllerProps {
   control: Control<{ name: string }, any>;

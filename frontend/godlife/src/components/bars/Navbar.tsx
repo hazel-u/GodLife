@@ -77,28 +77,6 @@ const Navbar = () => {
               >
                 이전의 갓생
               </TextButton>
-
-              <Tooltip title={"서비스 준비중입니다."}>
-                <TextButton
-                  onClick={() => {
-                    dispatch(
-                      setSnackbar({
-                        open: true,
-                        message: "서비스 준비중입니다.",
-                        severity: "info",
-                      })
-                    );
-                  }}
-                  sx={{
-                    color:
-                      location.pathname.split("/")[1] === "group"
-                        ? "black"
-                        : "",
-                  }}
-                >
-                  내 그룹
-                </TextButton>
-              </Tooltip>
             </Stack>
           </Grid>
 
@@ -132,10 +110,12 @@ const Navbar = () => {
                   }}
                   sx={{
                     color:
-                      location.pathname.split("/")[1] === "item" ? "black" : "",
+                      location.pathname.split("/")[1] === "group"
+                        ? "black"
+                        : "",
                   }}
                 >
-                  아이템 샵
+                  모두의 갓생
                 </TextButton>
               </Tooltip>
               <TextButton onClick={() => setOpen(true)}>내 정보</TextButton>

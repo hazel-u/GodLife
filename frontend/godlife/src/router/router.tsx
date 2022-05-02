@@ -5,11 +5,11 @@ import ShareLayout from "../layouts/ShareLayout";
 import Main from "../pages/Main";
 import NotFound from "../pages/NotFound";
 import BingoCreate from "../pages/bingo/create/BingoCreate";
-import GodlifeShare from "../pages/bingo/detail/GodlifeShare";
-import PreviousBingoList from "../pages/bingo/list/PreviousBingoList";
+import BingoDetail from "../pages/bingo/detail/BingoDetail";
+import BingoList from "../pages/bingo/list/BingoList";
 import Join from "../pages/join/Join";
-import KakaoAuth from "../pages/login/KakaoAuth";
 import Login from "../pages/login/Login";
+import LoginOAuthKakao from "../pages/login/LoginOAuthKakao";
 import { useAppSelector } from "../store/hooks";
 import { selectTodayBingo } from "../store/todayBingo";
 
@@ -28,7 +28,7 @@ export default function Router() {
     },
     {
       path: process.env.REACT_APP_KAKAO_REDIRECT_PATH,
-      element: <KakaoAuth />,
+      element: <LoginOAuthKakao />,
     },
     {
       path: "/",
@@ -49,7 +49,7 @@ export default function Router() {
         },
         {
           path: "/list",
-          element: <PreviousBingoList />,
+          element: <BingoList />,
         },
       ],
     },
@@ -59,7 +59,7 @@ export default function Router() {
       children: [
         {
           path: "/bingo/:bingoId",
-          element: <GodlifeShare />,
+          element: <BingoDetail />,
         },
       ],
     },

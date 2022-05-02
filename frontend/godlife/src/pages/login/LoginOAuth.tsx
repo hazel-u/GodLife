@@ -9,7 +9,7 @@ import { ReactComponent as KakaoLoginImage } from "../../assets/logo/Brand/oAuth
 import { useLogin } from "../../hooks/useAuth";
 import axiosWithToken from "../../utils/axios";
 
-const SocialLogin = () => {
+const LoginOAuth = () => {
   const login = useLogin();
 
   const responseGoogle = async (res: any) => {
@@ -63,4 +63,4 @@ const SocialLogin = () => {
   );
 };
 
-export default SocialLogin;
+export default LoginOAuth;

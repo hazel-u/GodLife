@@ -10,12 +10,12 @@ import { selectBingo, setBingo } from "../../../store/bingo";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setLoading } from "../../../store/loading";
 import { selectUser } from "../../../store/user";
-import BingoTitle from "./BingoTitle";
-import CommentList from "./CommentList";
-import Interaction from "./Interaction";
-import Share from "./Share";
+import BingoDetailCommentList from "./BingoDetailCommentList";
+import BingoDetailInteraction from "./BingoDetailInteraction";
+import BingoDetailShare from "./BingoDetailShare";
+import BingoDetailTitle from "./BingoDetailTitle";
 
-const GodlifeShare = () => {
+const BingoDetail = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ const GodlifeShare = () => {
       {bingo.code && (
         <>
           {/* 본인의 bingo일 경우에만 실제 id 넘겨주고 그렇지 않다면 빈 문자열 넘기기*/}
-          <BingoTitle
+          <BingoDetailTitle
             id={bingo.userEmail === email ? bingo.id : ""}
             title={bingo.title}
             getBingo={getBingo}
@@ -79,7 +79,7 @@ const GodlifeShare = () => {
               id={bingo.id}
             />
 
-            <Interaction
+            <BingoDetailInteraction
               code={bingo.code}
               likeCnt={bingo.likeCnt}
               seq={bingo.id}
@@ -87,12 +87,12 @@ const GodlifeShare = () => {
             />
           </Box>
 
-          <Share />
-          <CommentList getBingo={getBingo} />
+          <BingoDetailShare />
+          <BingoDetailCommentList getBingo={getBingo} />
         </>
       )}
     </Stack>
   );
 };
 
-export default GodlifeShare;
+export default BingoDetail;

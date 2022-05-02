@@ -1,5 +1,5 @@
 import { IconButton, Stack, SvgIcon, Typography } from "@mui/material";
-import * as htmlToImage from "html-to-image";
+import html2canvas from "html2canvas";
 
 import React from "react";
 
@@ -9,9 +9,9 @@ import { ReactComponent as FacebookLogo } from "../../../assets/logo/Brand/faceb
 import { ReactComponent as TwitterLogo } from "../../../assets/logo/Brand/twitter.svg";
 import { useAppDispatch } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
-import KakaoShare from "./KakaoShare";
+import BingoDetailShareKakao from "./BingoDetailShareKakao";
 
-const Share = () => {
+const BingoDetailShare = () => {
   const today = new Date();
   const month = today.getMonth() + 1; // 월
   const date = today.getDate(); // 날짜
@@ -21,10 +21,11 @@ const Share = () => {
     const bingo = document.getElementById("bingo");
 
     if (bingo) {
-      htmlToImage.toPng(bingo).then(function (dataUrl: string) {
+      html2canvas(bingo).then((canvas) => {
+        const image = canvas.toDataURL("image/png", 1);
         const link = window.document.createElement("a");
         link.download = `${month}월_${date}일의_갓생.png`;
-        link.href = dataUrl;
+        link.href = image;
         link.click();
       });
     }
@@ -66,7 +67,7 @@ const Share = () => {
           />
         </IconButton>
 
-        <KakaoShare />
+        <BingoDetailShareKakao />
 
         <IconButton
           onClick={() => {
@@ -102,4 +103,4 @@ const Share = () => {
   );
 };
 
-export default Share;
+export default BingoDetailShare;

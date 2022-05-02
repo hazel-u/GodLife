@@ -11,10 +11,10 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
 import { setTodayBingo } from "../../../store/todayBingo";
 import axiosWithToken from "../../../utils/axios";
-import BingoConfirm from "./BingoConfirm";
 import BingoCopy from "./BingoCopy";
+import BingoCreateConfirm from "./BingoCreateConfirm";
 import BingoCreateGoalList from "./BingoCreateGoalList";
-import BingoTitle from "./BingoTitle";
+import BingoCreateTitle from "./BingoCreateTitle";
 
 const BingoCreate = () => {
   const selectedGoals = useAppSelector(selectGoal);
@@ -116,7 +116,7 @@ const BingoCreate = () => {
 
   return (
     <>
-      <BingoConfirm
+      <BingoCreateConfirm
         confirmOpen={confirmOpen}
         setConfirmOpen={setConfirmOpen}
         startBingo={startBingo}
@@ -163,7 +163,7 @@ const BingoCreate = () => {
             spacing={5}
             marginY={5}
           >
-            <BingoTitle title={title} setTitle={setTitle} />
+            <BingoCreateTitle title={title} setTitle={setTitle} />
 
             <Stack
               direction="row"

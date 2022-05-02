@@ -9,9 +9,9 @@ import { BlackButton, OutlinedButton } from "../../components/common/Button";
 import { useAppDispatch } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
 import { JoinInput } from "../../types/user";
-import EmailController from "./EmailController";
-import NicknameController from "./NicknameController";
-import PasswordContoller from "./PasswordContoller";
+import JoinEmailController from "./JoinEmailController";
+import JoinNicknameController from "./JoinNicknameController";
+import JoinPasswordContoller from "./JoinPasswordContoller";
 
 const Join = () => {
   const { control, trigger, getValues, handleSubmit, watch } =
@@ -58,17 +58,17 @@ const Join = () => {
 
       <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
         <Stack direction="column" alignItems="center" spacing={1.5}>
-          <EmailController
+          <JoinEmailController
             control={control}
             trigger={trigger}
             getValues={getValues}
           />
-          <NicknameController
+          <JoinNicknameController
             control={control}
             trigger={trigger}
             getValues={getValues}
           />
-          <PasswordContoller control={control} watch={watch} />
+          <JoinPasswordContoller control={control} watch={watch} />
 
           <BlackButton type="submit">회원가입</BlackButton>
           <OutlinedButton variant="outlined" href="/login">
