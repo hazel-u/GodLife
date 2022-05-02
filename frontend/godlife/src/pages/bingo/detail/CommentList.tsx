@@ -125,16 +125,16 @@ const CommentList = ({ getBingo }: { getBingo: () => void }) => {
 
           <Box sx={{ textAlign: "end" }}>
             <BlackButton
+              onClick={goPreviousBingoList}
+              sx={{ width: "50px", height: "39.99px", marginLight: "10px" }}
+            >
+              목록
+            </BlackButton>
+            <BlackButton
               type="submit"
               sx={{ width: "50px", height: "39.99px" }}
             >
               작성
-            </BlackButton>
-            <BlackButton
-              onClick={goPreviousBingoList}
-              sx={{ width: "50px", height: "39.99px" }}
-            >
-              목록
             </BlackButton>
           </Box>
         </Stack>
