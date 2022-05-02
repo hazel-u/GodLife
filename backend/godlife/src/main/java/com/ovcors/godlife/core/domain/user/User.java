@@ -56,7 +56,7 @@ public class User {
     private List<Bingo> bingos = new ArrayList<>();
 
     @Builder
-    public User(String email, String password, String name, JoinType oauth_type, Boolean deleted, LocalDate recentDate, int godCount) {
+    public User(String email, String password, String name, JoinType oauth_type, Boolean deleted, LocalDate recentDate, int godCount, int serialGodCount) {
         this.email = email;
         this.password = password;
         this.name=name;
@@ -64,6 +64,7 @@ public class User {
         this.deleted=deleted;
         this.recentDate = recentDate;
         this.godCount=godCount;
+        this.serialGodCount=serialGodCount;
     }
 
     public void changeName(String name) {
