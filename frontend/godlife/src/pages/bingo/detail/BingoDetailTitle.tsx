@@ -1,5 +1,13 @@
 import EditIcon from "@mui/icons-material/Edit";
-import { Box, IconButton, Stack, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Stack,
+  TextField,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import dayjs from "dayjs";
 
 import React, { useEffect, useState } from "react";
@@ -59,6 +67,9 @@ const BingoDetailTitle = ({
     setLeftMinutes(Math.floor((countDown % (1000 * 60 * 60)) / (1000 * 60)));
   }, [countDown]);
 
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Box
       sx={{
@@ -94,7 +105,9 @@ const BingoDetailTitle = ({
             }}
             InputProps={{
               style: {
-                width: `${newTitle.length * 36}px`,
+                width: `${
+                  fullScreen ? newTitle.length * 24 : newTitle.length * 36
+                }px`,
                 maxWidth: "100%",
                 fontFamily: "BMEULJIRO",
                 fontSize: "36px",
@@ -133,7 +146,12 @@ const BingoDetailTitle = ({
             }}
           />
         ) : (
-          <Typography sx={{ fontSize: 36, width: `${title.length * 36}px` }}>
+          <Typography
+            sx={{
+              fontSize: fullScreen ? 24 : 36,
+              width: `${fullScreen ? title.length * 24 : title.length * 36}px`,
+            }}
+          >
             {title}
           </Typography>
         )}
