@@ -97,27 +97,15 @@ const Navbar = () => {
 
           <Grid item sm={5}>
             <Stack direction="row" justifyContent="space-around">
-              <Tooltip title={"서비스 준비중입니다."}>
-                <TextButton
-                  onClick={() => {
-                    dispatch(
-                      setSnackbar({
-                        open: true,
-                        message: "서비스 준비중입니다.",
-                        severity: "info",
-                      })
-                    );
-                  }}
-                  sx={{
-                    color:
-                      location.pathname.split("/")[1] === "group"
-                        ? "black"
-                        : "",
-                  }}
-                >
-                  모두의 갓생
-                </TextButton>
-              </Tooltip>
+              <TextButton
+                onClick={() => navigate("/feed")}
+                sx={{
+                  color:
+                    location.pathname.split("/")[1] === "group" ? "black" : "",
+                }}
+              >
+                모두의 갓생
+              </TextButton>
               <TextButton onClick={() => setOpen(true)}>내 정보</TextButton>
               <TextButton onClick={logout}>로그아웃</TextButton>
             </Stack>

@@ -6,6 +6,7 @@ import Main from "../pages/Main";
 import NotFound from "../pages/NotFound";
 import BingoCreate from "../pages/bingo/create/BingoCreate";
 import BingoDetail from "../pages/bingo/detail/BingoDetail";
+import BingoFeed from "../pages/bingo/feed/BingoFeed";
 import BingoList from "../pages/bingo/list/BingoList";
 import Join from "../pages/join/Join";
 import Login from "../pages/login/Login";
@@ -50,6 +51,10 @@ export default function Router() {
         {
           path: "/list",
           element: <BingoList />,
+        },
+        {
+          path: "/feed",
+          element: <BingoFeed />,
         },
       ],
     },
