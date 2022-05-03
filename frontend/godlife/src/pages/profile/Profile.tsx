@@ -1,106 +1,96 @@
-import { Box, Dialog, Tab, Tabs, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
+import axios from "axios";
 
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
-import { OutlinedButton } from "../../components/common/Button";
-import { useAppSelector } from "../../store/hooks";
-import { selectUser } from "../../store/user";
-import ProfileChangePassword from "./ProfileChangePassword/ProfileChangePassword";
-import ProfileDelete from "./ProfileDelete";
-import ProfileEdit from "./ProfileEdit/ProfileEdit";
+import BorderImage from "../../assets/images/border.webp";
+import Bingo from "../../components/Bingo/Bingo";
+import { selectBingo, setBingo } from "../../store/bingo";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { selectTodayBingo } from "../../store/todayBingo";
+import ProfileFollow from "./ProfileFollow";
+import ProfileInfo from "./ProfileInfo";
+import ProfileSettingDialog from "./ProfileSettingDialog";
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
+const Profile = () => {
+  const dispatch = useAppDispatch();
+  const [open, setOpen] = useState(false);
+  const bingo = useAppSelector(selectBingo);
+  const code = useAppSelector(selectTodayBingo);
 
-const Profile = ({
-  open,
-  setOpen,
-}: {
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const getBingo = useCallback(() => {
+    axios
+      .get(`bingo/${code}`)
+      .then((res) => {
+        dispatch(setBingo(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [dispatch]);
 
-  // Responsive layout
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
-
-  // Tab
-  const [value, setValue] = React.useState(0);
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
-  function a11yProps(index: number) {
-    return {
-      id: `simple-tab-${index}`,
-      "aria-controls": `simple-tabpanel-${index}`,
-      value: index,
-    };
-  }
-  function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
-
-    return (
-      <Box
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        sx={{
-          height: "100%",
-          minHeight: "450px",
-          padding: "20px",
-          margin: "0 auto",
-        }}
-        {...other}
-      >
-        {value === index && <>{children}</>}
-      </Box>
-    );
-  }
-
-  const { joinType } = useAppSelector(selectUser);
+  useEffect(() => {
+    getBingo();
+  }, [getBingo]);
 
   return (
-    <Dialog
-      onClose={handleClose}
-      open={open}
-      PaperProps={{
-        style: !fullScreen ? { minWidth: "min(60%, 600px)", width: "60%" } : {},
-      }}
-      fullScreen={fullScreen}
-    >
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs value={value} onChange={handleChange} variant="fullWidth">
-          <Tab label="회원정보 수정" {...a11yProps(0)} />
-          {joinType === "NATIVE" && (
-            <Tab label="비밀번호 변경" {...a11yProps(1)} />
-          )}
-          <Tab label="회원 탈퇴" {...a11yProps(2)} />
-        </Tabs>
-      </Box>
-
-      <TabPanel value={value} index={0}>
-        <ProfileEdit handleClose={handleClose} />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <ProfileChangePassword handleClose={handleClose} />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <ProfileDelete handleClose={handleClose} />
-      </TabPanel>
-
-      <Box sx={{ textAlign: "center", paddingBottom: "20px" }}>
-        <OutlinedButton variant="outlined" onClick={handleClose}>
-          돌아가기
-        </OutlinedButton>
-      </Box>
-    </Dialog>
+    <>
+      <ProfileSettingDialog open={open} setOpen={setOpen} />
+      <Stack
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        sx={{
+          maxWidth: "900px",
+          margin: "0 auto",
+          backgroundColor: "white",
+          border: "20px solid white",
+          borderImageSource: `url(${BorderImage})`,
+          borderImageSlice: "37 51 47 47",
+          borderImageWidth: "13px 13px 14px 13px",
+          borderImageOutset: "13px 13px 13px 11px",
+          borderImageRepeat: "repeat repeat",
+        }}
+      >
+        <Box
+          sx={(theme) => ({
+            width: "772px",
+            [theme.breakpoints.down(800)]: {
+              width: "548px",
+            },
+            [theme.breakpoints.down("sm")]: {
+              width: "324px",
+            },
+          })}
+        >
+          <ProfileInfo setOpen={setOpen} />
+          <ProfileFollow />
+          <Typography sx={{ whiteSpace: "pre-line", margin: "3% 0" }}>
+            오늘의 갓생
+          </Typography>
+          <Stack direction="column" alignItems="center">
+            {code && code !== "none" && bingo.code && (
+              <Box
+                sx={{ width: "100%", maxWidth: "550px", textAlign: "center" }}
+              >
+                <Typography fontSize={22} fontFamily="BMEULJIRO">
+                  {bingo.title}
+                </Typography>
+                <Bingo
+                  createdBy={bingo.userName}
+                  size={3}
+                  goals={bingo.goals}
+                  mode={"Active"}
+                  startDate={bingo.startDate}
+                  godlife={bingo.godlife}
+                  id={bingo.id}
+                />
+              </Box>
+            )}
+          </Stack>
+        </Box>
+      </Stack>
+    </>
   );
 };
 

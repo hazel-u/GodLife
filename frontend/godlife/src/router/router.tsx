@@ -10,6 +10,7 @@ import BingoList from "../pages/bingo/list/BingoList";
 import Join from "../pages/join/Join";
 import Login from "../pages/login/Login";
 import LoginOAuthKakao from "../pages/login/LoginOAuthKakao";
+import Profile from "../pages/profile/Profile";
 import { useAppSelector } from "../store/hooks";
 import { selectTodayBingo } from "../store/todayBingo";
 
@@ -50,6 +51,10 @@ export default function Router() {
         {
           path: "/list",
           element: <BingoList />,
+        },
+        {
+          path: "/profile",
+          element: <Profile />,
         },
       ],
     },

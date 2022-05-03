@@ -1,11 +1,11 @@
 import { Grid, Hidden, Stack, Tooltip } from "@mui/material";
 
-import React, { useState } from "react";
+import React from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { ReactComponent as Logo } from "../../assets/logo/Godlife/logo.svg";
 import { useLogout } from "../../hooks/useAuth";
-import Profile from "../../pages/profile/Profile";
+// import ProfileSettingDialog from "../../pages/profile/ProfileSettingDialog";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
 import { selectTodayBingo } from "../../store/todayBingo";
@@ -13,7 +13,7 @@ import { TextButton } from "../common/Button";
 import MobileNavbarDialog from "./MobileNavbarDialog";
 
 const Navbar = () => {
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
 
   const location = useLocation();
   const params = useParams();
@@ -34,7 +34,7 @@ const Navbar = () => {
 
   return (
     <>
-      <Profile open={open} setOpen={setOpen} />
+      {/* <ProfileSettingDialog open={open} setOpen={setOpen} /> */}
 
       <Hidden smDown>
         <Grid
@@ -118,7 +118,10 @@ const Navbar = () => {
                   모두의 갓생
                 </TextButton>
               </Tooltip>
-              <TextButton onClick={() => setOpen(true)}>내 정보</TextButton>
+              {/* <TextButton onClick={() => setOpen(true)}>내 정보</TextButton> */}
+              <TextButton onClick={() => navigate("/profile")}>
+                내 정보
+              </TextButton>
               <TextButton onClick={logout}>로그아웃</TextButton>
             </Stack>
           </Grid>
@@ -162,7 +165,8 @@ const Navbar = () => {
           <p>{pageNameList[location.pathname.split("/")[1]]}</p>
         </Grid>
         <Grid item xs>
-          <MobileNavbarDialog logout={logout} setOpen={setOpen} />
+          {/* <MobileNavbarDialog logout={logout} setOpen={setOpen} /> */}
+          <MobileNavbarDialog logout={logout} />
         </Grid>
       </Grid>
     </>

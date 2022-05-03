@@ -42,10 +42,10 @@ const Puller = styled(Box)(({ theme }) => ({
 
 export default function SwipeableEdgeDrawer({
   logout,
-  setOpen,
-}: {
+}: // setOpen,
+{
   logout: () => void;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  // setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -139,7 +139,8 @@ export default function SwipeableEdgeDrawer({
                 <TextButton
                   onClick={() => {
                     setDrawerOpen(false);
-                    setOpen(true);
+                    // setOpen(true);
+                    navigate("/profile");
                   }}
                 >
                   내 정보
