@@ -94,9 +94,7 @@ public class User {
 
     public LocalDate getRecentGodLife(){
         for(int i  = this.bingos.size()-1 ; i >= 0 ; i--){
-            System.out.println("Here-------------------------------------------------------------------");
             Bingo bingo = this.bingos.get(i);
-            System.out.println(bingo.getStartDate());
             if(bingo.getGodlife()){
                 return bingo.getStartDate();
             }
