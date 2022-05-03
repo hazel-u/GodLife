@@ -7,7 +7,6 @@ import ReactGA from "react-ga4";
 import { ReactComponent as Image } from "../../../assets/icon/image.svg";
 import { ReactComponent as Link } from "../../../assets/icon/link.svg";
 import { ReactComponent as FacebookLogo } from "../../../assets/logo/Brand/facebook.svg";
-import { ReactComponent as TwitterLogo } from "../../../assets/logo/Brand/twitter.svg";
 import { useAppDispatch } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
 import BingoDetailShareKakao from "./BingoDetailShareKakao";
@@ -17,7 +16,7 @@ const BingoDetailShare = () => {
   const today = new Date();
   const month = today.getMonth() + 1; // 월
   const date = today.getDate(); // 날짜
-  const text = `${month}월 ${date}일의 갓생`;
+  // const text = `${month}월 ${date}일의 갓생`;
 
   const saveImage = () => {
     const bingo = document.getElementById("bingo");

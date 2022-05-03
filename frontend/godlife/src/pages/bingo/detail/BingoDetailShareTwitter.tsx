@@ -1,11 +1,9 @@
-import { IconButton, Stack, SvgIcon, Typography } from "@mui/material";
-import { createNoSubstitutionTemplateLiteral } from "typescript";
+import { IconButton, SvgIcon } from "@mui/material";
 
 import ReactGA from "react-ga4";
 
 import { ReactComponent as TwitterLogo } from "../../../assets/logo/Brand/twitter.svg";
 import { selectBingo } from "../../../store/bingo";
-import goal from "../../../store/goal";
 import { useAppSelector } from "../../../store/hooks";
 
 interface goal {
@@ -74,8 +72,8 @@ const BingoDetailShareTwitter = () => {
   ${emojifiedBingo}%0A
   `;
   text = serialGodCount
-    ? text + "%0A" + `🏃‍♀️ 연속 ${serialGodCount} 일 갓생 달성!!%0A`
-    : text + "%0A" + `🏃‍♀️ 연속 1 일 갓생 달성 도전중!!%0A`;
+    ? text + `%0A🏃‍♀️ 연속 ${serialGodCount} 일 갓생 달성!!%0A`
+    : text + `%0A🏃‍♀️ 연속 1 일 갓생 달성 도전중!!%0A`;
   text = godCount
     ? text + `🔥 총 ${godCount} 일 갓생 달성!!%0A`
     : text + `🔥 첫 갓생 달성 도전중!!%0A`;
