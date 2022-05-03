@@ -1,6 +1,7 @@
 import { Stack } from "@mui/material";
 import axios from "axios";
 
+import ReactGA from "react-ga4";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -28,6 +29,9 @@ const Join = () => {
     })
       .then((res) => {
         navigate("/login");
+        ReactGA.gtag("event", "sign_up", {
+          method: "native",
+        });
         dispatch(
           setSnackbar({
             open: true,
