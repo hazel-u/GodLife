@@ -1,7 +1,7 @@
 import { Box, Grid, Pagination, Stack, Typography } from "@mui/material";
 
 import React, { useCallback, useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import BorderImage from "../../../assets/images/border.webp";
 import Stamp from "../../../assets/images/stamp.webp";
@@ -12,7 +12,6 @@ import { BingoType } from "../../../types/bingo";
 import axiosWithToken from "../../../utils/axios";
 
 const BingoList = () => {
-  const location = useLocation();
   const params = useParams();
   const initialPage =
     params.page && Number.isInteger(params.page)
@@ -49,7 +48,7 @@ const BingoList = () => {
         }
       })
       .catch((err) => console.log(err));
-  }, [getBingoList, dispatch]);
+  }, [getBingoList, dispatch, bingoCount, page]);
 
   useEffect(() => {
     dispatch(setLoading(true));

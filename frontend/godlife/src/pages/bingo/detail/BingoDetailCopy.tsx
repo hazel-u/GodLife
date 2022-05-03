@@ -15,7 +15,6 @@ import { TransitionProps } from "@mui/material/transitions";
 import React, { useState } from "react";
 
 import { TextButton } from "../../../components/common/Button";
-import { useAppDispatch } from "../../../store/hooks";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -27,7 +26,6 @@ const Transition = React.forwardRef(function Transition(
 });
 
 const BingoDetailCopy = ({ code }: { code: string }) => {
-  const dispatch = useAppDispatch();
   const copyBingoCode = () => {
     navigator.clipboard.writeText(`${code}`);
     setOpen(true);
