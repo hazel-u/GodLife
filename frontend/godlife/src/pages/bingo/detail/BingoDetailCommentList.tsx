@@ -95,6 +95,7 @@ const BingoDetailCommentList = ({ getBingo }: { getBingo: () => void }) => {
                 setNewComment({ ...newComment, nickname: e.target.value });
               }}
               sx={{ maxWidth: "150px" }}
+              type="text"
             />
             <OutlinedInput
               placeholder="비밀번호"

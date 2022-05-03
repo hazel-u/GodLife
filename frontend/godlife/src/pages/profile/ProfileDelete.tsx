@@ -69,6 +69,7 @@ const ProfileDelete = ({ handleClose }: { handleClose: () => void }) => {
             setNameInput(e.target.value);
           }}
           sx={{ marginBottom: "20px" }}
+          type="text"
         />
         <OutlinedButton
           variant="outlined"
