@@ -43,7 +43,6 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User join(JoinReqDto joinReqDto) {
-        System.out.println("join 진입");
         if("deleteUserName".equals(joinReqDto.getName()) || "deleteEmail@delete.com".equals(joinReqDto.getEmail())) {
             throw new CustomException(ErrorCode.WRONG_INPUT);
         }
