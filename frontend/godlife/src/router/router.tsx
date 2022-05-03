@@ -50,6 +50,16 @@ export default function Router() {
         {
           path: "/list",
           element: <BingoList />,
+          children: [
+            {
+              path: "/list",
+              element: <BingoList />,
+            },
+            {
+              path: "/list/:page",
+              element: <BingoList />,
+            },
+          ],
         },
       ],
     },
