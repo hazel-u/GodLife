@@ -1,4 +1,14 @@
-import { Box, Grid, Pagination, Stack, Typography } from "@mui/material";
+import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import {
+  Box,
+  Grid,
+  IconButton,
+  Pagination,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { typography } from "@mui/system";
 
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +25,7 @@ const BingoFeed = () => {
   const [bingoList, setBingoList] = useState<BingoType[]>([]);
   const [bingoCount, setBingoCount] = useState(-1);
   const [page, setPage] = useState(0);
-
+  console.log(bingoList);
   const limit = 6;
   const dispatch = useAppDispatch();
   const getBingoList = useCallback(() => {
@@ -55,7 +65,6 @@ const BingoFeed = () => {
 
   return (
     <Stack direction="column" justifyContent="center" alignItems="center" p={3}>
-      <Typography>빙고 피드</Typography>
       {bingoCount === 0 ? (
         <Stack
           direction="column"
@@ -65,60 +74,125 @@ const BingoFeed = () => {
           <Box textAlign={"center"} m={3}>
             <img src={Stamp} alt="stamp" />
           </Box>
-          <Typography>아직 생성된 갓생이 없습니다.</Typography>
+          <Typography>
+            다른 갓생러들을 팔로우하고 갓생 피드를 채워보세요.
+          </Typography>
         </Stack>
       ) : (
         <>
           <Grid
             container
             spacing={4}
-            sx={{ maxWidth: "1000px", padding: "40px 0" }}
+            sx={{ maxWidth: "800px", padding: "40px 0" }}
           >
             {bingoList.map((bingo) => (
               <Grid
+                container
                 item
                 xs={12}
-                sm={6}
-                md={4}
                 key={bingo.id}
-                onClick={() => navigate(`/bingo/${bingo.code}`)}
                 sx={{
                   cursor: "pointer",
                 }}
               >
-                <Box
+                <Grid
+                  item
+                  xs={7}
+                  onClick={() => navigate(`/bingo/${bingo.code}`)}
+                >
+                  <Box
+                    sx={{
+                      cursor: "pointer",
+                      backgroundColor: "white",
+                      border: "20px solid white",
+                      borderImageSource: `url(${BorderImage})`,
+                      borderImageSlice: "37 51 47 47",
+                      borderImageWidth: "14px 20px 14px 13px",
+                      borderImageOutset: "13px 13px 13px 11px",
+                      borderImageRepeat: "repeat repeat",
+                    }}
+                  >
+                    <Bingo
+                      createdBy={bingo.userName}
+                      size={3}
+                      goals={bingo.goals}
+                      mode={"Active"}
+                      startDate={bingo.startDate}
+                      godlife={bingo.godlife}
+                    />
+                  </Box>
+                </Grid>
+                <Grid
+                  item
+                  xs={4}
+                  marginLeft={5}
                   sx={{
-                    cursor: "pointer",
-                    backgroundColor: "white",
-                    border: "20px solid white",
-                    borderImageSource: `url(${BorderImage})`,
-                    borderImageSlice: "37 51 47 47",
-                    borderImageWidth: "14px 20px 14px 13px",
-                    borderImageOutset: "13px 13px 13px 11px",
-                    borderImageRepeat: "repeat repeat",
+                    backgroundColor: "E3E3E3",
                   }}
                 >
-                  <Typography fontSize={12}>
-                    {bingo.startDate[0]}년 {bingo.startDate[1]}월{" "}
-                    {bingo.startDate[2]}일의 갓생
-                  </Typography>
-                  <Typography
-                    textAlign={"center"}
-                    fontFamily={"BMEULJIRO"}
-                    fontSize={16}
-                    marginY={1}
+                  <Box
+                    sx={{
+                      cursor: "pointer",
+                      backgroundColor: "white",
+                      border: "20px solid white",
+                      borderImageSource: `url(${BorderImage})`,
+                      borderImageSlice: "37 51 47 47",
+                      borderImageWidth: "14px 20px 14px 13px",
+                      borderImageOutset: "13px 13px 13px 11px",
+                      borderImageRepeat: "repeat repeat",
+                    }}
                   >
-                    {bingo.title}
-                  </Typography>
-                  <Bingo
-                    createdBy={bingo.userName}
-                    size={3}
-                    goals={bingo.goals}
-                    mode={"Active"}
-                    startDate={bingo.startDate}
-                    godlife={bingo.godlife}
-                  />
-                </Box>
+                    <Typography
+                      fontFamily={"BMEULJIRO"}
+                      fontSize={20}
+                      marginY={1}
+                    >
+                      {bingo.userName} 님의 갓생
+                    </Typography>
+                    <Typography fontSize={12}>
+                      {bingo.startDate[0]}년 {bingo.startDate[1]}월{" "}
+                      {bingo.startDate[2]}일
+                    </Typography>
+                    <Typography
+                      textAlign={"center"}
+                      fontFamily={"BMEULJIRO"}
+                      fontSize={20}
+                      marginY={1}
+                    >
+                      "{bingo.title}"
+                    </Typography>
+                    <Stack direction="row" alignItems="center">
+                      <Box>
+                        <IconButton size="small">
+                          <ThumbUpIcon style={{ color: "#BB9B72" }} />
+                        </IconButton>
+                      </Box>
+                      <Typography sx={{ mt: 0.5 }}>{bingo.likeCnt}</Typography>
+                      <Box>
+                        <IconButton size="small">
+                          <ChatBubbleIcon style={{ color: "#BB9B72" }} />
+                        </IconButton>
+                      </Box>
+                      <Typography sx={{ mt: 0.5 }}>
+                        {bingo.comments.length}
+                      </Typography>
+                    </Stack>
+                    <hr />
+                    {/* 댓글 부분 */}
+                    {bingo.comments.slice(0, 3).map((comment) => (
+                      <Box paddingBottom={2}>
+                        <Typography fontSize={13}>
+                          {comment.nickname}
+                        </Typography>
+                        <Typography fontSize={10}>{comment.content}</Typography>
+                        <Typography></Typography>
+                      </Box>
+                    ))}
+                    <Typography fontSize={8} align="right">
+                      -자세히 보기-
+                    </Typography>
+                  </Box>
+                </Grid>
               </Grid>
             ))}
           </Grid>
