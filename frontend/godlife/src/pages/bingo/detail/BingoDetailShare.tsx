@@ -11,6 +11,7 @@ import { ReactComponent as TwitterLogo } from "../../../assets/logo/Brand/twitte
 import { useAppDispatch } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
 import BingoDetailShareKakao from "./BingoDetailShareKakao";
+import BingoDetailShareTwitter from "./BingoDetailShareTwitter";
 
 const BingoDetailShare = () => {
   const today = new Date();
@@ -80,26 +81,7 @@ const BingoDetailShare = () => {
         </IconButton>
 
         <BingoDetailShareKakao />
-
-        <IconButton
-          onClick={() => {
-            ReactGA.gtag("event", "share", {
-              method: "twitter",
-              content_type: "twitter",
-              item_id: "twitter",
-            });
-            window.open(
-              `https://www.twitter.com/intent/tweet?text=${text}&url=${window.location.href}`
-            );
-          }}
-          sx={{ padding: 0, height: "40px" }}
-        >
-          <SvgIcon
-            component={TwitterLogo}
-            inheritViewBox
-            sx={{ width: "40px", height: "40px" }}
-          />
-        </IconButton>
+        <BingoDetailShareTwitter />
 
         <IconButton
           onClick={() => {
