@@ -11,7 +11,8 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setLoading } from "../../../store/loading";
 import { selectUser } from "../../../store/user";
 import BingoDetailCommentList from "./BingoDetailCommentList";
-import BingoDetailInteraction from "./BingoDetailInteraction";
+import BingoDetailCopy from "./BingoDetailCopy";
+import BingoDetailLike from "./BingoDetailLike";
 import BingoDetailShare from "./BingoDetailShare";
 import BingoDetailTitle from "./BingoDetailTitle";
 
@@ -79,12 +80,18 @@ const BingoDetail = () => {
               id={bingo.id}
             />
 
-            <BingoDetailInteraction
-              code={bingo.code}
-              likeCnt={bingo.likeCnt}
-              seq={bingo.id}
-              getBingo={getBingo}
-            />
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              sx={{ width: "100%" }}
+            >
+              <BingoDetailLike
+                likeCnt={bingo.likeCnt}
+                seq={bingo.id}
+                getBingo={getBingo}
+              />
+              <BingoDetailCopy code={bingo.code} />
+            </Stack>
           </Box>
 
           <BingoDetailShare />
