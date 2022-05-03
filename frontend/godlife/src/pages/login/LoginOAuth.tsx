@@ -2,6 +2,7 @@ import { Button, Stack } from "@mui/material";
 import axios from "axios";
 
 import React from "react";
+import ReactGA from "react-ga4";
 import GoogleLogin from "react-google-login";
 
 import { ReactComponent as GoogleLoginImage } from "../../assets/logo/Brand/oAuth/google/google.svg";
@@ -32,6 +33,9 @@ const LoginOAuth = () => {
         })
         .then(() => {
           login();
+          ReactGA.gtag("event", "login", {
+            method: "google",
+          });
         });
     }
   };

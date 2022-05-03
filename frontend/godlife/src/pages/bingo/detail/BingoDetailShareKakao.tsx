@@ -1,6 +1,7 @@
 import { IconButton, SvgIcon } from "@mui/material";
 
 import React, { useEffect } from "react";
+import ReactGA from "react-ga4";
 
 import { ReactComponent as KakaotalkLogo } from "../../../assets/logo/Brand/kakaotalk.svg";
 import { selectBingo } from "../../../store/bingo";
@@ -15,6 +16,12 @@ const BingoDetailShareKakao = () => {
   }, []);
 
   const shareKakao = () => {
+    ReactGA.gtag("event", "share", {
+      method: "kakao",
+      content_type: "kakao",
+      item_id: "kakao",
+    });
+
     window.Kakao.Link.sendDefault({
       objectType: "feed",
       content: {

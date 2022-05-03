@@ -1,7 +1,7 @@
 import { Box, Grid, Pagination, Stack, Typography } from "@mui/material";
 
 import React, { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import BorderImage from "../../../assets/images/border.webp";
 import Stamp from "../../../assets/images/stamp.webp";
@@ -12,9 +12,15 @@ import { BingoType } from "../../../types/bingo";
 import axiosWithToken from "../../../utils/axios";
 
 const BingoList = () => {
+  const params = useParams();
+  const initialPage =
+    params.page && Number.isInteger(params.page)
+      ? parseInt(params.page) - 1
+      : 0;
+
   const [bingoList, setBingoList] = useState<BingoType[]>([]);
   const [bingoCount, setBingoCount] = useState(-1);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(initialPage);
 
   const limit = 6;
   const dispatch = useAppDispatch();
@@ -33,12 +39,16 @@ const BingoList = () => {
       .get("bingo/count")
       .then((res) => {
         setBingoCount(res.data.count);
-        if (res.data.count) {
+        if (
+          res.data.count &&
+          -1 < page &&
+          page <= Math.floor((bingoCount + limit - 1) / limit)
+        ) {
           getBingoList();
         }
       })
       .catch((err) => console.log(err));
-  }, [getBingoList, dispatch]);
+  }, [getBingoList, dispatch, bingoCount, page]);
 
   useEffect(() => {
     dispatch(setLoading(true));
@@ -80,7 +90,9 @@ const BingoList = () => {
                 sm={6}
                 md={4}
                 key={bingo.id}
-                onClick={() => navigate(`/bingo/${bingo.code}`)}
+                onClick={() =>
+                  navigate(`/bingo/${bingo.code}`, { state: { page } })
+                }
                 sx={{
                   cursor: "pointer",
                 }}
