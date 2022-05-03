@@ -36,7 +36,7 @@ const CommonDialog = () => {
     <Dialog open={open} onClose={handleClose} TransitionComponent={Transition}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
-        <DialogContentText>{content}</DialogContentText>
+        <DialogContentText whiteSpace={"pre-line"}>{content}</DialogContentText>
       </DialogContent>
       <DialogActions>
         <TextButton onClick={handleClose} autoFocus>
