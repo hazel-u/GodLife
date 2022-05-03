@@ -126,7 +126,6 @@ export const Bingo = ({
           // backgroundImage: `url(${BackgroundImage})`,
           // backgroundSize: "cover",
         }}
-        id="bingo"
       >
         {goals.map(function (goal: any, index: number) {
           return (

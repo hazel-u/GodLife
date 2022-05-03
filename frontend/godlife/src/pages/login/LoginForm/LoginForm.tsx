@@ -1,6 +1,7 @@
 import { FormControl, Stack } from "@mui/material";
 import axios from "axios";
 
+import ReactGA from "react-ga4";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { BlackButton } from "../../../components/common/Button";
@@ -44,6 +45,9 @@ const LoginForm = () => {
           })
           .then(() => {
             login();
+            ReactGA.gtag("event", "login", {
+              method: "native",
+            });
           });
       })
       .catch(() => {

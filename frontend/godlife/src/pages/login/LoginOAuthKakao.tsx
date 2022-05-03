@@ -2,6 +2,7 @@ import axios from "axios";
 import qs from "qs";
 
 import { useEffect } from "react";
+import ReactGA from "react-ga4";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -53,6 +54,9 @@ const LoginOAuthKakao = () => {
               })
               .then(() => {
                 login();
+                ReactGA.gtag("event", "login", {
+                  method: "kakao",
+                });
               });
           });
       });

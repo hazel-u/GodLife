@@ -2,6 +2,7 @@ import { IconButton, Stack, SvgIcon, Typography } from "@mui/material";
 import html2canvas from "html2canvas";
 
 import React from "react";
+import ReactGA from "react-ga4";
 
 import { ReactComponent as Image } from "../../../assets/icon/image.svg";
 import { ReactComponent as Link } from "../../../assets/icon/link.svg";
@@ -29,6 +30,12 @@ const BingoDetailShare = () => {
         link.click();
       });
     }
+
+    ReactGA.gtag("event", "share", {
+      method: "image",
+      content_type: "image",
+      item_id: "image",
+    });
   };
 
   const dispatch = useAppDispatch();
@@ -49,6 +56,11 @@ const BingoDetailShare = () => {
                 severity: "success",
               })
             );
+            ReactGA.gtag("event", "share", {
+              method: "link",
+              content_type: "link",
+              item_id: "link",
+            });
           }}
           sx={{ padding: 0, height: "40px" }}
         >
@@ -71,6 +83,11 @@ const BingoDetailShare = () => {
 
         <IconButton
           onClick={() => {
+            ReactGA.gtag("event", "share", {
+              method: "twitter",
+              content_type: "twitter",
+              item_id: "twitter",
+            });
             window.open(
               `https://www.twitter.com/intent/tweet?text=${text}&url=${window.location.href}`
             );
@@ -86,6 +103,11 @@ const BingoDetailShare = () => {
 
         <IconButton
           onClick={() => {
+            ReactGA.gtag("event", "share", {
+              method: "facebook",
+              content_type: "facebook",
+              item_id: "facebook",
+            });
             window.open(
               `http://www.facebook.com/sharer/sharer.php?u=${window.location.href}`
             );
