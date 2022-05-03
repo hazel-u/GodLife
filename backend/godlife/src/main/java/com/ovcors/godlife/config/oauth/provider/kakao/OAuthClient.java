@@ -16,7 +16,6 @@ public class OAuthClient {
     private final WebClient webClient;
 
     public KakaoOAuthResponse getInfo(String accessToken) {
-        System.out.println(accessToken);
         KakaoOAuthResponse response = webClient.post()
                 .uri("https://kapi.kakao.com/v2/user/me?secure_resource=false")
 //                .headers(h-> h.setBearerAuth(accessToken))
