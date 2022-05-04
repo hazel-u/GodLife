@@ -23,10 +23,10 @@ public class Follow {
 
 
     @ManyToOne
-    @JoinColumn(name = "follower_seq")
+    @JoinColumn(name = "follower")
     User follower;
     @ManyToOne
-    @JoinColumn(name = "following_seq")
+    @JoinColumn(name = "following")
     User following;
     @Builder
     public Follow(User follower,User following){

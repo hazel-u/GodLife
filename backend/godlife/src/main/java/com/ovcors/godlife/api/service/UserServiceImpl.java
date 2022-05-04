@@ -277,7 +277,7 @@ public class UserServiceImpl implements UserService{
 
         List<FollowInfoResDto> followerName = new ArrayList<>();
 
-        for(Follow follow : user.getFollower()) {
+        for(Follow follow : user.getFollowing()) {
             User followerUser = follow.getFollower();
             followerName.add(new FollowInfoResDto(followerUser.getName(), followerUser.getSerialGodCount(), followerUser.getGodCount()));
         }
@@ -295,7 +295,7 @@ public class UserServiceImpl implements UserService{
 
         List<FollowInfoResDto> followingName = new ArrayList<>();
 
-        for(Follow follow : user.getFollowing()) {
+        for(Follow follow : user.getFollower()) {
             User followingUser = follow.getFollowing();
             followingName.add(new FollowInfoResDto(followingUser.getName(), followingUser.getSerialGodCount(), followingUser.getGodCount()));
         }
