@@ -1,13 +1,14 @@
 import axios from "axios";
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+
 import App from "./App";
 import "./index.css";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import { store } from "./store/index";
-
-
 
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
@@ -23,3 +24,5 @@ root.render(
     </React.StrictMode>
   </Provider>
 );
+
+serviceWorkerRegistration.register();
