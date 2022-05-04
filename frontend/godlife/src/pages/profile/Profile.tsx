@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { selectTodayBingo } from "../../store/todayBingo";
 import ProfileFollow from "./ProfileFollow";
 import ProfileInfo from "./ProfileInfo";
+import ProfileRecord from "./ProfileRecord";
 import ProfileSettingDialog from "./ProfileSettingDialog";
 
 const Profile = () => {
@@ -88,6 +89,7 @@ const Profile = () => {
               </Box>
             )}
           </Stack>
+          <ProfileRecord />
         </Box>
       </Stack>
     </>
