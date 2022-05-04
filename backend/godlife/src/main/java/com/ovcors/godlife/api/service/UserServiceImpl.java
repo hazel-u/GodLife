@@ -7,17 +7,18 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.ovcors.godlife.api.dto.request.ChangePasswordReqDto;
 import com.ovcors.godlife.api.dto.request.ChangeUserInfoReqDto;
 import com.ovcors.godlife.api.dto.request.JoinReqDto;
-import com.ovcors.godlife.api.dto.response.FollowInfoResDto;
-import com.ovcors.godlife.api.dto.response.GodLifeResDto;
-import com.ovcors.godlife.api.dto.response.SimpleUserInfoResDto;
-import com.ovcors.godlife.api.dto.response.UserInfoResDto;
+import com.ovcors.godlife.api.dto.response.*;
 import com.ovcors.godlife.api.exception.CustomException;
 import com.ovcors.godlife.api.exception.ErrorCode;
 import com.ovcors.godlife.config.jwt.JwtProperties;
+import com.ovcors.godlife.core.domain.bingo.Bingo;
 import com.ovcors.godlife.core.domain.user.Follow;
 import com.ovcors.godlife.core.domain.user.JoinType;
 import com.ovcors.godlife.core.domain.user.User;
+import com.ovcors.godlife.core.queryrepository.BingoQueryRepository;
+import com.ovcors.godlife.core.repository.BingoRepository;
 import com.ovcors.godlife.core.repository.UserRepository;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -25,6 +26,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,6 +42,12 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BingoRepository bingoRepository;
+
+    @Autowired
+    private BingoQueryRepository bingoQueryRepository;
 
     @Autowired
     private RedisTemplate redisTemplate;;
@@ -216,20 +225,46 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public SimpleUserInfoResDto getOtherUserInfo(String name) {
+    public OtherUserInfoResDto getOtherUserInfo(String name) {
         User user = userRepository.findByNameAndDeletedFalse(name);
         if(user==null) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
 
-        SimpleUserInfoResDto simpleUserInfoResDto = SimpleUserInfoResDto.builder()
+        // 사용자의 전체 빙고 찾기
+        List<Bingo> bingos = bingoRepository.findAllByUserOrderByStartDateDesc(user);
+        List<FindBingoSimpleResDto> allBingos = new ArrayList<>();
+        for(Bingo bingo:bingos) {
+            allBingos.add(new FindBingoSimpleResDto(bingo));
+        }
+
+        // 오늘의 빙고 찾기
+        Bingo todayBingo = null;
+        if(allBingos.size()>0) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate recentBingo = LocalDate.parse(allBingos.get(0).getStartDate().format(formatter));
+            LocalDate now = LocalDate.parse(LocalDate.now().format(formatter));
+
+            if (now.isEqual(recentBingo)) {
+                todayBingo = bingoRepository.findTopByStartDateAndUser(now, user)
+                        .orElseThrow(() -> new CustomException(ErrorCode.BINGO_DATE_NOT_FOUND));
+            }
+        }
+
+
+        OtherUserInfoResDto otherUserInfoResDto = OtherUserInfoResDto.builder()
                 .name(user.getName())
                 .info(user.getInfo())
-                .serialGodCount(user.getSerialGodCount())
+//                .serialGodCount(user.getSerialGodCount())
+                .serialGodCount(0)
                 .godCount(user.getGodCount())
+                .followerCount(user.getFollower().size())
+                .followingCount(user.getFollowing().size())
+                .todayBingo(todayBingo==null?null:new FindBingoResDto(todayBingo))
+                .allBingo(allBingos)
                 .build();
 
-        return simpleUserInfoResDto;
+        return otherUserInfoResDto;
     }
 
     @Override

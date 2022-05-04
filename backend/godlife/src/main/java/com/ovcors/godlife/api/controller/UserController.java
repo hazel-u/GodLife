@@ -6,7 +6,6 @@ import com.ovcors.godlife.api.resolver.Auth;
 import com.ovcors.godlife.api.service.UserService;
 import com.ovcors.godlife.config.jwt.JwtProperties;
 import com.ovcors.godlife.core.domain.user.User;
-import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -84,9 +83,9 @@ public class UserController {
     // 2차 MVP
     // 다른 사람 정보 불러오기
     @GetMapping("/info/{name}")
-    public ResponseEntity<SimpleUserInfoResDto> getOtherUserInfo(@PathVariable String name) {
-        SimpleUserInfoResDto simpleUserInfoResDto = userService.getOtherUserInfo(name);
-        return ResponseEntity.ok().body(simpleUserInfoResDto);
+    public ResponseEntity<OtherUserInfoResDto> getOtherUserInfo(@PathVariable String name) {
+        OtherUserInfoResDto otherUserInfoResDto = userService.getOtherUserInfo(name);
+        return ResponseEntity.ok().body(otherUserInfoResDto);
     }
 
     // 팔로워 목록 불러오기
