@@ -52,11 +52,20 @@ public class User {
     @Column
     private Integer serialGodCount;
 
+    @Column
+    private String info;
+
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Bingo> bingos = new ArrayList<>();
 
+    @OneToMany(mappedBy="following", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Follow> following = new ArrayList<>();
+
+    @OneToMany(mappedBy="follower", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Follow> follower = new ArrayList<>();
+
     @Builder
-    public User(String email, String password, String name, JoinType oauth_type, Boolean deleted, LocalDate recentDate, int godCount, int serialGodCount) {
+    public User(String email, String password, String name, JoinType oauth_type, Boolean deleted, LocalDate recentDate, int godCount, int serialGodCount, String info) {
         this.email = email;
         this.password = password;
         this.name=name;
@@ -65,6 +74,7 @@ public class User {
         this.recentDate = recentDate;
         this.godCount=godCount;
         this.serialGodCount=serialGodCount;
+        this.info = info;
     }
 
     public void changeName(String name) {
@@ -94,9 +104,7 @@ public class User {
 
     public LocalDate getRecentGodLife(){
         for(int i  = this.bingos.size()-1 ; i >= 0 ; i--){
-            System.out.println("Here-------------------------------------------------------------------");
             Bingo bingo = this.bingos.get(i);
-            System.out.println(bingo.getStartDate());
             if(bingo.getGodlife()){
                 return bingo.getStartDate();
             }

@@ -60,6 +60,8 @@ class UserServiceImplTest {
                 .deleted(false)
                 .recentDate(null)
                 .godCount(2)
+                .serialGodCount(2)
+                .info("hi")
                 .build();
     }
 
@@ -168,9 +170,6 @@ class UserServiceImplTest {
                 .build();
     }
 
-    // JWT 갱신
-
-
     // 최근 갓생일자, 연속 갓생 일수 조회
     @Test
     void godLife() {
@@ -185,4 +184,6 @@ class UserServiceImplTest {
         assertThat(godLifeResDto).isNotNull();
         assertThat(godLifeResDto.getGodCount()).isEqualTo(2);
     }
+
+    //
 }

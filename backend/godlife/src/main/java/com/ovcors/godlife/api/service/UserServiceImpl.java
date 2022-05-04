@@ -7,11 +7,14 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.ovcors.godlife.api.dto.request.ChangePasswordReqDto;
 import com.ovcors.godlife.api.dto.request.ChangeUserInfoReqDto;
 import com.ovcors.godlife.api.dto.request.JoinReqDto;
+import com.ovcors.godlife.api.dto.response.FollowInfoResDto;
 import com.ovcors.godlife.api.dto.response.GodLifeResDto;
+import com.ovcors.godlife.api.dto.response.SimpleUserInfoResDto;
 import com.ovcors.godlife.api.dto.response.UserInfoResDto;
 import com.ovcors.godlife.api.exception.CustomException;
 import com.ovcors.godlife.api.exception.ErrorCode;
 import com.ovcors.godlife.config.jwt.JwtProperties;
+import com.ovcors.godlife.core.domain.user.Follow;
 import com.ovcors.godlife.core.domain.user.JoinType;
 import com.ovcors.godlife.core.domain.user.User;
 import com.ovcors.godlife.core.repository.UserRepository;
@@ -22,7 +25,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -43,7 +48,6 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User join(JoinReqDto joinReqDto) {
-        System.out.println("join 진입");
         if("deleteUserName".equals(joinReqDto.getName()) || "deleteEmail@delete.com".equals(joinReqDto.getEmail())) {
             throw new CustomException(ErrorCode.WRONG_INPUT);
         }
@@ -66,6 +70,7 @@ public class UserServiceImpl implements UserService{
                 .recentDate(null)
                 .godCount(0)
                 .serialGodCount(0)
+                .info(null)
                 .build();
         userRepository.save(user);
 
@@ -85,6 +90,9 @@ public class UserServiceImpl implements UserService{
                 .recentDate(user.getRecentDate())
                 .godCount(user.getGodCount())
                 .joinType(user.getOauth_type().getCompanyName())
+                .info(user.getInfo())
+                .followerCnt(user.getFollower().size())
+                .followingCnt(user.getFollowing().size())
                 .build();
 
         return userInfoResDto;
@@ -205,5 +213,58 @@ public class UserServiceImpl implements UserService{
                 .build();
 
         return godLifeResDto;
+    }
+
+    @Override
+    public SimpleUserInfoResDto getOtherUserInfo(String name) {
+        User user = userRepository.findByNameAndDeletedFalse(name);
+        if(user==null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+
+        SimpleUserInfoResDto simpleUserInfoResDto = SimpleUserInfoResDto.builder()
+                .name(user.getName())
+                .info(user.getInfo())
+                .serialGodCount(user.getSerialGodCount())
+                .godCount(user.getGodCount())
+                .build();
+
+        return simpleUserInfoResDto;
+    }
+
+    @Override
+    public List<FollowInfoResDto> getFollowerList(UUID seq) {
+        if(seq==null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+
+        User user = userRepository.findById(seq).get();
+
+        List<FollowInfoResDto> followerName = new ArrayList<>();
+
+        for(Follow follow : user.getFollower()) {
+            User followerUser = follow.getFollower();
+            followerName.add(new FollowInfoResDto(followerUser.getName(), followerUser.getSerialGodCount(), followerUser.getGodCount()));
+        }
+
+        return followerName;
+    }
+
+    @Override
+    public List<FollowInfoResDto> getFollowingList(UUID seq) {
+        if(seq==null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+
+        User user = userRepository.findById(seq).get();
+
+        List<FollowInfoResDto> followingName = new ArrayList<>();
+
+        for(Follow follow : user.getFollowing()) {
+            User followingUser = follow.getFollowing();
+            followingName.add(new FollowInfoResDto(followingUser.getName(), followingUser.getSerialGodCount(), followingUser.getGodCount()));
+        }
+
+        return followingName;
     }
 }
