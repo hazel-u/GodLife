@@ -1,10 +1,8 @@
 package com.ovcors.godlife.api.controller;
 
+import ch.qos.logback.core.pattern.util.RegularEscapeUtil;
 import com.ovcors.godlife.api.dto.request.*;
-import com.ovcors.godlife.api.dto.response.BaseResponseEntity;
-import com.ovcors.godlife.api.dto.response.BingoCountResDto;
-import com.ovcors.godlife.api.dto.response.FindBingoResDto;
-import com.ovcors.godlife.api.dto.response.SaveBingoResDto;
+import com.ovcors.godlife.api.dto.response.*;
 import com.ovcors.godlife.api.resolver.Auth;
 import com.ovcors.godlife.api.service.BingoService;
 import com.ovcors.godlife.api.service.FollowService;
@@ -35,5 +33,10 @@ public class FeedController {
     public ResponseEntity<BaseResponseEntity> unfollowUser(@Auth User user, @PathVariable String name) {
         followService.unfollow(user,name);
         return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
+    }
+    @GetMapping("/user/{keyword}")
+    public ResponseEntity<List<FollowInfoResDto>> getFollowingList(@PathVariable String keyword) {
+        List<FollowInfoResDto> list= followService.findUser(keyword);
+        return ResponseEntity.ok().body(list);
     }
 }
