@@ -17,6 +17,7 @@
     "@types/react": "^18.0.4",
     "@types/react-dom": "^18.0.0",
     "@types/react-responsive": "^8.0.5",
+    "aws-sdk": "^2.1127.0",
     "axios": "^0.26.1",
     "dayjs": "^1.11.1",
     "dom-to-image": "^2.6.0",
@@ -31,6 +32,8 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "typescript": "^4.6.3",
+    "util": "^0.12.4",
+    "web-vitals": "^2.1.4"
     "web-vitals": "^2.1.4",
     "workbox-background-sync": "^5.1.4",
     "workbox-broadcast-update": "^5.1.4",
