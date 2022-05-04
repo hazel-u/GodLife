@@ -12,6 +12,7 @@ import java.util.UUID;
 
 public interface BingoRepository extends JpaRepository<Bingo, UUID> {
     List<Bingo> findAllByUser(User user);
+    List<Bingo> findAllByUserOrderByStartDateDesc(User user);
     Long countByUser(User user);
     Optional<Bingo> findTopByStartDateAndUser(LocalDate date, User user);
 }
