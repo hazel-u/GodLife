@@ -33,7 +33,6 @@
     "react-scripts": "5.0.1",
     "typescript": "^4.6.3",
     "util": "^0.12.4",
-    "web-vitals": "^2.1.4"
     "web-vitals": "^2.1.4",
     "workbox-background-sync": "^5.1.4",
     "workbox-broadcast-update": "^5.1.4",
