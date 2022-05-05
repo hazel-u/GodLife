@@ -123,9 +123,8 @@ export const Bingo = ({
           stretch: { height: "100%" },
           maxWidth: 750,
           backgroundColor: "white",
-          // backgroundImage: `url(${BackgroundImage})`,
-          // backgroundSize: "cover",
         }}
+        id="bingo-box"
       >
         {goals.map(function (goal: any, index: number) {
           return (
