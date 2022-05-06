@@ -58,10 +58,27 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     public List<FollowInfoResDto> findUser(String name) {
-        List<User> list = userRepository.findByNameContainingIgnoreCase(name);
+        List<User> list = userRepository.findByNameContaining(name);
         List<FollowInfoResDto> response = new ArrayList<>();
         for(User user : list){
             response.add(new FollowInfoResDto(user.getName(), user.getSerialGodCount(),user.getGodCount()));
+        }
+        return response;
+    }
+    @Override
+    public List<FindBingoResDto> getFeed(UUID seq) {
+        if(seq==null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+        List<FindBingoResDto> response = new ArrayList<>();
+        User user = userRepository.findById(seq).get();
+
+        for (Follow follow : user.getFollower()) {
+            User followingUser = follow.getFollowing();
+            List<Bingo> list = bingoRepository.findAllByUser(followingUser);
+            for (Bingo bingo : list) {
+                response.add(new FindBingoResDto(bingo));
+            }
         }
         return response;
     }
