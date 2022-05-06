@@ -8,6 +8,8 @@ import Bingo from "../../components/Bingo/Bingo";
 import { selectBingo, setBingo } from "../../store/bingo";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { selectTodayBingo } from "../../store/todayBingo";
+import { setLoggedUser } from "../../store/user";
+import axiosWithToken from "../../utils/axios";
 import ProfileFollow from "./ProfileFollow";
 import ProfileFollowDialog from "./ProfileFollowDialog";
 import ProfileInfo from "./ProfileInfo";
@@ -20,6 +22,12 @@ const Profile = () => {
   const [openFollowDialog, setOpenFollowDialog] = useState(false);
   const bingo = useAppSelector(selectBingo);
   const code = useAppSelector(selectTodayBingo);
+
+  const getUserInfo = () => {
+    axiosWithToken.get("user/info").then((res) => {
+      dispatch(setLoggedUser(res.data));
+    });
+  };
 
   const getBingo = useCallback(() => {
     axios
@@ -34,6 +42,7 @@ const Profile = () => {
 
   useEffect(() => {
     getBingo();
+    getUserInfo();
   }, [getBingo]);
 
   return (
