@@ -45,7 +45,7 @@ const BingoDetailShareKakao = () => {
                   content: {
                     title: "갓생살기",
                     description: "쉽게만 살아가면 재미없어 빙고!",
-                    imageUrl: `https://sayeon.s3.ap-northeast-2.amazonaws.com/${imageName}`,
+                    imageUrl: `https://s3.ap-northeast-2.amazonaws.com/today.godlife/${imageName}`,
                     link: {
                       mobileWebUrl: window.location.href,
                       webUrl: window.location.href,

@@ -29,7 +29,7 @@ const BingoDetailShareImage = () => {
             uploadImage(formData.get("image"))
               .then(() => {
                 const link = window.document.createElement("a");
-                link.href = `https://sayeon.s3.ap-northeast-2.amazonaws.com/${imageName}`;
+                link.href = `https://s3.ap-northeast-2.amazonaws.com/today.godlife/${imageName}`;
                 link.click();
               })
               .catch((err) => {
