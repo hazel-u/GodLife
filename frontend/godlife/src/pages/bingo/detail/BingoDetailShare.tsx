@@ -1,43 +1,17 @@
 import { IconButton, Stack, SvgIcon, Typography } from "@mui/material";
-import html2canvas from "html2canvas";
 
 import React from "react";
 import ReactGA from "react-ga4";
 
-import { ReactComponent as Image } from "../../../assets/icon/image.svg";
 import { ReactComponent as Link } from "../../../assets/icon/link.svg";
 import { ReactComponent as FacebookLogo } from "../../../assets/logo/Brand/facebook.svg";
 import { useAppDispatch } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
+import BingoDetailShareImage from "./BingoDetailShareImage";
 import BingoDetailShareKakao from "./BingoDetailShareKakao";
 import BingoDetailShareTwitter from "./BingoDetailShareTwitter";
 
 const BingoDetailShare = () => {
-  const today = new Date();
-  const month = today.getMonth() + 1; // 월
-  const date = today.getDate(); // 날짜
-  // const text = `${month}월 ${date}일의 갓생`;
-
-  const saveImage = () => {
-    const bingo = document.getElementById("bingo");
-
-    if (bingo) {
-      html2canvas(bingo).then((canvas) => {
-        const image = canvas.toDataURL("image/png", 1);
-        const link = window.document.createElement("a");
-        link.download = `${month}월_${date}일의_갓생.png`;
-        link.href = image;
-        link.click();
-      });
-    }
-
-    ReactGA.gtag("event", "share", {
-      method: "image",
-      content_type: "image",
-      item_id: "image",
-    });
-  };
-
   const dispatch = useAppDispatch();
 
   return (
@@ -71,14 +45,7 @@ const BingoDetailShare = () => {
           />
         </IconButton>
 
-        <IconButton onClick={saveImage} sx={{ padding: 0, height: "40px" }}>
-          <SvgIcon
-            component={Image}
-            inheritViewBox
-            sx={{ width: "40px", height: "40px" }}
-          />
-        </IconButton>
-
+        <BingoDetailShareImage />
         <BingoDetailShareKakao />
         <BingoDetailShareTwitter />
 
