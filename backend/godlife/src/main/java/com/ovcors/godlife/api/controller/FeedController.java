@@ -39,4 +39,10 @@ public class FeedController {
         List<FollowInfoResDto> list= followService.findUser(keyword);
         return ResponseEntity.ok().body(list);
     }
+        @GetMapping
+    public ResponseEntity<List<FindBingoResDto>> getFeed(@Auth User user) {
+        List<FindBingoResDto> response = followService.getFeed(user.getSeq());
+        return ResponseEntity.ok().body(response);
+    }
+
 }
