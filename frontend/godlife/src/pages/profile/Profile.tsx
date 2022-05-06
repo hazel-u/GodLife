@@ -9,13 +9,15 @@ import { selectBingo, setBingo } from "../../store/bingo";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { selectTodayBingo } from "../../store/todayBingo";
 import ProfileFollow from "./ProfileFollow";
+import ProfileFollowDialog from "./ProfileFollowDialog";
 import ProfileInfo from "./ProfileInfo";
-import ProfileRecord from "./ProfileRecord";
+// import ProfileRecord from "./ProfileRecord";
 import ProfileSettingDialog from "./ProfileSettingDialog";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
+  const [openFollowDialog, setOpenFollowDialog] = useState(false);
   const bingo = useAppSelector(selectBingo);
   const code = useAppSelector(selectTodayBingo);
 
@@ -37,6 +39,10 @@ const Profile = () => {
   return (
     <>
       <ProfileSettingDialog open={open} setOpen={setOpen} />
+      <ProfileFollowDialog
+        open={openFollowDialog}
+        setOpenFollowDialog={setOpenFollowDialog}
+      />
       <Stack
         direction="column"
         alignItems="center"
@@ -65,7 +71,7 @@ const Profile = () => {
           })}
         >
           <ProfileInfo setOpen={setOpen} />
-          <ProfileFollow />
+          <ProfileFollow setOpenFollowDialog={setOpenFollowDialog} />
           <Typography sx={{ whiteSpace: "pre-line", margin: "3% 0" }}>
             오늘의 갓생
           </Typography>
@@ -89,7 +95,7 @@ const Profile = () => {
               </Box>
             )}
           </Stack>
-          <ProfileRecord />
+          {/* <ProfileRecord /> */}
         </Box>
       </Stack>
     </>

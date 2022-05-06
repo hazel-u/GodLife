@@ -13,8 +13,6 @@ import { TextButton } from "../common/Button";
 import MobileNavbarDialog from "./MobileNavbarDialog";
 
 const Navbar = () => {
-  // const [open, setOpen] = useState(false);
-
   const location = useLocation();
   const params = useParams();
 
@@ -34,8 +32,6 @@ const Navbar = () => {
 
   return (
     <>
-      {/* <ProfileSettingDialog open={open} setOpen={setOpen} /> */}
-
       <Hidden smDown>
         <Grid
           container
