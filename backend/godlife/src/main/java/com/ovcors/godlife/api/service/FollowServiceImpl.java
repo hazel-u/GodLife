@@ -58,7 +58,7 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     public List<FollowInfoResDto> findUser(String name) {
-        List<User> list = userRepository.findByNameContainingIgnoreCase(name);
+        List<User> list = userRepository.findByNameContaining(name);
         List<FollowInfoResDto> response = new ArrayList<>();
         for(User user : list){
             response.add(new FollowInfoResDto(user.getName(), user.getSerialGodCount(),user.getGodCount()));

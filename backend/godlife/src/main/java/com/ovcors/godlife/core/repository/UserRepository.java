@@ -9,5 +9,5 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<User, UUID> {
     public User findByEmailAndDeletedFalse(String email); //jpa query method
     public User findByNameAndDeletedFalse(String name);
-    public List<User> findByNameContainingIgnoreCase(String name);
+    public List<User> findByNameContaining(String name);
 }
