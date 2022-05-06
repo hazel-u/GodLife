@@ -24,7 +24,7 @@ const CommonSnackbar = () => {
     <Snackbar
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
       open={open}
-      autoHideDuration={1000}
+      autoHideDuration={6000}
       onClose={handleClose}
     >
       <Alert onClose={handleClose} severity={severity}>
