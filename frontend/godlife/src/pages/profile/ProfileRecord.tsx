@@ -1,17 +1,24 @@
-import { Calendar } from "@fullcalendar/core";
-import dayGridPlugin from "@fullcalendar/daygrid";
+import { Typography } from "@mui/material";
 import FullCalendar from "@fullcalendar/react";
-import React from "react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import React, {Component} from "react";
 
 
-const ProfileRecord = () => {
-  const name = Calendar.name;
+class ProfileRecord extends Component {
 
-  return (
-    <>
-      <FullCalendar initialView="dayGridMonth" plugins={[dayGridPlugin]} />
-    </>
-  );
-};
+  render() {
+    return (
+      <>
+        <Typography sx={{ whiteSpace: "pre-line", margin: "5% 0" }}>
+          이전의 갓생
+        </Typography>
+        <FullCalendar 
+          initialView="dayGridMonth" 
+          plugins={[ dayGridPlugin ]}
+        />
+      </>
+    );
+  }
+}
 
 export default ProfileRecord;

@@ -11,7 +11,7 @@ import { selectTodayBingo } from "../../store/todayBingo";
 import ProfileFollow from "./ProfileFollow";
 import ProfileFollowDialog from "./ProfileFollowDialog";
 import ProfileInfo from "./ProfileInfo";
-// import ProfileRecord from "./ProfileRecord";
+import ProfileRecord from "./ProfileRecord";
 import ProfileSettingDialog from "./ProfileSettingDialog";
 
 const Profile = () => {
@@ -95,7 +95,7 @@ const Profile = () => {
               </Box>
             )}
           </Stack>
-          {/* <ProfileRecord /> */}
+          <ProfileRecord />
         </Box>
       </Stack>
     </>
