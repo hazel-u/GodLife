@@ -101,4 +101,11 @@ public class UserController {
         List<FollowInfoResDto> list = userService.getFollowingList(user.getSeq());
         return ResponseEntity.ok().body(list);
     }
+
+    // 상태메세지 변경
+    @PatchMapping("/info")
+    public ResponseEntity<BaseResponseEntity> changeStatus(@Auth User user, @RequestBody UpdateStatusReqDto updateStatusReqDto) {
+        userService.changeStatus(user.getSeq(), updateStatusReqDto);
+        return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
+    }
 }

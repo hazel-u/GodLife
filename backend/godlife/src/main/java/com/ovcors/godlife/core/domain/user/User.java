@@ -116,4 +116,8 @@ public class User {
     public void addBingo(Bingo bingo) {
         this.bingos.add(bingo);
     }
+
+    public void changeInfo(String info) {
+        this.info = info;
+    }
 }
