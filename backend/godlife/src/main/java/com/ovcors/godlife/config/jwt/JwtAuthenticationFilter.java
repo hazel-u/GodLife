@@ -63,7 +63,6 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
     }
 
     private void sendErrorResponse(HttpServletResponse response, String message) throws IOException {
-        // Todo: ErrorCode만들어지면 주석 해제
         response.setCharacterEncoding("UTF-8");
         response.setStatus(ErrorCode.USER_NOT_FOUND.getStatus().value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
