@@ -13,7 +13,7 @@ export interface ProfileInfoProps {
 
 function ProfileInfo(props: ProfileInfoProps) {
   const { setOpen } = props;
-  const { email, name } = useAppSelector(selectUser);
+  const { email, name, info } = useAppSelector(selectUser);
   const { godCount, serialGodCount, userEmail } = useAppSelector(selectBingo);
 
   return (
@@ -41,6 +41,14 @@ function ProfileInfo(props: ProfileInfoProps) {
           </IconButton>
         )}
       </Stack>
+
+      <Typography
+        fontSize={20}
+        fontFamily="BMEULJIRO"
+        sx={{ whiteSpace: "pre-line", margin: "0 0 20px" }}
+      >
+        {info}
+      </Typography>
       <Typography sx={{ whiteSpace: "pre-line" }}>
         갓생 달성 {godCount}일 | 연속 갓생 달성 {serialGodCount}일
       </Typography>
