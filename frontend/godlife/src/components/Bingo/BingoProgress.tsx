@@ -25,7 +25,7 @@ const BingoProgress = (props: LinearProgressProps & { value: number }) => {
           value={(props.value * 100) / 3}
         />
       </Box>
-      {location.pathname !== "/list" && (
+      {location.pathname.split("/")[1] !== "list" && (
         <Box>
           <Typography variant="body2" color="text.secondary">
             {props.value === 3

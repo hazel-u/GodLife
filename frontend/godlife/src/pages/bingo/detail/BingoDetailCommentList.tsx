@@ -62,7 +62,7 @@ const BingoDetailCommentList = ({ getBingo }: { getBingo: () => void }) => {
   };
 
   return (
-    <Box sx={{ maxWidth: "500px", margin: "3% 0", width: "100%" }}>
+    <Box sx={{ maxWidth: "550px", margin: "3% 0", width: "100%" }}>
       <p>댓글 {comments.length}개</p>
       <Divider />
       {!comments.length && (
@@ -95,6 +95,7 @@ const BingoDetailCommentList = ({ getBingo }: { getBingo: () => void }) => {
                 setNewComment({ ...newComment, nickname: e.target.value });
               }}
               sx={{ maxWidth: "150px" }}
+              type="text"
             />
             <OutlinedInput
               placeholder="비밀번호"
@@ -111,13 +112,20 @@ const BingoDetailCommentList = ({ getBingo }: { getBingo: () => void }) => {
           <OutlinedInput
             placeholder="내용"
             value={newComment.content}
-            sx={{ width: "100%", maxWidth: "500px" }}
+            sx={{ width: "100%", maxWidth: "550px" }}
+            inputProps={{ maxLength: 500 }}
             onChange={(e) => {
               setNewComment({ ...newComment, content: e.target.value });
             }}
           />
 
           <Box sx={{ textAlign: "end" }}>
+            <BlackButton
+              href="/list"
+              sx={{ width: "50px", height: "39.99px", margin: "0px 10px" }}
+            >
+              목록
+            </BlackButton>
             <BlackButton
               type="submit"
               sx={{ width: "50px", height: "39.99px" }}

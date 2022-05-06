@@ -30,7 +30,12 @@ const Footer = () => {
           >
             today.godlife@gmail.com
           </a>
-          <span>서울특별시 강남구 테헤란로 212길</span>
+          <a
+            style={{ textDecoration: "none", color: "black" }}
+            href="https://forms.gle/9RLt3YCEhu6FBuav9"
+          >
+            개발자와 소통하기
+          </a>
 
           <p>CopyRight 2022 갓생살기 All rights reserved.</p>
         </Stack>

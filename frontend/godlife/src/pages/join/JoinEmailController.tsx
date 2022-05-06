@@ -69,6 +69,7 @@ const EmailController = ({
         <OutlinedInput
           {...field}
           placeholder="이메일"
+          type="email"
           error={!!fieldState.error}
           helperText={
             fieldState.error?.message ? fieldState.error.message : " "
