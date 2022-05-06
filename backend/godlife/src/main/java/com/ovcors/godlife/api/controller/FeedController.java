@@ -44,5 +44,14 @@ public class FeedController {
         List<FindBingoResDto> response = followService.getFeed(user.getSeq());
         return ResponseEntity.ok().body(response);
     }
-
+    @GetMapping("search/date/{date}")
+    public ResponseEntity<List<FindBingoResDto>> findDateInFeed(@Auth User user,@PathVariable String date) throws ParseException {
+       List<FindBingoResDto> response = followService.searchDateInFeed(user.getSeq(), date);
+        return ResponseEntity.ok().body(response);
+    }
+    @GetMapping("search/user/{keyword}")
+    public ResponseEntity<List<FindBingoResDto>> findUserInFeed(@Auth User user,@PathVariable String keyword) {
+        List<FindBingoResDto> response = followService.searchUserInFeed(user.getSeq(), keyword);
+        return ResponseEntity.ok().body(response);
+    }
 }
