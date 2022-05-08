@@ -1,3 +1,5 @@
+import { Box } from "@mui/material";
+
 import React from "react";
 import { Outlet } from "react-router-dom";
 
@@ -9,11 +11,11 @@ const ShareLayout = () => {
   const isAuth = localStorage.getItem("token");
 
   return (
-    <>
+    <Box sx={{ maxWidth: "1200px", margin: "0 auto" }}>
       {isAuth ? <Navbar /> : <ShareNavbar />}
       <Outlet />
       <Footer />
-    </>
+    </Box>
   );
 };
 
