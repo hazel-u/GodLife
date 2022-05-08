@@ -46,7 +46,13 @@ class ProfileRecord extends Component {
         <Typography sx={{ whiteSpace: "pre-line", margin: "5% 0" }}>
           이전의 갓생
         </Typography>
-        <FullCalendar 
+        <FullCalendar
+          headerToolbar={{
+            left: 'prev',
+            center: 'title',
+            right: 'next'
+          }}
+          locale="ko"
           initialView="dayGridMonth" 
           plugins={[ dayGridPlugin ]}
           events={bingoList}
