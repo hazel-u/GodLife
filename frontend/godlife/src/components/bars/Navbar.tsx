@@ -39,11 +39,11 @@ const Navbar = () => {
       <Hidden smDown>
         <Grid
           container
-          alignItems="center"
+          alignItems="end"
           sx={{
-            padding: "20px 10px 40px 10px",
+            padding: "40px 10px",
             "& .MuiButton-root": {
-              fontSize: "14px",
+              fontSize: "24px",
               fontFamily: "BMEULJIRO",
             },
           }}
@@ -60,9 +60,8 @@ const Navbar = () => {
                 }}
                 sx={{
                   color:
-                    location.pathname.split("/")[1] === "bingo" ||
-                    location.pathname.split("/")[1] === "create"
-                      ? "black"
+                    location.pathname.split("/")[1] === "bingo"
+                      ? "#464646"
                       : "",
                 }}
               >
@@ -72,7 +71,7 @@ const Navbar = () => {
                 href="/list"
                 sx={{
                   color:
-                    location.pathname.split("/")[1] === "list" ? "black" : "",
+                    location.pathname.split("/")[1] === "list" ? "#464646" : "",
                 }}
               >
                 이전의 갓생
@@ -88,8 +87,8 @@ const Navbar = () => {
             }}
           >
             <Logo
-              width="70px"
-              height="70px"
+              width="105px"
+              height="105px"
               style={{ cursor: "pointer" }}
               onClick={() => navigate("/")}
             />
@@ -111,7 +110,7 @@ const Navbar = () => {
                   sx={{
                     color:
                       location.pathname.split("/")[1] === "group"
-                        ? "black"
+                        ? "#464646"
                         : "",
                   }}
                 >
