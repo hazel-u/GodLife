@@ -101,7 +101,7 @@ const BingoCreateGoalList = () => {
 
   return (
     <>
-      <Stack direction="row" spacing={2} marginBottom={4}>
+      <Stack direction="row" spacing={2}>
         <Stack>
           {category.map((c, index) => (
             <Chip
@@ -116,9 +116,10 @@ const BingoCreateGoalList = () => {
                   fontFamily: "NotoSerifKR",
                 },
                 marginBottom: "10px",
-                border: "1px solid #6D6D6D",
-                color: selectedCategory === c ? "black" : "#6D6D6D",
-                backgroundColor: selectedCategory === c ? "#D8D8D8" : "white",
+                border: "1px solid #b3b3b3",
+                boxShadow: "inset -2px -4px 4px rgba(0,0,0,0.25)",
+                color: selectedCategory === c ? "white" : "#6D6D6D",
+                backgroundColor: selectedCategory === c ? "#464646" : "white",
               }}
               onClick={(e) => changeCategory(e)}
             />
@@ -131,10 +132,10 @@ const BingoCreateGoalList = () => {
             spacing={2}
             sx={(theme) => ({
               width: "672px",
-              [theme.breakpoints.down(800)]: {
+              [theme.breakpoints.down(900)]: {
                 width: "448px",
               },
-              [theme.breakpoints.down("sm")]: {
+              [theme.breakpoints.down(650)]: {
                 width: "224px",
               },
             })}

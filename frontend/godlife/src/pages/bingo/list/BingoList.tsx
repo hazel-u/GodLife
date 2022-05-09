@@ -64,12 +64,7 @@ const BingoList = () => {
   const navigate = useNavigate();
 
   return (
-    <Stack
-      direction="column"
-      justifyContent="center"
-      alignItems="center"
-      paddingX={3}
-    >
+    <Stack justifyContent="center" alignItems="center">
       {bingoCount === 0 ? (
         <Stack
           direction="column"
@@ -83,11 +78,7 @@ const BingoList = () => {
         </Stack>
       ) : (
         <>
-          <Grid
-            container
-            spacing={4}
-            sx={{ maxWidth: "1000px", padding: "40px 0" }}
-          >
+          <Grid container spacing={3}>
             <Grid item xs={12}>
               <BingoListSearch />
             </Grid>
