@@ -57,7 +57,10 @@ const BingoDetail = () => {
     >
       {bingo.code && (
         <>
-          <Box sx={{ width: "100%", maxWidth: "800px" }} id="bingo">
+          <Box
+            sx={{ width: "100%", maxWidth: "800px", backgroundColor: "white" }}
+            id="bingo"
+          >
             {/* 본인의 bingo일 경우에만 실제 id 넘겨주고 그렇지 않다면 빈 문자열 넘기기*/}
             <BingoDetailTitle
               id={bingo.userEmail === email ? bingo.id : ""}
@@ -76,20 +79,20 @@ const BingoDetail = () => {
                 godlife={bingo.godlife}
                 id={bingo.id}
               />
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ width: "100%", maxWidth: "550px" }}
-              >
-                <BingoDetailLike
-                  likeCnt={bingo.likeCnt}
-                  seq={bingo.id}
-                  getBingo={getBingo}
-                />
-                <BingoDetailCopy code={bingo.code} />
-              </Stack>
             </Box>
           </Box>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            sx={{ width: "100%", maxWidth: "500px" }}
+          >
+            <BingoDetailLike
+              likeCnt={bingo.likeCnt}
+              seq={bingo.id}
+              getBingo={getBingo}
+            />
+            <BingoDetailCopy code={bingo.code} />
+          </Stack>
 
           <BingoDetailShare />
           <BingoDetailCommentList getBingo={getBingo} />
