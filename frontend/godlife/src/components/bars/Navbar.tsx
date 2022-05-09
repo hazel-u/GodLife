@@ -1,4 +1,11 @@
-import { Grid, Hidden, Tooltip } from "@mui/material";
+import {
+  Grid,
+  Hidden,
+  Menu,
+  MenuItem,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 
 import React, { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -31,6 +38,15 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const logout = useLogout();
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const menuOpen = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <>
@@ -136,9 +152,37 @@ const Navbar = () => {
               textAlign: "end",
             }}
           >
-            <TextButton onClick={() => setOpen(true)}>내 정보</TextButton>
+            <TextButton
+              id="basic-button"
+              aria-controls={menuOpen ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={menuOpen ? "true" : undefined}
+              onClick={handleClick}
+            >
+              내 정보
+            </TextButton>
           </Grid>
         </Grid>
+
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={menuOpen}
+          onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
+          }}
+        >
+          <MenuItem
+            onClick={() => {
+              setOpen(true);
+              handleClose();
+            }}
+          >
+            프로필
+          </MenuItem>
+          <MenuItem onClick={logout}>로그아웃</MenuItem>
+        </Menu>
       </Hidden>
 
       <Grid
@@ -148,23 +192,10 @@ const Navbar = () => {
         alignItems="center"
         display={{ sm: "none", md: "none" }}
         sx={{
-          padding: "20px 10px 40px 10px",
+          padding: "40px 10px",
         }}
       >
-        <Grid
-          item
-          xs
-          sx={{
-            textAlign: "left",
-          }}
-        >
-          <Logo
-            width="70px"
-            height="70px"
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate("/")}
-          />
-        </Grid>
+        <Grid item xs></Grid>
         <Grid
           item
           xs
@@ -175,7 +206,9 @@ const Navbar = () => {
             alignItems: "center",
           }}
         >
-          <p>{pageNameList[location.pathname.split("/")[1]]}</p>
+          <Typography fontFamily="BMEULJIRO" fontSize={20}>
+            {pageNameList[location.pathname.split("/")[1]]}
+          </Typography>
         </Grid>
         <Grid item xs>
           <MobileNavbarDialog logout={logout} setOpen={setOpen} />
