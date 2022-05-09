@@ -16,6 +16,12 @@
   font-display: swap;
 }
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
 body {
   font-family: "NotoSerifKR", -apple-system, BlinkMacSystemFont, "Segoe UI",
     "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
@@ -24,6 +30,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow: overlay;
   background-image: url("https://www.transparenttextures.com/patterns/beige-paper.png");
+  margin: 0;
 }
 
 code {
