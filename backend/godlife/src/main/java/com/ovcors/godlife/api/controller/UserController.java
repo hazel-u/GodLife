@@ -1,14 +1,11 @@
 package com.ovcors.godlife.api.controller;
 
 import com.ovcors.godlife.api.dto.request.*;
-import com.ovcors.godlife.api.dto.response.BaseResponseEntity;
-import com.ovcors.godlife.api.dto.response.GodLifeResDto;
-import com.ovcors.godlife.api.dto.response.UserInfoResDto;
+import com.ovcors.godlife.api.dto.response.*;
 import com.ovcors.godlife.api.resolver.Auth;
 import com.ovcors.godlife.api.service.UserService;
 import com.ovcors.godlife.config.jwt.JwtProperties;
 import com.ovcors.godlife.core.domain.user.User;
-import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -80,5 +78,34 @@ public class UserController {
     public ResponseEntity<GodLifeResDto> getGodLife(@Auth User user) {
         GodLifeResDto godLifeResDto = userService.getGodLife(user.getSeq());
         return ResponseEntity.ok().body(godLifeResDto);
+    }
+
+    // 2차 MVP
+    // 다른 사람 정보 불러오기
+    @GetMapping("/info/{name}")
+    public ResponseEntity<OtherUserInfoResDto> getOtherUserInfo(@PathVariable String name) {
+        OtherUserInfoResDto otherUserInfoResDto = userService.getOtherUserInfo(name);
+        return ResponseEntity.ok().body(otherUserInfoResDto);
+    }
+
+    // 팔로워 목록 불러오기
+    @GetMapping("/follower")
+    public ResponseEntity<List<FollowInfoResDto>> getFollowerList(@Auth User user) {
+        List<FollowInfoResDto> list = userService.getFollowerList(user.getSeq());
+        return ResponseEntity.ok().body(list);
+    }
+
+    // 팔로잉 목록 불러오기
+    @GetMapping("/following")
+    public ResponseEntity<List<FollowInfoResDto>> getFollowingList(@Auth User user) {
+        List<FollowInfoResDto> list = userService.getFollowingList(user.getSeq());
+        return ResponseEntity.ok().body(list);
+    }
+
+    // 상태메세지 변경
+    @PatchMapping("/info")
+    public ResponseEntity<BaseResponseEntity> changeStatus(@Auth User user, @RequestBody UpdateStatusReqDto updateStatusReqDto) {
+        userService.changeStatus(user.getSeq(), updateStatusReqDto);
+        return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
     }
 }

@@ -23,7 +23,7 @@ public class User {
 
     @Id
     @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name="uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(columnDefinition = "BINARY(16)")
     private UUID seq;
 
@@ -52,19 +52,28 @@ public class User {
     @Column
     private Integer serialGodCount;
 
-    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Column
+    private String info;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Bingo> bingos = new ArrayList<>();
 
+    @OneToMany(mappedBy = "following", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Follow> following = new ArrayList<>();
+
+    @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Follow> follower = new ArrayList<>();
+
     @Builder
-    public User(String email, String password, String name, JoinType oauth_type, Boolean deleted, LocalDate recentDate, int godCount, int serialGodCount) {
+    public User(String email, String password, String name, JoinType oauth_type, Boolean deleted, LocalDate recentDate, int godCount, int serialGodCount, String info) {
         this.email = email;
         this.password = password;
-        this.name=name;
-        this.oauth_type=oauth_type;
-        this.deleted=deleted;
+        this.name = name;
+        this.oauth_type = oauth_type;
         this.recentDate = recentDate;
-        this.godCount=godCount;
-        this.serialGodCount=serialGodCount;
+        this.godCount = godCount;
+        this.serialGodCount = serialGodCount;
+        this.info = info;
     }
 
     public void changeName(String name) {
@@ -85,19 +94,19 @@ public class User {
         UUID seq = UUID.randomUUID();
         this.seq = seq;
     }
-    public void changeGodCount(int godCount){
+
+    public void changeGodCount(int godCount) {
         this.godCount = godCount;
     }
-    public void changeSerialGodCount(int serialGodCount){
+
+    public void changeSerialGodCount(int serialGodCount) {
         this.serialGodCount = serialGodCount;
     }
 
-    public LocalDate getRecentGodLife(){
-        for(int i  = this.bingos.size()-1 ; i >= 0 ; i--){
-            System.out.println("Here-------------------------------------------------------------------");
+    public LocalDate getRecentGodLife() {
+        for (int i = this.bingos.size() - 1; i >= 0; i--) {
             Bingo bingo = this.bingos.get(i);
-            System.out.println(bingo.getStartDate());
-            if(bingo.getGodlife()){
+            if (bingo.getGodlife()) {
                 return bingo.getStartDate();
             }
         }
@@ -106,5 +115,9 @@ public class User {
 
     public void addBingo(Bingo bingo) {
         this.bingos.add(bingo);
+    }
+
+    public void changeInfo(String info) {
+        this.info = info;
     }
 }
