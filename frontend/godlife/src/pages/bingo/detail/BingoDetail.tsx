@@ -4,7 +4,6 @@ import axios from "axios";
 import React, { useCallback, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-import BorderImage from "../../../assets/images/border.webp";
 import Bingo from "../../../components/Bingo/Bingo";
 import { OutlinedButton } from "../../../components/common/Button";
 import { selectBingo, setBingo } from "../../../store/bingo";
@@ -50,53 +49,48 @@ const BingoDetail = () => {
     <Stack
       alignItems="center"
       sx={{
-        margin: "3% auto",
-        maxWidth: "700px",
         width: "100%",
         backgroundColor: "white",
-        border: "36px solid white",
-        borderImageSource: `url(${BorderImage})`,
-        borderImageSlice: "37 51 47 47",
-        borderImageWidth: "14px 13px 14px 13px",
-        borderImageOutset: "13px 13px 13px 11px",
-        borderImageRepeat: "repeat repeat",
+        borderRadius: "10px",
+        boxShadow: "inset -2px -4px 4px rgba(0,0,0,0.25)",
+        padding: "10%",
       }}
     >
       {bingo.code && (
         <>
-          <Box
-            sx={{ marginTop: "5%", width: "100%", maxWidth: "550px" }}
-            id="bingo"
-          >
+          <Box sx={{ width: "100%", maxWidth: "800px" }} id="bingo">
             {/* 본인의 bingo일 경우에만 실제 id 넘겨주고 그렇지 않다면 빈 문자열 넘기기*/}
             <BingoDetailTitle
               id={bingo.userEmail === email ? bingo.id : ""}
               title={bingo.title}
               getBingo={getBingo}
             />
-            <Bingo
-              createdBy={bingo.userName}
-              size={3}
-              goals={bingo.goals}
-              mode={"Active"}
-              startDate={bingo.startDate}
-              getBingo={getBingo}
-              godlife={bingo.godlife}
-              id={bingo.id}
-            />
+
+            <Box sx={{ maxWidth: "500px", margin: "0 auto" }}>
+              <Bingo
+                createdBy={bingo.userName}
+                size={3}
+                goals={bingo.goals}
+                mode={"showProgress"}
+                startDate={bingo.startDate}
+                getBingo={getBingo}
+                godlife={bingo.godlife}
+                id={bingo.id}
+              />
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                sx={{ width: "100%", maxWidth: "550px" }}
+              >
+                <BingoDetailLike
+                  likeCnt={bingo.likeCnt}
+                  seq={bingo.id}
+                  getBingo={getBingo}
+                />
+                <BingoDetailCopy code={bingo.code} />
+              </Stack>
+            </Box>
           </Box>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            sx={{ width: "100%", maxWidth: "550px" }}
-          >
-            <BingoDetailLike
-              likeCnt={bingo.likeCnt}
-              seq={bingo.id}
-              getBingo={getBingo}
-            />
-            <BingoDetailCopy code={bingo.code} />
-          </Stack>
 
           <BingoDetailShare />
           <BingoDetailCommentList getBingo={getBingo} />
@@ -107,7 +101,7 @@ const BingoDetail = () => {
         <Stack
           direction="row"
           justifyContent="start"
-          sx={{ width: "100%", maxWidth: "550px" }}
+          sx={{ width: "100%", maxWidth: "800px" }}
         >
           <Box>
             <OutlinedButton

@@ -32,6 +32,6 @@ export const theme = createTheme({
     text: {
       primary: "#464646",
     },
-    divider: "#939393",
+    divider: "#9B9B9B",
   },
 });

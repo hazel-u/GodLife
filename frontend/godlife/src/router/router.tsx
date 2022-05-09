@@ -1,7 +1,6 @@
 import { Navigate, useRoutes } from "react-router-dom";
 
 import MainLayout from "../layouts/MainLayout";
-import ShareLayout from "../layouts/ShareLayout";
 import Main from "../pages/Main";
 import NotFound from "../pages/NotFound";
 import BingoCreate from "../pages/bingo/create/BingoCreate";
@@ -65,7 +64,7 @@ export default function Router() {
     },
     {
       path: "/",
-      element: <ShareLayout />,
+      element: <MainLayout />,
       children: [
         {
           path: "/bingo/:bingoId",

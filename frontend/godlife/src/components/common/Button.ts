@@ -38,7 +38,7 @@ const BlackButton = styled(Button)({
 });
 
 const TextButton = styled(Button)({
-  color: "#939393",
+  color: "#484848",
   "&:hover": {
     color: "#464646",
     backgroundColor: "transparent",
@@ -52,6 +52,9 @@ const TextButton = styled(Button)({
   },
   "&:focus": {
     backgroundColor: "transparent",
+  },
+  "&:disabled": {
+    color: "#464646",
   },
 });
 

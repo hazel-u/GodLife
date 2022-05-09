@@ -14,8 +14,6 @@ import dayjs from "dayjs";
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-import BackgroundImage2 from "../../assets/images/bingoCell2.webp";
-import BackgroundImage from "../../assets/images/bingoCell.webp";
 import Stamp from "../../assets/images/stamp.webp";
 import { selectBingo } from "../../store/bingo";
 import { useAppSelector } from "../../store/hooks";
@@ -120,10 +118,9 @@ const BingoCell = ({
             right: 5,
             bottom: 5,
             padding: cellSize < 85 ? 1 : 3,
-            backgroundImage: `url(${
-              index % 2 ? BackgroundImage : BackgroundImage2
-            })`,
-            backgroundSize: "cover",
+            borderRadius: "10px",
+            boxShadow: "inset -2px -4px 4px rgba(0,0,0,0.25)",
+            border: "1px solid #b3b3b3",
           }}
           ref={cell}
         >
