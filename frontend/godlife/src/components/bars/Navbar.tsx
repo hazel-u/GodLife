@@ -1,4 +1,4 @@
-import { Grid, Hidden, Stack, Tooltip } from "@mui/material";
+import { Grid, Hidden, Tooltip } from "@mui/material";
 
 import React, { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -43,83 +43,100 @@ const Navbar = () => {
           sx={{
             padding: "40px 10px",
             "& .MuiButton-root": {
-              fontSize: "24px",
+              fontSize: "20px",
               fontFamily: "BMEULJIRO",
             },
           }}
+          columns={5}
         >
-          <Grid item sm={5}>
-            <Stack direction="row" justifyContent="space-around">
-              <TextButton
-                onClick={() => {
-                  if (code && code !== "none") {
-                    navigate(`/bingo/${code}`);
-                  } else {
-                    navigate("create");
-                  }
-                }}
-                sx={{
-                  color:
-                    location.pathname.split("/")[1] === "bingo"
-                      ? "#464646"
-                      : "",
-                }}
-              >
-                오늘의 갓생
-              </TextButton>
-              <TextButton
-                href="/list"
-                sx={{
-                  color:
-                    location.pathname.split("/")[1] === "list" ? "#464646" : "",
-                }}
-              >
-                이전의 갓생
-              </TextButton>
-            </Stack>
+          <Grid item sm={1}>
+            <TextButton
+              onClick={() => {
+                if (code && code !== "none") {
+                  navigate(`/bingo/${code}`);
+                } else {
+                  navigate("create");
+                }
+              }}
+              sx={{
+                color:
+                  location.pathname.split("/")[1] === "bingo" ? "#464646" : "",
+              }}
+            >
+              오늘의 갓생
+            </TextButton>
+          </Grid>
+          <Grid
+            item
+            sm={1}
+            sx={{
+              textAlign: "center",
+            }}
+          >
+            <TextButton
+              href="/list"
+              sx={{
+                color:
+                  location.pathname.split("/")[1] === "list" ? "#464646" : "",
+              }}
+            >
+              이전의 갓생
+            </TextButton>
           </Grid>
 
           <Grid
             item
-            sm={2}
+            sm={1}
             sx={{
               textAlign: "center",
             }}
           >
             <Logo
-              width="105px"
-              height="105px"
+              width="85px"
+              height="85px"
               style={{ cursor: "pointer" }}
               onClick={() => navigate("/")}
             />
           </Grid>
 
-          <Grid item sm={5}>
-            <Stack direction="row" justifyContent="space-around">
-              <Tooltip title={"서비스 준비중입니다."}>
-                <TextButton
-                  onClick={() => {
-                    dispatch(
-                      setSnackbar({
-                        open: true,
-                        message: "서비스 준비중입니다.",
-                        severity: "info",
-                      })
-                    );
-                  }}
-                  sx={{
-                    color:
-                      location.pathname.split("/")[1] === "group"
-                        ? "#464646"
-                        : "",
-                  }}
-                >
-                  모두의 갓생
-                </TextButton>
-              </Tooltip>
-              <TextButton onClick={() => setOpen(true)}>내 정보</TextButton>
-              <TextButton onClick={logout}>로그아웃</TextButton>
-            </Stack>
+          <Grid
+            item
+            sm={1}
+            sx={{
+              textAlign: "center",
+            }}
+          >
+            <Tooltip title={"서비스 준비중입니다."}>
+              <TextButton
+                onClick={() => {
+                  dispatch(
+                    setSnackbar({
+                      open: true,
+                      message: "서비스 준비중입니다.",
+                      severity: "info",
+                    })
+                  );
+                }}
+                sx={{
+                  color:
+                    location.pathname.split("/")[1] === "group"
+                      ? "#464646"
+                      : "",
+                }}
+              >
+                모두의 갓생
+              </TextButton>
+            </Tooltip>
+          </Grid>
+
+          <Grid
+            item
+            sm={1}
+            sx={{
+              textAlign: "end",
+            }}
+          >
+            <TextButton onClick={() => setOpen(true)}>내 정보</TextButton>
           </Grid>
         </Grid>
       </Hidden>
