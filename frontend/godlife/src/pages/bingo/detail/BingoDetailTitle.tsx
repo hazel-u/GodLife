@@ -15,7 +15,6 @@ import React, { useState } from "react";
 import { selectBingo } from "../../../store/bingo";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
-import { selectUser } from "../../../store/user";
 import axiosWithToken from "../../../utils/axios";
 
 const BingoDetailTitle = ({
@@ -52,8 +51,8 @@ const BingoDetailTitle = ({
     }
   };
 
-  const { startDate, godCount, serialGodCount } = useAppSelector(selectBingo);
-  const { name } = useAppSelector(selectUser);
+  const { startDate, godCount, serialGodCount, userName } =
+    useAppSelector(selectBingo);
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -77,7 +76,7 @@ const BingoDetailTitle = ({
           fontFamily="BMEULJIRO"
           fontSize={fullScreen ? "16px" : "24px"}
         >
-          {name}의 갓생
+          {userName}의 갓생
         </Typography>
       </Stack>
 

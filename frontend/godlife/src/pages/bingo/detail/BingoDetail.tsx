@@ -49,7 +49,6 @@ const BingoDetail = () => {
     <Stack
       alignItems="center"
       sx={{
-        width: "100%",
         backgroundColor: "white",
         borderRadius: "10px",
         boxShadow: "inset -2px -4px 4px rgba(0,0,0,0.25)",
