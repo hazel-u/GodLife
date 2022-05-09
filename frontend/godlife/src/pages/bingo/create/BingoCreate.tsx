@@ -96,7 +96,7 @@ const BingoCreate = () => {
   };
 
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const fullScreen = useMediaQuery(theme.breakpoints.down(650));
 
   const [confirmOpen, setConfirmOpen] = useState(false);
   const confirmBingo = () => {
@@ -137,10 +137,10 @@ const BingoCreate = () => {
         <Box
           sx={(theme) => ({
             width: "772px",
-            [theme.breakpoints.down(800)]: {
+            [theme.breakpoints.down(900)]: {
               width: "548px",
             },
-            [theme.breakpoints.down("sm")]: {
+            [theme.breakpoints.down(650)]: {
               width: "324px",
             },
             textAlign: "center",

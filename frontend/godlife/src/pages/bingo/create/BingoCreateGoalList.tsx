@@ -132,10 +132,10 @@ const BingoCreateGoalList = () => {
             spacing={2}
             sx={(theme) => ({
               width: "672px",
-              [theme.breakpoints.down(800)]: {
+              [theme.breakpoints.down(900)]: {
                 width: "448px",
               },
-              [theme.breakpoints.down("sm")]: {
+              [theme.breakpoints.down(650)]: {
                 width: "224px",
               },
             })}
