@@ -4,7 +4,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import BorderImage from "../../../assets/images/border.webp";
 import { BlackButton, OutlinedButton } from "../../../components/common/Button";
 import { selectGoal } from "../../../store/goal";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
@@ -127,15 +126,12 @@ const BingoCreate = () => {
         alignItems="center"
         justifyContent="center"
         sx={{
-          maxWidth: "900px",
+          maxWidth: "1200px",
           margin: "0 auto",
           backgroundColor: "white",
-          border: "20px solid white",
-          borderImageSource: `url(${BorderImage})`,
-          borderImageSlice: "37 51 47 47",
-          borderImageWidth: "13px 13px 14px 13px",
-          borderImageOutset: "13px 13px 13px 11px",
-          borderImageRepeat: "repeat repeat",
+          borderRadius: "10px",
+          boxShadow: "inset -2px -4px 4px rgba(0,0,0,0.25)",
+          padding: "60px 0",
         }}
       >
         <Box
@@ -147,13 +143,14 @@ const BingoCreate = () => {
             [theme.breakpoints.down("sm")]: {
               width: "324px",
             },
+            textAlign: "center",
           })}
         >
-          <Typography fontSize={36} fontFamily="BMEULJIRO">
-            갓생 만들기
+          <Typography fontSize={24} fontFamily="BMEULJIRO">
+            오늘의 갓생 만들기
           </Typography>
-          <Typography sx={{ whiteSpace: "pre-line" }}>
-            {`최대 9개의 목표를 선택해 오늘의 갓생을 만들어보세요. \n현재 ${selectedGoals.length}개의 목표를 선택하셨습니다.`}
+          <Typography>
+            최대 9개의 목표를 선택해 오늘의 갓생을 만드시오.
           </Typography>
 
           <Stack
@@ -171,13 +168,9 @@ const BingoCreate = () => {
               spacing={2}
               sx={{ textAlign: "center" }}
             >
-              <BlackButton onClick={confirmBingo} sx={{ width: "100px" }}>
-                시작하기
-              </BlackButton>
-
               <OutlinedButton
                 variant="outlined"
-                sx={{ width: "100px" }}
+                sx={{ width: "150px" }}
                 onClick={() => {
                   if (title) {
                     setOpen(true);
@@ -194,6 +187,9 @@ const BingoCreate = () => {
               >
                 갓생 복사
               </OutlinedButton>
+              <BlackButton onClick={confirmBingo} sx={{ width: "150px" }}>
+                시작하기
+              </BlackButton>
             </Stack>
           </Stack>
         </Box>

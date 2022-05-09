@@ -19,34 +19,28 @@ const OutlinedButton = styled(Button)({
     backgroundColor: "white",
     borderColor: "#000000",
   },
-  "&:focus": {
-    // boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)",
-  },
 });
 
 const BlackButton = styled(Button)({
   width: "100%",
   maxWidth: "300px",
   borderRadius: 10,
-  backgroundColor: "black",
+  backgroundColor: "#434343",
   color: "#f3f3f3",
   "&:hover": {
-    color: "#ffffff",
-    backgroundColor: "black",
+    color: "#fafafa",
+    backgroundColor: "#434343",
     boxShadow: "none",
   },
   "&:active": {
     boxShadow: "none",
-  },
-  "&:focus": {
-    // boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)",
   },
 });
 
 const TextButton = styled(Button)({
   color: "#939393",
   "&:hover": {
-    color: "#000000",
+    color: "#464646",
     backgroundColor: "transparent",
     borderColor: "#000000",
     boxShadow: "none",

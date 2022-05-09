@@ -30,7 +30,7 @@ export const theme = createTheme({
       main: "#EC6953",
     },
     text: {
-      primary: "#000000",
+      primary: "#464646",
     },
     divider: "#939393",
   },
