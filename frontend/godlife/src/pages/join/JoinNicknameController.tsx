@@ -41,7 +41,7 @@ const NicknameController = ({
   const isMount = useIsMount();
   useEffect(() => {
     if (!isMount) {
-      trigger("name");
+      // trigger("name");
     }
   }, [validatedNickname, isMount, trigger]);
 
