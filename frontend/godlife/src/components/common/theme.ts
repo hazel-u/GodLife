@@ -4,6 +4,7 @@ export const theme = createTheme({
   typography: {
     allVariants: {
       fontFamily: "NotoSerifKR",
+      color: "#464646",
     },
   },
   palette: {
