@@ -5,6 +5,7 @@ export interface FollowingUserInfo {
     code: string;
     godlife: boolean;
     id: string;
+    startDate: number[];
   }[];
   followerCount: number;
   followingCount: number;
