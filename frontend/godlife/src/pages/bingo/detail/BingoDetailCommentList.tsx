@@ -1,4 +1,11 @@
-import { Box, Divider, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Grid,
+  Stack,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 
 import React from "react";
 
@@ -61,13 +68,83 @@ const BingoDetailCommentList = ({ getBingo }: { getBingo: () => void }) => {
     }
   };
 
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+
   return (
-    <Box sx={{ maxWidth: "500px", margin: "3% 0", width: "100%" }}>
-      <p>댓글 {comments.length}개</p>
-      <Divider />
-      {!comments.length && (
-        <Typography marginY={4}>댓글이 없습니다.</Typography>
-      )}
+    <Box sx={{ maxWidth: "800px", width: "100%" }}>
+      <Divider
+        sx={{
+          height: "3px",
+          backgroundColor: "#989898",
+          border: "none",
+        }}
+      />
+      <form onSubmit={handleSubmit} style={{ padding: "20px 0" }}>
+        <Grid container spacing={1}>
+          <Grid item xs={12} md={2}>
+            <Stack spacing={1} direction={fullScreen ? "row" : "column"}>
+              <OutlinedInput
+                placeholder="닉네임"
+                size="small"
+                value={newComment.nickname}
+                onChange={(e) => {
+                  setNewComment({ ...newComment, nickname: e.target.value });
+                }}
+                sx={{ maxWidth: "150px" }}
+                type="text"
+                inputProps={{ maxLength: 8 }}
+              />
+              <OutlinedInput
+                placeholder="비밀번호"
+                size="small"
+                value={newComment.password}
+                type="password"
+                onChange={(e) => {
+                  setNewComment({ ...newComment, password: e.target.value });
+                }}
+                sx={{ maxWidth: "150px" }}
+              />
+            </Stack>
+          </Grid>
+          <Grid item xs={12} md>
+            <OutlinedInput
+              placeholder="내용"
+              value={newComment.content}
+              sx={{
+                width: "100%",
+                maxWidth: "800px",
+                "& .MuiOutlinedInput-root": { height: "88px" },
+              }}
+              inputProps={{ maxLength: 255 }}
+              onChange={(e) => {
+                setNewComment({ ...newComment, content: e.target.value });
+              }}
+              multiline
+              maxRows={3}
+            />
+          </Grid>
+
+          <Grid item sx={{ textAlign: "end" }} xs={12} md={1}>
+            <BlackButton
+              type="submit"
+              sx={(theme) => ({
+                height: "88px",
+                minWidth: "",
+                whiteSpace: "pre-line",
+                maxWidth: "100px",
+                [theme.breakpoints.down("md")]: {
+                  whiteSpace: "normal",
+                  height: "40px",
+                },
+              })}
+            >
+              {"댓글\n쓰기"}
+            </BlackButton>
+          </Grid>
+        </Grid>
+      </form>
+
       {comments
         .slice()
         .sort(function (a, b) {
@@ -80,53 +157,10 @@ const BingoDetailCommentList = ({ getBingo }: { getBingo: () => void }) => {
         })
         .map((comment: any, index: number) => (
           <React.Fragment key={index}>
+            <Divider />
             <BingoDetailCommentItem comment={comment} getBingo={getBingo} />
-            {index !== comments.length - 1 && <Divider />}
           </React.Fragment>
         ))}
-      <form onSubmit={handleSubmit}>
-        <Stack spacing={1}>
-          <Stack direction="row" spacing={1}>
-            <OutlinedInput
-              placeholder="닉네임"
-              size="small"
-              value={newComment.nickname}
-              onChange={(e) => {
-                setNewComment({ ...newComment, nickname: e.target.value });
-              }}
-              sx={{ maxWidth: "150px" }}
-            />
-            <OutlinedInput
-              placeholder="비밀번호"
-              size="small"
-              value={newComment.password}
-              type="password"
-              onChange={(e) => {
-                setNewComment({ ...newComment, password: e.target.value });
-              }}
-              sx={{ maxWidth: "150px" }}
-            />
-          </Stack>
-
-          <OutlinedInput
-            placeholder="내용"
-            value={newComment.content}
-            sx={{ width: "100%", maxWidth: "500px" }}
-            onChange={(e) => {
-              setNewComment({ ...newComment, content: e.target.value });
-            }}
-          />
-
-          <Box sx={{ textAlign: "end" }}>
-            <BlackButton
-              type="submit"
-              sx={{ width: "50px", height: "39.99px" }}
-            >
-              작성
-            </BlackButton>
-          </Box>
-        </Stack>
-      </form>
     </Box>
   );
 };

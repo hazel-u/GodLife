@@ -10,6 +10,7 @@ import {
 import { styled } from "@mui/material/styles";
 
 import React, { useState } from "react";
+import ReactGA from "react-ga4";
 
 import Stamp from "../../../assets/images/stamp.webp";
 import { deleteGoal, selectGoal, setGoal } from "../../../store/goal";
@@ -21,7 +22,8 @@ const GoalButton = styled(Button)(({ theme }) => ({
   position: "relative",
   width: "208px",
   height: "50px",
-  border: "1px solid #5A5A5A",
+  border: "1px solid #b3b3b3",
+  boxShadow: "inset -2px -4px 4px rgba(0,0,0,0.25)",
   display: "flex",
   flexDirection: "row",
   alignItems: "center",
@@ -114,6 +116,10 @@ const BingoCreateGoalItem = (goal: GoalProps) => {
         })
       );
     }
+    ReactGA.gtag("event", "select_content", {
+      content_type: goal.content,
+      item_id: goal.seq,
+    });
   };
 
   const selectedGoals = useAppSelector(selectGoal);

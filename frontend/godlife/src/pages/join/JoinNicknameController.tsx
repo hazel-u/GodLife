@@ -41,7 +41,7 @@ const NicknameController = ({
   const isMount = useIsMount();
   useEffect(() => {
     if (!isMount) {
-      trigger("name");
+      // trigger("name");
     }
   }, [validatedNickname, isMount, trigger]);
 
@@ -73,6 +73,7 @@ const NicknameController = ({
         <OutlinedInput
           {...field}
           placeholder="닉네임"
+          type="text"
           error={!!fieldState.error}
           helperText={
             fieldState.error?.message ? fieldState.error.message : " "

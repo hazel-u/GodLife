@@ -10,13 +10,11 @@ import {
 } from "@mui/material";
 import dayjs from "dayjs";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-import useCountDown from "../../../hooks/useCountDown";
 import { selectBingo } from "../../../store/bingo";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
-import { selectUser } from "../../../store/user";
 import axiosWithToken from "../../../utils/axios";
 
 const BingoDetailTitle = ({
@@ -53,19 +51,8 @@ const BingoDetailTitle = ({
     }
   };
 
-  const { startDate, godCount, serialGodCount, userEmail } =
+  const { startDate, godCount, serialGodCount, userName } =
     useAppSelector(selectBingo);
-  const { email, name } = useAppSelector(selectUser);
-
-  const countDown = useCountDown();
-  const [leftHours, setLeftHours] = useState<number>();
-  const [leftMinutes, setLeftMinutes] = useState<number>();
-  useEffect(() => {
-    setLeftHours(
-      Math.floor((countDown % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-    );
-    setLeftMinutes(Math.floor((countDown % (1000 * 60 * 60)) / (1000 * 60)));
-  }, [countDown]);
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -78,9 +65,20 @@ const BingoDetailTitle = ({
         },
       }}
     >
-      <Typography>
-        {startDate[0]}년 {startDate[1]}월 {startDate[2]}일 {name}의 갓생
-      </Typography>
+      <Stack direction="row" justifyContent="space-between">
+        <Typography
+          fontFamily="BMEULJIRO"
+          fontSize={fullScreen ? "16px" : "24px"}
+        >
+          {startDate[0]}년 {startDate[1]}월 {startDate[2]}일
+        </Typography>
+        <Typography
+          fontFamily="BMEULJIRO"
+          fontSize={fullScreen ? "16px" : "24px"}
+        >
+          {userName}의 갓생
+        </Typography>
+      </Stack>
 
       <Stack
         direction="row"
@@ -92,11 +90,13 @@ const BingoDetailTitle = ({
             fontFamily: "BMEULJIRO",
           },
         }}
+        marginTop={3}
       >
         {id && <Box sx={{ width: "40px" }} />}
         {clickEdit ? (
           <TextField
             variant="standard"
+            type="text"
             inputProps={{
               maxLength: 10,
               style: {
@@ -106,12 +106,12 @@ const BingoDetailTitle = ({
             InputProps={{
               style: {
                 width: `${
-                  fullScreen ? newTitle.length * 24 : newTitle.length * 36
+                  fullScreen ? newTitle.length * 24 : newTitle.length * 32
                 }px`,
                 maxWidth: "100%",
                 fontFamily: "BMEULJIRO",
-                fontSize: "36px",
-                minWidth: "36px",
+                fontSize: "32px",
+                minWidth: "32px",
               },
             }}
             autoFocus={true}
@@ -148,8 +148,8 @@ const BingoDetailTitle = ({
         ) : (
           <Typography
             sx={{
-              fontSize: fullScreen ? 24 : 36,
-              width: `${fullScreen ? title.length * 24 : title.length * 36}px`,
+              fontSize: fullScreen ? 24 : 32,
+              width: `${fullScreen ? title.length * 24 : title.length * 32}px`,
             }}
           >
             {title}
@@ -167,15 +167,13 @@ const BingoDetailTitle = ({
       {dayjs().format("YYYY-M-D") === startDate.join("-") && (
         <Box>
           <Typography>
-            {godCount}일째 갓생 달성 중 | {serialGodCount}일 연속 갓생 달성 중
+            <span style={{ color: "#A11803" }}>{godCount}일째</span> 갓생 달성
+            중
           </Typography>
-          {userEmail === email && (
-            <Typography color={"#939393"}>
-              오늘의 갓생이 끝나기까지 {leftHours && leftHours < 10 && "0"}
-              {leftHours}시간 {leftMinutes && leftMinutes < 10 && "0"}
-              {leftMinutes}분
-            </Typography>
-          )}
+          <Typography>
+            <span style={{ color: "#A11803" }}>{serialGodCount}일 연속</span>{" "}
+            갓생 달성 중
+          </Typography>
         </Box>
       )}
     </Box>

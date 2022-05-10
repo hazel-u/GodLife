@@ -22,28 +22,101 @@
     <!-- favicon -->
     <link
       rel="apple-touch-icon"
+      sizes="57x57"
+      href="%PUBLIC_URL%/apple-touch-icon-57x57.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="%PUBLIC_URL%/apple-touch-icon-114x114.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="%PUBLIC_URL%/apple-touch-icon-72x72.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="%PUBLIC_URL%/apple-touch-icon-144x144.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="60x60"
+      href="%PUBLIC_URL%/apple-touch-icon-60x60.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="%PUBLIC_URL%/apple-touch-icon-120x120.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="%PUBLIC_URL%/apple-touch-icon-76x76.png"
+    />
+    <link
+      rel="apple-touch-icon"
       sizes="152x152"
-      href="%PUBLIC_URL%/favicon/apple-touch-icon.png"
+      href="%PUBLIC_URL%/apple-touch-icon-152x152.png"
     />
     <link
       rel="icon"
       type="image/png"
+      href="%PUBLIC_URL%/favicon-196x196.png"
+      sizes="196x196"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="%PUBLIC_URL%/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="%PUBLIC_URL%/favicon-32x32.png"
       sizes="32x32"
-      href="%PUBLIC_URL%/favicon/favicon-32x32.png"
     />
     <link
       rel="icon"
       type="image/png"
+      href="%PUBLIC_URL%/favicon-16x16.png"
       sizes="16x16"
-      href="%PUBLIC_URL%/favicon/favicon-16x16.png"
     />
-    <link rel="manifest" href="%PUBLIC_URL%/favicon/site.webmanifest" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="%PUBLIC_URL%/favicon-128.png"
+      sizes="128x128"
+    />
+
     <link
       rel="mask-icon"
       href="%PUBLIC_URL%/favicon/safari-pinned-tab.svg"
       color="#5bbad5"
     />
-    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta
+      name="msapplication-TileImage"
+      content="%PUBLIC_URL%/mstile-144x144.png"
+    />
+    <meta
+      name="msapplication-square70x70logo"
+      content="%PUBLIC_URL%/mstile-70x70.png"
+    />
+    <meta
+      name="msapplication-square150x150logo"
+      content="%PUBLIC_URL%/mstile-150x150.png"
+    />
+    <meta
+      name="msapplication-wide310x150logo"
+      content="%PUBLIC_URL%/mstile-310x150.png"
+    />
+    <meta
+      name="msapplication-square310x310logo"
+      content="%PUBLIC_URL%/mstile-310x310.png"
+    />
     <meta name="theme-color" content="#ffffff" />
 
     <!-- 카카오 공유 기능 관련 -->
@@ -61,7 +134,7 @@
     <meta property="og:description" content="쉽게만 살아가면 재미없어 빙고" />
     <meta
       property="og:image"
-      content="https://sayeon.s3.ap-northeast-2.amazonaws.com/upload/logo(2).png"
+      content="https://s3.ap-northeast-2.amazonaws.com/today.godlife/logo(2).png"
     />
 
     <!-- Twitter -->
@@ -74,13 +147,13 @@
     />
     <meta
       property="twitter:image"
-      content="https://sayeon.s3.ap-northeast-2.amazonaws.com/upload/logo(2).png"
+      content="https://s3.ap-northeast-2.amazonaws.com/today.godlife/logo(2).png"
     />
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script
       async
-      src="https://www.googletagmanager.com/gtag/js?id=G-63Z8DJH4XR"
+      src="https://www.googletagmanager.com/gtag/js?id=%REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID%"
     ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -89,8 +162,16 @@
       }
       gtag("js", new Date());
 
-      gtag("config", "G-63Z8DJH4XR");
+      gtag("config", "%REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID%");
     </script>
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Reggae+One&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
