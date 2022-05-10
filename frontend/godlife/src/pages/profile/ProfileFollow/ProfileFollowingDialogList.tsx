@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -37,9 +37,20 @@ const ProfileFollowingDialogList = ({
                 onClick={() => navigate(`/profile/${following.name}`)}
                 sx={{
                   cursor: "pointer",
+                  marginBottom: "20px",
                 }}
               >
-                <p>{following.name}</p>
+                <Typography
+                  fontSize={18}
+                  fontFamily="BMEULJIRO"
+                  sx={{ whiteSpace: "pre-line", margin: "5px 0" }}
+                >
+                  {following.name}
+                </Typography>
+                <Typography sx={{ whiteSpace: "pre-line" }}>
+                  갓생 달성 {following.godCount}일 | 연속 갓생 달성{" "}
+                  {following.serialGodCount}일
+                </Typography>
               </Box>
             ))}
           </>
