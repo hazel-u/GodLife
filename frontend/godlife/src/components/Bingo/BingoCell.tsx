@@ -50,9 +50,9 @@ const BingoCell = ({
   };
 
   const handleComplete = () => {
+    setStampAnimation(!isCompleted);
     customClickEvent();
     setOpen(false);
-    setStampAnimation(true);
   };
 
   const cell = useRef<HTMLDivElement | null>(null);
