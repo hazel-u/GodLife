@@ -3,6 +3,7 @@ package com.ovcors.godlife.api.service;
 import com.ovcors.godlife.api.dto.request.ChangePasswordReqDto;
 import com.ovcors.godlife.api.dto.request.ChangeUserInfoReqDto;
 import com.ovcors.godlife.api.dto.request.JoinReqDto;
+import com.ovcors.godlife.api.dto.request.UpdateStatusReqDto;
 import com.ovcors.godlife.api.dto.response.FollowInfoResDto;
 import com.ovcors.godlife.api.dto.response.GodLifeResDto;
 import com.ovcors.godlife.api.dto.response.OtherUserInfoResDto;
@@ -25,4 +26,5 @@ public interface UserService {
     OtherUserInfoResDto getOtherUserInfo(String name);
     List<FollowInfoResDto> getFollowerList(UUID seq);
     List<FollowInfoResDto> getFollowingList(UUID seq);
+    void changeStatus(UUID seq, UpdateStatusReqDto updateStatusReqDto);
 }

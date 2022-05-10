@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.ovcors.godlife.api.dto.request.ChangePasswordReqDto;
 import com.ovcors.godlife.api.dto.request.ChangeUserInfoReqDto;
 import com.ovcors.godlife.api.dto.request.JoinReqDto;
+import com.ovcors.godlife.api.dto.request.UpdateStatusReqDto;
 import com.ovcors.godlife.api.dto.response.*;
 import com.ovcors.godlife.api.exception.CustomException;
 import com.ovcors.godlife.api.exception.ErrorCode;
@@ -301,5 +302,22 @@ public class UserServiceImpl implements UserService{
         }
 
         return followingName;
+    }
+
+    @Override
+    public void changeStatus(UUID seq, UpdateStatusReqDto updateStatusReqDto) {
+        if(seq==null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+
+        User user = userRepository.findById(seq).get();
+        if(user==null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+
+        user.changeInfo(updateStatusReqDto.getInfo());
+        userRepository.save(user);
+
+        return;
     }
 }
