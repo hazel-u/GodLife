@@ -39,7 +39,15 @@ const Login = () => {
       </Box>
 
       <Box width="max(400px, 30%)" margin="0 auto">
-        <Box width="300px" margin="0 auto 0 50px">
+        <Box
+          sx={(theme) => ({
+            width: "300px",
+            margin: "0 auto 0 50px",
+            [theme.breakpoints.down("md")]: {
+              margin: "0 auto",
+            },
+          })}
+        >
           <Box sx={{ textAlign: "center" }}>
             <img
               src={Logo}
