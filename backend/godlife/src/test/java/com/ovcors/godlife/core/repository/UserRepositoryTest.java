@@ -54,6 +54,8 @@ class UserRepositoryTest {
                 .deleted(false)
                 .recentDate(null)
                 .godCount(0)
+                .serialGodCount(0)
+                .info(null)
                 .build();
 
         // when
@@ -79,6 +81,8 @@ class UserRepositoryTest {
                 .deleted(false)
                 .recentDate(null)
                 .godCount(0)
+                .serialGodCount(0)
+                .info(null)
                 .build();
 
         // when

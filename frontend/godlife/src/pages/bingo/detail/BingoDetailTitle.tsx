@@ -97,6 +97,7 @@ const BingoDetailTitle = ({
         {clickEdit ? (
           <TextField
             variant="standard"
+            type="text"
             inputProps={{
               maxLength: 10,
               style: {

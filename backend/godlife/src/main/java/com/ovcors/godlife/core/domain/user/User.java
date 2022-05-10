@@ -70,6 +70,7 @@ public class User {
         this.password = password;
         this.name = name;
         this.oauth_type = oauth_type;
+        this.deleted = deleted;
         this.recentDate = recentDate;
         this.godCount = godCount;
         this.serialGodCount = serialGodCount;

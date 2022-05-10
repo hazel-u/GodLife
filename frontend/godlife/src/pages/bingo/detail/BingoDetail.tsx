@@ -2,16 +2,18 @@ import { Box, Stack } from "@mui/material";
 import axios from "axios";
 
 import React, { useCallback, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import BorderImage from "../../../assets/images/border.webp";
 import Bingo from "../../../components/Bingo/Bingo";
+import { OutlinedButton } from "../../../components/common/Button";
 import { selectBingo, setBingo } from "../../../store/bingo";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setLoading } from "../../../store/loading";
 import { selectUser } from "../../../store/user";
 import BingoDetailCommentList from "./BingoDetailCommentList";
-import BingoDetailInteraction from "./BingoDetailInteraction";
+import BingoDetailCopy from "./BingoDetailCopy";
+import BingoDetailLike from "./BingoDetailLike";
 import BingoDetailShare from "./BingoDetailShare";
 import BingoDetailTitle from "./BingoDetailTitle";
 
@@ -19,6 +21,8 @@ const BingoDetail = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const locationState = location.state as { page: number };
 
   const getBingo = useCallback(() => {
     axios
@@ -60,14 +64,16 @@ const BingoDetail = () => {
     >
       {bingo.code && (
         <>
-          {/* 본인의 bingo일 경우에만 실제 id 넘겨주고 그렇지 않다면 빈 문자열 넘기기*/}
-          <BingoDetailTitle
-            id={bingo.userEmail === email ? bingo.id : ""}
-            title={bingo.title}
-            getBingo={getBingo}
-          />
-
-          <Box sx={{ marginTop: "5%", width: "100%", maxWidth: "550px" }}>
+          <Box
+            sx={{ marginTop: "5%", width: "100%", maxWidth: "550px" }}
+            id="bingo"
+          >
+            {/* 본인의 bingo일 경우에만 실제 id 넘겨주고 그렇지 않다면 빈 문자열 넘기기*/}
+            <BingoDetailTitle
+              id={bingo.userEmail === email ? bingo.id : ""}
+              title={bingo.title}
+              getBingo={getBingo}
+            />
             <Bingo
               createdBy={bingo.userName}
               size={3}
@@ -78,18 +84,40 @@ const BingoDetail = () => {
               godlife={bingo.godlife}
               id={bingo.id}
             />
-
-            <BingoDetailInteraction
-              code={bingo.code}
+          </Box>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            sx={{ width: "100%", maxWidth: "550px" }}
+          >
+            <BingoDetailLike
               likeCnt={bingo.likeCnt}
               seq={bingo.id}
               getBingo={getBingo}
             />
-          </Box>
+            <BingoDetailCopy code={bingo.code} />
+          </Stack>
 
           <BingoDetailShare />
           <BingoDetailCommentList getBingo={getBingo} />
         </>
+      )}
+
+      {locationState && 0 <= locationState.page && (
+        <Stack
+          direction="row"
+          justifyContent="start"
+          sx={{ width: "100%", maxWidth: "550px" }}
+        >
+          <Box>
+            <OutlinedButton
+              variant="outlined"
+              onClick={() => navigate(`/list/${locationState.page + 1}`)}
+            >
+              이전의 갓생 목록
+            </OutlinedButton>
+          </Box>
+        </Stack>
       )}
     </Stack>
   );

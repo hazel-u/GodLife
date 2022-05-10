@@ -73,6 +73,7 @@ const NicknameController = ({
         <OutlinedInput
           {...field}
           placeholder="닉네임"
+          type="text"
           error={!!fieldState.error}
           helperText={
             fieldState.error?.message ? fieldState.error.message : " "
