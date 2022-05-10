@@ -1,10 +1,12 @@
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
+import { Korean } from "flatpickr/dist/l10n/ko.js";
+import "flatpickr/dist/themes/light.css";
 
 import React from "react";
+import Flatpickr from "react-flatpickr";
 import { useNavigate } from "react-router-dom";
 
-import { OutlinedInput } from "../../../components/common/Input";
 import { useAppDispatch } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
 import axiosWithToken from "../../../utils/axios";
@@ -14,17 +16,7 @@ const BingoListSearch = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const handleChange = (newValue: Date | null) => {
-    console.log(
-      newValue,
-      dayjs(newValue).isValid(),
-      dayjs(newValue).isBetween(
-        dayjs("2022-05-01"),
-        dayjs("2999-12-31"),
-        "year",
-        "[]"
-      )
-    );
+  const handleChange = (newValue: Date) => {
     if (
       !dayjs(newValue).isValid() ||
       !dayjs(newValue).isBetween(
@@ -53,18 +45,18 @@ const BingoListSearch = () => {
   };
 
   return (
-    <OutlinedInput
+    <Flatpickr
+      onChange={(newDate) => {
+        handleChange(newDate[0]);
+        console.log(newDate[0]);
+      }}
+      options={{
+        locale: Korean,
+        minDate: "2022-05-01",
+        maxDate: "2999-12-31",
+      }}
+      className="date-picker"
       placeholder="날짜로 이동"
-      id="date"
-      type="text"
-      sx={{ width: 200 }}
-      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-        handleChange(e.target.valueAsDate)
-      }
-      onFocus={() =>
-        document.getElementById("date")?.setAttribute("type", "date")
-      }
-      InputProps={{ inputProps: { min: "2022-05-01", max: "2999-12-31" } }}
     />
   );
 };
