@@ -85,7 +85,7 @@ const Profile = () => {
             오늘의 갓생
           </Typography>
           <Stack direction="column" alignItems="center">
-            {code && code !== "none" && bingo.code && (
+            {bingo.code && (
               <Box
                 sx={{ width: "100%", maxWidth: "550px", textAlign: "center" }}
               >

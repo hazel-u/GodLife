@@ -103,7 +103,7 @@ const ProfileFollowDetail = () => {
             오늘의 갓생
           </Typography>
           <Stack direction="column" alignItems="center">
-            {todayBingo.code && (
+            {todayBingo !== null && todayBingo.code && (
               <Box
                 sx={{ width: "100%", maxWidth: "550px", textAlign: "center" }}
               >
