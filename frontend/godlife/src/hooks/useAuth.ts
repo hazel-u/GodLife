@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 
 import { useNavigate } from "react-router-dom";
 
+import { clearGoal } from "../store/goal";
 import { useAppDispatch } from "../store/hooks";
 import { setSnackbar } from "../store/snackbar";
 import { setTodayBingo } from "../store/todayBingo";
@@ -19,6 +20,7 @@ export const useLogout = () => {
     localStorage.removeItem("expired");
     dispatch(setTodayBingo(""));
     dispatch(clearLoggedUser());
+    dispatch(clearGoal());
     dispatch(
       setSnackbar({
         open: true,
