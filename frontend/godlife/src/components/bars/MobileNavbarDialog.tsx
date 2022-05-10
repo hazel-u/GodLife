@@ -62,7 +62,7 @@ export default function SwipeableEdgeDrawer({
       <Global
         styles={{
           ".MuiDrawer-root > .MuiPaper-root": {
-            height: `calc(40% - ${drawerBleeding}px)`,
+            height: `max(400px, calc(50% - ${drawerBleeding}px))`,
             overflow: "visible",
           },
         }}
