@@ -3,8 +3,8 @@ import { Box, Dialog, Tab, Tabs, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
 
 import { OutlinedButton } from "../../components/common/Button";
-import ProfileFollower from "./ProfileFollow/ProfileFollower";
-import ProfileFollowing from "./ProfileFollow/ProfileFollowing";
+import ProfileFollower from "./ProfileFollow/ProfileFollowerDialogList";
+import ProfileFollowing from "./ProfileFollow/ProfileFollowingDialogList";
 
 interface TabPanelProps {
   children?: React.ReactNode;

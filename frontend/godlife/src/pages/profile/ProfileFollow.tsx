@@ -18,7 +18,7 @@ function ProfileFollow(props: ProfileFollowProps) {
       <Typography
         sx={{ whiteSpace: "pre-line", margin: "2% 0", cursor: "pointer" }}
       >
-        팔로워 {followerCnt} | 팔로잉 {followingCnt}
+        팔로워 {followingCnt} | 팔로잉 {followerCnt}
       </Typography>
     </Box>
   );

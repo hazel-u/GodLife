@@ -11,6 +11,7 @@ import Join from "../pages/join/Join";
 import Login from "../pages/login/Login";
 import LoginOAuthKakao from "../pages/login/LoginOAuthKakao";
 import Profile from "../pages/profile/Profile";
+import ProfileFollowDetail from "../pages/profile/ProfileFollow/ProfileFollowDetail";
 import { useAppSelector } from "../store/hooks";
 import { selectTodayBingo } from "../store/todayBingo";
 
@@ -55,6 +56,10 @@ export default function Router() {
         {
           path: "/profile",
           element: <Profile />,
+        },
+        {
+          path: "/profile/:name",
+          element: <ProfileFollowDetail />,
         },
       ],
     },
