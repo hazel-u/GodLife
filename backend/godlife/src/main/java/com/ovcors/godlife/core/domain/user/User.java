@@ -112,7 +112,14 @@ public class User {
         }
         return null;
     }
-
+    public boolean isSerial() {
+        for (Bingo bingo : this.bingos) {
+            if (bingo.getGodlife() && bingo.getStartDate().equals(LocalDate.now().minusDays(1))) {
+                return true;
+            }
+        }
+        return false;
+    }
     public void addBingo(Bingo bingo) {
         this.bingos.add(bingo);
     }

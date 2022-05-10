@@ -169,11 +169,9 @@ public class BingoServiceImpl implements BingoService {
 
     @Scheduled(cron = "1 0 0 * * *")
     public void updateUserGodlife(){
-        List<User> users = userRepository.findAll();
+        List<User> users = userRepository.findByDeletedFalse();
         for(User user : users){
-            LocalDate recentDate = user.getRecentGodLife();
-            if(recentDate==null || !recentDate.equals(LocalDate.now().minusDays(1))){
-
+            if(user.isSerial()){
                 user.changeSerialGodCount(0);
             } else{
                 user.changeGodCount(user.getGodCount()+1);
