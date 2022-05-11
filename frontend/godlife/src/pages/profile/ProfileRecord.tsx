@@ -3,13 +3,14 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import React, { Component } from "react";
 import axiosWithToken from "../../utils/axios";
+import Stamp from "../../assets/images/stamp.webp";
 
 
 class ProfileRecord extends Component {
   state = {
     bingoList: [],
     page: 0,
-    limit: 10,
+    limit: 31,
   };
 
   getBingoList = async () => {
@@ -43,7 +44,7 @@ class ProfileRecord extends Component {
 
     return (
       <>
-        <Typography sx={{ whiteSpace: "pre-line", margin: "5% 0" }}>
+        <Typography fontSize={18} sx={{ margin: "5% 0" }}>
           이전의 갓생
         </Typography>
         <FullCalendar
@@ -57,7 +58,16 @@ class ProfileRecord extends Component {
           plugins={[ dayGridPlugin ]}
           events={bingoList}
           eventDisplay="background"
-          eventBackgroundColor="#A11803"
+          eventBackgroundColor="#ffffff"
+          eventContent={<img
+            src={Stamp}
+            alt="stamp"
+            style={{
+              width: "80%",
+              opacity: "50%",
+            }}
+          />
+          }
         />
       </>
     );

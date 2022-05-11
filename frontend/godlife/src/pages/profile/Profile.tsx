@@ -87,13 +87,14 @@ const Profile = () => {
         >
           <ProfileInfo setOpen={setOpen} />
           <ProfileFollow setOpenFollowDialog={setOpenFollowDialog} />
+
           <Box
             sx={{
               height: "100%",
               width: "100%",
             }}
           >
-            <Typography sx={{ whiteSpace: "pre-line", margin: "3% 0" }}>
+            <Typography fontSize={18} sx={{ margin: "3% 0" }}>
               오늘의 갓생
             </Typography>
             {code && code !== "none" ? (

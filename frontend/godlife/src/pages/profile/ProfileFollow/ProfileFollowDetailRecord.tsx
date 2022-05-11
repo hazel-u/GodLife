@@ -4,6 +4,7 @@ import { Typography } from "@mui/material";
 import axios from "axios";
 
 import React, { Component } from "react";
+import Stamp from "../../../assets/images/stamp.webp";
 
 
 interface nameProps {
@@ -59,7 +60,7 @@ class ProfileFollowDetailRecord extends Component <nameProps>{
 
     return (
       <>
-        <Typography sx={{ whiteSpace: "pre-line", margin: "5% 0" }}>
+        <Typography fontSize={18} sx={{ margin: "5% 0" }}>
           이전의 갓생
         </Typography>
         <FullCalendar
@@ -73,7 +74,16 @@ class ProfileFollowDetailRecord extends Component <nameProps>{
           plugins={[dayGridPlugin]}
           events={bingoList}
           eventDisplay="background"
-          eventBackgroundColor="#A11803"
+          eventBackgroundColor="#ffffff"
+          eventContent={<img
+            src={Stamp}
+            alt="stamp"
+            style={{
+              width: "80%",
+              opacity: "50%",
+            }}
+          />
+          }
         />
       </>
     );

@@ -55,11 +55,7 @@ const ProfileFollowingDialogList = ({
             ))}
           </>
         ) : (
-          <Stack
-            justifyContent="center"
-            alignItems="center"
-            sx={{ height: "100%" }}
-          >
+          <Stack justifyContent="center" alignItems="center">
             <p style={{ fontSize: "15px" }}>
               회원님이 팔로우하는 모든 사람이 여기에 표시됩니다.
             </p>
