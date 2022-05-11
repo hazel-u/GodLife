@@ -320,4 +320,19 @@ public class UserServiceImpl implements UserService{
 
         return;
     }
+
+    @Override
+    public void logout(UUID seq) {
+        if(seq == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+        User user = userRepository.findById(seq).get();
+        if(user==null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+
+        System.out.println("삭제 전-> "+redisTemplate.opsForValue().get(user.getEmail()));
+        redisTemplate.delete(user.getEmail());
+        System.out.println("삭제 후-> "+redisTemplate.opsForValue().get(user.getEmail()));
+    }
 }

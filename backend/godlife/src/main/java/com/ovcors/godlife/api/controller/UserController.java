@@ -108,4 +108,11 @@ public class UserController {
         userService.changeStatus(user.getSeq(), updateStatusReqDto);
         return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
     }
+
+    // 로그아웃 - refreshToken 삭제
+    @GetMapping("/logout")
+    public ResponseEntity<BaseResponseEntity> logout(@Auth User user) {
+        userService.logout(user.getSeq());
+        return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
+    }
 }
