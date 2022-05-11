@@ -45,6 +45,13 @@ const BingoDetail = () => {
   const bingo = useAppSelector(selectBingo);
   const { email } = useAppSelector(selectUser);
 
+  useEffect(() => {
+    document.title = `${bingo.startDate[0]}년 ${bingo.startDate[1]}월 ${bingo.startDate[2]}일 ${bingo.userName}의 갓생 | 갓생살기`;
+    return () => {
+      document.title = "갓생살기";
+    };
+  }, [bingo]);
+
   return (
     <Stack
       alignItems="center"

@@ -52,7 +52,7 @@ const Login = () => {
             <img
               src={Logo}
               alt="logo"
-              style={{ width: "120px", margin: "30px" }}
+              style={{ width: "120px", height: "120px", margin: "30px" }}
             />
           </Box>
 

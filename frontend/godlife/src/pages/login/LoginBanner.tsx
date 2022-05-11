@@ -83,12 +83,12 @@ const LoginBanner = () => {
             fontSize: "40px",
             marginBottom: "30px",
           }}
-          variant="h1"
+          variant="h2"
         >
           한 번 살아보시지 않으렵니까?
         </Typography>
 
-        <Typography fontSize={20} variant="h1">
+        <Typography fontSize={20} variant="h3">
           매일의 갓생 목표를 달성하고, <br />
           친구들과 함께 도전을 이어가시오.
         </Typography>
