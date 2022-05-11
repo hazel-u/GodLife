@@ -70,6 +70,7 @@ public class User {
         this.password = password;
         this.name = name;
         this.oauth_type = oauth_type;
+        this.deleted = deleted;
         this.recentDate = recentDate;
         this.godCount = godCount;
         this.serialGodCount = serialGodCount;
@@ -112,7 +113,14 @@ public class User {
         }
         return null;
     }
-
+    public boolean isSerial() {
+        for (Bingo bingo : this.bingos) {
+            if (bingo.getGodlife() && bingo.getStartDate().equals(LocalDate.now().minusDays(1))) {
+                return true;
+            }
+        }
+        return false;
+    }
     public void addBingo(Bingo bingo) {
         this.bingos.add(bingo);
     }
