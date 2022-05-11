@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { typography } from "@mui/system";
+import axios from "axios";
 
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -21,10 +22,26 @@ import { setLoading } from "../../../store/loading";
 import { BingoType } from "../../../types/bingo";
 import axiosWithToken from "../../../utils/axios";
 
-const searchUser = () => {
-  const userName = "kill";
+const searchUser = (nickName: string) => {
   axiosWithToken
-    .get(`feed/user/${userName}`)
+    .get(`feed/user/${nickName}`)
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => console.log(err));
+};
+
+const followUser = (nickName: string) => {
+  axiosWithToken
+    .post(`feed/follow/${nickName}`)
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => console.log(err));
+};
+const unfollowUser = (nickName: string) => {
+  axiosWithToken
+    .delete(`feed/follow/${nickName}`)
     .then((res) => {
       console.log(res.data);
     })
@@ -49,7 +66,8 @@ const BingoFeed = () => {
   useEffect(() => {
     if (bingoCount === -1) {
       getBingoFeed();
-      searchUser();
+      followUser("천민우");
+      searchUser("천민우");
     }
   });
 
