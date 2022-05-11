@@ -145,7 +145,7 @@ const Profile = () => {
                     }}
                     onClick={() => navigate("/create")}
                   >
-                    갓생 살러가기
+                    갓생 살러 가기
                   </BlackButton>
                 </Box>
               </Stack>

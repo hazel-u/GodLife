@@ -104,6 +104,7 @@ const ProfileFollowDetail = () => {
             sx={{
               height: "100%",
               width: "100%",
+              marginBottom: todayBingo !== null && todayBingo.code ? 0 : "20%",
             }}
           >
             <Typography sx={{ whiteSpace: "pre-line", margin: "3% 0" }}>
