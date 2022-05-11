@@ -146,7 +146,7 @@ const BingoCreate = () => {
             textAlign: "center",
           })}
         >
-          <Typography fontSize={24} fontFamily="BMEULJIRO">
+          <Typography fontSize={24} fontFamily="BMEULJIRO" variant="h1">
             오늘의 갓생 만들기
           </Typography>
           <Typography>

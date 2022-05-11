@@ -59,7 +59,10 @@ const LoginBanner = () => {
         justifyContent={fullScreen ? "end" : "center"}
       >
         <Box position="relative">
-          <Typography sx={{ fontFamily: "BMEULJIRO", fontSize: "80px" }}>
+          <Typography
+            sx={{ fontFamily: "BMEULJIRO", fontSize: "80px" }}
+            variant="h1"
+          >
             God <span style={{ fontFamily: "Reggae One" }}>生</span>
           </Typography>
 
@@ -80,11 +83,12 @@ const LoginBanner = () => {
             fontSize: "40px",
             marginBottom: "30px",
           }}
+          variant="h1"
         >
           한 번 살아보시지 않으렵니까?
         </Typography>
 
-        <Typography fontSize={20}>
+        <Typography fontSize={20} variant="h1">
           매일의 갓생 목표를 달성하고, <br />
           친구들과 함께 도전을 이어가시오.
         </Typography>

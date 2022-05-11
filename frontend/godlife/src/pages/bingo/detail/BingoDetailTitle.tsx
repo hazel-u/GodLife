@@ -60,7 +60,7 @@ const BingoDetailTitle = ({
   return (
     <Box
       sx={{
-        "& p": {
+        "& p, h1": {
           textAlign: "center",
         },
       }}
@@ -69,12 +69,14 @@ const BingoDetailTitle = ({
         <Typography
           fontFamily="BMEULJIRO"
           fontSize={fullScreen ? "16px" : "24px"}
+          variant="h1"
         >
           {startDate[0]}년 {startDate[1]}월 {startDate[2]}일
         </Typography>
         <Typography
           fontFamily="BMEULJIRO"
           fontSize={fullScreen ? "16px" : "24px"}
+          variant="h1"
         >
           {userName}의 갓생
         </Typography>
@@ -86,7 +88,7 @@ const BingoDetailTitle = ({
         justifyContent="center"
         sx={{
           height: "65px",
-          "& p": {
+          "& p, h1": {
             fontFamily: "BMEULJIRO",
           },
         }}
@@ -151,6 +153,7 @@ const BingoDetailTitle = ({
               fontSize: fullScreen ? 24 : 32,
               width: `${fullScreen ? title.length * 24 : title.length * 32}px`,
             }}
+            variant="h1"
           >
             {title}
           </Typography>
