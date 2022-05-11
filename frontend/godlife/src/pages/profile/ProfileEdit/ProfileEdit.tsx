@@ -101,11 +101,11 @@ const ProfileEdit = ({ handleClose }: { handleClose: () => void }) => {
         </Box>
       </form>
 
-      <Divider sx={{ margin: "20px 0" }} />
+      <Divider sx={{ margin: "20px 0 10px" }} />
 
       <form onSubmit={messageHandleSubmit(onSubmitMessage)}>
         <Stack direction="row" spacing={2} alignItems="center">
-          <p style={{ marginTop: 0, minWidth: "45px" }}>상태메시지</p>
+          <p style={{ textAlign: "center", minWidth: "45px" }}>상태메시지</p>
           <MessageController control={messageControl} currentMessage={info} />
         </Stack>
         <Box sx={{ textAlign: "center", margin: "30px 0" }}>

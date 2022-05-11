@@ -16,9 +16,16 @@ function ProfileFollow(props: ProfileFollowProps) {
   return (
     <Box onClick={() => setOpenFollowDialog(true)}>
       <Typography
-        sx={{ whiteSpace: "pre-line", margin: "2% 0", cursor: "pointer" }}
+        sx={{ whiteSpace: "pre-line", margin: "2px 0", cursor: "pointer" }}
       >
-        팔로워 {followingCnt} | 팔로잉 {followerCnt}
+        팔로워{" "}
+        <span style={{ fontFamily: "Reggae One", fontWeight: 900 }}>
+          {followingCnt}{" "}
+        </span>{" "}
+        | 팔로잉{" "}
+        <span style={{ fontFamily: "Reggae One", fontWeight: 900 }}>
+          {followerCnt}{" "}
+        </span>
       </Typography>
     </Box>
   );

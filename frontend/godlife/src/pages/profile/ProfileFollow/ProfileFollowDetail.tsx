@@ -83,11 +83,7 @@ const ProfileFollowDetail = () => {
               {name}님의 프로필
             </Typography>
           </Stack>
-          <Typography
-            fontSize={20}
-            fontFamily="BMEULJIRO"
-            sx={{ whiteSpace: "pre-line", margin: "0 0 20px" }}
-          >
+          <Typography fontSize={18} sx={{ margin: "0 0 20px" }}>
             {info}
           </Typography>
           <Typography sx={{ whiteSpace: "pre-line" }}>
@@ -95,9 +91,20 @@ const ProfileFollowDetail = () => {
           </Typography>
           <Box>
             <Typography
-              sx={{ whiteSpace: "pre-line", margin: "2% 0", cursor: "pointer" }}
+              sx={{
+                whiteSpace: "pre-line",
+                margin: "2px 0",
+                cursor: "pointer",
+              }}
             >
-              팔로워 {followingCount} | 팔로잉 {followerCount}
+              팔로워{" "}
+              <span style={{ fontFamily: "Reggae One", fontWeight: 900 }}>
+                {followingCount}{" "}
+              </span>{" "}
+              | 팔로잉{" "}
+              <span style={{ fontFamily: "Reggae One", fontWeight: 900 }}>
+                {followerCount}{" "}
+              </span>
             </Typography>
           </Box>
           <Box

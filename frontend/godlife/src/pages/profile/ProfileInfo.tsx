@@ -42,11 +42,7 @@ function ProfileInfo(props: ProfileInfoProps) {
         )}
       </Stack>
 
-      <Typography
-        fontSize={20}
-        fontFamily="BMEULJIRO"
-        sx={{ whiteSpace: "pre-line", margin: "0 0 20px" }}
-      >
+      <Typography fontSize={18} sx={{ margin: "0 0 20px" }}>
         {info}
       </Typography>
       <Typography sx={{ whiteSpace: "pre-line" }}>
