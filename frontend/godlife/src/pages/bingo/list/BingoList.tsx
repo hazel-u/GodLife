@@ -12,6 +12,13 @@ import BingoListItem from "./BingoListItem";
 import BingoListSearch from "./BingoListSearch";
 
 const BingoList = () => {
+  useEffect(() => {
+    document.title = "이전의 갓생 | 갓생살기";
+    return () => {
+      document.title = "갓생살기";
+    };
+  }, []);
+
   const params = useParams();
   const initialPage =
     params.page && Number.isInteger(params.page)

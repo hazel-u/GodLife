@@ -1,6 +1,7 @@
 import { Stack } from "@mui/material";
 import axios from "axios";
 
+import { useEffect } from "react";
 import ReactGA from "react-ga4";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +16,13 @@ import JoinNicknameController from "./JoinNicknameController";
 import JoinPasswordContoller from "./JoinPasswordContoller";
 
 const Join = () => {
+  useEffect(() => {
+    document.title = "회원가입 | 갓생살기";
+    return () => {
+      document.title = "갓생살기";
+    };
+  }, []);
+
   const { control, trigger, getValues, handleSubmit, watch } =
     useForm<JoinInput>({});
 

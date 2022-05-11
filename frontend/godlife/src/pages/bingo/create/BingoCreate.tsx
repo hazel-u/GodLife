@@ -16,6 +16,13 @@ import BingoCreateGoalList from "./BingoCreateGoalList";
 import BingoCreateTitle from "./BingoCreateTitle";
 
 const BingoCreate = () => {
+  useEffect(() => {
+    document.title = "오늘의 갓생 만들기 | 갓생살기";
+    return () => {
+      document.title = "갓생살기";
+    };
+  }, []);
+
   const selectedGoals = useAppSelector(selectGoal);
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
