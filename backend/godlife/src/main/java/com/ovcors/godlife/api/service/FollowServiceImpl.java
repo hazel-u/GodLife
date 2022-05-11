@@ -61,6 +61,9 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     public List<FollowInfoResDto> findUser(String name) {
+        if(name.equals(null)){
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
         List<User> list = userRepository.findByNameContaining(name);
         List<FollowInfoResDto> response = new ArrayList<>();
         for (User user : list) {
