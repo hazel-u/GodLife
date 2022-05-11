@@ -2,9 +2,12 @@ import { Box, Stack, Typography } from "@mui/material";
 import axios from "axios";
 
 import React, { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import BorderImage from "../../assets/images/border.webp";
+import Stamp from "../../assets/images/stamp.webp";
 import Bingo from "../../components/Bingo/Bingo";
+import { BlackButton } from "../../components/common/Button";
 import { selectBingo, setBingo } from "../../store/bingo";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { selectTodayBingo } from "../../store/todayBingo";
@@ -17,17 +20,18 @@ import ProfileRecord from "./ProfileRecord";
 import ProfileSettingDialog from "./ProfileSettingDialog";
 
 const Profile = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
   const [openFollowDialog, setOpenFollowDialog] = useState(false);
   const bingo = useAppSelector(selectBingo);
   const code = useAppSelector(selectTodayBingo);
 
-  const getUserInfo = () => {
+  const getUserInfo = useCallback(() => {
     axiosWithToken.get("user/info").then((res) => {
       dispatch(setLoggedUser(res.data));
     });
-  };
+  }, [dispatch]);
 
   const getBingo = useCallback(() => {
     axios
@@ -38,12 +42,14 @@ const Profile = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [dispatch]);
+  }, [code, dispatch]);
 
   useEffect(() => {
-    getBingo();
+    if (code && code !== "none") {
+      getBingo();
+    }
     getUserInfo();
-  }, [getBingo]);
+  }, [getBingo, getUserInfo]);
 
   return (
     <>
@@ -81,29 +87,70 @@ const Profile = () => {
         >
           <ProfileInfo setOpen={setOpen} />
           <ProfileFollow setOpenFollowDialog={setOpenFollowDialog} />
-          <Typography sx={{ whiteSpace: "pre-line", margin: "3% 0" }}>
-            오늘의 갓생
-          </Typography>
-          <Stack direction="column" alignItems="center">
-            {bingo.code && (
-              <Box
-                sx={{ width: "100%", maxWidth: "550px", textAlign: "center" }}
+          <Box
+            sx={{
+              height: "100%",
+              width: "100%",
+            }}
+          >
+            <Typography sx={{ whiteSpace: "pre-line", margin: "3% 0" }}>
+              오늘의 갓생
+            </Typography>
+            {code && code !== "none" ? (
+              <Stack direction="column" alignItems="center">
+                <Box
+                  sx={{ width: "100%", maxWidth: "550px", textAlign: "center" }}
+                >
+                  <Typography fontSize={22} fontFamily="BMEULJIRO">
+                    {bingo.title}
+                  </Typography>
+                  <Bingo
+                    createdBy={bingo.userName}
+                    size={3}
+                    goals={bingo.goals}
+                    mode={"Active"}
+                    startDate={bingo.startDate}
+                    godlife={bingo.godlife}
+                    id={bingo.id}
+                  />
+                </Box>
+              </Stack>
+            ) : (
+              <Stack
+                sx={{
+                  height: "100%",
+                  textAlign: "center",
+                  width: "100%",
+                  marginTop: "20%",
+                }}
               >
-                <Typography fontSize={22} fontFamily="BMEULJIRO">
-                  {bingo.title}
-                </Typography>
-                <Bingo
-                  createdBy={bingo.userName}
-                  size={3}
-                  goals={bingo.goals}
-                  mode={"Active"}
-                  startDate={bingo.startDate}
-                  godlife={bingo.godlife}
-                  id={bingo.id}
-                />
-              </Box>
+                <Box position="relative">
+                  <Typography fontSize={18} sx={{ whiteSpace: "pre-line" }}>
+                    오늘의 갓생이 없습니다.
+                  </Typography>
+                  <img
+                    src={Stamp}
+                    alt="stamp"
+                    style={{
+                      position: "absolute",
+                      top: "-70px",
+                      left: "45%",
+                      opacity: "30%",
+                    }}
+                  />
+                  <BlackButton
+                    style={{
+                      width: "35%",
+                      margin: "10% 0",
+                    }}
+                    onClick={() => navigate("/create")}
+                  >
+                    갓생 살러가기
+                  </BlackButton>
+                </Box>
+              </Stack>
             )}
-          </Stack>
+          </Box>
           <ProfileRecord />
         </Box>
       </Stack>

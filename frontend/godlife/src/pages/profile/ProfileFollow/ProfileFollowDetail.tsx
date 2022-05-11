@@ -5,6 +5,7 @@ import React, { useCallback, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import BorderImage from "../../../assets/images/border.webp";
+import Stamp from "../../../assets/images/stamp.webp";
 import Bingo from "../../../components/Bingo/Bingo";
 import { setFollowingUser } from "../../../store/following";
 import { selectFollowingUser } from "../../../store/following";
@@ -99,29 +100,61 @@ const ProfileFollowDetail = () => {
               팔로워 {followingCount} | 팔로잉 {followerCount}
             </Typography>
           </Box>
-          <Typography sx={{ whiteSpace: "pre-line", margin: "3% 0" }}>
-            오늘의 갓생
-          </Typography>
-          <Stack direction="column" alignItems="center">
-            {todayBingo !== null && todayBingo.code && (
-              <Box
-                sx={{ width: "100%", maxWidth: "550px", textAlign: "center" }}
+          <Box
+            sx={{
+              height: "100%",
+              width: "100%",
+            }}
+          >
+            <Typography sx={{ whiteSpace: "pre-line", margin: "3% 0" }}>
+              오늘의 갓생
+            </Typography>
+            {todayBingo !== null && todayBingo.code ? (
+              <Stack direction="column" alignItems="center">
+                <Box
+                  sx={{ width: "100%", maxWidth: "550px", textAlign: "center" }}
+                >
+                  <Typography fontSize={22} fontFamily="BMEULJIRO">
+                    {todayBingo.title}
+                  </Typography>
+                  <Bingo
+                    createdBy={todayBingo.userName}
+                    size={3}
+                    goals={todayBingo.goals}
+                    mode={"Active"}
+                    startDate={todayBingo.startDate}
+                    godlife={todayBingo.godlife}
+                    id={todayBingo.id}
+                  />
+                </Box>
+              </Stack>
+            ) : (
+              <Stack
+                sx={{
+                  height: "100%",
+                  textAlign: "center",
+                  width: "100%",
+                  marginTop: "20%",
+                }}
               >
-                <Typography fontSize={22} fontFamily="BMEULJIRO">
-                  {todayBingo.title}
-                </Typography>
-                <Bingo
-                  createdBy={todayBingo.userName}
-                  size={3}
-                  goals={todayBingo.goals}
-                  mode={"Active"}
-                  startDate={todayBingo.startDate}
-                  godlife={todayBingo.godlife}
-                  id={todayBingo.id}
-                />
-              </Box>
+                <Box position="relative">
+                  <Typography fontSize={18} sx={{ whiteSpace: "pre-line" }}>
+                    오늘의 갓생이 없습니다.
+                  </Typography>
+                  <img
+                    src={Stamp}
+                    alt="stamp"
+                    style={{
+                      position: "absolute",
+                      top: "-70px",
+                      left: "45%",
+                      opacity: "30%",
+                    }}
+                  />
+                </Box>
+              </Stack>
             )}
-          </Stack>
+          </Box>
           <ProfileFollowDetailRecord name={paramId} />
         </Box>
       </Stack>
