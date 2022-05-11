@@ -19,7 +19,7 @@ public class PrincipalDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // ROLE에 따라 접근하는 페이지 다르게 설정 -> 일단 다 동일한 ROLE 설정
+        // ROLE에 따라 접근하는 페이지 다르게 설정
         Collection<GrantedAuthority> collect = new ArrayList<>();
         collect.add(new GrantedAuthority() {
             @Override
