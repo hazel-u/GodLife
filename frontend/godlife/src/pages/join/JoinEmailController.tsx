@@ -40,7 +40,7 @@ const EmailController = ({
   const isMount = useIsMount();
   useEffect(() => {
     if (!isMount) {
-      trigger("email");
+      // trigger("email");
     }
   }, [isMount, trigger, validatedEmail]);
 

@@ -1,5 +1,5 @@
 import { IconButton, SvgIcon } from "@mui/material";
-import html2canvas from "html2canvas";
+import domtoimage from "dom-to-image";
 
 import React, { useMemo } from "react";
 import ReactGA from "react-ga4";
@@ -20,25 +20,19 @@ const BingoDetailShareImage = () => {
     const bingo = document.getElementById("bingo");
 
     if (bingo) {
-      html2canvas(bingo).then((canvas) => {
-        canvas.toBlob(
-          (blob: any) => {
-            const formData = new FormData();
-            formData.append("image", blob, imageName);
+      domtoimage.toBlob(bingo).then((blob) => {
+        const formData = new FormData();
+        formData.append("image", blob, imageName);
 
-            uploadImage(formData.get("image"))
-              .then(() => {
-                const link = window.document.createElement("a");
-                link.href = `https://sayeon.s3.ap-northeast-2.amazonaws.com/${imageName}`;
-                link.click();
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          },
-          "image/png",
-          1
-        );
+        uploadImage(formData.get("image"))
+          .then(() => {
+            const link = window.document.createElement("a");
+            link.href = `https://s3.ap-northeast-2.amazonaws.com/today.godlife/${imageName}`;
+            link.click();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       });
     }
 

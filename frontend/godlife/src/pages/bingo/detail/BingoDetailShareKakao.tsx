@@ -1,5 +1,5 @@
 import { IconButton, SvgIcon } from "@mui/material";
-import html2canvas from "html2canvas";
+import domtoimage from "dom-to-image";
 
 import React, { useEffect, useMemo } from "react";
 import ReactGA from "react-ga4";
@@ -32,38 +32,32 @@ const BingoDetailShareKakao = () => {
     const bingo = document.getElementById("bingo-box");
 
     if (bingo) {
-      html2canvas(bingo).then((canvas) => {
-        canvas.toBlob(
-          (blob: any) => {
-            const formData = new FormData();
-            formData.append("image", blob, imageName);
+      domtoimage.toBlob(bingo).then((blob) => {
+        const formData = new FormData();
+        formData.append("image", blob, imageName);
 
-            uploadImage(formData.get("image"))
-              .then(() => {
-                window.Kakao.Link.sendDefault({
-                  objectType: "feed",
-                  content: {
-                    title: "갓생살기",
-                    description: "쉽게만 살아가면 재미없어 빙고!",
-                    imageUrl: `https://sayeon.s3.ap-northeast-2.amazonaws.com/${imageName}`,
-                    link: {
-                      mobileWebUrl: window.location.href,
-                      webUrl: window.location.href,
-                    },
-                  },
-                  social: {
-                    likeCount: likeCnt,
-                    commentCount: comments.length,
-                  },
-                });
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          },
-          "image/png",
-          1
-        );
+        uploadImage(formData.get("image"))
+          .then(() => {
+            window.Kakao.Link.sendDefault({
+              objectType: "feed",
+              content: {
+                title: "갓생살기",
+                description: "쉽게만 살아가면 재미없어 빙고!",
+                imageUrl: `https://s3.ap-northeast-2.amazonaws.com/today.godlife/${imageName}`,
+                link: {
+                  mobileWebUrl: window.location.href,
+                  webUrl: window.location.href,
+                },
+              },
+              social: {
+                likeCount: likeCnt,
+                commentCount: comments.length,
+              },
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       });
     }
   };

@@ -17,7 +17,7 @@ const BingoDetailShare = () => {
   return (
     <Stack direction="column" alignItems="center" sx={{ margin: "8% 0" }}>
       <Typography fontSize={20} fontFamily={"BMEULJIRO"} mb={1}>
-        함께 갓생 살기
+        갓생 자랑하기
       </Typography>
       <Stack direction="row" spacing={2}>
         <IconButton

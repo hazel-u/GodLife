@@ -2,6 +2,7 @@ import Grid from "@mui/material/Grid";
 
 import { useCallback, useEffect, useState } from "react";
 
+import Award from "../../assets/images/award.webp";
 import { setDialog } from "../../store/dialog";
 import { useAppDispatch } from "../../store/hooks";
 import axiosWithToken from "../../utils/axios";
@@ -115,7 +116,9 @@ export const Bingo = ({
 
   return (
     <>
-      <BingoProgress value={Math.min(3, bingoCounts)} />
+      {mode === "showProgress" && (
+        <BingoProgress value={Math.min(3, bingoCounts)} />
+      )}
       {/* 빙고 박스 */}
       <Grid
         container
@@ -123,6 +126,11 @@ export const Bingo = ({
           stretch: { height: "100%" },
           maxWidth: 750,
           backgroundColor: "white",
+          position: "relative",
+          backgroundImage: 3 <= bingoCounts ? `url(${Award})` : "",
+          backgroundSize: "100%",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
         }}
         id="bingo-box"
       >

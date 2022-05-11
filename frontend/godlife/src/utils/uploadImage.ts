@@ -3,7 +3,7 @@ import AWS from "aws-sdk";
 const ACCESS_KEY = process.env.REACT_APP_S3_ACCESS_KEY;
 const SECRET_ACCESS_KEY = process.env.REACT_APP_S3_SECRET_ACCESS_KEY;
 const REGION = "ap-northeast-2";
-const S3_BUCKET = "sayeon";
+const S3_BUCKET = "today.godlife";
 
 AWS.config.update({
   accessKeyId: ACCESS_KEY,
