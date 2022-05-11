@@ -21,21 +21,17 @@ const LoginBanner = () => {
       <Box
         position="absolute"
         sx={{
-          top: fullScreen ? "30%" : "-10px",
-          left: fullScreen ? "calc(50% - 200px)" : "50px",
+          top: fullScreen ? "60vh" : "-20px",
+          left: fullScreen ? "calc(50% - 150px)" : "50px",
         }}
       >
-        <img
-          src={LoginBannerImage1}
-          alt="banner 1"
-          style={{ width: fullScreen ? "400px" : "300px" }}
-        />
+        <img src={LoginBannerImage1} alt="banner 1" />
       </Box>
 
       <Box
         position="absolute"
         sx={{
-          bottom: "-10px",
+          bottom: "-40px",
           right: "50px",
           display: fullScreen ? "none" : "block",
         }}
@@ -48,17 +44,19 @@ const LoginBanner = () => {
       </Box>
 
       <Stack
-        sx={{
+        sx={(theme) => ({
           height: "100%",
           textAlign: "center",
           width: "100%",
           "& p": {
             zIndex: 2,
           },
-        }}
+          [theme.breakpoints.down(1550)]: {
+            height: "55%",
+          },
+        })}
         alignItems="center"
-        justifyContent={fullScreen ? "start" : "center"}
-        marginTop={fullScreen ? "20%" : "0"}
+        justifyContent={fullScreen ? "end" : "center"}
       >
         <Box position="relative">
           <Typography sx={{ fontFamily: "BMEULJIRO", fontSize: "80px" }}>
