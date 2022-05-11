@@ -16,10 +16,8 @@ import com.ovcors.godlife.core.domain.bingo.Bingo;
 import com.ovcors.godlife.core.domain.user.Follow;
 import com.ovcors.godlife.core.domain.user.JoinType;
 import com.ovcors.godlife.core.domain.user.User;
-import com.ovcors.godlife.core.queryrepository.BingoQueryRepository;
 import com.ovcors.godlife.core.repository.BingoRepository;
 import com.ovcors.godlife.core.repository.UserRepository;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -46,9 +44,6 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private BingoRepository bingoRepository;
-
-    @Autowired
-    private BingoQueryRepository bingoQueryRepository;
 
     @Autowired
     private RedisTemplate redisTemplate;;
@@ -90,10 +85,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserInfoResDto getUserInfo(UUID seq) {
-        if(seq == null) {
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
-        }
-        User user = userRepository.findById(seq).get();
+        User user = findUserBySeq(seq);
         UserInfoResDto userInfoResDto = UserInfoResDto.builder()
                 .email(user.getEmail())
                 .name(user.getName())
@@ -110,22 +102,14 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void setUserInfo(UUID seq, ChangeUserInfoReqDto changeUserInfoReqDto) {
-        if(seq == null) {
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
-        }
-
-        User user = userRepository.findById(seq).get();
+        User user = findUserBySeq(seq);
         user.changeName(changeUserInfoReqDto.getName());
         userRepository.save(user);
     }
 
     @Override
     public void deleteUser(UUID seq) {
-        if(seq == null) {
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
-        }
-
-        User user = userRepository.findById(seq).get();
+        User user = findUserBySeq(seq);
         user.deleteUser();
         userRepository.save(user);
     }
@@ -150,11 +134,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Boolean changePassword(UUID seq, ChangePasswordReqDto changePasswordReqDto) {
-        if(seq == null) {
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
-        }
-
-        User user = userRepository.findById(seq).get();
+        User user = findUserBySeq(seq);
 
         // oldPassword가 DB에 저장된 password와 맞나 확인
         Boolean matchCheck = bCryptPasswordEncoder.matches(changePasswordReqDto.getOldPassword(), user.getPassword());
@@ -211,11 +191,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public GodLifeResDto getGodLife(UUID seq) {
-        if(seq == null) {
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
-        }
-
-        User user = userRepository.findById(seq).get();
+        User user = findUserBySeq(seq);
 
         GodLifeResDto godLifeResDto = GodLifeResDto.builder()
                 .recentDate(user.getRecentDate())
@@ -270,11 +246,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<FollowInfoResDto> getFollowerList(UUID seq) {
-        if(seq==null) {
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
-        }
-
-        User user = userRepository.findById(seq).get();
+        User user = findUserBySeq(seq);
 
         List<FollowInfoResDto> followerName = new ArrayList<>();
 
@@ -288,11 +260,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<FollowInfoResDto> getFollowingList(UUID seq) {
-        if(seq==null) {
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
-        }
-
-        User user = userRepository.findById(seq).get();
+        User user = findUserBySeq(seq);
 
         List<FollowInfoResDto> followingName = new ArrayList<>();
 
@@ -306,18 +274,29 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void changeStatus(UUID seq, UpdateStatusReqDto updateStatusReqDto) {
-        if(seq==null) {
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
-        }
-
-        User user = userRepository.findById(seq).get();
-        if(user==null) {
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
-        }
+        User user = findUserBySeq(seq);
 
         user.changeInfo(updateStatusReqDto.getInfo());
         userRepository.save(user);
 
         return;
+    }
+
+    @Override
+    public void logout(UUID seq) {
+        User user = findUserBySeq(seq);
+
+        redisTemplate.delete(user.getEmail());
+    }
+
+    public User findUserBySeq(UUID seq) {
+        if(seq == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+        User user = userRepository.findById(seq).get();
+        if(user==null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+        return user;
     }
 }
