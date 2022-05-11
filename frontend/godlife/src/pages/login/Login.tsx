@@ -1,4 +1,4 @@
-import { Box, Divider, Grid } from "@mui/material";
+import { Box, Divider, Stack } from "@mui/material";
 
 import React from "react";
 
@@ -10,20 +10,36 @@ import LoginOAuth from "./LoginOAuth";
 
 const Login = () => {
   return (
-    <Grid
-      container
-      spacing={2}
+    <Stack
       direction="row"
-      justifyContent="center"
       alignItems="center"
-      sx={{ height: "100vh" }}
+      sx={(theme) => ({
+        height: "100%",
+        width: "100%",
+        [theme.breakpoints.up("md")]: {
+          backgroundColor: "white",
+        },
+      })}
     >
-      <Grid item md={8} display={{ xs: "none", md: "block" }}>
-        <LoginBanner />
-      </Grid>
+      <Box
+        display={{ xs: "none", md: "block" }}
+        sx={{ backgroundColor: "#F2F2F2", height: "100%", flex: 1 }}
+      >
+        <Box
+          sx={{
+            maxWidth: "1400px",
+            height: "100%",
+            width: "100%",
+            margin: "0 50px 0 auto",
+            overflow: "hidden",
+          }}
+        >
+          <LoginBanner />
+        </Box>
+      </Box>
 
-      <Grid item xs={10} md={3}>
-        <Box sx={{ maxWidth: "300px", margin: "auto" }}>
+      <Box width="max(400px, 30%)" margin="0 auto">
+        <Box width="300px" margin="0 auto 0 50px">
           <Box sx={{ textAlign: "center" }}>
             <img
               src={Logo}
@@ -48,8 +64,8 @@ const Login = () => {
 
           <LoginOAuth />
         </Box>
-      </Grid>
-    </Grid>
+      </Box>
+    </Stack>
   );
 };
 

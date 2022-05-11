@@ -69,7 +69,7 @@ const BingoDetailCopy = ({ code }: { code: string }) => {
                     padding: "5px 10px",
                   }}
                 >
-                  갓생 복사
+                  복사하기
                 </Typography>{" "}
                 버튼을 클릭
               </ListItem>
@@ -94,7 +94,7 @@ const BingoDetailCopy = ({ code }: { code: string }) => {
           </TextButton>
         </DialogActions>
       </Dialog>
-      <TextButton onClick={copyBingoCode}>갓생 복사</TextButton>
+      <TextButton onClick={copyBingoCode}>복사하기</TextButton>
     </>
   );
 };

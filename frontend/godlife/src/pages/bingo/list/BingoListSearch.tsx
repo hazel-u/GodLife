@@ -15,9 +15,24 @@ const BingoListSearch = () => {
   const dispatch = useAppDispatch();
 
   const handleChange = (newValue: Date | null) => {
+    console.log(
+      newValue,
+      dayjs(newValue).isValid(),
+      dayjs(newValue).isBetween(
+        dayjs("2022-05-01"),
+        dayjs("2999-12-31"),
+        "year",
+        "[]"
+      )
+    );
     if (
       !dayjs(newValue).isValid() ||
-      !dayjs(newValue).isBetween("2022-05-01", "2999-12-31", "year")
+      !dayjs(newValue).isBetween(
+        dayjs("2022-05-01"),
+        dayjs("2999-12-31"),
+        "year",
+        "[]"
+      )
     )
       return;
 

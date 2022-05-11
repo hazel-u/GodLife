@@ -1,8 +1,9 @@
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import { Box, IconButton, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import axios from "axios";
 
 import React, { useState } from "react";
+
+import { TextButton } from "../../../components/common/Button";
 
 const BingoDetailLike = ({
   likeCnt,
@@ -23,12 +24,10 @@ const BingoDetailLike = ({
 
   return (
     <Stack direction="row" alignItems="center">
-      <Box>
-        <IconButton disabled={clickLike} size="small" onClick={like}>
-          <ThumbUpIcon style={{ color: "#BB9B72" }} />
-        </IconButton>
-      </Box>
-      <Typography sx={{ mt: 0.5 }}>{likeCnt}</Typography>
+      <TextButton disabled={clickLike} onClick={like}>
+        {clickLike ? "칭찬완료" : "칭찬하기"}
+      </TextButton>
+      <Typography color="primary">{likeCnt}</Typography>
     </Stack>
   );
 };

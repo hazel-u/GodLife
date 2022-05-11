@@ -34,8 +34,8 @@ public class FeedController {
         followService.unfollow(user,name);
         return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
     }
-    @GetMapping("/user/{keyword}")
-    public ResponseEntity<List<FollowInfoResDto>> getFollowingList(@PathVariable String keyword) {
+    @GetMapping("/user")
+    public ResponseEntity<List<FollowInfoResDto>> getFollowingList(@RequestParam("keyword") String keyword) {
         List<FollowInfoResDto> list= followService.findUser(keyword);
         return ResponseEntity.ok().body(list);
     }

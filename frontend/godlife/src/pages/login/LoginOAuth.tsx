@@ -48,7 +48,12 @@ const LoginOAuth = () => {
         clientId={process.env.REACT_APP_GOOGLE_OAUTH_KEY!}
         render={(renderProps) => (
           <Button
-            sx={{ padding: 0 }}
+            sx={(theme) => ({
+              padding: 0,
+              [theme.breakpoints.up("md")]: {
+                boxShadow: "2px 3px 5px rgba(0, 0, 0, 0.10)",
+              },
+            })}
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
           >
