@@ -34,12 +34,12 @@ public class FeedController {
         followService.unfollow(user,name);
         return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
     }
-    @GetMapping("/user")
-    public ResponseEntity<List<FollowInfoResDto>> getFollowingList(@RequestParam("keyword") String keyword) {
-        List<FollowInfoResDto> list= followService.findUser(keyword);
+    @PostMapping("/user")
+    public ResponseEntity<List<FollowInfoResDto>> getFollowingList(@RequestBody UserSearchingDto reqDto) {
+        List<FollowInfoResDto> list= followService.findUser(reqDto.getKeyword());
         return ResponseEntity.ok().body(list);
     }
-        @GetMapping
+    @GetMapping
     public ResponseEntity<List<FindBingoResDto>> getFeed(@Auth User user) {
         List<FindBingoResDto> response = followService.getFeed(user.getSeq());
         return ResponseEntity.ok().body(response);
