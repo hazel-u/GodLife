@@ -124,15 +124,15 @@ const Navbar = () => {
           >
             <Tooltip title={"서비스 준비중입니다."}>
               <TextButton
-                onClick={() => {
-                  dispatch(
-                    setSnackbar({
-                      open: true,
-                      message: "서비스 준비중입니다.",
-                      severity: "info",
-                    })
-                  );
-                }}
+                // onClick={() => {
+                //   dispatch(
+                //     setSnackbar({
+                //       open: true,
+                //       message: "서비스 준비중입니다.",
+                //       severity: "info",
+                //     })
+                //   );
+                // }}
                 sx={{
                   color:
                     location.pathname.split("/")[1] === "group"

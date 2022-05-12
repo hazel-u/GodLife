@@ -47,7 +47,6 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                     .getClaim("email").asString();
 
             if(email != null) {
-                System.out.println(email+" -> 로그인 시도");
                 User user = userRepository.findByEmailAndDeletedFalse(email);
 
                 if(user == null) {

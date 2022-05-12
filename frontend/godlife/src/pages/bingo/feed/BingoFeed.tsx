@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { typography } from "@mui/system";
+import axios from "axios";
 
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -16,55 +17,82 @@ import { useNavigate } from "react-router-dom";
 import BorderImage from "../../../assets/images/border.webp";
 import Stamp from "../../../assets/images/stamp.webp";
 import Bingo from "../../../components/Bingo/Bingo";
+import { OutlinedInput } from "../../../components/common/Input";
 import { useAppDispatch } from "../../../store/hooks";
 import { setLoading } from "../../../store/loading";
 import { BingoType } from "../../../types/bingo";
 import axiosWithToken from "../../../utils/axios";
 
+const searchUser = (nickName: string) => {
+  axiosWithToken
+    .post(`feed/user`, { keyword: nickName })
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => console.log(err));
+};
+
+const followUser = (nickName: string) => {
+  console.log(nickName);
+  axiosWithToken
+    .post(`feed/follow/${nickName}`)
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => console.log("팔로우 에러", err));
+};
+
+const unfollowUser = (nickName: string) => {
+  axiosWithToken
+    .delete(`feed/follow/${nickName}`)
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => console.log(err));
+};
+
+const UserSearchResult = () => {
+  return null;
+};
+
 const BingoFeed = () => {
   const [bingoList, setBingoList] = useState<BingoType[]>([]);
   const [bingoCount, setBingoCount] = useState(-1);
-  const [page, setPage] = useState(0);
+  // 유저 검색창
+  const [searchInput, setSearchInput] = useState("");
   console.log(bingoList);
-  const limit = 6;
-  const dispatch = useAppDispatch();
-  const getBingoList = useCallback(() => {
+
+  const getBingoFeed = () => {
     axiosWithToken
-      .get(`bingo/${page}/${limit}`)
+      .get(`feed`)
       .then((res) => {
         setBingoList(res.data);
+        setBingoCount(res.data.length);
       })
       .catch((err) => console.log(err));
-  }, [page]);
-
-  useEffect(() => {
-    dispatch(setLoading(true));
-    axiosWithToken
-      .get("bingo/count")
-      .then((res) => {
-        setBingoCount(res.data.count);
-        if (res.data.count) {
-          getBingoList();
-        }
-      })
-      .catch((err) => console.log(err));
-  }, [getBingoList, dispatch]);
-
-  useEffect(() => {
-    dispatch(setLoading(true));
-    getBingoList();
-  }, [page, getBingoList, dispatch]);
-
-  useEffect(() => {
-    if (-1 < bingoCount) {
-      dispatch(setLoading(false));
-    }
-  }, [bingoList, dispatch, bingoCount]);
+  };
 
   const navigate = useNavigate();
+  useEffect(() => {
+    if (bingoCount === -1) {
+      getBingoFeed();
+      // followUser("월워우러");
+      // searchUser("천민우");
+    }
+  });
 
   return (
     <Stack direction="column" justifyContent="center" alignItems="center" p={3}>
+      <OutlinedInput
+        value={searchInput}
+        onChange={(e) => {
+          setSearchInput(e.target.value);
+        }}
+        type="text"
+      />
+      <Box>
+        <Typography></Typography>
+      </Box>
       {bingoCount === 0 ? (
         <Stack
           direction="column"
@@ -196,12 +224,6 @@ const BingoFeed = () => {
               </Grid>
             ))}
           </Grid>
-          <Pagination
-            count={Math.floor((bingoCount + limit - 1) / limit)}
-            page={page + 1}
-            sx={{ padding: "50px" }}
-            onChange={(_, value: number) => setPage(value - 1)}
-          />
         </>
       )}
     </Stack>

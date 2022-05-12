@@ -48,8 +48,8 @@ public class FindBingoResDto {
         this.likeCnt = bingo.getLikeCnt();
 
         this.godCount = bingo.getUser().getGodCount();
-        this.serialGodCount = bingo.getUser().getSerialGodCount();
-
+//        this.serialGodCount = bingo.getUser().getSerialGodCount();
+        this.serialGodCount=0;
         List<BingoGoals> bingoGoals = bingo.getBingoGoals();
         for (BingoGoals bingoGoal : bingoGoals) {
             this.goals.add(BingoGoalResDto.builder()
