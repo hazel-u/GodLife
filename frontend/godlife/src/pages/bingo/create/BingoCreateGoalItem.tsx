@@ -91,8 +91,9 @@ const BingoCreateGoalItem = (props: GoalProps) => {
 
   const deleteCustomGoal = () => {
     axiosWithToken
-      .delete("goal/??")
+      .delete(`goal/custom/${props.seq}`)
       .then(() => {
+        manageSelectedGoals();
         props.getGoals();
         dispatch(
           setSnackbar({
@@ -157,14 +158,16 @@ const BingoCreateGoalItem = (props: GoalProps) => {
         <Typography>{props.content}</Typography>
       </GoalButton>
 
-      <CustomIconButton
-        sx={{
-          right: 8,
-        }}
-        onClick={deleteCustomGoal}
-      >
-        <SvgIcon component={ClearIcon} />
-      </CustomIconButton>
+      {props.category === "내목표" && (
+        <CustomIconButton
+          sx={{
+            right: 8,
+          }}
+          onClick={deleteCustomGoal}
+        >
+          <SvgIcon component={ClearIcon} />
+        </CustomIconButton>
+      )}
     </Stack>
   );
 };

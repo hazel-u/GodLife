@@ -22,7 +22,7 @@ const BingoCreateCustomGoal = ({ getGoals }: { getGoals: () => void }) => {
   const addGoal = () => {
     content &&
       axiosWithToken
-        .post("goal/??")
+        .post("goal/custom", { content })
         .then(() => {
           getGoals();
           handleClose();

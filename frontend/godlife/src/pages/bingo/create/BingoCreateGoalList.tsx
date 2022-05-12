@@ -1,5 +1,4 @@
 import { Box, Chip, Grid, Stack, Typography } from "@mui/material";
-import axios from "axios";
 
 import React, { useCallback, useEffect, useState } from "react";
 
@@ -20,7 +19,10 @@ const BingoCreateGoalList = () => {
   const changeCategory = useCallback(() => {
     selectedCategory && setSelectedCategory(selectedCategory);
     if (selectedCategory === "내 목표") {
-      setGoalList([]);
+      const classifiedGoalList = allGoalList.filter(
+        (goal) => goal.category === "내목표"
+      );
+      setGoalList(classifiedGoalList);
     } else if (selectedCategory === "즐겨찾기") {
       setGoalList(userFavorites);
     } else if (selectedCategory === "선택된목표") {
@@ -38,7 +40,7 @@ const BingoCreateGoalList = () => {
   }, [changeCategory, selectedCategory]);
 
   const getGoals = useCallback(() => {
-    axios
+    axiosWithToken
       .get("goal")
       .then((res) => {
         // if (selectedCategory === "내 목표") {
@@ -47,7 +49,7 @@ const BingoCreateGoalList = () => {
         //   );
         //   setGoalList(classifiedGoalList);
         // }
-        setAllGoalList(res.data.goals);
+        setAllGoalList(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
