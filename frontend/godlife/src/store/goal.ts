@@ -15,10 +15,11 @@ export const goalSlice = createSlice({
     deleteGoal: (state, { payload }) => {
       return state.filter(({ seq }) => seq !== payload.seq);
     },
+    clearGoal: () => initialState,
   },
 });
 
-export const { setGoal, deleteGoal } = goalSlice.actions;
+export const { setGoal, deleteGoal, clearGoal } = goalSlice.actions;
 
 export const selectGoal = (state: RootState) => state.goal;
 

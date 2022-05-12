@@ -62,7 +62,7 @@ export default function SwipeableEdgeDrawer({
       <Global
         styles={{
           ".MuiDrawer-root > .MuiPaper-root": {
-            height: `calc(50% - ${drawerBleeding}px)`,
+            height: `max(400px, calc(50% - ${drawerBleeding}px))`,
             overflow: "visible",
           },
         }}
@@ -94,59 +94,58 @@ export default function SwipeableEdgeDrawer({
             direction="column"
             justifyContent="start"
             alignItems="center"
-            paddingTop="10px"
-            height="100%"
+            paddingTop="20px"
+            height="90%"
           >
             <Stack>
               <h4>{name}님, 갓생사세요!</h4>
               <div className="division-line" />
             </Stack>
-            <Box sx={{ height: "70%" }}>
-              <Stack
-                direction="column"
-                justifyContent="space-around"
-                sx={{ height: "100%" }}
+
+            <Stack
+              direction="column"
+              justifyContent="space-around"
+              sx={{ height: "100%" }}
+            >
+              <TextButton
+                onClick={() => {
+                  if (code && code !== "none") {
+                    navigate(`/bingo/${code}`);
+                  } else {
+                    navigate("create");
+                  }
+                }}
               >
+                오늘의 갓생
+              </TextButton>
+              <TextButton href="/list">이전의 갓생</TextButton>
+
+              <Tooltip title={"서비스 준비중입니다."}>
                 <TextButton
                   onClick={() => {
-                    if (code && code !== "none") {
-                      navigate(`/bingo/${code}`);
-                    } else {
-                      navigate("create");
-                    }
+                    dispatch(
+                      setSnackbar({
+                        open: true,
+                        message: "서비스 준비중입니다.",
+                        severity: "info",
+                      })
+                    );
                   }}
                 >
-                  오늘의 갓생
+                  모두의 갓생
                 </TextButton>
-                <TextButton href="/list">이전의 갓생</TextButton>
+              </Tooltip>
 
-                <Tooltip title={"서비스 준비중입니다."}>
-                  <TextButton
-                    onClick={() => {
-                      dispatch(
-                        setSnackbar({
-                          open: true,
-                          message: "서비스 준비중입니다.",
-                          severity: "info",
-                        })
-                      );
-                    }}
-                  >
-                    모두의 갓생
-                  </TextButton>
-                </Tooltip>
-
-                <TextButton
-                  onClick={() => {
-                    setDrawerOpen(false);
-                    setOpen(true);
-                  }}
-                >
-                  내 정보
-                </TextButton>
-                <TextButton onClick={logout}>로그아웃</TextButton>
-              </Stack>
-            </Box>
+              <TextButton
+                onClick={() => {
+                  setDrawerOpen(false);
+                  setOpen(true);
+                }}
+              >
+                내 정보
+              </TextButton>
+              <TextButton onClick={logout}>로그아웃</TextButton>
+            </Stack>
           </Stack>
         </StyledBox>
       </SwipeableDrawer>

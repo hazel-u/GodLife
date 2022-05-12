@@ -1,15 +1,16 @@
 import ClearIcon from "@mui/icons-material/Clear";
 import {
-  Box,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Grid,
   IconButton,
   Stack,
   Typography,
 } from "@mui/material";
+import dayjs from "dayjs";
 
 import React, { useEffect, useRef, useState } from "react";
 
@@ -103,6 +104,7 @@ const Comment = ({
                 size="small"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                type="text"
               />
             </>
           )}
@@ -113,17 +115,38 @@ const Comment = ({
         </DialogActions>
       </Dialog>
 
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <p>{comment.nickname}</p>
-        <Box>
-          <IconButton onClick={() => setOpen(true)}>
-            <ClearIcon />
-          </IconButton>
-        </Box>
-      </Stack>
-      <Typography sx={{ margin: "0 0 30px 0", wordBreak: "break-all" }}>
-        {comment.content}
-      </Typography>
+      <Grid
+        container
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        spacing={1}
+        margin="5px 0 20px 0"
+        width="100%"
+      >
+        <Grid item xs={2}>
+          {comment.nickname}
+        </Grid>
+        <Grid item xs={10}>
+          <Stack direction="row" justifyContent="space-between">
+            <Stack>
+              <Typography sx={{ wordBreak: "break-all" }}>
+                {comment.content}
+              </Typography>
+              <Typography sx={{ fontSize: "11px", color: "#9b9b9b" }}>
+                {dayjs(
+                  comment.date.slice(0, 3).join("-") +
+                    " " +
+                    comment.date.slice(3, 5).join(":")
+                ).format("YYYY.MM.DD HH:mm")}
+              </Typography>
+            </Stack>
+            <IconButton onClick={() => setOpen(true)}>
+              <ClearIcon />
+            </IconButton>
+          </Stack>
+        </Grid>
+      </Grid>
     </>
   );
 };

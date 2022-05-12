@@ -1,55 +1,99 @@
-import { Divider, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 
 import React from "react";
 
-import BorderImage from "../../assets/images/border.webp";
+import LoginBannerImage1 from "../../assets/images/loginBannerImage1.webp";
+import LoginBannerImage2 from "../../assets/images/loginBannerImage2.webp";
 import Stamp from "../../assets/images/stamp.webp";
 
 const LoginBanner = () => {
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down(1550));
+
   return (
-    <Stack
+    <Box
       sx={{
-        height: "80vh",
-        margin: "20px",
-        backgroundColor: "white",
-        border: "20px solid white",
-        borderImageSource: `url(${BorderImage})`,
-        borderImageSlice: "37 51 47 47",
-        borderImageWidth: "13px 13px 14px 13px",
-        borderImageOutset: "10px 10px 13px 11px",
-        borderImageRepeat: "repeat repeat",
-        padding: "20px",
-        borderRadius: "10px",
+        height: "100%",
+        width: "100%",
         position: "relative",
       }}
-      direction="column"
-      justifyContent="center"
     >
-      <Typography variant="h1" sx={{ fontFamily: "BMEULJIRO" }}>
-        갓생살기
-      </Typography>
-      <Typography variant="h4" sx={{ fontFamily: "BMEULJIRO" }}>
-        - 쉽게만 살아가면 재미없어 빙고
-      </Typography>
+      <Box
+        position="absolute"
+        sx={{
+          top: fullScreen ? "60vh" : "-20px",
+          left: fullScreen ? "calc(50% - 150px)" : "50px",
+        }}
+      >
+        <img src={LoginBannerImage1} alt="banner 1" />
+      </Box>
 
-      <Divider sx={{ margin: "20px 0" }} />
+      <Box
+        position="absolute"
+        sx={{
+          bottom: "-40px",
+          right: "50px",
+          display: fullScreen ? "none" : "block",
+        }}
+      >
+        <img
+          src={LoginBannerImage2}
+          alt="banner 2"
+          style={{ width: "300px" }}
+        />
+      </Box>
 
-      <Typography fontSize={18} lineHeight={2} whiteSpace="pre-wrap">
-        {"\t"}
-        <b>갓생살기</b>는 갓생러
-        <span style={{ color: "#939393", fontSize: "14px" }}>God+生+-er</span>
-        들을 위한 갓생빙고 플랫폼입니다. <br />
-        40여 개의 갓생 목표 중 9개를 선택해 세 빙고를 달성해보세요.{" "}
-        <b>갓생살기</b>는 매일의 갓생 목표를 달성하고, 친구들과 쉽게 공유할 수
-        있도록 도와드립니다. <br />
-        {"\t"}나를 위한 갓생, 지금 바로 <b>갓생살기</b>와 시작해보세요.
-      </Typography>
-      <img
-        src={Stamp}
-        alt="stamp"
-        style={{ position: "absolute", bottom: "5%", right: "2%" }}
-      />
-    </Stack>
+      <Stack
+        sx={(theme) => ({
+          height: "100%",
+          textAlign: "center",
+          width: "100%",
+          "& p": {
+            zIndex: 2,
+          },
+          [theme.breakpoints.down(1550)]: {
+            height: "55%",
+          },
+        })}
+        alignItems="center"
+        justifyContent={fullScreen ? "end" : "center"}
+      >
+        <Box position="relative">
+          <Typography
+            sx={{ fontFamily: "BMEULJIRO", fontSize: "80px" }}
+            variant="h1"
+          >
+            God <span style={{ fontFamily: "Reggae One" }}>生</span>
+          </Typography>
+
+          <img
+            src={Stamp}
+            alt="stamp"
+            style={{
+              position: "absolute",
+              top: "-59px",
+              left: "-69px",
+              opacity: "30%",
+            }}
+          />
+        </Box>
+        <Typography
+          sx={{
+            fontFamily: "BMEULJIRO",
+            fontSize: "40px",
+            marginBottom: "30px",
+          }}
+          variant="h2"
+        >
+          한 번 살아보시지 않으렵니까?
+        </Typography>
+
+        <Typography fontSize={20} variant="h3">
+          매일의 갓생 목표를 달성하고, <br />
+          친구들과 함께 도전을 이어가시오.
+        </Typography>
+      </Stack>
+    </Box>
   );
 };
 

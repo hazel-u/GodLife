@@ -13,6 +13,7 @@ const BingoCreateTitle = ({
   return (
     <TextField
       variant="standard"
+      type="text"
       placeholder="오늘의 갓생 제목"
       InputProps={{
         endAdornment: (

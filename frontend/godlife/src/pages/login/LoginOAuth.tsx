@@ -2,6 +2,7 @@ import { Button, Stack } from "@mui/material";
 import axios from "axios";
 
 import React from "react";
+import ReactGA from "react-ga4";
 import GoogleLogin from "react-google-login";
 
 import { ReactComponent as GoogleLoginImage } from "../../assets/logo/Brand/oAuth/google/google.svg";
@@ -32,6 +33,9 @@ const LoginOAuth = () => {
         })
         .then(() => {
           login();
+          ReactGA.gtag("event", "login", {
+            method: "google",
+          });
         });
     }
   };
@@ -44,7 +48,12 @@ const LoginOAuth = () => {
         clientId={process.env.REACT_APP_GOOGLE_OAUTH_KEY!}
         render={(renderProps) => (
           <Button
-            sx={{ padding: 0 }}
+            sx={(theme) => ({
+              padding: 0,
+              [theme.breakpoints.up("md")]: {
+                boxShadow: "2px 3px 5px rgba(0, 0, 0, 0.10)",
+              },
+            })}
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
           >
