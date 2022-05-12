@@ -186,13 +186,14 @@ const BingoFeed = () => {
                       <Typography></Typography>
                     </Box>
                   ))}
-                  <Typography
-                    sx={{ cursor: "pointer" }}
-                    fontSize={8}
-                    align="right"
-                  >
-                    더보기
-                  </Typography>
+                  <Box textAlign="right">
+                    <span
+                      style={{ cursor: "pointer", fontSize: "10px" }}
+                      onClick={() => navigate(`/bingo/${bingo.code}`)}
+                    >
+                      더보기
+                    </span>
+                  </Box>
                 </Box>
               </Grid>
             </Grid>
