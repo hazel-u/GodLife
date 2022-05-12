@@ -1,11 +1,4 @@
-import {
-  Grid,
-  Hidden,
-  Menu,
-  MenuItem,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Grid, Hidden, Menu, MenuItem, Typography } from "@mui/material";
 
 import React, { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -14,7 +7,6 @@ import { ReactComponent as Logo } from "../../assets/logo/Godlife/logo.svg";
 import { useLogout } from "../../hooks/useAuth";
 import Profile from "../../pages/profile/Profile";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { setSnackbar } from "../../store/snackbar";
 import { selectTodayBingo } from "../../store/todayBingo";
 import { TextButton } from "../common/Button";
 import MobileNavbarDialog from "./MobileNavbarDialog";
@@ -122,27 +114,15 @@ const Navbar = () => {
               textAlign: "center",
             }}
           >
-            <Tooltip title={"서비스 준비중입니다."}>
-              <TextButton
-                // onClick={() => {
-                //   dispatch(
-                //     setSnackbar({
-                //       open: true,
-                //       message: "서비스 준비중입니다.",
-                //       severity: "info",
-                //     })
-                //   );
-                // }}
-                sx={{
-                  color:
-                    location.pathname.split("/")[1] === "group"
-                      ? "#464646"
-                      : "",
-                }}
-              >
-                모두의 갓생
-              </TextButton>
-            </Tooltip>
+            <TextButton
+              href="/feed"
+              sx={{
+                color:
+                  location.pathname.split("/")[1] === "feed" ? "#464646" : "",
+              }}
+            >
+              모두의 갓생
+            </TextButton>
           </Grid>
 
           <Grid

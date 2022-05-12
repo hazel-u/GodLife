@@ -1,6 +1,6 @@
 import { Global } from "@emotion/react";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Box, IconButton, Stack, Tooltip } from "@mui/material";
+import { Box, IconButton, Stack } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import { grey } from "@mui/material/colors";
@@ -12,7 +12,6 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { useAppSelector } from "../../store/hooks";
-import { setSnackbar } from "../../store/snackbar";
 import { selectTodayBingo } from "../../store/todayBingo";
 import { selectUser } from "../../store/user";
 import { TextButton } from "../common/Button";
@@ -120,21 +119,7 @@ export default function SwipeableEdgeDrawer({
               </TextButton>
               <TextButton href="/list">이전의 갓생</TextButton>
 
-              <Tooltip title={"서비스 준비중입니다."}>
-                <TextButton
-                  onClick={() => {
-                    dispatch(
-                      setSnackbar({
-                        open: true,
-                        message: "서비스 준비중입니다.",
-                        severity: "info",
-                      })
-                    );
-                  }}
-                >
-                  모두의 갓생
-                </TextButton>
-              </Tooltip>
+              <TextButton href="/feed">모두의 갓생</TextButton>
 
               <TextButton
                 onClick={() => {
