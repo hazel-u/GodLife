@@ -38,13 +38,15 @@ const BingoCreateConfirm = ({
         <DialogContentText>
           총 {selectedGoals.length}개의 목표를 선택하셨습니다.
         </DialogContentText>
-        <List dense={true} sx={{ padding: "30px 0" }}>
-          {selectedGoals.map((goal) => (
-            <ListItem key={goal.seq}>
-              <ListItemText>✔ {goal.content}</ListItemText>
-            </ListItem>
-          ))}
-        </List>
+        {0 < selectedGoals.length && (
+          <List dense={true} sx={{ padding: "30px 0" }}>
+            {selectedGoals.map((goal) => (
+              <ListItem key={goal.seq}>
+                <ListItemText>✔ {goal.content}</ListItemText>
+              </ListItem>
+            ))}
+          </List>
+        )}
         {selectedGoals.length < 9 && (
           <DialogContentText>
             {9 - selectedGoals.length}개의 목표가 무작위로 선택되어 추가됩니다.

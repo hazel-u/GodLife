@@ -158,6 +158,9 @@ const BingoCreate = () => {
           </Typography>
           <Typography>
             최대 9개의 목표를 선택해 오늘의 갓생을 만드시오.
+            <br />
+            {selectedGoals.length}개 목표 선택 | {9 - selectedGoals.length}개
+            무작위 목표
           </Typography>
 
           <Stack
