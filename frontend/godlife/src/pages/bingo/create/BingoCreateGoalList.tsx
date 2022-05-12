@@ -5,98 +5,84 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import { selectGoal } from "../../../store/goal";
 import { useAppSelector } from "../../../store/hooks";
+import { FavoriteGoalType, GoalType } from "../../../types/goal";
 import axiosWithToken from "../../../utils/axios";
+import BingoCreateCustomGoal from "./BingoCreateCustomGoal";
 import BingoCreateGoalItem from "./BingoCreateGoalItem";
 
 const BingoCreateGoalList = () => {
   const selectedGoals = useAppSelector(selectGoal);
-  const [selectedCategory, setSelectedCategory] = useState("건강한삶");
-  const [goalList, setGoalList] = useState<any[]>([]);
-  const [allGoalList, setAllGoalList] = useState<any[]>([]);
-  const [userFavorites, setUserFavorites] = useState<
-    {
-      seq: number;
-      content: string;
-      category: string;
-      favoriteSeq: string;
-    }[]
-  >([]);
+  const [selectedCategory, setSelectedCategory] = useState("내 목표");
+  const [goalList, setGoalList] = useState<GoalType[]>([]);
+  const [allGoalList, setAllGoalList] = useState<GoalType[]>([]);
+  const [userFavorites, setUserFavorites] = useState<FavoriteGoalType[]>([]);
 
-  const changeCategoryGoalList = useCallback(
-    (selectedCategory: string) => {
-      const classifiedGoalList = allGoalList.filter(
-        (goal) => goal.category === selectedCategory
-      );
-      setGoalList(classifiedGoalList);
-    },
-    [allGoalList]
-  );
-
-  const changeCategory = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const selectedCategory = (e.target as HTMLLIElement).textContent;
-
+  const changeCategory = useCallback(() => {
     selectedCategory && setSelectedCategory(selectedCategory);
-    if (selectedCategory === "전체") {
-      setGoalList(allGoalList);
+    if (selectedCategory === "내 목표") {
+      setGoalList([]);
     } else if (selectedCategory === "즐겨찾기") {
       setGoalList(userFavorites);
     } else if (selectedCategory === "선택된목표") {
       setGoalList(selectedGoals);
-    } else if (selectedCategory !== null && selectedCategory !== "전체") {
-      changeCategoryGoalList(selectedCategory);
+    } else if (selectedCategory !== null && selectedCategory !== "내 목표") {
+      const classifiedGoalList = allGoalList.filter(
+        (goal) => goal.category === selectedCategory
+      );
+      setGoalList(classifiedGoalList);
     }
-  };
+  }, [selectedCategory, selectedGoals, userFavorites, allGoalList]);
 
-  const getGoals = () => {
+  useEffect(() => {
+    changeCategory();
+  }, [changeCategory, selectedCategory]);
+
+  const getGoals = useCallback(() => {
     axios
       .get("goal")
       .then((res) => {
-        const classifiedGoalList = res.data.goals.filter(
-          (goal: { category: string }) => goal.category === "건강한삶"
-        );
-        setGoalList(classifiedGoalList);
+        // if (selectedCategory === "내 목표") {
+        //   const classifiedGoalList = res.data.goals.filter(
+        //     (goal: { category: string }) => goal.category === "내목표"
+        //   );
+        //   setGoalList(classifiedGoalList);
+        // }
         setAllGoalList(res.data.goals);
       })
       .catch((err) => console.log(err));
-  };
+  }, []);
 
-  useEffect(() => {
-    changeCategoryGoalList("건강한삶");
-  }, [changeCategoryGoalList]);
-
-  const getFavorites = () => {
+  const getFavorites = useCallback(() => {
     axiosWithToken
       .get("goal/usergoal")
       .then((res) => {
-        const favoriteGoals: {
-          seq: number;
-          content: string;
-          category: string;
-          favoriteSeq: string;
-        }[] = [];
-        res.data.userGoals.forEach((goal: { goals: any; seq: string }) => {
+        const favoriteGoals: FavoriteGoalType[] = [];
+        res.data.userGoals.forEach((goal: { goals: GoalType; seq: string }) => {
           favoriteGoals.push({ ...goal.goals, favoriteSeq: goal.seq });
         });
         setUserFavorites(favoriteGoals);
+        if (selectedCategory === "즐겨찾기") {
+          setGoalList(favoriteGoals);
+        }
       })
       .catch((err) => console.log(err));
-  };
+  }, [selectedCategory]);
 
   useEffect(() => {
     getGoals();
     getFavorites();
-  }, []);
+  }, [getGoals, getFavorites]);
 
   const category = [
+    "내 목표",
     "선택된목표",
+    "즐겨찾기",
     "건강한삶",
     "미라클모닝",
     "자기개발",
     "삶의질",
     "습관개선",
     "환경",
-    "즐겨찾기",
-    "전체",
   ];
 
   return (
@@ -124,7 +110,12 @@ const BingoCreateGoalList = () => {
                 color: selectedCategory === c ? "white" : "#6D6D6D",
               },
             }}
-            onClick={(e) => changeCategory(e)}
+            onClick={(e) =>
+              ((e.target as HTMLLIElement).textContent as string) &&
+              setSelectedCategory(
+                (e.target as HTMLLIElement).textContent as string
+              )
+            }
           />
         ))}
       </Stack>
@@ -143,41 +134,46 @@ const BingoCreateGoalList = () => {
             },
           })}
         >
-          {goalList.length ? (
-            <>
-              {goalList.map(
-                (goal: {
-                  seq: number;
-                  content: string;
-                  category: string;
-                  favoriteSeq?: string;
-                }) => (
-                  <Grid item key={goal.seq}>
-                    <BingoCreateGoalItem
-                      {...goal}
-                      isFavorite={userFavorites.some(
-                        (el) => el.seq === goal.seq
-                      )}
-                      getFavorites={getFavorites}
-                      userFavorites={userFavorites}
-                    />
-                  </Grid>
-                )
-              )}
-            </>
-          ) : (
-            <Stack
-              sx={{ width: "100%", height: "360px" }}
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Typography sx={{ textAlign: "center", whiteSpace: "pre-line" }}>
-                {selectedCategory === "즐겨찾기"
-                  ? "즐겨찾는 목표가 없습니다."
-                  : "선택된 목표가 없습니다."}
-              </Typography>
-            </Stack>
+          {goalList.map(
+            (goal: {
+              seq: number;
+              content: string;
+              category: string;
+              favoriteSeq?: string;
+            }) => (
+              <Grid item key={goal.seq}>
+                <BingoCreateGoalItem
+                  {...goal}
+                  isFavorite={userFavorites.some((el) => el.seq === goal.seq)}
+                  getFavorites={getFavorites}
+                  userFavorites={userFavorites}
+                  getGoals={getGoals}
+                />
+              </Grid>
+            )
           )}
+          {selectedCategory === "내 목표" && (
+            <Grid item>
+              <BingoCreateCustomGoal getGoals={getGoals} />
+            </Grid>
+          )}
+          {goalList.length === 0 &&
+            (selectedCategory === "즐겨찾기" ||
+              selectedCategory === "선택된목표") && (
+              <Stack
+                sx={{ width: "100%", height: "360px" }}
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Typography
+                  sx={{ textAlign: "center", whiteSpace: "pre-line" }}
+                >
+                  {selectedCategory === "즐겨찾기"
+                    ? "즐겨찾는 목표가 없습니다."
+                    : "선택된 목표가 없습니다."}
+                </Typography>
+              </Stack>
+            )}
         </Grid>
       </Box>
     </Stack>
