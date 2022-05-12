@@ -1,5 +1,13 @@
 import SettingsIcon from "@mui/icons-material/Settings";
-import { IconButton, Menu, MenuItem, Stack, Typography } from "@mui/material";
+import {
+  IconButton,
+  Menu,
+  MenuItem,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 
 import React, { useState } from "react";
 
@@ -29,6 +37,9 @@ function ProfileInfo(props: ProfileInfoProps) {
 
   const logout = useLogout();
 
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <>
       <Stack
@@ -42,8 +53,13 @@ function ProfileInfo(props: ProfileInfoProps) {
           },
         }}
       >
-        <Typography fontSize={30} fontFamily="BMEULJIRO">
-          {name}님의 프로필
+        <Typography
+          sx={{
+            fontSize: fullScreen ? 26 : 30,
+            fontFamily: "BMEULJIRO",
+          }}
+        >
+          {name} 님의 프로필
         </Typography>
         <IconButton
           aria-controls={menuOpen ? "basic-menu" : undefined}

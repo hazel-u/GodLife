@@ -82,11 +82,21 @@ const ProfileFollowDetail = () => {
               },
             }}
           >
-            <Typography fontSize={30} fontFamily="BMEULJIRO">
-              {name}님의 프로필
+            <Typography
+              sx={{
+                fontSize: fullScreen ? 26 : 30,
+                fontFamily: "BMEULJIRO",
+              }}
+            >
+              {name} 님의 프로필
             </Typography>
           </Stack>
-          <Typography fontSize={18} sx={{ margin: "0 0 20px" }}>
+          <Typography
+            sx={{
+              fontSize: 18,
+              margin: "0 0 20px",
+            }}
+          >
             {info}
           </Typography>
           <Typography sx={{ whiteSpace: "pre-line" }}>
