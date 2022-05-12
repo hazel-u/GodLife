@@ -80,6 +80,7 @@ class ProfileFollowDetailRecord extends Component <nameProps>{
           locale="ko"
           initialView="dayGridMonth"
           plugins={[dayGridPlugin]}
+          contentHeight="auto"
           events={bingoList}
           eventDisplay="background"
           eventBackgroundColor="#ffffff"

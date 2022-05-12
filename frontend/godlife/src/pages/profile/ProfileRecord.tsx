@@ -1,4 +1,4 @@
-import { Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Typography } from "@mui/material";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import React, { Component } from "react";
@@ -64,6 +64,7 @@ class ProfileRecord extends Component {
           locale="ko"
           initialView="dayGridMonth" 
           plugins={[ dayGridPlugin ]}
+          contentHeight="auto"
           events={bingoList}
           eventDisplay="background"
           eventBackgroundColor="#ffffff"
