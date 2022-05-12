@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import axios from "axios";
 
 import React, { useCallback, useEffect, useState } from "react";
@@ -51,6 +51,9 @@ const Profile = () => {
     getUserInfo();
   }, [getBingo, getUserInfo]);
 
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <>
       <ProfileSettingDialog open={open} setOpen={setOpen} />
@@ -94,7 +97,12 @@ const Profile = () => {
               width: "100%",
             }}
           >
-            <Typography fontSize={18} sx={{ margin: "3% 0" }}>
+            <Typography
+              sx={{
+                fontSize: fullScreen ? 16 : 18,
+                margin: "3% 0",
+              }}
+            >
               오늘의 갓생
             </Typography>
             {code && code !== "none" ? (
@@ -126,7 +134,12 @@ const Profile = () => {
                 }}
               >
                 <Box position="relative">
-                  <Typography fontSize={18} sx={{ whiteSpace: "pre-line" }}>
+                  <Typography
+                    sx={{
+                      fontSize: fullScreen ? 16 : 18,
+                      margin: "3% 0",
+                    }}
+                  >
                     오늘의 갓생이 없습니다.
                   </Typography>
                   <img
@@ -134,7 +147,7 @@ const Profile = () => {
                     alt="stamp"
                     style={{
                       position: "absolute",
-                      top: "-70px",
+                      top: "-50px",
                       left: "45%",
                       opacity: "30%",
                     }}

@@ -5,7 +5,6 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { ReactComponent as Logo } from "../../assets/logo/Godlife/logo.svg";
 import { useLogout } from "../../hooks/useAuth";
-// import ProfileSettingDialog from "../../pages/profile/ProfileSettingDialog";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setSnackbar } from "../../store/snackbar";
 import { selectTodayBingo } from "../../store/todayBingo";
@@ -114,11 +113,9 @@ const Navbar = () => {
                   모두의 갓생
                 </TextButton>
               </Tooltip>
-              {/* <TextButton onClick={() => setOpen(true)}>내 정보</TextButton> */}
               <TextButton onClick={() => navigate("/profile")}>
                 내 정보
               </TextButton>
-              <TextButton onClick={logout}>로그아웃</TextButton>
             </Stack>
           </Grid>
         </Grid>

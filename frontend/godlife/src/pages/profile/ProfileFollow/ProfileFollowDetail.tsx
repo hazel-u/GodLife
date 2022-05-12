@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import axios from "axios";
 
 import React, { useCallback, useEffect } from "react";
@@ -39,6 +39,9 @@ const ProfileFollowDetail = () => {
     serialGodCount,
     todayBingo,
   } = useAppSelector(selectFollowingUser);
+
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <>
@@ -114,7 +117,12 @@ const ProfileFollowDetail = () => {
               marginBottom: todayBingo !== null && todayBingo.code ? 0 : "20%",
             }}
           >
-            <Typography sx={{ whiteSpace: "pre-line", margin: "3% 0" }}>
+            <Typography
+              sx={{
+                fontSize: fullScreen ? 16 : 18,
+                margin: "3% 0",
+              }}
+            >
               오늘의 갓생
             </Typography>
             {todayBingo !== null && todayBingo.code ? (
@@ -146,7 +154,12 @@ const ProfileFollowDetail = () => {
                 }}
               >
                 <Box position="relative">
-                  <Typography fontSize={18} sx={{ whiteSpace: "pre-line" }}>
+                  <Typography
+                    sx={{
+                      fontSize: fullScreen ? 16 : 18,
+                      margin: "3% 0",
+                    }}
+                  >
                     오늘의 갓생이 없습니다.
                   </Typography>
                   <img
@@ -154,7 +167,7 @@ const ProfileFollowDetail = () => {
                     alt="stamp"
                     style={{
                       position: "absolute",
-                      top: "-70px",
+                      top: "-50px",
                       left: "45%",
                       opacity: "30%",
                     }}

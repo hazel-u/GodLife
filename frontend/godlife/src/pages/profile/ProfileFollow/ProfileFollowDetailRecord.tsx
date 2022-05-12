@@ -60,7 +60,15 @@ class ProfileFollowDetailRecord extends Component <nameProps>{
 
     return (
       <>
-        <Typography fontSize={18} sx={{ margin: "5% 0" }}>
+        <Typography 
+          sx={(theme) => ({
+            margin: "5% 0",
+            fontSize: 18,
+            [theme.breakpoints.down("sm")]: {
+              fontSize: 16,
+            }, 
+          })}
+        >
           이전의 갓생
         </Typography>
         <FullCalendar

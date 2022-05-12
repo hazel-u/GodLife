@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Typography, useMediaQuery, useTheme } from "@mui/material";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import React, { Component } from "react";
@@ -41,10 +41,18 @@ class ProfileRecord extends Component {
 
   render() {
     const { bingoList } = this.state
-
+   
     return (
       <>
-        <Typography fontSize={18} sx={{ margin: "5% 0" }}>
+        <Typography 
+          sx={(theme) => ({
+            margin: "5% 0",
+            fontSize: 18,
+            [theme.breakpoints.down("sm")]: {
+              fontSize: 16,
+            }, 
+          })}
+        >
           이전의 갓생
         </Typography>
         <FullCalendar
@@ -66,8 +74,7 @@ class ProfileRecord extends Component {
               width: "80%",
               opacity: "50%",
             }}
-          />
-          }
+          />}
         />
       </>
     );
