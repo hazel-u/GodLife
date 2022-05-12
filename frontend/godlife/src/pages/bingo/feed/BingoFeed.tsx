@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import BorderImage from "../../../assets/images/border.webp";
 import Stamp from "../../../assets/images/stamp.webp";
 import Bingo from "../../../components/Bingo/Bingo";
+import { OutlinedInput } from "../../../components/common/Input";
 import { useAppDispatch } from "../../../store/hooks";
 import { setLoading } from "../../../store/loading";
 import { BingoType } from "../../../types/bingo";
@@ -24,7 +25,7 @@ import axiosWithToken from "../../../utils/axios";
 
 const searchUser = (nickName: string) => {
   axiosWithToken
-    .get(`feed/user/${nickName}`)
+    .post(`feed/user`, { keyword: nickName })
     .then((res) => {
       console.log(res.data);
     })
@@ -32,13 +33,15 @@ const searchUser = (nickName: string) => {
 };
 
 const followUser = (nickName: string) => {
+  console.log(nickName);
   axiosWithToken
     .post(`feed/follow/${nickName}`)
     .then((res) => {
       console.log(res.data);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log("팔로우 에러", err));
 };
+
 const unfollowUser = (nickName: string) => {
   axiosWithToken
     .delete(`feed/follow/${nickName}`)
@@ -48,10 +51,17 @@ const unfollowUser = (nickName: string) => {
     .catch((err) => console.log(err));
 };
 
+const UserSearchResult = () => {
+  return null;
+};
+
 const BingoFeed = () => {
   const [bingoList, setBingoList] = useState<BingoType[]>([]);
   const [bingoCount, setBingoCount] = useState(-1);
+  // 유저 검색창
+  const [searchInput, setSearchInput] = useState("");
   console.log(bingoList);
+
   const getBingoFeed = () => {
     axiosWithToken
       .get(`feed`)
@@ -66,13 +76,23 @@ const BingoFeed = () => {
   useEffect(() => {
     if (bingoCount === -1) {
       getBingoFeed();
-      followUser("천민우");
-      searchUser("천민우");
+      // followUser("월워우러");
+      // searchUser("천민우");
     }
   });
 
   return (
     <Stack direction="column" justifyContent="center" alignItems="center" p={3}>
+      <OutlinedInput
+        value={searchInput}
+        onChange={(e) => {
+          setSearchInput(e.target.value);
+        }}
+        type="text"
+      />
+      <Box>
+        <Typography></Typography>
+      </Box>
       {bingoCount === 0 ? (
         <Stack
           direction="column"
