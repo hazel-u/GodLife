@@ -9,6 +9,8 @@ import Stamp from "../../../assets/images/stamp.webp";
 import Bingo from "../../../components/Bingo/Bingo";
 import { BingoType } from "../../../types/bingo";
 import axiosWithToken from "../../../utils/axios";
+import BingoFeedDateSearch from "./BingoFeedDateSearch";
+import BingoFeedSearch from "./BingoFeedSearch";
 
 const searchUser = (nickName: string) => {
   axiosWithToken
@@ -70,6 +72,10 @@ const BingoFeed = () => {
 
   return (
     <Stack direction="column" justifyContent="center" alignItems="center">
+      <Box marginY={3}>
+        <BingoFeedDateSearch setBingoList={setBingoList} />
+      </Box>
+      <BingoFeedSearch />
       {/* <OutlinedInput
         value={searchInput}
         onChange={(e) => {
@@ -81,13 +87,14 @@ const BingoFeed = () => {
       {/* <Box>
         <Typography></Typography>
       </Box> */}
-      {bingoCount === 0 ? (
+      {bingoList.length === 0 ? (
         <>
           <Box textAlign={"center"} margin={"20%"}>
             <img src={Stamp} alt="stamp" />
             <Typography paddingY={5}>
-              다른 갓생러들을 팔로우하고
-              <br /> 갓생 피드를 채워보세요.
+              {bingoCount === 0
+                ? "다른 갓생러들을 팔로우하고 갓생 피드를 채워보세요."
+                : "해당 날짜의 갓생이 존재하지 않습니다."}
             </Typography>
           </Box>
         </>
@@ -106,13 +113,13 @@ const BingoFeed = () => {
                 xs={12}
                 sm={7}
                 md={8}
-                onClick={() => navigate(`/bingo/${bingo.code}`)}
                 marginBottom={1}
                 sx={{
                   cursor: "pointer",
                 }}
               >
                 <Box
+                  onClick={() => navigate(`/bingo/${bingo.code}`)}
                   sx={{
                     cursor: "pointer",
                     backgroundColor: "white",
