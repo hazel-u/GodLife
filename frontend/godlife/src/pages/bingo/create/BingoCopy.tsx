@@ -80,6 +80,7 @@ const BingoCopy = ({
           onChange={(e) => {
             setCode(e.target.value);
           }}
+          type="text"
         />
       </DialogContent>
 

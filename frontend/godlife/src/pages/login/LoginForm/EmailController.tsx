@@ -13,7 +13,7 @@ const EmailController: React.FC<{
         <OutlinedInput
           {...field}
           placeholder="이메일"
-          type="text"
+          type="email"
           error={!!fieldState.error}
           helperText={
             fieldState.error?.message ? fieldState.error.message : " "
