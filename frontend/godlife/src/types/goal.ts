@@ -3,3 +3,7 @@ export interface GoalType {
   content: string;
   category: string;
 }
+
+export interface FavoriteGoalType extends GoalType {
+  favoriteSeq: string;
+}

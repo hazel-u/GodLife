@@ -1,113 +1,80 @@
 import BookmarkIcon from "@mui/icons-material/Bookmark";
-import {
-  Box,
-  Button,
-  IconButton,
-  Stack,
-  SvgIcon,
-  Typography,
-} from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
+import { Box, IconButton, Stack, SvgIcon, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 import React, { useState } from "react";
 import ReactGA from "react-ga4";
 
 import Stamp from "../../../assets/images/stamp.webp";
+import { GoalButton } from "../../../components/common/Button";
 import { deleteGoal, selectGoal, setGoal } from "../../../store/goal";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
+import { FavoriteGoalType, GoalType } from "../../../types/goal";
 import axiosWithToken from "../../../utils/axios";
 
-const GoalButton = styled(Button)(({ theme }) => ({
-  position: "relative",
-  width: "208px",
-  height: "50px",
-  border: "1px solid #b3b3b3",
-  boxShadow: "inset -2px -4px 4px rgba(0,0,0,0.25)",
-  display: "flex",
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "center",
-  borderRadius: "10px",
-  webkitBorderRadius: "10px",
-  mozBorderRadius: "10px",
-  color: "#5A5A5A",
-  "& p": {
-    fontSize: "14px",
+const CustomIconButton = styled(IconButton)({
+  position: "absolute",
+  top: 8,
+  padding: 0,
+  zIndex: 2,
+  "& svg": {
+    fontSize: 15,
   },
-  "&:hover": {
-    color: "black",
-    backgroundColor: "#ffffff",
-  },
-}));
+});
 
-interface GoalProps {
-  seq: number;
-  content: string;
-  category: string;
+interface GoalProps extends GoalType {
   favoriteSeq?: string;
   isFavorite: boolean;
   getFavorites: () => void;
-  userFavorites: {
-    seq: number;
-    content: string;
-    category: string;
-    favoriteSeq: string;
-  }[];
+  getGoals: () => void;
+  userFavorites: FavoriteGoalType[];
 }
 
-const BingoCreateGoalItem = (goal: GoalProps) => {
-  const BookmarkButton = styled(IconButton)(({ theme }) => ({
-    position: "absolute",
-    top: 8,
-    left: 8,
-    padding: 0,
-    zIndex: 2,
-    "& svg": {
-      fontSize: 15,
-      color: goal.isFavorite ? "#A11803" : "#939393",
-    },
-  }));
-
+const BingoCreateGoalItem = (props: GoalProps) => {
   const dispatch = useAppDispatch();
+
+  const selectedGoals = useAppSelector(selectGoal);
+  const isSelected = () => {
+    return selectedGoals.find((el) => el.seq === props.seq);
+  };
 
   const manageFavorites = () => {
     let request;
-    const clickedGoal = goal.userFavorites.find((el) => el.seq === goal.seq);
+    const clickedGoal = props.userFavorites.find((el) => el.seq === props.seq);
     if (clickedGoal) {
       request = axiosWithToken.delete("goal", {
         data: { seq: clickedGoal.favoriteSeq },
       });
     } else {
-      request = axiosWithToken.put("goal", { seq: goal.seq });
+      request = axiosWithToken.put("goal", { seq: props.seq });
     }
     request
       .then(() => {
-        goal.getFavorites();
+        props.getFavorites();
       })
       .catch((err) => console.log(err));
   };
 
-  const nowSelected = useAppSelector(selectGoal);
-
   const manageSelectedGoals = () => {
     setStampAnimation(true);
-    const found = nowSelected.some((el) => el.seq === goal.seq);
-    if (nowSelected.length < 9 && !found) {
+    const found = selectedGoals.some((el) => el.seq === props.seq);
+    if (selectedGoals.length < 9 && !found) {
       dispatch(
         setGoal([
-          { seq: goal.seq, content: goal.content, category: goal.category },
+          { seq: props.seq, content: props.content, category: props.category },
         ])
       );
-    } else if (nowSelected.length <= 9 && found) {
+    } else if (selectedGoals.length <= 9 && found) {
       dispatch(
         deleteGoal({
-          seq: goal.seq,
-          content: goal.content,
-          category: goal.category,
+          seq: props.seq,
+          content: props.content,
+          category: props.category,
         })
       );
-    } else if (nowSelected.length === 9 && !found) {
+    } else if (selectedGoals.length === 9 && !found) {
       dispatch(
         setSnackbar({
           open: true,
@@ -117,14 +84,33 @@ const BingoCreateGoalItem = (goal: GoalProps) => {
       );
     }
     ReactGA.gtag("event", "select_content", {
-      content_type: goal.content,
-      item_id: goal.seq,
+      content_type: props.content,
+      item_id: props.seq,
     });
   };
 
-  const selectedGoals = useAppSelector(selectGoal);
-  const isSelected = () => {
-    return selectedGoals.find((el) => el.seq === goal.seq);
+  const deleteCustomGoal = () => {
+    axiosWithToken
+      .delete("goal/??")
+      .then(() => {
+        props.getGoals();
+        dispatch(
+          setSnackbar({
+            open: true,
+            message: "목표가 삭제되었습니다.",
+            severity: "success",
+          })
+        );
+      })
+      .catch(() =>
+        dispatch(
+          setSnackbar({
+            open: true,
+            message: "다시 시도해주세요.",
+            severity: "error",
+          })
+        )
+      );
   };
 
   const [stampAnimation, setStampAnimation] = useState(false);
@@ -155,12 +141,30 @@ const BingoCreateGoalItem = (goal: GoalProps) => {
         />
       </Box>
 
-      <BookmarkButton onClick={manageFavorites}>
+      <CustomIconButton
+        sx={{
+          left: 8,
+          "& svg": {
+            color: props.isFavorite ? "#A11803" : "#939393",
+          },
+        }}
+        onClick={manageFavorites}
+      >
         <SvgIcon component={BookmarkIcon} />
-      </BookmarkButton>
+      </CustomIconButton>
+
       <GoalButton onClick={manageSelectedGoals}>
-        <Typography>{goal.content}</Typography>
+        <Typography>{props.content}</Typography>
       </GoalButton>
+
+      <CustomIconButton
+        sx={{
+          right: 8,
+        }}
+        onClick={deleteCustomGoal}
+      >
+        <SvgIcon component={ClearIcon} />
+      </CustomIconButton>
     </Stack>
   );
 };

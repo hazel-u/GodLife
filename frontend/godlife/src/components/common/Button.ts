@@ -58,4 +58,27 @@ const TextButton = styled(Button)({
   },
 });
 
-export { OutlinedButton, TextButton, BlackButton };
+const GoalButton = styled(Button)(({ theme }) => ({
+  position: "relative",
+  width: "208px",
+  height: "50px",
+  border: "1px solid #b3b3b3",
+  boxShadow: "inset -2px -4px 4px rgba(0,0,0,0.25)",
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "center",
+  borderRadius: "10px",
+  webkitBorderRadius: "10px",
+  mozBorderRadius: "10px",
+  color: "#5A5A5A",
+  "& p": {
+    fontSize: "14px",
+  },
+  "&:hover": {
+    color: "black",
+    backgroundColor: "#ffffff",
+  },
+}));
+
+export { OutlinedButton, TextButton, BlackButton, GoalButton };
