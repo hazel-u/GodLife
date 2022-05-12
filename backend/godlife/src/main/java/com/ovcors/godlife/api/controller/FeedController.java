@@ -36,8 +36,8 @@ public class FeedController {
         return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
     }
     @PostMapping("/user")
-    public ResponseEntity<List<FollowInfoResDto>> getFollowingList(@RequestBody UserSearchingDto reqDto) {
-        List<FollowInfoResDto> list= followService.findUser(reqDto.getKeyword());
+    public ResponseEntity<List<FindUserResDto>> getFollowingList(@Auth User user,@RequestBody UserSearchingDto reqDto) {
+        List<FindUserResDto> list= followService.findUser(user.getSeq(),reqDto.getKeyword());
         return ResponseEntity.ok().body(list);
     }
     @GetMapping
