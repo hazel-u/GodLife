@@ -15,4 +15,5 @@ public interface BingoRepository extends JpaRepository<Bingo, UUID> {
     List<Bingo> findAllByUserOrderByStartDateDesc(User user);
     Long countByUser(User user);
     Optional<Bingo> findTopByStartDateAndUser(LocalDate date, User user);
+    List<Bingo> findTop6ByStartDateOrderByLikeCnt(LocalDate startdate);
 }

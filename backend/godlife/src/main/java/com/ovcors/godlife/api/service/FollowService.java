@@ -15,4 +15,5 @@ public interface FollowService {
     List<FindBingoResDto> getFeed(UUID seq);
     List<FindBingoResDto> searchUserInFeed(UUID seq, String keyword);
     List<FindBingoResDto> searchDateInFeed(UUID seq, String date) throws ParseException;
+    List<FindBingoResDto> getMainFeed();
 }
