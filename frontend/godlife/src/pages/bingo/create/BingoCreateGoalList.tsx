@@ -100,87 +100,87 @@ const BingoCreateGoalList = () => {
   ];
 
   return (
-    <>
-      <Stack direction="row" spacing={2}>
-        <Stack>
-          {category.map((c, index) => (
-            <Chip
-              key={index}
-              label={c}
-              sx={{
-                width: "100px",
-                height: "30px",
-                fontSize: "14px",
-                "& span": {
-                  padding: 0,
-                  fontFamily: "NotoSerifKR",
-                },
-                marginBottom: "10px",
-                border: "1px solid #b3b3b3",
-                boxShadow: "inset -2px -4px 4px rgba(0,0,0,0.25)",
-                color: selectedCategory === c ? "white" : "#6D6D6D",
+    <Stack direction="row" spacing={2}>
+      <Stack>
+        {category.map((c, index) => (
+          <Chip
+            key={index}
+            label={c}
+            sx={{
+              width: "100px",
+              height: "30px",
+              fontSize: "14px",
+              "& span": {
+                padding: 0,
+                fontFamily: "NotoSerifKR",
+              },
+              marginBottom: "10px",
+              border: "1px solid #b3b3b3",
+              boxShadow: "inset -2px -4px 4px rgba(0,0,0,0.25)",
+              color: selectedCategory === c ? "#f3f3f3" : "#6D6D6D",
+              backgroundColor: selectedCategory === c ? "#464646" : "white",
+              "&:hover": {
                 backgroundColor: selectedCategory === c ? "#464646" : "white",
-              }}
-              onClick={(e) => changeCategory(e)}
-            />
-          ))}
-        </Stack>
-
-        <Box>
-          <Grid
-            container
-            spacing={2}
-            sx={(theme) => ({
-              width: "672px",
-              [theme.breakpoints.down(900)]: {
-                width: "448px",
+                color: selectedCategory === c ? "white" : "#6D6D6D",
               },
-              [theme.breakpoints.down(650)]: {
-                width: "224px",
-              },
-            })}
-          >
-            {goalList.length ? (
-              <>
-                {goalList.map(
-                  (goal: {
-                    seq: number;
-                    content: string;
-                    category: string;
-                    favoriteSeq?: string;
-                  }) => (
-                    <Grid item key={goal.seq}>
-                      <BingoCreateGoalItem
-                        {...goal}
-                        isFavorite={userFavorites.some(
-                          (el) => el.seq === goal.seq
-                        )}
-                        getFavorites={getFavorites}
-                        userFavorites={userFavorites}
-                      />
-                    </Grid>
-                  )
-                )}
-              </>
-            ) : (
-              <Stack
-                sx={{ width: "100%", height: "360px" }}
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Typography
-                  sx={{ textAlign: "center", whiteSpace: "pre-line" }}
-                >
-                  {selectedCategory === "즐겨찾기"
-                    ? "즐겨찾는 목표가 없습니다."
-                    : "선택된 목표가 없습니다."}
-                </Typography>
-              </Stack>
-            )}
-          </Grid>
-        </Box>
+            }}
+            onClick={(e) => changeCategory(e)}
+          />
+        ))}
       </Stack>
-    </>
+
+      <Box>
+        <Grid
+          container
+          spacing={2}
+          sx={(theme) => ({
+            width: "672px",
+            [theme.breakpoints.down(900)]: {
+              width: "448px",
+            },
+            [theme.breakpoints.down(650)]: {
+              width: "224px",
+            },
+          })}
+        >
+          {goalList.length ? (
+            <>
+              {goalList.map(
+                (goal: {
+                  seq: number;
+                  content: string;
+                  category: string;
+                  favoriteSeq?: string;
+                }) => (
+                  <Grid item key={goal.seq}>
+                    <BingoCreateGoalItem
+                      {...goal}
+                      isFavorite={userFavorites.some(
+                        (el) => el.seq === goal.seq
+                      )}
+                      getFavorites={getFavorites}
+                      userFavorites={userFavorites}
+                    />
+                  </Grid>
+                )
+              )}
+            </>
+          ) : (
+            <Stack
+              sx={{ width: "100%", height: "360px" }}
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Typography sx={{ textAlign: "center", whiteSpace: "pre-line" }}>
+                {selectedCategory === "즐겨찾기"
+                  ? "즐겨찾는 목표가 없습니다."
+                  : "선택된 목표가 없습니다."}
+              </Typography>
+            </Stack>
+          )}
+        </Grid>
+      </Box>
+    </Stack>
   );
 };
 
