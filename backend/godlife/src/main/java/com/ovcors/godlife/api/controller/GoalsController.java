@@ -1,19 +1,13 @@
 package com.ovcors.godlife.api.controller;
 
-import com.ovcors.godlife.api.dto.request.BingoGoalsCompletedReqDto;
-import com.ovcors.godlife.api.dto.request.GoalsReqDto;
-import com.ovcors.godlife.api.dto.request.JoinReqDto;
-import com.ovcors.godlife.api.dto.request.UserGoalsReqDto;
+import com.ovcors.godlife.api.dto.request.*;
 import com.ovcors.godlife.api.dto.response.BaseResponseEntity;
-import com.ovcors.godlife.api.dto.response.GoalsResDto;
+import com.ovcors.godlife.api.dto.response.FindGoalsResDto;
 import com.ovcors.godlife.api.dto.response.UserGoalsResDto;
 import com.ovcors.godlife.api.resolver.Auth;
 import com.ovcors.godlife.api.service.GoalsService;
-import com.ovcors.godlife.api.service.UserService;
-import com.ovcors.godlife.core.domain.goals.Goals;
 import com.ovcors.godlife.core.domain.user.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,11 +18,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GoalsController {
 
-    @Autowired
-    private GoalsService goalsService;
+    private final GoalsService goalsService;
+
     @GetMapping
-    public ResponseEntity<GoalsResDto> getGoals() {
-        GoalsResDto response = goalsService.getGoals();
+    public ResponseEntity<List<FindGoalsResDto>> getGoals(@Auth User user) {
+        List<FindGoalsResDto> response = goalsService.getGoals(user);
         return ResponseEntity.ok().body(response);
     }
     @GetMapping("/usergoal")
@@ -38,7 +32,6 @@ public class GoalsController {
     }
     @PutMapping
     public ResponseEntity<BaseResponseEntity> addUserGoals(@Auth User user,@RequestBody GoalsReqDto goalsReqDto) {
-       System.out.println(user.getEmail());
         goalsService.addUserGoals(user,goalsReqDto);
         return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
     }
@@ -51,6 +44,18 @@ public class GoalsController {
     @PostMapping
     public ResponseEntity<BaseResponseEntity> setBingoGoalsCompleted(@RequestBody BingoGoalsCompletedReqDto reqDto){
         goalsService.setCompleted(reqDto);
+        return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
+    }
+
+    @PostMapping("/custom")
+    public ResponseEntity<BaseResponseEntity> createCustomGoal(@Auth User user, @RequestBody SaveCustomGoalReqDto reqDto){
+        goalsService.saveCustomGoals(user, reqDto);
+        return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
+    }
+
+    @DeleteMapping("/custom/{seq}")
+    public ResponseEntity<BaseResponseEntity> deleteCustomGoal(@Auth User user, @PathVariable Long seq){
+        goalsService.deleteCustomGoal(user, seq);
         return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
     }
 }

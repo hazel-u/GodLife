@@ -2,27 +2,32 @@ package com.ovcors.godlife.api.service;
 
 import com.ovcors.godlife.api.dto.request.BingoGoalsCompletedReqDto;
 import com.ovcors.godlife.api.dto.request.GoalsReqDto;
+import com.ovcors.godlife.api.dto.request.SaveCustomGoalReqDto;
 import com.ovcors.godlife.api.dto.request.UserGoalsReqDto;
-import com.ovcors.godlife.api.dto.response.GoalsResDto;
+import com.ovcors.godlife.api.dto.response.FindGoalsResDto;
 import com.ovcors.godlife.api.dto.response.UserGoalsResDto;
 import com.ovcors.godlife.api.exception.CustomException;
 import com.ovcors.godlife.api.exception.ErrorCode;
 import com.ovcors.godlife.core.domain.goals.BingoGoals;
+import com.ovcors.godlife.core.domain.goals.Category;
 import com.ovcors.godlife.core.domain.goals.Goals;
 import com.ovcors.godlife.core.domain.goals.UserGoals;
 import com.ovcors.godlife.core.domain.user.User;
+import com.ovcors.godlife.core.queryrepository.GoalQueryRepository;
 import com.ovcors.godlife.core.repository.BingoGoalsRepository;
 import com.ovcors.godlife.core.repository.GoalsRepository;
 import com.ovcors.godlife.core.repository.UserGoalsRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class GoalsServiceImpl implements GoalsService{
 
     @Autowired
@@ -31,6 +36,8 @@ public class GoalsServiceImpl implements GoalsService{
     UserGoalsRepository userGoalsRepository;
     @Autowired
     BingoGoalsRepository bingoGoalsRepository;
+
+    private final GoalQueryRepository goalQueryRepository;
 
     @Override
     public void addUserGoals(User user, GoalsReqDto goalsReqDto) {
@@ -52,12 +59,12 @@ public class GoalsServiceImpl implements GoalsService{
     public UserGoalsResDto getUserGoals(User user) {
         UserGoalsResDto response = new UserGoalsResDto(userGoalsRepository.findByUserSeq(user.getSeq()));
         return response;
-//        return null;
     }
 
     @Override
-    public GoalsResDto getGoals() {
-        GoalsResDto response = new GoalsResDto(goalsRepository.findAll());
+    public List<FindGoalsResDto> getGoals(User user) {
+        List<FindGoalsResDto> response = goalQueryRepository.findBasicGoals();
+        response.addAll(goalQueryRepository.findCustomGoalsByUserEmail(user.getEmail()));
         return response ;
     }
 
@@ -68,4 +75,24 @@ public class GoalsServiceImpl implements GoalsService{
         bingoGoals.changeCompleted(reqDto.getCompleted());
     }
 
+    @Override
+    public void saveCustomGoals(User user, SaveCustomGoalReqDto reqDto) {
+        Goals goals = Goals.builder()
+                .category(Category.내목표)
+                .content(reqDto.getContent())
+                .user(user)
+                .build();
+        goalsRepository.save(goals);
+    }
+
+    @Override
+    public void deleteCustomGoal(User user, Long customGoalSeq){
+        Goals goals = goalsRepository.findById(customGoalSeq).orElseThrow(
+                ()->new CustomException(ErrorCode.GOALS_NOT_FOUND)
+        );
+        if(goals.getUser() == null || !goals.getUser().getSeq().equals(user.getSeq()))
+            throw new CustomException(ErrorCode.NOT_MATCH_USER);
+
+        goalsRepository.delete(goals);
+    }
 }
