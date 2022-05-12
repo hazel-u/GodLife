@@ -14,20 +14,22 @@ export const useLogout = () => {
   const dispatch = useAppDispatch();
 
   return () => {
-    navigate("/login");
-    localStorage.removeItem("token");
-    localStorage.removeItem("refreshtoken");
-    localStorage.removeItem("expired");
-    dispatch(setTodayBingo(""));
-    dispatch(clearLoggedUser());
-    dispatch(clearGoal());
-    dispatch(
-      setSnackbar({
-        open: true,
-        message: "로그아웃 되었습니다.",
-        severity: "success",
-      })
-    );
+    axiosWithToken.get("user/logout").then(() => {
+      navigate("/login");
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshtoken");
+      localStorage.removeItem("expired");
+      dispatch(setTodayBingo(""));
+      dispatch(clearLoggedUser());
+      dispatch(clearGoal());
+      dispatch(
+        setSnackbar({
+          open: true,
+          message: "로그아웃 되었습니다.",
+          severity: "success",
+        })
+      );
+    });
   };
 };
 
