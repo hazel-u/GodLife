@@ -9,6 +9,7 @@ import com.ovcors.godlife.api.service.FollowService;
 import com.ovcors.godlife.core.domain.user.Follow;
 import com.ovcors.godlife.core.domain.user.User;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.GeneratorType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,6 +53,11 @@ public class FeedController {
     @GetMapping("search/user/{keyword}")
     public ResponseEntity<List<FindBingoResDto>> findUserInFeed(@Auth User user,@PathVariable String keyword) {
         List<FindBingoResDto> response = followService.searchUserInFeed(user.getSeq(), keyword);
+        return ResponseEntity.ok().body(response);
+    }
+    @GetMapping("/main")
+    public ResponseEntity<List<FindBingoResDto>> getMainFeed(){
+        List<FindBingoResDto> response = followService.getMainFeed();
         return ResponseEntity.ok().body(response);
     }
 }

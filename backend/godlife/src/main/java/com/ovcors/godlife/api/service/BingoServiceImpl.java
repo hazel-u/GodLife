@@ -172,10 +172,10 @@ public class BingoServiceImpl implements BingoService {
         List<User> users = userRepository.findByDeletedFalse();
         for(User user : users){
             if(user.isSerial()){
-                user.changeSerialGodCount(0);
-            } else{
                 user.changeGodCount(user.getGodCount()+1);
                 user.changeSerialGodCount(user.getSerialGodCount()+1);
+            } else{
+                user.changeSerialGodCount(0);
             }
         }
     }
