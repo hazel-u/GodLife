@@ -7,7 +7,6 @@ import com.ovcors.godlife.api.dto.request.LoginReqDto;
 import com.ovcors.godlife.api.exception.ErrorCode;
 import com.ovcors.godlife.config.auth.PrincipalDetails;
 import com.ovcors.godlife.core.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
