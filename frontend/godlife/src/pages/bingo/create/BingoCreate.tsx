@@ -1,5 +1,4 @@
 import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
-import axios from "axios";
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -31,10 +30,10 @@ const BingoCreate = () => {
   const [goals, setGoals] = useState<any[]>([]);
 
   const getGoals = () => {
-    axios
+    axiosWithToken
       .get("goal")
       .then((res) => {
-        setGoals(res.data.goals);
+        setGoals(res.data);
       })
       .catch((err) => console.log(err));
   };
