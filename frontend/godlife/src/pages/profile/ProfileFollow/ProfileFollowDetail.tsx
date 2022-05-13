@@ -4,11 +4,12 @@ import axios from "axios";
 import React, { useCallback, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import BorderImage from "../../../assets/images/border.webp";
 import Stamp from "../../../assets/images/stamp.webp";
 import Bingo from "../../../components/Bingo/Bingo";
-import { setFollowingUser } from "../../../store/following";
-import { selectFollowingUser } from "../../../store/following";
+import {
+  selectFollowingUser,
+  setFollowingUser,
+} from "../../../store/following";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import ProfileFollowDetailRecord from "./ProfileFollowDetailRecord";
 
@@ -53,12 +54,9 @@ const ProfileFollowDetail = () => {
           maxWidth: "900px",
           margin: "0 auto",
           backgroundColor: "white",
-          border: "20px solid white",
-          borderImageSource: `url(${BorderImage})`,
-          borderImageSlice: "37 51 47 47",
-          borderImageWidth: "13px 13px 14px 13px",
-          borderImageOutset: "13px 13px 13px 11px",
-          borderImageRepeat: "repeat repeat",
+          borderRadius: "10px",
+          boxShadow: "inset -2px -4px 4px rgba(0,0,0,0.25)",
+          padding: "60px 0",
         }}
       >
         <Box
