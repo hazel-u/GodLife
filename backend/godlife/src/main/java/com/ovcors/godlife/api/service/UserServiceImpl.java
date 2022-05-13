@@ -209,7 +209,7 @@ public class UserServiceImpl implements UserService{
         }
 
         // 사용자의 전체 빙고 찾기
-        List<Bingo> bingos = bingoRepository.findAllByUserOrderByStartDateDesc(user);
+        List<Bingo> bingos = bingoRepository.findAllByUserAndActivateTrueOrderByStartDateDesc(user);
         List<FindBingoSimpleResDto> allBingos = new ArrayList<>();
         for(Bingo bingo:bingos) {
             allBingos.add(new FindBingoSimpleResDto(bingo));
@@ -223,7 +223,7 @@ public class UserServiceImpl implements UserService{
             LocalDate now = LocalDate.parse(LocalDate.now().format(formatter));
 
             if (now.isEqual(recentBingo)) {
-                todayBingo = bingoRepository.findTopByStartDateAndUser(now, user)
+                todayBingo = bingoRepository.findTopByStartDateAndUserAndActivateTrue(now, user)
                         .orElseThrow(() -> new CustomException(ErrorCode.BINGO_DATE_NOT_FOUND));
             }
         }
