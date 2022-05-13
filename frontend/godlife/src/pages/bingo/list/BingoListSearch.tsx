@@ -48,7 +48,6 @@ const BingoListSearch = () => {
     <Flatpickr
       onChange={(newDate) => {
         handleChange(newDate[0]);
-        console.log(newDate[0]);
       }}
       options={{
         locale: Korean,
