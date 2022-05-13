@@ -11,9 +11,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface BingoRepository extends JpaRepository<Bingo, UUID> {
-    List<Bingo> findAllByUser(User user);
-    List<Bingo> findAllByUserOrderByStartDateDesc(User user);
+    List<Bingo> findAllByUserAndActivateTrue(User user);
+    List<Bingo> findAllByUserAndActivateTrueOrderByStartDateDesc(User user);
     Long countByUser(User user);
-    Optional<Bingo> findTopByStartDateAndUser(LocalDate date, User user);
-    List<Bingo> findTop6ByStartDateOrderByLikeCnt(LocalDate startdate);
+    Optional<Bingo> findTopByStartDateAndUserAndActivateTrue(LocalDate date, User user);
+    List<Bingo> findTop6ByStartDateAndActivateTrueOrderByLikeCnt(LocalDate startdate);
 }

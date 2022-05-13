@@ -21,4 +21,5 @@ public interface BingoService {
     void deleteCommentByPassword(String seq, DeleteCommentDto reqDto);
     Long findBingoCount(User user);
     FindBingoResDto findBingoBydate(String date, User user)  throws ParseException;
+    void deleteBingo(String seq);
 }
