@@ -1,7 +1,9 @@
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, Stack, Typography } from "@mui/material";
+import axios from "axios";
 
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import Stamp from "../../../assets/images/stamp.webp";
 import { BingoType } from "../../../types/bingo";
@@ -11,17 +13,29 @@ import BingoFeedItem from "./BingoFeedItem";
 import BingoFeedUserSearch from "./BingoFeedUserSearch";
 
 const BingoFeed = () => {
+  const isAuth = localStorage.getItem("token");
+  const location = useLocation();
   const [bingoList, setBingoList] = useState<BingoType[]>([]);
   const [bingoCount, setBingoCount] = useState(-1);
 
   const getBingoFeed = () => {
-    axiosWithToken
-      .get(`feed`)
-      .then((res) => {
-        setBingoList(res.data);
-        setBingoCount(res.data.length);
-      })
-      .catch((err) => console.log(err));
+    if (location.pathname === "/feed" && isAuth) {
+      axiosWithToken
+        .get(`feed`)
+        .then((res) => {
+          setBingoList(res.data);
+          setBingoCount(res.data.length);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      axios
+        .get(`feed/main`)
+        .then((res) => {
+          setBingoList(res.data);
+          setBingoCount(res.data.length);
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   useEffect(() => {
@@ -32,21 +46,23 @@ const BingoFeed = () => {
 
   return (
     <Stack justifyContent="center" alignItems="center">
-      <Stack
-        direction="row"
-        justifyContent="end"
-        margin="0 0 0 auto"
-        padding={1}
-      >
-        <BingoFeedDateSearch setBingoList={setBingoList} />
-        <BingoFeedUserSearch setBingoList={setBingoList} />
+      {isAuth && (
         <Stack
-          justifyContent="center"
-          sx={{ height: "50px", borderBottom: "#464646 1px solid" }}
+          direction="row"
+          justifyContent="end"
+          margin="0 0 0 auto"
+          padding={1}
         >
-          <SearchIcon />
+          <BingoFeedDateSearch setBingoList={setBingoList} />
+          <BingoFeedUserSearch setBingoList={setBingoList} />
+          <Stack
+            justifyContent="center"
+            sx={{ height: "50px", borderBottom: "#464646 1px solid" }}
+          >
+            <SearchIcon />
+          </Stack>
         </Stack>
-      </Stack>
+      )}
 
       {-1 < bingoCount && bingoList.length === 0 ? (
         <>

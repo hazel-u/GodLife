@@ -11,15 +11,17 @@ import { TextButton } from "../common/Button";
 import MobileNavbarDialog from "./MobileNavbarDialog";
 
 const Navbar = () => {
+  const isAuth = localStorage.getItem("token");
   const location = useLocation();
   const params = useParams();
 
   const code = useAppSelector(selectTodayBingo);
   const pageNameList: { [key: string]: string } = {
     list: "이전의 갓생",
-    group: "내 그룹",
+    feed: "모두의 갓생",
     item: "아이템 샵",
     create: "갓생 만들기",
+    profile: "프로필",
     bingo: `${code}` === params.bingoId ? "오늘의 갓생" : "",
   };
 
@@ -117,9 +119,13 @@ const Navbar = () => {
               textAlign: "end",
             }}
           >
-            <TextButton onClick={() => navigate("/profile")}>
-              내 정보
-            </TextButton>
+            {isAuth ? (
+              <TextButton onClick={() => navigate("/profile")}>
+                내 정보
+              </TextButton>
+            ) : (
+              <TextButton onClick={() => navigate("/login")}>로그인</TextButton>
+            )}
           </Grid>
         </Grid>
       </Hidden>

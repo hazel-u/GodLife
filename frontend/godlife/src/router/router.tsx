@@ -82,6 +82,10 @@ export default function Router() {
       element: <MainLayout />,
       children: [
         {
+          path: "/main",
+          element: <BingoFeed />,
+        },
+        {
           path: "/bingo/:bingoId",
           element: <BingoDetail />,
         },

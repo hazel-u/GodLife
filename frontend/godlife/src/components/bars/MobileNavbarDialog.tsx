@@ -40,11 +40,10 @@ const Puller = styled(Box)(({ theme }) => ({
 
 export default function SwipeableEdgeDrawer({
   logout,
-}: // setOpen,
-{
+}: {
   logout: () => void;
-  // setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const isAuth = localStorage.getItem("token");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const toggleDrawer = (newOpen: boolean) => () => {
     setDrawerOpen(newOpen);
@@ -95,7 +94,11 @@ export default function SwipeableEdgeDrawer({
             height="90%"
           >
             <Stack>
-              <h4>{name}님, 갓생사세요!</h4>
+              {isAuth ? (
+                <h4>{name}님, 갓생사세요!</h4>
+              ) : (
+                <h4>오늘도 갓생사세요!</h4>
+              )}
               <div className="division-line" />
             </Stack>
 
@@ -119,15 +122,28 @@ export default function SwipeableEdgeDrawer({
 
               <TextButton href="/feed">모두의 갓생</TextButton>
 
-              <TextButton
-                onClick={() => {
-                  setDrawerOpen(false);
-                  navigate("/profile");
-                }}
-              >
-                내 정보
-              </TextButton>
-              <TextButton onClick={logout}>로그아웃</TextButton>
+              {isAuth ? (
+                <>
+                  <TextButton
+                    onClick={() => {
+                      setDrawerOpen(false);
+                      navigate("/profile");
+                    }}
+                  >
+                    내 정보
+                  </TextButton>
+                  <TextButton onClick={logout}>로그아웃</TextButton>
+                </>
+              ) : (
+                <TextButton
+                  onClick={() => {
+                    setDrawerOpen(false);
+                    navigate("/login");
+                  }}
+                >
+                  로그인
+                </TextButton>
+              )}
             </Stack>
           </Stack>
         </StyledBox>
