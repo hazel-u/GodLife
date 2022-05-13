@@ -15,9 +15,10 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOriginPattern("*"); // Access-Control-Allow-Origin
+        config.addAllowedOriginPattern("http://localhost:3000"); // Access-Control-Allow-Origin
+        config.addAllowedOriginPattern("https://godlife.today");
         config.addAllowedHeader("*"); // Access-Control-Request-Headers
-        config.addAllowedMethod("*"); // Access-Control-Request-Method
+        config.addAllowedMethod("*"); // Access-Control-Request-Method (GET, POST, DELETE ...)
         config.addExposedHeader(JwtProperties.HEADER_STRING);
         config.addExposedHeader(JwtProperties.REFRESH_TOKEN_HEADER_STRING);
 

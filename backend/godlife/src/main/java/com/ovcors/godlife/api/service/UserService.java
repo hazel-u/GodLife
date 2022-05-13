@@ -27,4 +27,5 @@ public interface UserService {
     List<FollowInfoResDto> getFollowerList(UUID seq);
     List<FollowInfoResDto> getFollowingList(UUID seq);
     void changeStatus(UUID seq, UpdateStatusReqDto updateStatusReqDto);
+    void logout(UUID seq);
 }

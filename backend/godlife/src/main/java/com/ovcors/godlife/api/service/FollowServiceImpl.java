@@ -1,6 +1,7 @@
 package com.ovcors.godlife.api.service;
 
 import com.ovcors.godlife.api.dto.response.FindBingoResDto;
+import com.ovcors.godlife.api.dto.response.FindUserResDto;
 import com.ovcors.godlife.api.dto.response.FollowInfoResDto;
 import com.ovcors.godlife.api.exception.CustomException;
 import com.ovcors.godlife.api.exception.ErrorCode;
@@ -60,14 +61,19 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public List<FollowInfoResDto> findUser(String name) {
-        if(name.equals(null)){
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
-        }
+    public List<FindUserResDto> findUser(UUID seq, String name) {
+        User user = userRepository.findById(seq).get();
         List<User> list = userRepository.findByNameContaining(name);
-        List<FollowInfoResDto> response = new ArrayList<>();
-        for (User user : list) {
-            response.add(new FollowInfoResDto(user.getName(), user.getSerialGodCount(), user.getGodCount()));
+        List<FindUserResDto> response = new ArrayList<>();
+        List<User> followingUser = new ArrayList<>();
+        for (Follow follow : user.getFollower()) {
+            followingUser.add(follow.getFollowing());
+        }
+
+        for (User resultuser : list) {
+            boolean isFollowing = followingUser.contains(resultuser);
+            if (resultuser.getSeq() != seq)
+                response.add(new FindUserResDto(resultuser.getName(), resultuser.getSerialGodCount(), resultuser.getGodCount(), isFollowing));
         }
         return response;
     }
@@ -124,6 +130,17 @@ public class FollowServiceImpl implements FollowService {
                 if (bingo.getStartDate().equals(startdate))
                     response.add(new FindBingoResDto(bingo));
             }
+        }
+        return response;
+    }
+
+    @Override
+    public List<FindBingoResDto> getMainFeed() {
+        final int limit = 6;
+        List<FindBingoResDto> response = new ArrayList<>();
+        List<Bingo> bingos = bingoRepository.findTop6ByStartDateOrderByLikeCnt(LocalDate.now());
+        for (Bingo bingo : bingos) {
+            response.add(new FindBingoResDto(bingo));
         }
         return response;
     }
