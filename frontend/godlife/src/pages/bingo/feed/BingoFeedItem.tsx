@@ -178,11 +178,14 @@ const BingoFeedItem = ({
               <Typography
                 sx={{
                   display: { xs: "none", md: "block" },
+                  fontSize: 14,
                 }}
               >
                 댓글이 없습니다.
               </Typography>
             )}
+
+            {/* 댓글 */}
             {bingo.comments.slice(0, 3).map((comment) => (
               <Stack
                 sx={{
@@ -193,8 +196,16 @@ const BingoFeedItem = ({
                 key={comment.seq}
               >
                 <Stack direction="row" alignItems="end" spacing={1}>
-                  <Typography>{comment.nickname}</Typography>
-                  <Typography sx={{ fontSize: "11px", color: "#9b9b9b" }}>
+                  <Typography fontSize={14} noWrap>
+                    {comment.nickname}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "11px",
+                      color: "#9b9b9b",
+                      minWidth: "85px",
+                    }}
+                  >
                     {dayjs(
                       comment.date.slice(0, 3).join("-") +
                         " " +
@@ -210,6 +221,7 @@ const BingoFeedItem = ({
                       display: "-webkit-box",
                       WebkitLineClamp: `${3}`,
                       WebkitBoxOrient: "vertical",
+                      fontSize: 14,
                     }}
                   >
                     {comment.content}
