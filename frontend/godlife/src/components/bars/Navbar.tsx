@@ -1,19 +1,16 @@
-import { Grid, Hidden, Menu, MenuItem, Typography } from "@mui/material";
+import { Grid, Hidden, Typography } from "@mui/material";
 
-import React, { useState } from "react";
+import React from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { ReactComponent as Logo } from "../../assets/logo/Godlife/logo.svg";
 import { useLogout } from "../../hooks/useAuth";
-import Profile from "../../pages/profile/Profile";
 import { useAppSelector } from "../../store/hooks";
 import { selectTodayBingo } from "../../store/todayBingo";
 import { TextButton } from "../common/Button";
 import MobileNavbarDialog from "./MobileNavbarDialog";
 
 const Navbar = () => {
-  const [open, setOpen] = useState(false);
-
   const location = useLocation();
   const params = useParams();
 
@@ -30,19 +27,8 @@ const Navbar = () => {
 
   const logout = useLogout();
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const menuOpen = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   return (
     <>
-      <Profile open={open} setOpen={setOpen} />
-
       <Hidden smDown>
         <Grid
           container
@@ -131,37 +117,11 @@ const Navbar = () => {
               textAlign: "end",
             }}
           >
-            <TextButton
-              id="basic-button"
-              aria-controls={menuOpen ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={menuOpen ? "true" : undefined}
-              onClick={handleClick}
-            >
+            <TextButton onClick={() => navigate("/profile")}>
               내 정보
             </TextButton>
           </Grid>
         </Grid>
-
-        <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={menuOpen}
-          onClose={handleClose}
-          MenuListProps={{
-            "aria-labelledby": "basic-button",
-          }}
-        >
-          <MenuItem
-            onClick={() => {
-              setOpen(true);
-              handleClose();
-            }}
-          >
-            프로필
-          </MenuItem>
-          <MenuItem onClick={logout}>로그아웃</MenuItem>
-        </Menu>
       </Hidden>
 
       <Grid
@@ -190,7 +150,8 @@ const Navbar = () => {
           </Typography>
         </Grid>
         <Grid item xs>
-          <MobileNavbarDialog logout={logout} setOpen={setOpen} />
+          {/* <MobileNavbarDialog logout={logout} setOpen={setOpen} /> */}
+          <MobileNavbarDialog logout={logout} />
         </Grid>
       </Grid>
     </>
