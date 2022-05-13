@@ -9,6 +9,7 @@ import BingoList from "../pages/bingo/list/BingoList";
 import Join from "../pages/join/Join";
 import Login from "../pages/login/Login";
 import LoginOAuthKakao from "../pages/login/LoginOAuthKakao";
+import SurveyInProgress from "../pages/survey/SurveyInProgress";
 import SurveyStart from "../pages/survey/SurveyStart";
 import { useAppSelector } from "../store/hooks";
 import { selectTodayBingo } from "../store/todayBingo";
@@ -32,7 +33,17 @@ export default function Router() {
     },
     {
       path: "/survey",
-      element: <SurveyStart />,
+      element: <MainLayout />,
+      children: [
+        {
+          path: "/survey",
+          element: <SurveyStart />,
+        },
+        {
+          path: "/survey/inprogress",
+          element: <SurveyInProgress />,
+        },
+      ],
     },
     {
       path: "/",
