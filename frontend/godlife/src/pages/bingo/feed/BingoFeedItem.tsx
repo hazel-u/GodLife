@@ -45,15 +45,11 @@ const BingoFeedItem = ({
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState<UserInfoType>();
 
-  const getUserInfo = () => {
+  useEffect(() => {
     axios
       .get(`user/info/${bingo.userName}`)
       .then((res) => setUserInfo(res.data));
-  };
-
-  useEffect(() => {
-    getUserInfo();
-  }, []);
+  }, [bingo.userName]);
 
   return (
     <Grid
@@ -100,7 +96,7 @@ const BingoFeedItem = ({
           orientation="vertical"
           flexItem
         />
-        <Grid xs={12} display={{ xs: "block", md: "none" }}>
+        <Grid item xs={12} display={{ xs: "block", md: "none" }}>
           <Divider sx={{ margin: "20px 0" }} />
         </Grid>
       </Grid>
@@ -136,9 +132,9 @@ const BingoFeedItem = ({
       </Grid>
 
       <Grid item xs={12} md={3} lg={3} sx={{ "& button": { padding: 0 } }}>
-        <Grid xs={12} display={{ xs: "block", md: "none" }}>
+        <Box width="100%" display={{ xs: "block", md: "none" }}>
           <Divider sx={{ margin: "20px 0" }} />
-        </Grid>
+        </Box>
         <Stack
           direction={{ xs: "row", md: "column" }}
           justifyContent="space-between"

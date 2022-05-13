@@ -8,7 +8,6 @@ import { styled } from "@mui/material/styles";
 
 import * as React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { useAppSelector } from "../../store/hooks";
@@ -50,7 +49,6 @@ export default function SwipeableEdgeDrawer({
   const toggleDrawer = (newOpen: boolean) => () => {
     setDrawerOpen(newOpen);
   };
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { name } = useAppSelector(selectUser);
   const code = useAppSelector(selectTodayBingo);

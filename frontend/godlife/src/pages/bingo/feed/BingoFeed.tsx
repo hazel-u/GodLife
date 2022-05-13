@@ -2,7 +2,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Box, Stack, Typography } from "@mui/material";
 
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import Stamp from "../../../assets/images/stamp.webp";
 import { BingoType } from "../../../types/bingo";
@@ -10,29 +9,6 @@ import axiosWithToken from "../../../utils/axios";
 import BingoFeedDateSearch from "./BingoFeedDateSearch";
 import BingoFeedItem from "./BingoFeedItem";
 import BingoFeedUserSearch from "./BingoFeedUserSearch";
-
-const followUser = (nickName: string) => {
-  console.log(nickName);
-  axiosWithToken
-    .post(`feed/follow/${nickName}`)
-    .then((res) => {
-      console.log(res.data);
-    })
-    .catch((err) => console.log("팔로우 에러", err));
-};
-
-const unfollowUser = (nickName: string) => {
-  axiosWithToken
-    .delete(`feed/follow/${nickName}`)
-    .then((res) => {
-      console.log(res.data);
-    })
-    .catch((err) => console.log(err));
-};
-
-const UserSearchResult = () => {
-  return null;
-};
 
 const BingoFeed = () => {
   const [bingoList, setBingoList] = useState<BingoType[]>([]);
@@ -48,7 +24,6 @@ const BingoFeed = () => {
       .catch((err) => console.log(err));
   };
 
-  const navigate = useNavigate();
   useEffect(() => {
     if (bingoCount === -1) {
       getBingoFeed();

@@ -6,7 +6,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/logo/Godlife/logo.svg";
 import { useLogout } from "../../hooks/useAuth";
 import Profile from "../../pages/profile/Profile";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppSelector } from "../../store/hooks";
 import { selectTodayBingo } from "../../store/todayBingo";
 import { TextButton } from "../common/Button";
 import MobileNavbarDialog from "./MobileNavbarDialog";
@@ -26,7 +26,6 @@ const Navbar = () => {
     bingo: `${code}` === params.bingoId ? "오늘의 갓생" : "",
   };
 
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const logout = useLogout();
