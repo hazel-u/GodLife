@@ -4,7 +4,6 @@ import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import BorderImage from "../../assets/images/border.webp";
 import Stamp from "../../assets/images/stamp.webp";
 import Bingo from "../../components/Bingo/Bingo";
 import { BlackButton } from "../../components/common/Button";
@@ -69,12 +68,9 @@ const Profile = () => {
           maxWidth: "900px",
           margin: "0 auto",
           backgroundColor: "white",
-          border: "20px solid white",
-          borderImageSource: `url(${BorderImage})`,
-          borderImageSlice: "37 51 47 47",
-          borderImageWidth: "13px 13px 14px 13px",
-          borderImageOutset: "13px 13px 13px 11px",
-          borderImageRepeat: "repeat repeat",
+          borderRadius: "10px",
+          boxShadow: "inset -2px -4px 4px rgba(0,0,0,0.25)",
+          padding: "60px 0",
         }}
       >
         <Box
@@ -105,7 +101,7 @@ const Profile = () => {
             >
               오늘의 갓생
             </Typography>
-            {code && code !== "none" ? (
+            {bingo.code && code && code !== "none" ? (
               <Stack direction="column" alignItems="center">
                 <Box
                   sx={{ width: "100%", maxWidth: "550px", textAlign: "center" }}

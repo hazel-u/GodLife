@@ -87,7 +87,12 @@ const BingoFeedItem = ({
                 {userInfo?.serialGodCount}일 째 연속 갓생 달성 중
               </Typography>
             </Box>
-            <TextButton sx={{ paddingX: 0 }}>프로필보기</TextButton>
+            <TextButton
+              sx={{ paddingX: 0 }}
+              onClick={() => navigate(`/profile/${bingo.userName}`)}
+            >
+              프로필보기
+            </TextButton>
           </Box>
         </Stack>
 
