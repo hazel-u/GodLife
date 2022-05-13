@@ -54,7 +54,11 @@ const ProfileInfoMessage = ({ info }: { info: string }) => {
         {clickEdit ? (
           <TextField
             variant="standard"
-            inputProps={{}}
+            inputProps={{
+              style: {
+                textAlign: "center",
+              },
+            }}
             InputProps={{
               style: {
                 maxWidth: "100%",
