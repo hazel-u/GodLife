@@ -49,7 +49,7 @@ const Profile = () => {
       getBingo();
     }
     getUserInfo();
-  }, [getBingo, getUserInfo]);
+  }, [getBingo, getUserInfo, code]);
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
