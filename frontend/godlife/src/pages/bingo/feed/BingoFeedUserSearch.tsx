@@ -15,7 +15,6 @@ const BingoFeedUserSearch = ({
       axiosWithToken
         .get(`feed/search/user/${nickName}`)
         .then((res) => {
-          console.log(res.data);
           setBingoList(res.data);
         })
         .catch((err) => console.log(err));

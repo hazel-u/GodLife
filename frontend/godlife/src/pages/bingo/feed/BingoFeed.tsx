@@ -1,4 +1,3 @@
-import SearchIcon from "@mui/icons-material/Search";
 import { Box, Stack, Typography } from "@mui/material";
 import axios from "axios";
 
@@ -8,6 +7,7 @@ import { useLocation } from "react-router-dom";
 import Stamp from "../../../assets/images/stamp.webp";
 import { BingoType } from "../../../types/bingo";
 import axiosWithToken from "../../../utils/axios";
+import BingoFeedAllUserSearch from "./BingoFeedAllUserSearch";
 import BingoFeedDateSearch from "./BingoFeedDateSearch";
 import BingoFeedItem from "./BingoFeedItem";
 import BingoFeedUserSearch from "./BingoFeedUserSearch";
@@ -55,12 +55,7 @@ const BingoFeed = () => {
         >
           <BingoFeedDateSearch setBingoList={setBingoList} />
           <BingoFeedUserSearch setBingoList={setBingoList} />
-          <Stack
-            justifyContent="center"
-            sx={{ height: "50px", borderBottom: "#464646 1px solid" }}
-          >
-            <SearchIcon />
-          </Stack>
+          <BingoFeedAllUserSearch />
         </Stack>
       )}
 
