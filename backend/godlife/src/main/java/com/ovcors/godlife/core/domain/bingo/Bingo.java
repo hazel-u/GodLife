@@ -90,4 +90,7 @@ public class Bingo {
         this.bingoGoals.add(goal);
         goal.setBingo(this);
     }
+    public void delete() {
+        this.activate = false;
+    }
 }

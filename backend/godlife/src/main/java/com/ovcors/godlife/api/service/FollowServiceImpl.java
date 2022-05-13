@@ -88,7 +88,7 @@ public class FollowServiceImpl implements FollowService {
 
         for (Follow follow : user.getFollower()) {
             User followingUser = follow.getFollowing();
-            List<Bingo> list = bingoRepository.findAllByUser(followingUser);
+            List<Bingo> list = bingoRepository.findAllByUserAndActivateTrue(followingUser);
             for (Bingo bingo : list) {
                 response.add(new FindBingoResDto(bingo));
             }
@@ -107,7 +107,7 @@ public class FollowServiceImpl implements FollowService {
         for (Follow follow : user.getFollower()) {
             User followingUser = follow.getFollowing();
             if (followingUser.getName().contains(keyword)) {
-                List<Bingo> list = bingoRepository.findAllByUser(followingUser);
+                List<Bingo> list = bingoRepository.findAllByUserAndActivateTrue(followingUser);
                 for (Bingo bingo : list) {
                     response.add(new FindBingoResDto(bingo));
                 }
@@ -125,7 +125,7 @@ public class FollowServiceImpl implements FollowService {
 
         for (Follow follow : user.getFollower()) {
             User followingUser = follow.getFollowing();
-            List<Bingo> list = bingoRepository.findAllByUser(followingUser);
+            List<Bingo> list = bingoRepository.findAllByUserAndActivateTrue(followingUser);
             for (Bingo bingo : list) {
                 if (bingo.getStartDate().equals(startdate))
                     response.add(new FindBingoResDto(bingo));
@@ -138,7 +138,7 @@ public class FollowServiceImpl implements FollowService {
     public List<FindBingoResDto> getMainFeed() {
         final int limit = 6;
         List<FindBingoResDto> response = new ArrayList<>();
-        List<Bingo> bingos = bingoRepository.findTop6ByStartDateOrderByLikeCnt(LocalDate.now());
+        List<Bingo> bingos = bingoRepository.findTop6ByStartDateAndActivateTrueOrderByLikeCnt(LocalDate.now());
         for (Bingo bingo : bingos) {
             response.add(new FindBingoResDto(bingo));
         }

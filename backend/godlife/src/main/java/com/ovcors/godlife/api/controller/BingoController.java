@@ -95,4 +95,9 @@ public class BingoController {
         return ResponseEntity.ok().body(response);
     }
 
+    @DeleteMapping("/{seq}")
+    public ResponseEntity<BaseResponseEntity> deleteBingo(@PathVariable String seq){
+        bingoService.deleteBingo(seq);
+        return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
+    }
 }
