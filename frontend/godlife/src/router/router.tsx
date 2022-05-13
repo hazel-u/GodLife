@@ -10,6 +10,7 @@ import Join from "../pages/join/Join";
 import Login from "../pages/login/Login";
 import LoginOAuthKakao from "../pages/login/LoginOAuthKakao";
 import SurveyInProgress from "../pages/survey/SurveyInProgress";
+import SurveyResult from "../pages/survey/SurveyResult";
 import SurveyStart from "../pages/survey/SurveyStart";
 import { useAppSelector } from "../store/hooks";
 import { selectTodayBingo } from "../store/todayBingo";
@@ -42,6 +43,10 @@ export default function Router() {
         {
           path: "/survey/inprogress",
           element: <SurveyInProgress />,
+        },
+        {
+          path: "/survey/result",
+          element: <SurveyResult />,
         },
       ],
     },

@@ -4,6 +4,7 @@ import LinearProgress, {
 } from "@mui/material/LinearProgress";
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { BlackButton } from "../../components/common/Button";
 
@@ -71,11 +72,13 @@ const questions = [
 
 const SurveyInProgress = () => {
   const [page, setPage] = useState(0);
+  const navigate = useNavigate();
+
   const clickNext = () => {
     if (page + 1 < questions.length) {
       setPage(page + 1);
     } else {
-      console.log("유년기의 끝");
+      navigate(`result`);
     }
   };
 
