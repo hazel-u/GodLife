@@ -96,6 +96,7 @@ const BingoCell = ({
           position: "relative",
           cursor:
             location.pathname === "/list" ||
+            location.pathname === "/feed" ||
             (email === userEmail &&
               dayjs().format("YYYY-M-D") === startDate.join("-"))
               ? "pointer"

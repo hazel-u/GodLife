@@ -1,57 +1,36 @@
-import {
-  Grid,
-  Hidden,
-  Menu,
-  MenuItem,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Grid, Hidden, Typography } from "@mui/material";
 
-import React, { useState } from "react";
+import React from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { ReactComponent as Logo } from "../../assets/logo/Godlife/logo.svg";
 import { useLogout } from "../../hooks/useAuth";
-import Profile from "../../pages/profile/Profile";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { setSnackbar } from "../../store/snackbar";
+import { useAppSelector } from "../../store/hooks";
 import { selectTodayBingo } from "../../store/todayBingo";
 import { TextButton } from "../common/Button";
 import MobileNavbarDialog from "./MobileNavbarDialog";
 
 const Navbar = () => {
-  const [open, setOpen] = useState(false);
-
+  const isAuth = localStorage.getItem("token");
   const location = useLocation();
   const params = useParams();
 
   const code = useAppSelector(selectTodayBingo);
   const pageNameList: { [key: string]: string } = {
     list: "이전의 갓생",
-    group: "내 그룹",
+    feed: "모두의 갓생",
     item: "아이템 샵",
     create: "갓생 만들기",
+    profile: "프로필",
     bingo: `${code}` === params.bingoId ? "오늘의 갓생" : "",
   };
 
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const logout = useLogout();
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const menuOpen = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   return (
     <>
-      <Profile open={open} setOpen={setOpen} />
-
       <Hidden smDown>
         <Grid
           container
@@ -122,27 +101,15 @@ const Navbar = () => {
               textAlign: "center",
             }}
           >
-            <Tooltip title={"서비스 준비중입니다."}>
-              <TextButton
-                onClick={() => {
-                  dispatch(
-                    setSnackbar({
-                      open: true,
-                      message: "서비스 준비중입니다.",
-                      severity: "info",
-                    })
-                  );
-                }}
-                sx={{
-                  color:
-                    location.pathname.split("/")[1] === "group"
-                      ? "#464646"
-                      : "",
-                }}
-              >
-                모두의 갓생
-              </TextButton>
-            </Tooltip>
+            <TextButton
+              href="/feed"
+              sx={{
+                color:
+                  location.pathname.split("/")[1] === "feed" ? "#464646" : "",
+              }}
+            >
+              모두의 갓생
+            </TextButton>
           </Grid>
 
           <Grid
@@ -152,37 +119,15 @@ const Navbar = () => {
               textAlign: "end",
             }}
           >
-            <TextButton
-              id="basic-button"
-              aria-controls={menuOpen ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={menuOpen ? "true" : undefined}
-              onClick={handleClick}
-            >
-              내 정보
-            </TextButton>
+            {isAuth ? (
+              <TextButton onClick={() => navigate("/profile")}>
+                내 정보
+              </TextButton>
+            ) : (
+              <TextButton onClick={() => navigate("/login")}>로그인</TextButton>
+            )}
           </Grid>
         </Grid>
-
-        <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={menuOpen}
-          onClose={handleClose}
-          MenuListProps={{
-            "aria-labelledby": "basic-button",
-          }}
-        >
-          <MenuItem
-            onClick={() => {
-              setOpen(true);
-              handleClose();
-            }}
-          >
-            프로필
-          </MenuItem>
-          <MenuItem onClick={logout}>로그아웃</MenuItem>
-        </Menu>
       </Hidden>
 
       <Grid
@@ -211,7 +156,8 @@ const Navbar = () => {
           </Typography>
         </Grid>
         <Grid item xs>
-          <MobileNavbarDialog logout={logout} setOpen={setOpen} />
+          {/* <MobileNavbarDialog logout={logout} setOpen={setOpen} /> */}
+          <MobileNavbarDialog logout={logout} />
         </Grid>
       </Grid>
     </>

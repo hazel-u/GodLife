@@ -16,6 +16,9 @@ export interface UserInfo {
   godCount: number;
   recentDate: null;
   joinType: string;
+  info: string;
+  followerCnt: number;
+  followingCnt: number;
 }
 
 export interface ChangePasswordInput {
