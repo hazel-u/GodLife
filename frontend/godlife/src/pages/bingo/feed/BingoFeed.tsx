@@ -5,6 +5,8 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import Stamp from "../../../assets/images/stamp.webp";
+import { useAppDispatch } from "../../../store/hooks";
+import { setLoading } from "../../../store/loading";
 import { BingoType } from "../../../types/bingo";
 import axiosWithToken from "../../../utils/axios";
 import BingoFeedAllUserSearch from "./BingoFeedAllUserSearch";
@@ -18,24 +20,22 @@ const BingoFeed = () => {
   const [bingoList, setBingoList] = useState<BingoType[]>([]);
   const [bingoCount, setBingoCount] = useState(-1);
 
+  const dispatch = useAppDispatch();
   const getBingoFeed = () => {
+    dispatch(setLoading(true));
+    let request;
     if (location.pathname === "/feed" && isAuth) {
-      axiosWithToken
-        .get(`feed`)
-        .then((res) => {
-          setBingoList(res.data);
-          setBingoCount(res.data.length);
-        })
-        .catch((err) => console.log(err));
+      request = axiosWithToken.get(`feed`);
     } else {
-      axios
-        .get(`feed/main`)
-        .then((res) => {
-          setBingoList(res.data);
-          setBingoCount(res.data.length);
-        })
-        .catch((err) => console.log(err));
+      request = axios.get(`feed/main`);
     }
+    request
+      .then((res) => {
+        setBingoList(res.data);
+        setBingoCount(res.data.length);
+        dispatch(setLoading(false));
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
