@@ -64,9 +64,15 @@ const BingoFeed = () => {
           <Box textAlign={"center"} margin={"20%"}>
             <img src={Stamp} alt="stamp" />
             <Typography paddingY={5}>
-              {bingoCount === 0
-                ? "다른 갓생러들을 팔로우하고 갓생 피드를 채워보세요."
-                : "찾으시는 갓생이 존재하지 않습니다."}
+              {isAuth &&
+                bingoCount === 0 &&
+                "다른 갓생러들을 팔로우하고 갓생 피드를 채워보세요."}
+              {isAuth &&
+                bingoCount !== 0 &&
+                "찾으시는 갓생이 존재하지 않습니다.."}
+              {!isAuth &&
+                bingoCount === 0 &&
+                "모두의 갓생이 존재하지 않습니다."}
             </Typography>
           </Box>
         </>
