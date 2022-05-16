@@ -20,11 +20,13 @@ function ProfileFollow(props: ProfileFollowProps) {
       justifyContent="center"
       onClick={() => setOpenFollowDialog(true)}
     >
-      <Typography sx={{ margin: "2px 0", cursor: "pointer" }}>
+      <Typography sx={{ margin: "2px 3px", cursor: "pointer" }}>
         팔로워{" "}
         <span style={{ fontFamily: "Reggae One", fontWeight: 900 }}>
           {followingCnt}{" "}
         </span>{" "}
+      </Typography>
+      <Typography sx={{ margin: "2px 3px", cursor: "pointer" }}>
         | 팔로잉{" "}
         <span style={{ fontFamily: "Reggae One", fontWeight: 900 }}>
           {followerCnt}{" "}

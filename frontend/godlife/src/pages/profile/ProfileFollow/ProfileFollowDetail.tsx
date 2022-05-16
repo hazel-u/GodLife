@@ -195,22 +195,20 @@ const ProfileFollowDetail = () => {
             <Typography sx={{ whiteSpace: "pre-line" }}>
               갓생 달성 {godCount}일 | 연속 갓생 달성 {serialGodCount}일
             </Typography>
-            <Typography
-              sx={{
-                whiteSpace: "pre-line",
-                margin: "2px 0",
-                cursor: "pointer",
-              }}
-            >
-              팔로워{" "}
-              <span style={{ fontFamily: "Reggae One", fontWeight: 900 }}>
-                {followingCount}{" "}
-              </span>{" "}
-              | 팔로잉{" "}
-              <span style={{ fontFamily: "Reggae One", fontWeight: 900 }}>
-                {followerCount}{" "}
-              </span>
-            </Typography>
+            <Stack direction="row" alignItems="center">
+              <Typography sx={{ margin: "2px 3px", cursor: "pointer" }}>
+                팔로워{" "}
+                <span style={{ fontFamily: "Reggae One", fontWeight: 900 }}>
+                  {followingCount}{" "}
+                </span>{" "}
+              </Typography>
+              <Typography sx={{ margin: "2px 3px", cursor: "pointer" }}>
+                | 팔로잉{" "}
+                <span style={{ fontFamily: "Reggae One", fontWeight: 900 }}>
+                  {followerCount}{" "}
+                </span>
+              </Typography>
+            </Stack>
           </Stack>
 
           <Divider
