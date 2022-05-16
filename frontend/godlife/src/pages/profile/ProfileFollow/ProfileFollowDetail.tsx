@@ -1,4 +1,11 @@
-import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import axios from "axios";
 
 import React, { useCallback, useEffect } from "react";
@@ -71,8 +78,9 @@ const ProfileFollowDetail = () => {
           })}
         >
           <Stack
-            direction="row"
+            direction="column"
             alignItems="center"
+            justifyContent="center"
             sx={{
               height: "65px",
               "& p": {
@@ -89,18 +97,18 @@ const ProfileFollowDetail = () => {
               {name} 님의 프로필
             </Typography>
           </Stack>
-          <Typography
-            sx={{
-              fontSize: 18,
-              margin: "0 0 20px",
-            }}
-          >
-            {info}
-          </Typography>
-          <Typography sx={{ whiteSpace: "pre-line" }}>
-            갓생 달성 {godCount}일 | 연속 갓생 달성 {serialGodCount}일
-          </Typography>
-          <Box>
+          <Stack direction="column" alignItems="center" justifyContent="center">
+            <Typography
+              sx={{
+                fontSize: 18,
+                margin: "2% 0",
+              }}
+            >
+              {info}
+            </Typography>
+            <Typography sx={{ whiteSpace: "pre-line" }}>
+              갓생 달성 {godCount}일 | 연속 갓생 달성 {serialGodCount}일
+            </Typography>
             <Typography
               sx={{
                 whiteSpace: "pre-line",
@@ -117,12 +125,21 @@ const ProfileFollowDetail = () => {
                 {followerCount}{" "}
               </span>
             </Typography>
-          </Box>
+          </Stack>
+
+          <Divider
+            sx={{
+              margin: "3% auto 0",
+              width: "95%",
+            }}
+          />
+
           <Box
             sx={{
               height: "100%",
               width: "100%",
-              marginBottom: todayBingo !== null && todayBingo.code ? 0 : "20%",
+              margin:
+                todayBingo !== null && todayBingo.code ? "5% 0 7%" : "0 0 20%",
             }}
           >
             {todayBingo !== null && todayBingo.code ? (
