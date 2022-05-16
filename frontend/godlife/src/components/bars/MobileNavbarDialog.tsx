@@ -114,6 +114,7 @@ export default function SwipeableEdgeDrawer({
                   } else {
                     navigate("create");
                   }
+                  setDrawerOpen(false);
                 }}
               >
                 오늘의 갓생
