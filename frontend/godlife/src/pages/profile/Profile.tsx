@@ -1,4 +1,11 @@
-import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import axios from "axios";
 
 import React, { useCallback, useEffect, useState } from "react";
@@ -87,20 +94,20 @@ const Profile = () => {
           <ProfileInfo setOpen={setOpen} />
           <ProfileFollow setOpenFollowDialog={setOpenFollowDialog} />
 
+          <Divider
+            sx={{
+              margin: "3% auto 0",
+              width: "95%",
+            }}
+          />
+
           <Box
             sx={{
               height: "100%",
               width: "100%",
+              margin: "5% 0 7%",
             }}
           >
-            <Typography
-              sx={{
-                fontSize: fullScreen ? 16 : 18,
-                margin: "3% 0",
-              }}
-            >
-              오늘의 갓생
-            </Typography>
             {bingo.code && code && code !== "none" ? (
               <Stack direction="column" alignItems="center">
                 <Box
@@ -126,7 +133,7 @@ const Profile = () => {
                   height: "100%",
                   textAlign: "center",
                   width: "100%",
-                  marginTop: "20%",
+                  marginTop: "15%",
                 }}
               >
                 <Box position="relative">

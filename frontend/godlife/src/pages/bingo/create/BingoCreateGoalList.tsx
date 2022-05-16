@@ -100,7 +100,7 @@ const BingoCreateGoalList = () => {
               fontSize: "14px",
               "& span": {
                 padding: 0,
-                fontFamily: "NotoSerifKR",
+                fontFamily: "Noto Serif KR",
               },
               marginBottom: "10px",
               border: "1px solid #b3b3b3",

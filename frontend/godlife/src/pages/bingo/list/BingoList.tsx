@@ -85,6 +85,14 @@ const BingoList = () => {
         </Stack>
       ) : (
         <>
+          <Stack
+            direction="row"
+            justifyContent="end"
+            margin="0 0 0 auto"
+            padding="0 8px 30px 0"
+          >
+            <BingoListSearch />
+          </Stack>
           <Grid container spacing={3}>
             {bingoList.map((bingo) => (
               <Grid
@@ -104,25 +112,12 @@ const BingoList = () => {
               </Grid>
             ))}
           </Grid>
-          <Grid
-            container
-            sx={{ width: "100%", paddingY: "20px" }}
-            direction="row-reverse"
-            justifyContent="flex-start"
-            alignItems="center"
-          >
-            <Grid item xs={12} md={4} container justifyContent="end">
-              <BingoListSearch />
-            </Grid>
-            <Grid item xs={12} md={4} container justifyContent="center">
-              <Pagination
-                count={Math.floor((bingoCount + limit - 1) / limit)}
-                page={page + 1}
-                sx={{ padding: "50px" }}
-                onChange={(_, value: number) => setPage(value - 1)}
-              />
-            </Grid>
-          </Grid>
+          <Pagination
+            count={Math.floor((bingoCount + limit - 1) / limit)}
+            page={page + 1}
+            sx={{ padding: "50px" }}
+            onChange={(_, value: number) => setPage(value - 1)}
+          />
         </>
       )}
     </Stack>

@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
 import React from "react";
 
@@ -14,10 +14,13 @@ function ProfileFollow(props: ProfileFollowProps) {
   const { followerCnt, followingCnt } = useAppSelector(selectUser);
 
   return (
-    <Box onClick={() => setOpenFollowDialog(true)}>
-      <Typography
-        sx={{ whiteSpace: "pre-line", margin: "2px 0", cursor: "pointer" }}
-      >
+    <Stack
+      direction="row"
+      alignItems="center"
+      justifyContent="center"
+      onClick={() => setOpenFollowDialog(true)}
+    >
+      <Typography sx={{ margin: "2px 0", cursor: "pointer" }}>
         팔로워{" "}
         <span style={{ fontFamily: "Reggae One", fontWeight: 900 }}>
           {followingCnt}{" "}
@@ -27,7 +30,7 @@ function ProfileFollow(props: ProfileFollowProps) {
           {followerCnt}{" "}
         </span>
       </Typography>
-    </Box>
+    </Stack>
   );
 }
 

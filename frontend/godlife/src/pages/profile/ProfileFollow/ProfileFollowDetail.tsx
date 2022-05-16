@@ -1,22 +1,34 @@
-import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import axios from "axios";
 
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import Stamp from "../../../assets/images/stamp.webp";
 import Bingo from "../../../components/Bingo/Bingo";
+import { BlackButton, OutlinedButton } from "../../../components/common/Button";
 import {
   selectFollowingUser,
   setFollowingUser,
 } from "../../../store/following";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { setSnackbar } from "../../../store/snackbar";
+import axiosWithToken from "../../../utils/axios";
 import ProfileFollowDetailRecord from "./ProfileFollowDetailRecord";
 
 const ProfileFollowDetail = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
   const paramId = params.name;
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [followingList, setFollowingList] = useState<any>([]);
 
   const getOtherInfo = useCallback(() => {
     axios
@@ -26,6 +38,30 @@ const ProfileFollowDetail = () => {
       })
       .catch((err) => console.log(err));
   }, [params, dispatch]);
+
+  const getFollowingList = () => {
+    axiosWithToken
+      .get("user/following")
+      .then((res) => {
+        const nameList: any[] = [];
+        res.data.map((value: any) => {
+          nameList.push(value.name);
+          return nameList;
+        });
+        setFollowingList(nameList);
+        const nowFollowing = nameList.includes(name);
+        if (nowFollowing) {
+          setIsFollowing(true);
+        } else {
+          setIsFollowing(false);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getFollowingList();
+  });
 
   useEffect(() => {
     getOtherInfo();
@@ -43,6 +79,41 @@ const ProfileFollowDetail = () => {
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const manageFollow = () => {
+    const nowFollowing = followingList.includes(name);
+    console.log(followingList);
+    let request;
+    if (nowFollowing) {
+      request = axiosWithToken.delete(`feed/follow/${name}`);
+      setIsFollowing(false);
+    } else {
+      request = axiosWithToken.post(`feed/follow/${name}`);
+      setIsFollowing(true);
+    }
+    request
+      .then(() => {
+        getOtherInfo();
+        dispatch(
+          setSnackbar({
+            open: true,
+            message: nowFollowing
+              ? `${name}님을 언팔로우합니다.`
+              : `${name}님을 팔로우합니다.`,
+            severity: "success",
+          })
+        );
+      })
+      .catch(() =>
+        dispatch(
+          setSnackbar({
+            open: true,
+            message: "다시 시도해주세요.",
+            severity: "error",
+          })
+        )
+      );
+  };
 
   return (
     <>
@@ -73,6 +144,7 @@ const ProfileFollowDetail = () => {
           <Stack
             direction="row"
             alignItems="center"
+            justifyContent="center"
             sx={{
               height: "65px",
               "& p": {
@@ -88,19 +160,41 @@ const ProfileFollowDetail = () => {
             >
               {name} 님의 프로필
             </Typography>
+            {isFollowing ? (
+              <OutlinedButton
+                style={{
+                  width: "10%",
+                  margin: "0 2%",
+                  backgroundColor: "#EEEEEE",
+                }}
+                onClick={() => manageFollow()}
+              >
+                팔로우
+              </OutlinedButton>
+            ) : (
+              <BlackButton
+                style={{
+                  width: "10%",
+                  margin: "0 2%",
+                }}
+                onClick={() => manageFollow()}
+              >
+                팔로우
+              </BlackButton>
+            )}
           </Stack>
-          <Typography
-            sx={{
-              fontSize: 18,
-              margin: "0 0 20px",
-            }}
-          >
-            {info}
-          </Typography>
-          <Typography sx={{ whiteSpace: "pre-line" }}>
-            갓생 달성 {godCount}일 | 연속 갓생 달성 {serialGodCount}일
-          </Typography>
-          <Box>
+          <Stack direction="column" alignItems="center" justifyContent="center">
+            <Typography
+              sx={{
+                fontSize: 18,
+                margin: "2% 0",
+              }}
+            >
+              {info}
+            </Typography>
+            <Typography sx={{ whiteSpace: "pre-line" }}>
+              갓생 달성 {godCount}일 | 연속 갓생 달성 {serialGodCount}일
+            </Typography>
             <Typography
               sx={{
                 whiteSpace: "pre-line",
@@ -117,22 +211,23 @@ const ProfileFollowDetail = () => {
                 {followerCount}{" "}
               </span>
             </Typography>
-          </Box>
+          </Stack>
+
+          <Divider
+            sx={{
+              margin: "3% auto 0",
+              width: "95%",
+            }}
+          />
+
           <Box
             sx={{
               height: "100%",
               width: "100%",
-              marginBottom: todayBingo !== null && todayBingo.code ? 0 : "20%",
+              margin:
+                todayBingo !== null && todayBingo.code ? "5% 0 7%" : "0 0 20%",
             }}
           >
-            <Typography
-              sx={{
-                fontSize: fullScreen ? 16 : 18,
-                margin: "3% 0",
-              }}
-            >
-              오늘의 갓생
-            </Typography>
             {todayBingo !== null && todayBingo.code ? (
               <Stack direction="column" alignItems="center">
                 <Box

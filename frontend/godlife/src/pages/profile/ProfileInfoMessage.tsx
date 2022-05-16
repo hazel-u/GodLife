@@ -44,6 +44,7 @@ const ProfileInfoMessage = ({ info }: { info: string }) => {
       <Stack
         direction="row"
         alignItems="center"
+        justifyContent="center"
         sx={{
           height: "55px",
           "& p": {
@@ -87,7 +88,7 @@ const ProfileInfoMessage = ({ info }: { info: string }) => {
                 borderBottom: "2px solid #B3B3B3",
               },
             }}
-            value={newInfo}
+            value={newInfo || ""}
             onChange={(e) => {
               setNewInfo(e.target.value);
             }}

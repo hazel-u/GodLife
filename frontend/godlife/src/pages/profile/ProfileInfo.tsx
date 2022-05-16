@@ -45,7 +45,7 @@ function ProfileInfo(props: ProfileInfoProps) {
       <Stack
         direction="row"
         alignItems="center"
-        justifyContent="space-between"
+        justifyContent="center"
         sx={{
           height: "65px",
           "& p": {
@@ -90,9 +90,11 @@ function ProfileInfo(props: ProfileInfoProps) {
         </Menu>
       </Stack>
       <ProfileInfoMessage info={info} />
-      <Typography sx={{ whiteSpace: "pre-line" }}>
-        갓생 달성 {godCount}일 | 연속 갓생 달성 {serialGodCount}일
-      </Typography>
+      <Stack direction="row" alignItems="center" justifyContent="center">
+        <Typography sx={{ whiteSpace: "pre-line" }}>
+          갓생 달성 {godCount}일 | 연속 갓생 달성 {serialGodCount}일
+        </Typography>
+      </Stack>
     </>
   );
 }
