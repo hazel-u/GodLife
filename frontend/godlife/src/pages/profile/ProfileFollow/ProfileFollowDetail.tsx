@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 
 import Stamp from "../../../assets/images/stamp.webp";
 import Bingo from "../../../components/Bingo/Bingo";
-import { BlackButton } from "../../../components/common/Button";
+import { BlackButton, OutlinedButton } from "../../../components/common/Button";
 import {
   selectFollowingUser,
   setFollowingUser,
@@ -61,6 +61,9 @@ const ProfileFollowDetail = () => {
 
   useEffect(() => {
     getFollowingList();
+  });
+
+  useEffect(() => {
     getOtherInfo();
   }, [getOtherInfo]);
 
@@ -158,15 +161,16 @@ const ProfileFollowDetail = () => {
               {name} 님의 프로필
             </Typography>
             {isFollowing ? (
-              <BlackButton
+              <OutlinedButton
                 style={{
                   width: "10%",
                   margin: "0 2%",
+                  backgroundColor: "#EEEEEE",
                 }}
                 onClick={() => manageFollow()}
               >
-                언팔로우
-              </BlackButton>
+                팔로우
+              </OutlinedButton>
             ) : (
               <BlackButton
                 style={{
