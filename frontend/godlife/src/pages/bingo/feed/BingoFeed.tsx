@@ -25,14 +25,18 @@ const BingoFeed = () => {
     dispatch(setLoading(true));
     let request;
     if (location.pathname === "/feed" && isAuth) {
-      request = axiosWithToken.get(`feed`);
-    } else {
-      request = axios.get(`feed/main`);
-    }
-    request
-      .then((res) => {
+      request = axiosWithToken.get(`feed`).then((res) => {
         setBingoList(res.data);
         setBingoCount(res.data.length);
+      });
+    } else {
+      request = axios.get(`feed/main`).then((res) => {
+        setBingoList(res.data.reverse());
+        setBingoCount(res.data.length);
+      });
+    }
+    request
+      .then(() => {
         dispatch(setLoading(false));
       })
       .catch((err) => console.log(err));
