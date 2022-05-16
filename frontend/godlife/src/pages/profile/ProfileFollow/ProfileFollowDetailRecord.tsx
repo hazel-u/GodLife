@@ -1,6 +1,5 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import { Typography } from "@mui/material";
 import axios from "axios";
 
 import React, { Component } from "react";
@@ -28,19 +27,10 @@ class ProfileFollowDetailRecord extends Component <nameProps>{
         res.data.allBingo.forEach(
           (bingo: { code: string; startDate: any; godlife: boolean }) => {
             if (bingo.godlife === true) {
-              let formatDate =
-                bingo.startDate[0] +
-                "-" +
-                0 +
-                bingo.startDate[1] +
-                "-" +
-                0 +
-                bingo.startDate[2];
-              godBingoList.push({
-                code: bingo.code,
-                date: formatDate,
-                godlife: true,
-              });
+              var formatDate = (bingo.startDate[2] >= 10) ? 
+                bingo.startDate[0] + "-" + 0 + bingo.startDate[1] + "-" + bingo.startDate[2]
+                : bingo.startDate[0] + "-" + 0 + bingo.startDate[1] + "-" + 0 + bingo.startDate[2]
+              godBingoList.push({ code: bingo.code, date: formatDate, godlife: true })
             }
           }
         );
@@ -60,17 +50,6 @@ class ProfileFollowDetailRecord extends Component <nameProps>{
 
     return (
       <>
-        <Typography 
-          sx={(theme) => ({
-            margin: "5% 0",
-            fontSize: 18,
-            [theme.breakpoints.down("sm")]: {
-              fontSize: 16,
-            }, 
-          })}
-        >
-          이전의 갓생
-        </Typography>
         <FullCalendar
           headerToolbar={{
             left: "prev",
@@ -92,6 +71,13 @@ class ProfileFollowDetailRecord extends Component <nameProps>{
               opacity: "50%",
             }}
           />
+          }
+          eventClick={
+            function(info) {
+              info.jsEvent.preventDefault();
+              let eventCode = info.event._def.extendedProps.code
+              window.location.href=`/bingo/${eventCode}`
+            }
           }
         />
       </>

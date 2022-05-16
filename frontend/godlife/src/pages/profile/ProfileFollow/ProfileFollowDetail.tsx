@@ -125,14 +125,6 @@ const ProfileFollowDetail = () => {
               marginBottom: todayBingo !== null && todayBingo.code ? 0 : "20%",
             }}
           >
-            <Typography
-              sx={{
-                fontSize: fullScreen ? 16 : 18,
-                margin: "3% 0",
-              }}
-            >
-              오늘의 갓생
-            </Typography>
             {todayBingo !== null && todayBingo.code ? (
               <Stack direction="column" alignItems="center">
                 <Box

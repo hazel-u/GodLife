@@ -93,14 +93,6 @@ const Profile = () => {
               width: "100%",
             }}
           >
-            <Typography
-              sx={{
-                fontSize: fullScreen ? 16 : 18,
-                margin: "3% 0",
-              }}
-            >
-              오늘의 갓생
-            </Typography>
             {bingo.code && code && code !== "none" ? (
               <Stack direction="column" alignItems="center">
                 <Box
