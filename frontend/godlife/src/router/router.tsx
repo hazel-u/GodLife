@@ -34,6 +34,20 @@ export default function Router() {
     },
     {
       path: "/",
+      element: <MainLayout />,
+      children: [
+        {
+          path: "/",
+          element: <BingoFeed />,
+        },
+        {
+          path: "/bingo/:bingoId",
+          element: <BingoDetail />,
+        },
+      ],
+    },
+    {
+      path: "/",
       element: isAuth ? <MainLayout /> : <Navigate to="/login" />,
       children: [
         {
@@ -77,20 +91,7 @@ export default function Router() {
         },
       ],
     },
-    {
-      path: "/",
-      element: <MainLayout />,
-      children: [
-        {
-          path: "/main",
-          element: <BingoFeed />,
-        },
-        {
-          path: "/bingo/:bingoId",
-          element: <BingoDetail />,
-        },
-      ],
-    },
+
     {
       path: "/*",
       element: <NotFound />,
