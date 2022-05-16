@@ -54,7 +54,7 @@ const BingoListSearch = () => {
         minDate: "2022-05-01",
         maxDate: "2999-12-31",
       }}
-      className="date-picker"
+      className="feed-date-picker"
       placeholder="날짜로 이동"
     />
   );

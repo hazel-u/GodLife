@@ -179,14 +179,21 @@ const BingoFeedAllUserSearch = () => {
           </OutlinedButton>
         </Box>
       </Dialog>
-      <Stack
-        justifyContent="center"
-        sx={{ height: "50px", borderBottom: "#464646 1px solid" }}
+
+      <button
+        style={{ cursor: "pointer", width: "150px", paddingRight: 0 }}
+        onClick={() => setOpen(true)}
+        className="feed-user-search"
       >
-        <IconButton onClick={() => setOpen(true)}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          갓생러 검색
           <SearchIcon />
-        </IconButton>
-      </Stack>
+        </Stack>
+      </button>
     </>
   );
 };

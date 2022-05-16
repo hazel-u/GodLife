@@ -12,7 +12,6 @@ import axiosWithToken from "../../../utils/axios";
 import BingoFeedAllUserSearch from "./BingoFeedAllUserSearch";
 import BingoFeedDateSearch from "./BingoFeedDateSearch";
 import BingoFeedItem from "./BingoFeedItem";
-import BingoFeedUserSearch from "./BingoFeedUserSearch";
 
 const BingoFeed = () => {
   const isAuth = localStorage.getItem("token");
@@ -58,7 +57,6 @@ const BingoFeed = () => {
           padding={1}
         >
           <BingoFeedDateSearch setBingoList={setBingoList} />
-          <BingoFeedUserSearch setBingoList={setBingoList} />
           <BingoFeedAllUserSearch />
         </Stack>
       )}

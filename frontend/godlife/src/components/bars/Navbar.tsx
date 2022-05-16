@@ -19,6 +19,7 @@ const Navbar = () => {
   const pageNameList: { [key: string]: string } = {
     list: "이전의 갓생",
     feed: "모두의 갓생",
+    "": "모두의 갓생",
     item: "아이템 샵",
     create: "갓생 만들기",
     profile: "프로필",
