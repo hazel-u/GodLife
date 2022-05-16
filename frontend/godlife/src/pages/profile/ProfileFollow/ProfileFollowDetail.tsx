@@ -8,22 +8,27 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import Stamp from "../../../assets/images/stamp.webp";
 import Bingo from "../../../components/Bingo/Bingo";
+import { BlackButton } from "../../../components/common/Button";
 import {
   selectFollowingUser,
   setFollowingUser,
 } from "../../../store/following";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { setSnackbar } from "../../../store/snackbar";
+import axiosWithToken from "../../../utils/axios";
 import ProfileFollowDetailRecord from "./ProfileFollowDetailRecord";
 
 const ProfileFollowDetail = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
   const paramId = params.name;
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [followingList, setFollowingList] = useState<any>([]);
 
   const getOtherInfo = useCallback(() => {
     axios
@@ -34,7 +39,28 @@ const ProfileFollowDetail = () => {
       .catch((err) => console.log(err));
   }, [params, dispatch]);
 
+  const getFollowingList = () => {
+    axiosWithToken
+      .get("user/following")
+      .then((res) => {
+        const nameList: any[] = [];
+        res.data.map((value: any) => {
+          nameList.push(value.name);
+          return nameList;
+        });
+        setFollowingList(nameList);
+        const nowFollowing = nameList.includes(name);
+        if (nowFollowing) {
+          setIsFollowing(true);
+        } else {
+          setIsFollowing(false);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
+    getFollowingList();
     getOtherInfo();
   }, [getOtherInfo]);
 
@@ -50,6 +76,41 @@ const ProfileFollowDetail = () => {
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const manageFollow = () => {
+    const nowFollowing = followingList.includes(name);
+    console.log(followingList);
+    let request;
+    if (nowFollowing) {
+      request = axiosWithToken.delete(`feed/follow/${name}`);
+      setIsFollowing(false);
+    } else {
+      request = axiosWithToken.post(`feed/follow/${name}`);
+      setIsFollowing(true);
+    }
+    request
+      .then(() => {
+        getOtherInfo();
+        dispatch(
+          setSnackbar({
+            open: true,
+            message: nowFollowing
+              ? `${name}님을 언팔로우합니다.`
+              : `${name}님을 팔로우합니다.`,
+            severity: "success",
+          })
+        );
+      })
+      .catch(() =>
+        dispatch(
+          setSnackbar({
+            open: true,
+            message: "다시 시도해주세요.",
+            severity: "error",
+          })
+        )
+      );
+  };
 
   return (
     <>
@@ -78,7 +139,7 @@ const ProfileFollowDetail = () => {
           })}
         >
           <Stack
-            direction="column"
+            direction="row"
             alignItems="center"
             justifyContent="center"
             sx={{
@@ -96,6 +157,27 @@ const ProfileFollowDetail = () => {
             >
               {name} 님의 프로필
             </Typography>
+            {isFollowing ? (
+              <BlackButton
+                style={{
+                  width: "10%",
+                  margin: "0 2%",
+                }}
+                onClick={() => manageFollow()}
+              >
+                언팔로우
+              </BlackButton>
+            ) : (
+              <BlackButton
+                style={{
+                  width: "10%",
+                  margin: "0 2%",
+                }}
+                onClick={() => manageFollow()}
+              >
+                팔로우
+              </BlackButton>
+            )}
           </Stack>
           <Stack direction="column" alignItems="center" justifyContent="center">
             <Typography
