@@ -1,9 +1,11 @@
 import { Box, Stack, Typography } from "@mui/material";
-import { cacheNames } from "workbox-core/_private";
 
-import { useState } from "react";
-
+import SurveyResultAndroid from "../../assets/images/survey/SurveyResultAndroid.png";
+import SurveyResultClover from "../../assets/images/survey/SurveyResultClover.png";
+import SurveyResultDoer from "../../assets/images/survey/SurveyResultDoer.png";
+import SurveyResultGwichanism from "../../assets/images/survey/SurveyResultGwichanism.png";
 import SurveyResultHorse from "../../assets/images/survey/SurveyResultHorse.png";
+import SurveyResultWorries from "../../assets/images/survey/SurveyResultWorries.png";
 import { SurveyButton } from "../../components/common/Button";
 
 const results = [
@@ -41,7 +43,7 @@ const results = [
   },
   // 2. 즉흥형
   {
-    imgUrl: SurveyResultHorse,
+    imgUrl: SurveyResultDoer,
     subtitle: "계획 따윈 사치다!",
     title: "즉흥형",
     contents: [
@@ -72,7 +74,7 @@ const results = [
   },
   // 3. 귀차니즘형
   {
-    imgUrl: SurveyResultHorse,
+    imgUrl: SurveyResultGwichanism,
     subtitle: "모든 게 귀찮아..",
     title: "귀차니즘형",
     contents: [
@@ -104,7 +106,7 @@ const results = [
   },
   // 4. 지게꾼형
   {
-    imgUrl: SurveyResultHorse,
+    imgUrl: SurveyResultWorries,
     subtitle: "걱정이 너무 많아요!",
     title: "지게꾼형",
     contents: [
@@ -135,7 +137,7 @@ const results = [
   },
   // 5. 안드로이드형
   {
-    imgUrl: SurveyResultHorse,
+    imgUrl: SurveyResultAndroid,
     subtitle: "계획은⋯ 실행한다⋯.",
     title: "안드로이드형",
     contents: [
@@ -150,8 +152,8 @@ const results = [
       {
         header: "보완할 수 있는 점은?",
         texts: [
-          "때로는 쉴 시간도 필요해요. 번아웃에 조심하는 편이 좋겠어요.",
-          "",
+          "때로는 쉴 시간도 필요해요.",
+          "번아웃에 조심하는 편이 좋겠어요.",
         ],
       },
       {
@@ -165,7 +167,7 @@ const results = [
   },
   // 6. 세 잎 클로버형
   {
-    imgUrl: SurveyResultHorse,
+    imgUrl: SurveyResultClover,
     subtitle: "작고 소중한 행복을 찾아서.",
     title: "세 잎 클로버 형",
     contents: [
@@ -196,52 +198,86 @@ const results = [
   },
 ];
 
+const getResult = () => {
+  const resultType = window.location.href.split("#")[1] || "";
+  let resultNumber = 0;
+  switch (resultType) {
+    case "android":
+      resultNumber = 4;
+      break;
+    case "worries":
+      resultNumber = 3;
+      break;
+    case "horse":
+      resultNumber = 0;
+      break;
+    case "clover":
+      resultNumber = 5;
+      break;
+    case "doer":
+      resultNumber = 1;
+      break;
+    case "quichanism":
+      resultNumber = 2;
+      break;
+    default:
+      resultNumber = 0;
+  }
+  return resultNumber;
+};
+
 const SurveyResult = () => {
-  console.log(window.location.href);
-  const resultNumber = 0;
+  const resultNumber = getResult();
   const result = results[resultNumber];
   const contents = result.contents;
   return (
     <Stack direction="column" alignItems="center" mt={4}>
-      <Typography fontSize={20} fontFamily={"BMEULJIRO"}>
-        나의 유형은?
-      </Typography>
-      <img src={result.imgUrl} alt="" />
-      <Typography fontSize={20} fontFamily={"BMEULJIRO"} mt={2}>
-        {result.subtitle}
-      </Typography>
-      <Typography fontSize={40} fontFamily={"BMEULJIRO"} mt={2}>
-        {result.title}
-      </Typography>
-      <Stack direction="column" alignItems="start">
-        {contents.map(function (content: any) {
-          const texts = content.texts;
-          return (
-            <>
-              <Typography
-                fontSize={20}
-                mt={5}
-                variant="h1"
-                fontFamily="Noto Sans KR"
-              >
-                {content.header}
-              </Typography>
-              {texts.map(function (text: string) {
-                return (
-                  <Typography fontFamily="Noto Sans KR">· {text}</Typography>
-                );
-              })}
-            </>
-          );
-        })}
-      </Stack>
+      <Stack
+        direction="column"
+        alignItems="center"
+        mt={4}
+        sx={{ maxWidth: 500 }}
+      >
+        <Typography fontSize={20} fontFamily={"BMEULJIRO"}>
+          나의 유형은?
+        </Typography>
+        <img src={result.imgUrl} alt="" />
+        <Typography fontSize={20} fontFamily={"BMEULJIRO"} mt={2}>
+          {result.subtitle}
+        </Typography>
+        <Typography fontSize={40} fontFamily={"BMEULJIRO"} mt={2}>
+          {result.title}
+        </Typography>
+        <Stack direction="column" alignItems="start">
+          {contents.map(function (content: any) {
+            const texts = content.texts;
+            return (
+              <>
+                <Typography
+                  fontSize={20}
+                  mt={5}
+                  variant="h1"
+                  fontFamily="Noto Sans KR"
+                >
+                  {content.header}
+                </Typography>
+                {texts.map(function (text: string) {
+                  return (
+                    <Typography fontFamily="Noto Sans KR">· {text}</Typography>
+                  );
+                })}
+              </>
+            );
+          })}
+        </Stack>
 
-      <SurveyButton sx={{ width: "100%", marginTop: 5 }}>
-        '갓생살기'에서 재미있게 갓생 살아보기
-      </SurveyButton>
-      <SurveyButton sx={{ width: "100%", marginTop: 5 }}>
-        테스트 다시 하기
-      </SurveyButton>
+        <SurveyButton sx={{ width: "100%", marginTop: 5 }}>
+          '갓생살기'에서 재미있게 갓생 살아보기
+        </SurveyButton>
+        <SurveyButton sx={{ width: "100%", marginTop: 5 }}>
+          테스트 다시 하기
+        </SurveyButton>
+      </Stack>
     </Stack>
   );
 };

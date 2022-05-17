@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { SurveyButton } from "../../components/common/Button";
 
 function LinearProgressWithLabel(
-  props: LinearProgressProps & { value: number; totalQuestions: number }
+  props: LinearProgressProps & { value: number; totalquestions: number }
 ) {
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -19,7 +19,7 @@ function LinearProgressWithLabel(
       <Box sx={{ minWidth: 35 }}>
         <Typography variant="body2" color="text.secondary">{`${
           props.value / 10
-        }/${props.totalQuestions}`}</Typography>
+        }/${props.totalquestions}`}</Typography>
       </Box>
     </Box>
   );
@@ -70,10 +70,10 @@ const questions = [
     question:
       "간단히 외출 할 일이 생겼다! 걸어서 20분이면 갈 수 있을 만 한 거리다. 이 때 나는..",
     answers: [
-      { text: "3보 이상 택시! 택시를 잡아 타고 flex한다.", type: "집순이" },
+      { text: "3보 이상 택시! 택시를 잡아 타고 flex한다.", type: "E" },
       {
         text: "운동도 할 겸 걸어가볼까? 좀 멀더라도 산책 삼아 걸어간다.",
-        type: "집순이",
+        type: "CA",
       },
     ],
   },
@@ -82,11 +82,11 @@ const questions = [
     answers: [
       {
         text: "맵고 짜고 기름진 것!!! 점심이지만 껍데기집에서 김치찌개 한 사발 갈까요?",
-        type: "집순이",
+        type: "OA",
       },
       {
         text: "골고루 먹는게 좋겠지? 샐러드와 닭가슴살을 잘 챙겨먹는다.",
-        type: "집순이",
+        type: "C",
       },
     ],
   },
@@ -96,11 +96,11 @@ const questions = [
     answers: [
       {
         text: "인기 좋을 것 같은 요 아이! 다른 이들이 채가기 전에 바로 지른다!",
-        type: "집순이",
+        type: "EO",
       },
       {
         text: "아냐.. 비슷하게 생긴 옷 옷장에 5벌 있어. 참는다.",
-        type: "집순이",
+        type: "C",
       },
     ],
   },
@@ -109,9 +109,9 @@ const questions = [
     answers: [
       {
         text: "준비해온 텀블러에 커피를 담아온다. 500원 할인은 보너스!",
-        type: "집순이",
+        type: "CE",
       },
-      { text: "편한게 최고! 일회용 컵에 커피를 가져온다. ", type: "집순이" },
+      { text: "편한게 최고! 일회용 컵에 커피를 가져온다. ", type: "" },
     ],
   },
   {
@@ -119,12 +119,12 @@ const questions = [
       "아직 해야 할 일이 많은데 놀고 싶은 마음이 솟구친다. 그럴 때 나는",
     answers: [
       {
-        text: '"뒤는 맡긴다. 미래의 나" 우선 놀고 나서 마무리한다. ',
-        type: "집순이",
+        text: '"뒤는 맡긴다. 미래의 나"\n 우선 놀고 나서 마무리한다. ',
+        type: "E",
       },
       {
         text: '"놀땐 놀더라도 할 건 하고 놀아야지..."얼른 할 일을 마무리하고 놀러 간다. ',
-        type: "집순이",
+        type: "C",
       },
     ],
   },
@@ -133,9 +133,9 @@ const questions = [
     answers: [
       {
         text: "난 여기까지야... 침대에 드러눕는다.",
-        type: "집순이",
+        type: "N",
       },
-      { text: "오늘도 고생했어! 딱 30분만 공부하고 쉴까?", type: "집순이" },
+      { text: "오늘도 고생했어! 딱 30분만 공부하고 쉴까?", type: "AC" },
     ],
   },
   {
@@ -144,11 +144,11 @@ const questions = [
     answers: [
       {
         text: "이 때를 위해 준비했다! 아껴뒀던 쿠폰을 모아 야식을 시킨다. ",
-        type: "집순이",
+        type: "O",
       },
       {
         text: "좀 있다 잘건데 뭐 먹으면 안 되겠지? 아쉽지만 내일 점심에 먹기로 기약한다. ",
-        type: "집순이",
+        type: "C",
       },
     ],
   },
@@ -158,72 +158,122 @@ const questions = [
     answers: [
       {
         text: "너무 피곤하다. 내일 아침에 씻을래.... ",
-        type: "집순이",
+        type: "N",
       },
       {
         text: "아무리 피곤해도 안 씻고 잘 수는 없다. 화장실로 직행!",
-        type: "집순이",
+        type: "C",
       },
     ],
   },
 ];
+const chooseType = (big5Type: any) => {
+  let answer = "";
+  if (big5Type.C > 5) {
+    answer = "android";
+  } else if (big5Type.C > 4) {
+    if (big5Type.A > 3) {
+      answer = "horse";
+    } else if (big5Type.N > 2) {
+      answer = "worries";
+    } else if (big5Type.O > 1) {
+      answer = "clover";
+    }
+    answer = "android";
+  } else if (big5Type.C > 2) {
+    if (big5Type.A > 3) {
+      answer = "doer";
+    } else if (big5Type.O > 1) {
+      answer = "horse";
+    }
+    answer = "clover";
+  } else {
+    answer = "gwichanism";
+  }
+  return answer;
+};
 
 const SurveyInProgress = () => {
-  const [page, setPage] = useState(0);
-  // const [lifeType, setLifeType] = useState({''});
   const navigate = useNavigate();
 
-  const clickNext = () => {
+  const [page, setPage] = useState(0);
+  const [lifeType, setLifeType] = useState({ N: 0, E: 0, O: 0, A: 0, C: 0 });
+  const clickNext = (big5Type: string) => {
     if (page + 1 < questions.length) {
       setPage(page + 1);
+
+      if (big5Type) {
+        for (let syl of big5Type) {
+          switch (syl) {
+            case "N":
+              lifeType.N++;
+              break;
+            case "E":
+              lifeType.E++;
+              break;
+            case "O":
+              lifeType.O++;
+              break;
+            case "A":
+              lifeType.A++;
+              break;
+            case "C":
+              lifeType.C++;
+              break;
+          }
+        }
+      }
     } else {
-      navigate("../../survey/result");
+      console.log(chooseType(lifeType));
+      navigate(`../../survey/result#${chooseType(lifeType)}`);
     }
   };
 
   return (
-    <Stack
-      direction="column"
-      alignItems="center"
-      justifySelf={"center"}
-      mt={4}
-      sx={{ maxWidth: 500 }}
-    >
-      <Box sx={{ width: "90%" }}>
-        <LinearProgressWithLabel
-          value={(page + 1) * 10}
-          totalQuestions={questions.length}
-        />
-      </Box>
-      <Typography
-        fontSize={50}
-        fontFamily={"BMEULJIRO"}
-        mt={2}
-        sx={{ maxWidth: "80%" }}
+    <Stack direction="column" justifySelf="center" alignItems="center">
+      <Stack
+        direction="column"
+        alignItems="center"
+        justifySelf={"center"}
+        mt={4}
+        sx={{ maxWidth: 500 }}
       >
-        Q.{page + 1}
-      </Typography>
-      <Typography fontSize={25} fontFamily={"BMEULJIRO"} mt={2}>
-        {questions[page].question}
-      </Typography>
-      <Typography
-        fontSize={15}
-        fontFamily={"BMEULJIRO"}
-        mt={2}
-        mb={2}
-      ></Typography>
-      <SurveyButton
-        onClick={clickNext}
-        sx={{ width: "100%", marginTop: 5, paddingY: 2 }}
-      >
-        {questions[page].answers[0].text}
-      </SurveyButton>
-      <SurveyButton
-        onClick={clickNext}
-        sx={{ width: "100%", marginTop: 5, paddingY: 2 }}
-      >
-        {questions[page].answers[1].text}
-      </SurveyButton>
+        <Box sx={{ width: "90%" }}>
+          <LinearProgressWithLabel
+            value={(page + 1) * 10}
+            totalquestions={questions.length}
+          />
+        </Box>
+        <Typography
+          fontSize={50}
+          fontFamily={"BMEULJIRO"}
+          mt={2}
+          sx={{ maxWidth: "80%" }}
+        >
+          Q.{page + 1}
+        </Typography>
+        <Typography fontSize={25} fontFamily={"BMEULJIRO"} mt={2}>
+          {questions[page].question}
+        </Typography>
+        <Typography
+          fontSize={15}
+          fontFamily={"BMEULJIRO"}
+          mt={2}
+          mb={2}
+        ></Typography>
+        <SurveyButton
+          onClick={() => clickNext(questions[page].answers[0].type)}
+          sx={{ width: "100%", marginTop: 5, paddingY: 2 }}
+        >
+          {questions[page].answers[0].text}
+        </SurveyButton>
+        <SurveyButton
+          onClick={() => clickNext(questions[page].answers[1].type)}
+          sx={{ width: "100%", marginTop: 5, paddingY: 2 }}
+        >
+          {questions[page].answers[1].text}
+        </SurveyButton>
+      </Stack>
     </Stack>
   );
 };

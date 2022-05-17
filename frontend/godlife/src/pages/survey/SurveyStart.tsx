@@ -9,27 +9,29 @@ const SurveyStart = () => {
   const navigate = useNavigate();
 
   return (
-    <Stack
-      direction="column"
-      justifySelf="center"
-      alignItems="center"
-      sx={{ maxWidth: 500 }}
-    >
-      <Typography fontSize={45} fontFamily={"BMEULJIRO"} mt={2}>
-        갓생러 테스트
-      </Typography>
-      <Typography fontSize={20} fontFamily={"BMEULJIRO"} mt={1}>
-        나는 어떤 타입의 갓생러일까?
-      </Typography>
-      <img src={SurveyStartWoman} alt="" />
-      <SurveyButton
-        onClick={() => {
-          navigate("inprogress");
-        }}
-        sx={{ width: "44%", paddingY: 1, fontSize: 20 }}
+    <Stack direction="column" justifySelf="center" alignItems="center">
+      <Stack
+        direction="column"
+        justifySelf="center"
+        alignItems="center"
+        sx={{ maxWidth: 500 }}
       >
-        시작하기
-      </SurveyButton>
+        <Typography fontSize={45} fontFamily={"BMEULJIRO"} mt={2}>
+          갓생러 테스트
+        </Typography>
+        <Typography fontSize={20} fontFamily={"BMEULJIRO"} mt={1}>
+          나는 어떤 타입의 갓생러일까?
+        </Typography>
+        <img src={SurveyStartWoman} alt="" />
+        <SurveyButton
+          onClick={() => {
+            navigate("inprogress");
+          }}
+          sx={{ width: "44%", paddingY: 1, fontSize: 20 }}
+        >
+          시작하기
+        </SurveyButton>
+      </Stack>
     </Stack>
   );
 };
