@@ -39,7 +39,17 @@ const ProfileFollowDetail = () => {
       .catch((err) => console.log(err));
   }, [params, dispatch]);
 
-  const getFollowingList = () => {
+  const {
+    name,
+    info,
+    followerCount,
+    followingCount,
+    godCount,
+    serialGodCount,
+    todayBingo,
+  } = useAppSelector(selectFollowingUser);
+
+  const getFollowingList = useCallback(() => {
     axiosWithToken
       .get("user/following")
       .then((res) => {
@@ -50,32 +60,18 @@ const ProfileFollowDetail = () => {
         });
         setFollowingList(nameList);
         const nowFollowing = nameList.includes(name);
-        if (nowFollowing) {
-          setIsFollowing(true);
-        } else {
-          setIsFollowing(false);
-        }
+        setIsFollowing(nowFollowing);
       })
       .catch((err) => console.log(err));
-  };
+  }, [setFollowingList, setIsFollowing, name]);
 
   useEffect(() => {
     getFollowingList();
-  });
+  }, [getFollowingList]);
 
   useEffect(() => {
     getOtherInfo();
   }, [getOtherInfo]);
-
-  const {
-    name,
-    info,
-    followerCount,
-    followingCount,
-    godCount,
-    serialGodCount,
-    todayBingo,
-  } = useAppSelector(selectFollowingUser);
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -169,7 +165,7 @@ const ProfileFollowDetail = () => {
                 }}
                 onClick={() => manageFollow()}
               >
-                팔로우
+                팔로잉
               </OutlinedButton>
             ) : (
               <BlackButton
