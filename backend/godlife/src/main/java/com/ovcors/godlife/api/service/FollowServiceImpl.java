@@ -88,7 +88,7 @@ public class FollowServiceImpl implements FollowService {
 
             for (Follow follow : user.getFollower()) {
                 User followingUser = follow.getFollowing();
-                List<Bingo> list = bingoRepository.findAllByUserAndActivateTrueOrderByStartDate(followingUser);
+                List<Bingo> list = bingoRepository.findAllByUserAndActivateTrueOrderByStartDateDesc(followingUser);
                 for (Bingo bingo : list) {
                     response.add(new FindBingoResDto(bingo));
                 }
