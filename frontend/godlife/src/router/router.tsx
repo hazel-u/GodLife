@@ -35,7 +35,7 @@ export default function Router() {
     },
     {
       path: "/",
-      element: <Landing />,
+      element: isAuth ? <Navigate to="/create" /> : <Landing />,
     },
     {
       path: "/",
