@@ -66,12 +66,13 @@ class BingoRepositoryTest {
         userRepository.save(user);
         Bingo bingo = Bingo.builder()
                 .title("Hello world")
+                .activate(true)
                 .build();
         bingo.setUser(user);
         bingoRepository.save(bingo);
 
         // when
-        List<Bingo> findBingos = bingoRepository.findAllByUser(user);
+        List<Bingo> findBingos = bingoRepository.findAllByUserAndActivateTrue(user);
 
         // then
         assertThat(findBingos.size()).isEqualTo(1);

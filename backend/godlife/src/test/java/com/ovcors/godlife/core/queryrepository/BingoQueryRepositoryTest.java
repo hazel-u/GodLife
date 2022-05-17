@@ -52,6 +52,7 @@ class BingoQueryRepositoryTest {
         User savedUser = userRepository.save(user);
         Bingo bingo = Bingo.builder()
                 .title("Hello world")
+                .activate(true)
                 .build();
         BingoCode bingoCode = new BingoCode();
 
@@ -86,6 +87,7 @@ class BingoQueryRepositoryTest {
         User savedUser = userRepository.save(user);
         Bingo bingo = Bingo.builder()
                 .title("Hello world")
+                .activate(true)
                 .build();
         BingoCode bingoCode = BingoCode.builder()
                 .code(makeCode())

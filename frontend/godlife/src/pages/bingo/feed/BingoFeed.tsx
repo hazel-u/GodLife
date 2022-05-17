@@ -153,7 +153,11 @@ const BingoFeed = () => {
               {fullScreen ? (
                 <MoreVertIcon />
               ) : (
-                <Stack direction="row" justifyContent="space-between">
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
                   {selectedMenu}
                   <KeyboardArrowDownIcon />
                 </Stack>
