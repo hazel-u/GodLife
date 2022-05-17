@@ -33,7 +33,6 @@ const Main = () => {
             navigate("/create");
           });
       });
-      // .catch(() => console.log("Main"));
     } else if (code && code !== "none") {
       navigate(`/bingo/${code}`);
     } else {
