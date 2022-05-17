@@ -3,17 +3,20 @@ import isBetween from "dayjs/plugin/isBetween";
 import { Korean } from "flatpickr/dist/l10n/ko.js";
 import "flatpickr/dist/themes/light.css";
 
-import React from "react";
-import Flatpickr from "react-flatpickr";
-import { useNavigate } from "react-router-dom";
+import React, { useRef } from "react";
+import { default as Flatpickr } from "react-flatpickr";
 
 import { useAppDispatch } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
+import { BingoType } from "../../../types/bingo";
 import axiosWithToken from "../../../utils/axios";
 
-const BingoListSearch = () => {
+const BingoFeedDateSearch = ({
+  setBingoList,
+}: {
+  setBingoList: React.Dispatch<React.SetStateAction<BingoType[]>>;
+}) => {
   dayjs.extend(isBetween);
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const handleChange = (newValue: Date) => {
@@ -29,9 +32,9 @@ const BingoListSearch = () => {
       return;
 
     axiosWithToken
-      .get(`bingo/date/${dayjs(newValue).format("YYYY-MM-DD")}`)
+      .get(`feed/search/date/${dayjs(newValue).format("YYYY-MM-DD")}`)
       .then((res) => {
-        navigate(`/bingo/${res.data.code}`, { state: { page: 0 } });
+        setBingoList(res.data);
       })
       .catch(() => {
         dispatch(
@@ -44,20 +47,30 @@ const BingoListSearch = () => {
       });
   };
 
+  const fp = useRef<any>(null);
+
+  // const clear = () => {
+  //   fp.current && fp.current.flatpickr.clear();
+  // };
+
   return (
-    <Flatpickr
-      onChange={(newDate) => {
-        handleChange(newDate[0]);
-      }}
-      options={{
-        locale: Korean,
-        minDate: "2022-05-01",
-        maxDate: "2999-12-31",
-      }}
-      className="feed-date-picker"
-      placeholder="날짜로 이동"
-    />
+    <>
+      <Flatpickr
+        onChange={(newDate) => {
+          handleChange(newDate[0]);
+        }}
+        options={{
+          locale: Korean,
+          minDate: "2022-05-01",
+          maxDate: "2999-12-31",
+        }}
+        className="feed-date-picker"
+        placeholder="날짜로 검색"
+        ref={fp}
+      />
+      {/* <button onClick={clear}>클리어</button> */}
+    </>
   );
 };
 
-export default BingoListSearch;
+export default BingoFeedDateSearch;

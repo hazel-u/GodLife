@@ -12,6 +12,13 @@ import BingoListItem from "./BingoListItem";
 import BingoListSearch from "./BingoListSearch";
 
 const BingoList = () => {
+  useEffect(() => {
+    document.title = "이전의 갓생 | 갓생살기";
+    return () => {
+      document.title = "갓생살기";
+    };
+  }, []);
+
   const params = useParams();
   const initialPage =
     params.page && Number.isInteger(params.page)
@@ -78,10 +85,15 @@ const BingoList = () => {
         </Stack>
       ) : (
         <>
+          <Stack
+            direction="row"
+            justifyContent="end"
+            margin="0 0 0 auto"
+            padding="0 8px 30px 0"
+          >
+            <BingoListSearch />
+          </Stack>
           <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <BingoListSearch />
-            </Grid>
             {bingoList.map((bingo) => (
               <Grid
                 item

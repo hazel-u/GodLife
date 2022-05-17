@@ -50,13 +50,13 @@ const BingoCell = ({
   };
 
   const handleComplete = () => {
+    setStampAnimation(!isCompleted);
     customClickEvent();
     setOpen(false);
-    setStampAnimation(true);
   };
 
   const cell = useRef<HTMLDivElement | null>(null);
-  const [cellSize, setCellSize] = useState(160);
+  const [cellSize, setCellSize] = useState(0);
 
   const getCellSize = () => {
     cell.current && setCellSize(cell.current.clientWidth);
@@ -96,6 +96,7 @@ const BingoCell = ({
           position: "relative",
           cursor:
             location.pathname === "/list" ||
+            location.pathname === "/feed" ||
             (email === userEmail &&
               dayjs().format("YYYY-M-D") === startDate.join("-"))
               ? "pointer"
@@ -136,15 +137,17 @@ const BingoCell = ({
             className={isCompleted && stampAnimation ? "stamp" : ""}
           />
 
-          <Typography
-            align="center"
-            sx={{
-              fontSize: cellSize / 10,
-              wordBreak: "keep-all",
-            }}
-          >
-            {content}
-          </Typography>
+          {0 < cellSize && (
+            <Typography
+              align="center"
+              sx={{
+                fontSize: cellSize / 10,
+                wordBreak: "keep-all",
+              }}
+            >
+              {content}
+            </Typography>
+          )}
         </Box>
       </Grid>
     </>

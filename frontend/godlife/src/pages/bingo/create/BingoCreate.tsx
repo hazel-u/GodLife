@@ -1,5 +1,4 @@
 import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
-import axios from "axios";
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +15,13 @@ import BingoCreateGoalList from "./BingoCreateGoalList";
 import BingoCreateTitle from "./BingoCreateTitle";
 
 const BingoCreate = () => {
+  useEffect(() => {
+    document.title = "오늘의 갓생 만들기 | 갓생살기";
+    return () => {
+      document.title = "갓생살기";
+    };
+  }, []);
+
   const selectedGoals = useAppSelector(selectGoal);
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
@@ -24,10 +30,10 @@ const BingoCreate = () => {
   const [goals, setGoals] = useState<any[]>([]);
 
   const getGoals = () => {
-    axios
+    axiosWithToken
       .get("goal")
       .then((res) => {
-        setGoals(res.data.goals);
+        setGoals(res.data);
       })
       .catch((err) => console.log(err));
   };
@@ -146,11 +152,14 @@ const BingoCreate = () => {
             textAlign: "center",
           })}
         >
-          <Typography fontSize={24} fontFamily="BMEULJIRO">
+          <Typography fontSize={24} fontFamily="BMEULJIRO" variant="h1">
             오늘의 갓생 만들기
           </Typography>
           <Typography>
             최대 9개의 목표를 선택해 오늘의 갓생을 만드시오.
+            <br />
+            {selectedGoals.length}개 목표 선택 | {9 - selectedGoals.length}개
+            무작위 목표
           </Typography>
 
           <Stack

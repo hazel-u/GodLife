@@ -5,10 +5,13 @@ import Main from "../pages/Main";
 import NotFound from "../pages/NotFound";
 import BingoCreate from "../pages/bingo/create/BingoCreate";
 import BingoDetail from "../pages/bingo/detail/BingoDetail";
+import BingoFeed from "../pages/bingo/feed/BingoFeed";
 import BingoList from "../pages/bingo/list/BingoList";
 import Join from "../pages/join/Join";
 import Login from "../pages/login/Login";
 import LoginOAuthKakao from "../pages/login/LoginOAuthKakao";
+import Profile from "../pages/profile/Profile";
+import ProfileFollowDetail from "../pages/profile/ProfileFollow/ProfileFollowDetail";
 import { useAppSelector } from "../store/hooks";
 import { selectTodayBingo } from "../store/todayBingo";
 
@@ -28,6 +31,20 @@ export default function Router() {
     {
       path: process.env.REACT_APP_KAKAO_REDIRECT_PATH,
       element: <LoginOAuthKakao />,
+    },
+    {
+      path: "/",
+      element: <MainLayout />,
+      children: [
+        {
+          path: "/",
+          element: <BingoFeed />,
+        },
+        {
+          path: "/bingo/:bingoId",
+          element: <BingoDetail />,
+        },
+      ],
     },
     {
       path: "/",
@@ -60,18 +77,21 @@ export default function Router() {
             },
           ],
         },
-      ],
-    },
-    {
-      path: "/",
-      element: <MainLayout />,
-      children: [
         {
-          path: "/bingo/:bingoId",
-          element: <BingoDetail />,
+          path: "/feed",
+          element: <BingoFeed />,
+        },
+        {
+          path: "/profile",
+          element: <Profile />,
+        },
+        {
+          path: "/profile/:name",
+          element: <ProfileFollowDetail />,
         },
       ],
     },
+
     {
       path: "/*",
       element: <NotFound />,

@@ -16,7 +16,7 @@ const ProfileEdit = ({ handleClose }: { handleClose: () => void }) => {
   }>({});
 
   const dispatch = useAppDispatch();
-  const onSubmit = (data: { name: string }) => {
+  const onSubmitNickname = (data: { name: string }) => {
     axiosWithToken
       .post("user/info", data)
       .then(() => {
@@ -52,7 +52,7 @@ const ProfileEdit = ({ handleClose }: { handleClose: () => void }) => {
 
       <Divider sx={{ margin: "10px 0" }} />
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmitNickname)}>
         <Stack direction="row" spacing={2} alignItems="center">
           <p style={{ marginTop: 0, minWidth: "45px" }}>닉네임</p>
           <NicknameController
@@ -62,7 +62,7 @@ const ProfileEdit = ({ handleClose }: { handleClose: () => void }) => {
             currentNickname={name}
           />
         </Stack>
-        <Box sx={{ textAlign: "center", margin: "20px 0" }}>
+        <Box sx={{ textAlign: "center", margin: "10px 0" }}>
           <OutlinedButton variant="outlined" type="submit">
             닉네임 수정
           </OutlinedButton>

@@ -21,21 +21,17 @@ const LoginBanner = () => {
       <Box
         position="absolute"
         sx={{
-          top: fullScreen ? "30%" : "-10px",
-          left: fullScreen ? "calc(50% - 200px)" : "50px",
+          top: fullScreen ? "60vh" : "-20px",
+          left: fullScreen ? "calc(50% - 150px)" : "50px",
         }}
       >
-        <img
-          src={LoginBannerImage1}
-          alt="banner 1"
-          style={{ width: fullScreen ? "400px" : "300px" }}
-        />
+        <img src={LoginBannerImage1} alt="banner 1" />
       </Box>
 
       <Box
         position="absolute"
         sx={{
-          bottom: "-10px",
+          bottom: "-40px",
           right: "50px",
           display: fullScreen ? "none" : "block",
         }}
@@ -48,20 +44,25 @@ const LoginBanner = () => {
       </Box>
 
       <Stack
-        sx={{
+        sx={(theme) => ({
           height: "100%",
           textAlign: "center",
           width: "100%",
           "& p": {
             zIndex: 2,
           },
-        }}
+          [theme.breakpoints.down(1550)]: {
+            height: "55%",
+          },
+        })}
         alignItems="center"
-        justifyContent={fullScreen ? "start" : "center"}
-        marginTop={fullScreen ? "20%" : "0"}
+        justifyContent={fullScreen ? "end" : "center"}
       >
         <Box position="relative">
-          <Typography sx={{ fontFamily: "BMEULJIRO", fontSize: "80px" }}>
+          <Typography
+            sx={{ fontFamily: "BMEULJIRO", fontSize: "80px" }}
+            variant="h1"
+          >
             God <span style={{ fontFamily: "Reggae One" }}>生</span>
           </Typography>
 
@@ -82,11 +83,12 @@ const LoginBanner = () => {
             fontSize: "40px",
             marginBottom: "30px",
           }}
+          variant="h2"
         >
           한 번 살아보시지 않으렵니까?
         </Typography>
 
-        <Typography fontSize={20}>
+        <Typography fontSize={20} variant="h3">
           매일의 갓생 목표를 달성하고, <br />
           친구들과 함께 도전을 이어가시오.
         </Typography>

@@ -1,6 +1,6 @@
 import { Global } from "@emotion/react";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Box, IconButton, Stack, Tooltip } from "@mui/material";
+import { Box, IconButton, Stack } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import { grey } from "@mui/material/colors";
@@ -8,11 +8,9 @@ import { styled } from "@mui/material/styles";
 
 import * as React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { useAppSelector } from "../../store/hooks";
-import { setSnackbar } from "../../store/snackbar";
 import { selectTodayBingo } from "../../store/todayBingo";
 import { selectUser } from "../../store/user";
 import { TextButton } from "../common/Button";
@@ -42,16 +40,14 @@ const Puller = styled(Box)(({ theme }) => ({
 
 export default function SwipeableEdgeDrawer({
   logout,
-  setOpen,
 }: {
   logout: () => void;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const isAuth = localStorage.getItem("token");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const toggleDrawer = (newOpen: boolean) => () => {
     setDrawerOpen(newOpen);
   };
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { name } = useAppSelector(selectUser);
   const code = useAppSelector(selectTodayBingo);
@@ -62,7 +58,7 @@ export default function SwipeableEdgeDrawer({
       <Global
         styles={{
           ".MuiDrawer-root > .MuiPaper-root": {
-            height: `calc(40% - ${drawerBleeding}px)`,
+            height: `max(400px, calc(50% - ${drawerBleeding}px))`,
             overflow: "visible",
           },
         }}
@@ -98,7 +94,11 @@ export default function SwipeableEdgeDrawer({
             height="90%"
           >
             <Stack>
-              <h4>{name}님, 갓생사세요!</h4>
+              {isAuth ? (
+                <h4>{name}님, 갓생사세요!</h4>
+              ) : (
+                <h4>오늘도 갓생사세요!</h4>
+              )}
               <div className="division-line" />
             </Stack>
 
@@ -114,37 +114,37 @@ export default function SwipeableEdgeDrawer({
                   } else {
                     navigate("create");
                   }
+                  setDrawerOpen(false);
                 }}
               >
                 오늘의 갓생
               </TextButton>
               <TextButton href="/list">이전의 갓생</TextButton>
 
-              <Tooltip title={"서비스 준비중입니다."}>
+              <TextButton href="/feed">모두의 갓생</TextButton>
+
+              {isAuth ? (
+                <>
+                  <TextButton
+                    onClick={() => {
+                      setDrawerOpen(false);
+                      navigate("/profile");
+                    }}
+                  >
+                    내 정보
+                  </TextButton>
+                  <TextButton onClick={logout}>로그아웃</TextButton>
+                </>
+              ) : (
                 <TextButton
                   onClick={() => {
-                    dispatch(
-                      setSnackbar({
-                        open: true,
-                        message: "서비스 준비중입니다.",
-                        severity: "info",
-                      })
-                    );
+                    setDrawerOpen(false);
+                    navigate("/login");
                   }}
                 >
-                  모두의 갓생
+                  로그인
                 </TextButton>
-              </Tooltip>
-
-              <TextButton
-                onClick={() => {
-                  setDrawerOpen(false);
-                  setOpen(true);
-                }}
-              >
-                내 정보
-              </TextButton>
-              <TextButton onClick={logout}>로그아웃</TextButton>
+              )}
             </Stack>
           </Stack>
         </StyledBox>
