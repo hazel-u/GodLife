@@ -13,7 +13,11 @@ const NotFound = () => {
       alignItems="center"
       sx={{ height: "100vh" }}
     >
-      <img src={NotFoundImage} alt="404 Not Found" style={{ width: "44%" }} />
+      <img
+        src={NotFoundImage}
+        alt="404 Not Found"
+        style={{ width: "44%", maxWidth: "404px" }}
+      />
       <Typography
         sx={(theme) => ({
           fontFamily: "BMEULJIRO",

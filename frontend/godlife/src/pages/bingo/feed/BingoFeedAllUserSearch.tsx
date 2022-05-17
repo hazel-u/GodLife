@@ -1,5 +1,4 @@
 import PersonIcon from "@mui/icons-material/Person";
-import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
   Dialog,
@@ -181,17 +180,17 @@ const BingoFeedAllUserSearch = () => {
       </Dialog>
 
       <button
-        style={{ cursor: "pointer", width: "150px", paddingRight: 0 }}
+        style={{ width: "120px" }}
         onClick={() => setOpen(true)}
         className="feed-user-search"
       >
         <Stack
           direction="row"
           alignItems="center"
-          justifyContent="space-between"
+          justifyContent="space-around"
         >
+          <PersonIcon />
           갓생러 검색
-          <SearchIcon />
         </Stack>
       </button>
     </>

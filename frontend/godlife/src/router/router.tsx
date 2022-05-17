@@ -38,7 +38,7 @@ export default function Router() {
       children: [
         {
           path: "/",
-          element: <BingoFeed />,
+          element: isAuth ? <Main /> : <BingoFeed />,
         },
         {
           path: "/bingo/:bingoId",
@@ -50,10 +50,6 @@ export default function Router() {
       path: "/",
       element: isAuth ? <MainLayout /> : <Navigate to="/login" />,
       children: [
-        {
-          path: "/",
-          element: <Main />,
-        },
         {
           path: "/create",
           element:
