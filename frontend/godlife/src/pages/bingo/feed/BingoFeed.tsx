@@ -2,7 +2,6 @@ import { Box, Stack, Typography } from "@mui/material";
 import axios from "axios";
 
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 
 import Stamp from "../../../assets/images/stamp.webp";
 import { useAppDispatch } from "../../../store/hooks";
@@ -15,35 +14,38 @@ import BingoFeedItem from "./BingoFeedItem";
 
 const BingoFeed = () => {
   const isAuth = localStorage.getItem("token");
-  const location = useLocation();
   const [bingoList, setBingoList] = useState<BingoType[]>([]);
   const [bingoCount, setBingoCount] = useState(-1);
 
   const dispatch = useAppDispatch();
+
+  const getMainBingoFeed = () => {
+    axios.get(`feed/main`).then((res) => {
+      setBingoList(res.data.reverse());
+      setBingoCount(res.data.length);
+      dispatch(setLoading(false));
+    });
+  };
+
   const getBingoFeed = () => {
-    dispatch(setLoading(true));
-    let request;
-    if (location.pathname === "/feed" && isAuth) {
-      request = axiosWithToken.get(`feed`).then((res) => {
+    axiosWithToken.get(`feed`).then((res) => {
+      if (res.data.length) {
         setBingoList(res.data);
         setBingoCount(res.data.length);
-      });
-    } else {
-      request = axios.get(`feed/main`).then((res) => {
-        setBingoList(res.data.reverse());
-        setBingoCount(res.data.length);
-      });
-    }
-    request
-      .then(() => {
         dispatch(setLoading(false));
-      })
-      .catch((err) => console.log(err));
+      } else {
+        getMainBingoFeed();
+      }
+    });
   };
 
   useEffect(() => {
-    if (bingoCount === -1) {
+    if (bingoCount === -1 && isAuth) {
+      dispatch(setLoading(true));
       getBingoFeed();
+    } else if (bingoCount === -1 && !isAuth) {
+      dispatch(setLoading(true));
+      getMainBingoFeed();
     }
   });
 
