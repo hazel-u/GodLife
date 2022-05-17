@@ -2,12 +2,12 @@ import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 
 import React from "react";
 
-import LoginBannerImage1 from "../../assets/images/loginBannerImage1.webp";
-import LoginBannerImage2 from "../../assets/images/loginBannerImage2.webp";
-import Stamp from "../../assets/images/stamp.webp";
-import { BlackButton } from "../../components/common/Button";
+import LoginBannerImage1 from "../assets/images/loginBannerImage1.webp";
+import LoginBannerImage2 from "../assets/images/loginBannerImage2.webp";
+import Stamp from "../assets/images/stamp.webp";
+import { BlackButton } from "../components/common/Button";
 
-const LoginBanner = () => {
+const Landing = () => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down(1550));
 
@@ -17,13 +17,14 @@ const LoginBanner = () => {
         height: "100%",
         width: "100%",
         position: "relative",
+        overflowY: "hidden",
       }}
     >
       <Box
         position="absolute"
         sx={{
           top: fullScreen ? "60vh" : "-20px",
-          left: fullScreen ? "calc(50% - 150px)" : "50px",
+          left: fullScreen ? "calc(50% - 164.5px)" : "50px",
         }}
       >
         <img src={LoginBannerImage1} alt="banner 1" />
@@ -48,7 +49,6 @@ const LoginBanner = () => {
         sx={(theme) => ({
           height: "100%",
           textAlign: "center",
-          width: "100%",
           "& p": {
             zIndex: 2,
           },
@@ -58,6 +58,7 @@ const LoginBanner = () => {
         })}
         alignItems="center"
         justifyContent={fullScreen ? "end" : "center"}
+        padding={3}
       >
         <Box position="relative">
           <Typography
@@ -102,12 +103,16 @@ const LoginBanner = () => {
           margin={5}
           justifyContent="center"
         >
-          <BlackButton sx={{ width: "200px" }}>모두의 갓생 보기</BlackButton>
-          <BlackButton sx={{ width: "200px" }}>로그인하러 가기</BlackButton>
+          <BlackButton href="/main" sx={{ width: "200px" }}>
+            모두의 갓생 보기
+          </BlackButton>
+          <BlackButton href="/login" sx={{ width: "200px" }}>
+            로그인하러 가기
+          </BlackButton>
         </Stack>
       </Stack>
     </Box>
   );
 };
 
-export default LoginBanner;
+export default Landing;
