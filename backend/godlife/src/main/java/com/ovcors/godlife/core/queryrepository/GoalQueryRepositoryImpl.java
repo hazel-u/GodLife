@@ -38,7 +38,8 @@ public class GoalQueryRepositoryImpl implements GoalQueryRepository{
                         goals.content,
                         goals.category))
                 .from(goals)
-                .where(goals.user.email.eq(userEmail))
+                .where(goals.user.email.eq(userEmail)
+                        .and(goals.deleted.eq(false)))
                 .fetch();
     }
 }
