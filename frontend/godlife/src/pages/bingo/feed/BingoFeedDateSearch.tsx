@@ -3,7 +3,7 @@ import isBetween from "dayjs/plugin/isBetween";
 import { Korean } from "flatpickr/dist/l10n/ko.js";
 import "flatpickr/dist/themes/light.css";
 
-import React, { useRef } from "react";
+import React from "react";
 import { default as Flatpickr } from "react-flatpickr";
 
 import { useAppDispatch } from "../../../store/hooks";
@@ -47,8 +47,6 @@ const BingoFeedDateSearch = ({
       });
   };
 
-  const fp = useRef<any>(null);
-
   return (
     <Flatpickr
       onChange={(newDate) => {
@@ -58,10 +56,10 @@ const BingoFeedDateSearch = ({
         locale: Korean,
         minDate: "2022-05-01",
         maxDate: "2999-12-31",
+        disableMobile: true,
       }}
       className="feed-date-picker"
       placeholder="날짜로 검색"
-      ref={fp}
     />
   );
 };

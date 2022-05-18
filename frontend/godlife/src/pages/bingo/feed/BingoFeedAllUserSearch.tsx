@@ -184,12 +184,8 @@ const BingoFeedAllUserSearch = () => {
         onClick={() => setOpen(true)}
         className="feed-user-search"
       >
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-around"
-        >
-          <PersonIcon />
+        <Stack direction="row" alignItems="center" justifyContent="start">
+          <PersonIcon sx={{ marginRight: "5px" }} />
           갓생러 검색
         </Stack>
       </button>

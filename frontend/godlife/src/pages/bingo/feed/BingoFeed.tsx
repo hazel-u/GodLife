@@ -148,7 +148,10 @@ const BingoFeed = () => {
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
               className={fullScreen ? "more-button" : "feed-user-search"}
-              style={{ width: fullScreen ? "10px" : "110px" }}
+              style={{
+                width: fullScreen ? "24px" : "110px",
+                transform: "translate(-10px, 5px)",
+              }}
             >
               {fullScreen ? (
                 <MoreVertIcon />
@@ -197,8 +200,8 @@ const BingoFeed = () => {
           </Box>
 
           <Stack direction="row">
-            <BingoFeedDateSearch setBingoList={setBingoList} />
             <BingoFeedAllUserSearch />
+            <BingoFeedDateSearch setBingoList={setBingoList} />
           </Stack>
         </Stack>
       )}
