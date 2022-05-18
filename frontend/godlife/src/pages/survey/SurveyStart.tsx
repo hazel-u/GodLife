@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import SurveyStartWoman from "../../assets/images/survey/SurveyStartWoman.png";
 import { SurveyButton } from "../../components/common/Button";
+import SurveyShare from "./SurveyShare";
 
 const SurveyStart = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const SurveyStart = () => {
           나는 어떤 타입의 갓생러일까?
         </Typography>
         <img src={SurveyStartWoman} alt="" />
+        <SurveyShare />
         <SurveyButton
           onClick={() => {
             navigate("inprogress");

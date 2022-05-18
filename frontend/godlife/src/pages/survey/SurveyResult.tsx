@@ -1,5 +1,7 @@
 import { Box, Stack, Typography } from "@mui/material";
 
+import { useNavigate } from "react-router-dom";
+
 import SurveyResultAndroid from "../../assets/images/survey/SurveyResultAndroid.png";
 import SurveyResultClover from "../../assets/images/survey/SurveyResultClover.png";
 import SurveyResultDoer from "../../assets/images/survey/SurveyResultDoer.png";
@@ -7,6 +9,7 @@ import SurveyResultGwichanism from "../../assets/images/survey/SurveyResultGwich
 import SurveyResultHorse from "../../assets/images/survey/SurveyResultHorse.png";
 import SurveyResultWorries from "../../assets/images/survey/SurveyResultWorries.png";
 import { SurveyButton } from "../../components/common/Button";
+import SurveyResultShare from "./SurveyResultShare";
 
 const results = [
   // 1. 경주마형
@@ -227,6 +230,7 @@ const getResult = () => {
 };
 
 const SurveyResult = () => {
+  const navigate = useNavigate();
   const resultNumber = getResult();
   const result = results[resultNumber];
   const contents = result.contents;
@@ -241,7 +245,7 @@ const SurveyResult = () => {
         <Typography fontSize={20} fontFamily={"BMEULJIRO"}>
           나의 유형은?
         </Typography>
-        <img src={result.imgUrl} alt="" />
+        <img src={result.imgUrl} alt="img" />
         <Typography fontSize={20} fontFamily={"BMEULJIRO"} mt={2}>
           {result.subtitle}
         </Typography>
@@ -249,32 +253,49 @@ const SurveyResult = () => {
           {result.title}
         </Typography>
         <Stack direction="column" alignItems="start">
-          {contents.map(function (content: any) {
+          {contents.map(function (content: any, index: number) {
             const texts = content.texts;
             return (
-              <>
+              <Stack key={index}>
                 <Typography
                   fontSize={20}
                   mt={5}
                   variant="h1"
                   fontFamily="Noto Sans KR"
+                  key={content.header + 1}
                 >
                   {content.header}
                 </Typography>
                 {texts.map(function (text: string) {
                   return (
-                    <Typography fontFamily="Noto Sans KR">· {text}</Typography>
+                    <Typography fontFamily="Noto Sans KR" key={text}>
+                      · {text}
+                    </Typography>
                   );
                 })}
-              </>
+              </Stack>
             );
           })}
         </Stack>
-
-        <SurveyButton sx={{ width: "100%", marginTop: 5 }}>
+        <SurveyResultShare
+          subtitle={result.subtitle}
+          title={result.title}
+          imgUrl={result.imgUrl}
+        />
+        <SurveyButton
+          onClick={() => {
+            navigate("../../");
+          }}
+          sx={{ width: "100%", marginTop: 1 }}
+        >
           '갓생살기'에서 재미있게 갓생 살아보기
         </SurveyButton>
-        <SurveyButton sx={{ width: "100%", marginTop: 5 }}>
+        <SurveyButton
+          onClick={() => {
+            navigate("../");
+          }}
+          sx={{ width: "100%", marginTop: 5 }}
+        >
           테스트 다시 하기
         </SurveyButton>
       </Stack>
