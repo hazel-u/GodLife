@@ -3,6 +3,7 @@ package com.ovcors.godlife.api.controller;
 import com.ovcors.godlife.api.dto.request.*;
 import com.ovcors.godlife.api.dto.response.BaseResponseEntity;
 import com.ovcors.godlife.api.dto.response.FindGoalsResDto;
+import com.ovcors.godlife.api.dto.response.RecommendGoalsResDto;
 import com.ovcors.godlife.api.dto.response.UserGoalsResDto;
 import com.ovcors.godlife.api.resolver.Auth;
 import com.ovcors.godlife.api.service.GoalsService;
@@ -57,5 +58,11 @@ public class GoalsController {
     public ResponseEntity<BaseResponseEntity> deleteCustomGoal(@Auth User user, @PathVariable Long seq){
         goalsService.deleteCustomGoal(user, seq);
         return ResponseEntity.ok().body(new BaseResponseEntity(200, "Success"));
+    }
+
+    @GetMapping("/recommend")
+    public ResponseEntity<List<RecommendGoalsResDto>> recommendGoals(@Auth User user) {
+        List<RecommendGoalsResDto> goals = goalsService.recommendGoals(user.getSeq());
+        return ResponseEntity.ok().body(goals);
     }
 }

@@ -5,6 +5,7 @@ import com.ovcors.godlife.api.dto.request.GoalsReqDto;
 import com.ovcors.godlife.api.dto.request.SaveCustomGoalReqDto;
 import com.ovcors.godlife.api.dto.request.UserGoalsReqDto;
 import com.ovcors.godlife.api.dto.response.FindGoalsResDto;
+import com.ovcors.godlife.api.dto.response.RecommendGoalsResDto;
 import com.ovcors.godlife.api.dto.response.UserGoalsResDto;
 import com.ovcors.godlife.api.exception.CustomException;
 import com.ovcors.godlife.api.exception.ErrorCode;
@@ -12,18 +13,16 @@ import com.ovcors.godlife.core.domain.goals.BingoGoals;
 import com.ovcors.godlife.core.domain.goals.Category;
 import com.ovcors.godlife.core.domain.goals.Goals;
 import com.ovcors.godlife.core.domain.goals.UserGoals;
+import com.ovcors.godlife.core.domain.user.Personality;
 import com.ovcors.godlife.core.domain.user.User;
 import com.ovcors.godlife.core.queryrepository.GoalQueryRepository;
-import com.ovcors.godlife.core.repository.BingoGoalsRepository;
-import com.ovcors.godlife.core.repository.GoalsRepository;
-import com.ovcors.godlife.core.repository.UserGoalsRepository;
+import com.ovcors.godlife.core.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Transactional
@@ -36,6 +35,10 @@ public class GoalsServiceImpl implements GoalsService{
     UserGoalsRepository userGoalsRepository;
     @Autowired
     BingoGoalsRepository bingoGoalsRepository;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    PersonalityRepository personalityRepository;
 
     private final GoalQueryRepository goalQueryRepository;
 
@@ -94,5 +97,21 @@ public class GoalsServiceImpl implements GoalsService{
         if(goals.getUser() == null || !goals.getUser().getSeq().equals(user.getSeq()))
             throw new CustomException(ErrorCode.NOT_MATCH_USER);
         goals.deleteCustomGoal();
+    }
+
+    @Override
+    public List<RecommendGoalsResDto> recommendGoals(UUID seq) {
+        User user = userRepository.findById(seq).get();
+        if(user==null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+        Personality personality = personalityRepository.findByUser(user);
+        if(personality==null) {
+            throw new CustomException(ErrorCode.PERSONALITY_NOT_FOUNT);
+        }
+
+        List<RecommendGoalsResDto> goals = goalQueryRepository.findRecommendGoalsByPersonality(personality.getPersonalityType());
+        Collections.sort(goals);
+        return goals;
     }
 }
