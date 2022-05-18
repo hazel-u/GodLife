@@ -60,4 +60,10 @@ public class FeedController {
         List<FindBingoResDto> response = followService.getMainFeed();
         return ResponseEntity.ok().body(response);
     }
+    @GetMapping("/main/count")
+    public ResponseEntity<Long> getMainFeedCount(){
+        Long response = followService.getMainFeedCount();
+        return ResponseEntity.ok().body(response);
+    }
+
 }
