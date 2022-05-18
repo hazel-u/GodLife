@@ -8,52 +8,46 @@ import { TextButton } from "../../components/common/Button";
 import LoginForm from "./LoginForm/LoginForm";
 import LoginOAuth from "./LoginOAuth";
 
-const Login = () => {
+const Login = ({
+  setPage,
+}: {
+  setPage?: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   const navigate = useNavigate();
 
   return (
-    <Stack height="100%" justifyContent="center">
-      <Box width="max(400px, 30%)" margin="0 auto">
-        <Box
-          sx={(theme) => ({
-            width: "300px",
-            margin: "0 auto ",
-            [theme.breakpoints.down("md")]: {
-              margin: "0 auto",
-            },
-          })}
-        >
-          <Box sx={{ textAlign: "center" }}>
-            <img
-              src={Logo}
-              alt="logo"
-              style={{
-                width: "120px",
-                height: "120px",
-                margin: "30px",
-                cursor: "pointer",
-              }}
-              onClick={() => navigate("/")}
-            />
-          </Box>
-
-          <LoginForm />
-
-          <Box sx={{ textAlign: "right" }}>
-            <TextButton disableRipple={true} href="/join">
-              회원가입
-            </TextButton>
-          </Box>
-
-          <Divider
-            sx={{ fontSize: "14px", color: "#6D6D6D", margin: "10px 0" }}
-          >
-            혹은
-          </Divider>
-
-          <LoginOAuth />
-        </Box>
+    <Stack justifyContent="center" width="300px" height="100%" margin="0 auto">
+      <Box sx={{ textAlign: "center" }}>
+        <img
+          src={Logo}
+          alt="logo"
+          style={{
+            width: "120px",
+            height: "120px",
+            margin: "30px",
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            setPage ? setPage("landing") : navigate("/");
+          }}
+        />
       </Box>
+
+      <LoginForm />
+
+      <Box sx={{ textAlign: "right" }}>
+        <TextButton disableRipple={true} href="/join">
+          회원가입
+        </TextButton>
+      </Box>
+
+      <Divider
+        sx={{ fontSize: "14px", color: "#6D6D6D", margin: "10px 0 20px 0" }}
+      >
+        혹은
+      </Divider>
+
+      <LoginOAuth />
     </Stack>
   );
 };
