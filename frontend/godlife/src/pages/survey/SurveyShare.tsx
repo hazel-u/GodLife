@@ -92,7 +92,7 @@ const SurveyShare = () => {
             dispatch(
               setSnackbar({
                 open: true,
-                message: "갓생 링크가 클립보드에 복사되었습니다.",
+                message: "테스트 링크가 클립보드에 복사되었습니다.",
                 severity: "success",
               })
             );
