@@ -22,9 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Transactional
@@ -112,8 +110,8 @@ public class GoalsServiceImpl implements GoalsService{
             throw new CustomException(ErrorCode.PERSONALITY_NOT_FOUNT);
         }
 
-        List<RecommendGoalsResDto> goals = new ArrayList<>();
-        goals = goalQueryRepository.findRecommendGoalsByPersonality(personality.getPersonalityType());
+        List<RecommendGoalsResDto> goals = goalQueryRepository.findRecommendGoalsByPersonality(personality.getPersonalityType());
+        Collections.sort(goals);
         return goals;
     }
 }
