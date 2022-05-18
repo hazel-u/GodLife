@@ -39,7 +39,17 @@ const ProfileFollowDetail = () => {
       .catch((err) => console.log(err));
   }, [params, dispatch]);
 
-  const getFollowingList = () => {
+  const {
+    name,
+    info,
+    followerCount,
+    followingCount,
+    godCount,
+    serialGodCount,
+    todayBingo,
+  } = useAppSelector(selectFollowingUser);
+
+  const getFollowingList = useCallback(() => {
     axiosWithToken
       .get("user/following")
       .then((res) => {
@@ -50,32 +60,18 @@ const ProfileFollowDetail = () => {
         });
         setFollowingList(nameList);
         const nowFollowing = nameList.includes(name);
-        if (nowFollowing) {
-          setIsFollowing(true);
-        } else {
-          setIsFollowing(false);
-        }
+        setIsFollowing(nowFollowing);
       })
       .catch((err) => console.log(err));
-  };
+  }, [setFollowingList, setIsFollowing, name]);
 
   useEffect(() => {
     getFollowingList();
-  });
+  }, [getFollowingList]);
 
   useEffect(() => {
     getOtherInfo();
   }, [getOtherInfo]);
-
-  const {
-    name,
-    info,
-    followerCount,
-    followingCount,
-    godCount,
-    serialGodCount,
-    todayBingo,
-  } = useAppSelector(selectFollowingUser);
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -169,7 +165,7 @@ const ProfileFollowDetail = () => {
                 }}
                 onClick={() => manageFollow()}
               >
-                팔로우
+                팔로잉
               </OutlinedButton>
             ) : (
               <BlackButton
@@ -195,22 +191,20 @@ const ProfileFollowDetail = () => {
             <Typography sx={{ whiteSpace: "pre-line" }}>
               갓생 달성 {godCount}일 | 연속 갓생 달성 {serialGodCount}일
             </Typography>
-            <Typography
-              sx={{
-                whiteSpace: "pre-line",
-                margin: "2px 0",
-                cursor: "pointer",
-              }}
-            >
-              팔로워{" "}
-              <span style={{ fontFamily: "Reggae One", fontWeight: 900 }}>
-                {followingCount}{" "}
-              </span>{" "}
-              | 팔로잉{" "}
-              <span style={{ fontFamily: "Reggae One", fontWeight: 900 }}>
-                {followerCount}{" "}
-              </span>
-            </Typography>
+            <Stack direction="row" alignItems="center">
+              <Typography sx={{ margin: "2px 3px", cursor: "pointer" }}>
+                팔로워{" "}
+                <span style={{ fontFamily: "Reggae One", fontWeight: 900 }}>
+                  {followingCount}{" "}
+                </span>{" "}
+              </Typography>
+              <Typography sx={{ margin: "2px 3px", cursor: "pointer" }}>
+                | 팔로잉{" "}
+                <span style={{ fontFamily: "Reggae One", fontWeight: 900 }}>
+                  {followerCount}{" "}
+                </span>
+              </Typography>
+            </Stack>
           </Stack>
 
           <Divider

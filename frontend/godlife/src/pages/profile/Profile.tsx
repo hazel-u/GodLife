@@ -20,7 +20,6 @@ import { selectTodayBingo } from "../../store/todayBingo";
 import { setLoggedUser } from "../../store/user";
 import axiosWithToken from "../../utils/axios";
 import ProfileFollow from "./ProfileFollow";
-import ProfileFollowDialog from "./ProfileFollowDialog";
 import ProfileInfo from "./ProfileInfo";
 import ProfileRecord from "./ProfileRecord";
 import ProfileSettingDialog from "./ProfileSettingDialog";
@@ -29,7 +28,6 @@ const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
-  const [openFollowDialog, setOpenFollowDialog] = useState(false);
   const bingo = useAppSelector(selectBingo);
   const code = useAppSelector(selectTodayBingo);
 
@@ -63,10 +61,6 @@ const Profile = () => {
   return (
     <>
       <ProfileSettingDialog open={open} setOpen={setOpen} />
-      <ProfileFollowDialog
-        open={openFollowDialog}
-        setOpenFollowDialog={setOpenFollowDialog}
-      />
       <Stack
         direction="column"
         alignItems="center"
@@ -92,7 +86,7 @@ const Profile = () => {
           })}
         >
           <ProfileInfo setOpen={setOpen} />
-          <ProfileFollow setOpenFollowDialog={setOpenFollowDialog} />
+          <ProfileFollow />
 
           <Divider
             sx={{

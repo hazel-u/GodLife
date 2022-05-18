@@ -1,6 +1,7 @@
 import { Navigate, useRoutes } from "react-router-dom";
 
 import MainLayout from "../layouts/MainLayout";
+import Landing from "../pages/Landing";
 import Main from "../pages/Main";
 import NotFound from "../pages/NotFound";
 import BingoCreate from "../pages/bingo/create/BingoCreate";
@@ -34,11 +35,15 @@ export default function Router() {
     },
     {
       path: "/",
+      element: isAuth ? <Navigate to="/create" /> : <Landing />,
+    },
+    {
+      path: "/",
       element: <MainLayout />,
       children: [
         {
-          path: "/",
-          element: <BingoFeed />,
+          path: "/main",
+          element: isAuth ? <Main /> : <BingoFeed />,
         },
         {
           path: "/bingo/:bingoId",
@@ -50,10 +55,6 @@ export default function Router() {
       path: "/",
       element: isAuth ? <MainLayout /> : <Navigate to="/login" />,
       children: [
-        {
-          path: "/",
-          element: <Main />,
-        },
         {
           path: "/create",
           element:
@@ -91,7 +92,6 @@ export default function Router() {
         },
       ],
     },
-
     {
       path: "/*",
       element: <NotFound />,

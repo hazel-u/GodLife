@@ -1,10 +1,16 @@
 import { Box, Dialog, Tab, Tabs, useMediaQuery, useTheme } from "@mui/material";
 
-import React from "react";
+import React, { useEffect } from "react";
 
 import { OutlinedButton } from "../../components/common/Button";
 import ProfileFollower from "./ProfileFollow/ProfileFollowerDialogList";
 import ProfileFollowing from "./ProfileFollow/ProfileFollowingDialogList";
+
+interface ProfileFollowProps {
+  open: boolean;
+  check: number;
+  setOpenFollowDialog: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -12,15 +18,10 @@ interface TabPanelProps {
   value: number;
 }
 
-const ProfileFollowDialog = ({
-  open,
-  setOpenFollowDialog,
-}: {
-  open: boolean;
-  setOpenFollowDialog: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+const ProfileFollowDialog = (props: ProfileFollowProps) => {
   const handleClose = () => {
-    setOpenFollowDialog(false);
+    props.setOpenFollowDialog(false);
+    setValue(props.check);
   };
 
   // Responsive layout
@@ -28,7 +29,7 @@ const ProfileFollowDialog = ({
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   // Tab
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(props.check);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -39,6 +40,7 @@ const ProfileFollowDialog = ({
       value: index,
     };
   }
+
   function TabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
 
@@ -61,10 +63,14 @@ const ProfileFollowDialog = ({
     );
   }
 
+  useEffect(() => {
+    setValue(props.check);
+  }, [props.check]);
+
   return (
     <Dialog
       onClose={handleClose}
-      open={open}
+      open={props.open}
       PaperProps={{
         style: !fullScreen ? { minWidth: "min(60%, 600px)", width: "60%" } : {},
       }}

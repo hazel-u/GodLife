@@ -49,27 +49,20 @@ const BingoFeedDateSearch = ({
 
   const fp = useRef<any>(null);
 
-  // const clear = () => {
-  //   fp.current && fp.current.flatpickr.clear();
-  // };
-
   return (
-    <>
-      <Flatpickr
-        onChange={(newDate) => {
-          handleChange(newDate[0]);
-        }}
-        options={{
-          locale: Korean,
-          minDate: "2022-05-01",
-          maxDate: "2999-12-31",
-        }}
-        className="feed-date-picker"
-        placeholder="날짜로 검색"
-        ref={fp}
-      />
-      {/* <button onClick={clear}>클리어</button> */}
-    </>
+    <Flatpickr
+      onChange={(newDate) => {
+        handleChange(newDate[0]);
+      }}
+      options={{
+        locale: Korean,
+        minDate: "2022-05-01",
+        maxDate: "2999-12-31",
+      }}
+      className="feed-date-picker"
+      placeholder="날짜로 검색"
+      ref={fp}
+    />
   );
 };
 

@@ -5,8 +5,11 @@ import { Outlet } from "react-router-dom";
 
 import Footer from "../components/bars/Footer";
 import Navbar from "../components/bars/Navbar";
+import ShareNavbar from "../components/bars/ShareNavbar";
 
 const MainLayout = () => {
+  const isAuth = localStorage.getItem("token");
+
   return (
     <Box
       sx={{
@@ -15,7 +18,7 @@ const MainLayout = () => {
         padding: "0 3%",
       }}
     >
-      <Navbar />
+      {isAuth ? <Navbar /> : <ShareNavbar />}
       <Outlet />
       <Footer />
     </Box>
