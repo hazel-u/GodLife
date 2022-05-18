@@ -26,10 +26,9 @@ public enum ErrorCode {
     BINGO_DATE_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 날짜의 빙고를 찾을 수 없습니다."),
     COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 댓글을 찾을 수 없습니다."),
     DATE_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 날짜를 찾을 수 없습니다."),
-
     GOALS_NOT_FOUND(HttpStatus.NOT_FOUND, "목표가 존재하지 않습니다."),
-
     BINGO_GOALS_NOT_FOUND(HttpStatus.NOT_FOUND, "빙고의 목표가 존재하지 않습니다."),
+    PERSONALITY_NOT_FOUNT(HttpStatus.NOT_FOUND, "성향을 찾을 수 없습니다."),
 
     /* 409 : CONFLICT : Resource의 현재 상태와 충돌. 보통 중복된 데이터 존재 */
     DUPLICATE_RESOURCE(HttpStatus.CONFLICT, "데이터가 이미 존재합니다.")
