@@ -81,4 +81,23 @@ const GoalButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export { OutlinedButton, TextButton, BlackButton, GoalButton };
+const SurveyButton = styled(Button)({
+  width: "100%",
+  maxWidth: "400px",
+  fontFamily: "Noto Sans KR",
+  fontSize: 17,
+  borderRadius: 10,
+  wordBreak: "keep-all",
+  backgroundColor: "#434343",
+  color: "#f3f3f3",
+  "&:hover": {
+    color: "#fafafa",
+    backgroundColor: "#434343",
+    boxShadow: "none",
+  },
+  "&:active": {
+    boxShadow: "none",
+  },
+});
+
+export { OutlinedButton, TextButton, BlackButton, GoalButton, SurveyButton };

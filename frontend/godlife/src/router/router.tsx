@@ -13,6 +13,9 @@ import Login from "../pages/login/Login";
 import LoginOAuthKakao from "../pages/login/LoginOAuthKakao";
 import Profile from "../pages/profile/Profile";
 import ProfileFollowDetail from "../pages/profile/ProfileFollow/ProfileFollowDetail";
+import SurveyInProgress from "../pages/survey/SurveyInProgress";
+import SurveyResult from "../pages/survey/SurveyResult";
+import SurveyStart from "../pages/survey/SurveyStart";
 import { useAppSelector } from "../store/hooks";
 import { selectTodayBingo } from "../store/todayBingo";
 
@@ -32,6 +35,24 @@ export default function Router() {
     {
       path: process.env.REACT_APP_KAKAO_REDIRECT_PATH,
       element: <LoginOAuthKakao />,
+    },
+    {
+      path: "/survey",
+      element: <MainLayout />,
+      children: [
+        {
+          path: "/survey",
+          element: <SurveyStart />,
+        },
+        {
+          path: "/survey/inprogress",
+          element: <SurveyInProgress />,
+        },
+        {
+          path: "/survey/result",
+          element: <SurveyResult />,
+        },
+      ],
     },
     {
       path: "/",
