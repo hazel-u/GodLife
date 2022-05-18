@@ -2,7 +2,6 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { Box, Dialog, DialogContent, DialogTitle, Stack } from "@mui/material";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
-import "flatpickr/dist/themes/light.css";
 
 import React, { useState } from "react";
 import Calendar from "react-calendar";
@@ -21,6 +20,8 @@ const BingoFeedDateSearch = ({
   dayjs.extend(isBetween);
   const dispatch = useAppDispatch();
 
+  const [date, setDate] = useState(new Date());
+
   const handleChange = (newValue: Date) => {
     if (
       !dayjs(newValue).isValid() ||
@@ -33,6 +34,7 @@ const BingoFeedDateSearch = ({
     )
       return;
 
+    setDate(newValue);
     axiosWithToken
       .get(`feed/search/date/${dayjs(newValue).format("YYYY-MM-DD")}`)
       .then((res) => {
@@ -54,6 +56,8 @@ const BingoFeedDateSearch = ({
     setOpen(false);
   };
 
+  const [search, setSearch] = useState(false);
+
   return (
     <>
       <Dialog onClose={handleClose} open={open}>
@@ -66,10 +70,15 @@ const BingoFeedDateSearch = ({
               onChange={(newDate: Date) => {
                 handleChange(newDate);
                 setOpen(false);
+                setSearch(true);
               }}
               calendarType="Hebrew"
               className="feed-date-search"
               formatDay={(locale, date) => `${date.getDate()}`}
+              value={date}
+              minDetail="year"
+              minDate={new Date("2022-04-01")}
+              maxDate={new Date("2099-12-31")}
             />
           </Box>
         </DialogContent>
@@ -78,7 +87,7 @@ const BingoFeedDateSearch = ({
       <button onClick={() => setOpen(true)} className="feed-user-search">
         <Stack direction="row" alignItems="center" justifyContent="start">
           <CalendarMonthIcon sx={{ marginRight: "5px" }} />
-          날짜로 검색
+          {search ? `${dayjs(date).format("YYYY-MM-DD")}` : "날짜로 검색"}
         </Stack>
       </button>
     </>

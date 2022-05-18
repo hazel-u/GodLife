@@ -27,7 +27,6 @@
     "react": "^18.0.0",
     "react-calendar": "^3.7.0",
     "react-dom": "^18.0.0",
-    "react-flatpickr": "^3.10.11",
     "react-ga4": "^1.4.1",
     "react-google-login": "^5.2.2",
     "react-hook-form": "^7.30.0",
@@ -76,7 +75,6 @@
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^3.2.0",
-    "@types/react-flatpickr": "^3.8.6",
     "@types/workbox-expiration": "^4.3.1",
     "@types/workbox-routing": "^4.3.1"
   }
