@@ -28,7 +28,9 @@ public class BingoQueryRepositoryImpl implements BingoQueryRepository{
     public List<Bingo> findPageByUser(String userEmail, int page, int limit) {
         return query
                 .selectFrom(bingo)
-                .where(bingo.user.email.eq(userEmail))
+                .where(bingo.user.email.eq(userEmail).and(
+                        bingo.activate.eq(true)
+                ))
                 .orderBy(bingo.startDate.desc())
                 .offset(page*limit)
                 .limit(limit)
@@ -39,7 +41,9 @@ public class BingoQueryRepositoryImpl implements BingoQueryRepository{
     public Bingo findBingo(String code) {
         return query
                 .selectFrom(bingo)
-                .where(bingo.bingoCode.code.eq(code))
+                .where(bingo.bingoCode.code.eq(code).and(
+                        bingo.activate.eq(true)
+                ))
                 .fetchOne();
     }
 }

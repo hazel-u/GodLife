@@ -161,10 +161,17 @@ public class BingoServiceImpl implements BingoService {
     @Override
     public FindBingoResDto findBingoBydate(String date, User user) throws ParseException {
         LocalDate startdate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        Bingo bingo = bingoRepository.findTopByStartDateAndUser(startdate, user)
+        Bingo bingo = bingoRepository.findTopByStartDateAndUserAndActivateTrue(startdate, user)
                 .orElseThrow(() -> new CustomException(ErrorCode.BINGO_DATE_NOT_FOUND));
         ;
         return new FindBingoResDto(bingo);
+    }
+
+    @Override
+    public void deleteBingo(String seq) {
+        Bingo bingo = bingoRepository.findById(UUID.fromString(seq))
+                .orElseThrow(()->new CustomException(ErrorCode.BINGO_NOT_FOUND));
+        bingo.delete();
     }
 
     @Scheduled(cron = "1 0 0 * * *")

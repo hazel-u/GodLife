@@ -3,7 +3,7 @@ import { createTheme } from "@mui/material";
 export const theme = createTheme({
   typography: {
     allVariants: {
-      fontFamily: "NotoSerifKR",
+      fontFamily: "Noto Serif KR",
       color: "#464646",
     },
   },

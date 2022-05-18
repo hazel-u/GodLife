@@ -84,7 +84,7 @@ const NicknameController = ({
                 checkNicknameDuplication();
               }}
               size="small"
-              sx={{ width: "200px", paddingTop: "10px" }}
+              sx={{ width: "230px", paddingTop: "10px" }}
               inputProps={{ maxLength: 8 }}
               type="text"
             />

@@ -80,6 +80,7 @@ public class GoalsServiceImpl implements GoalsService{
         Goals goals = Goals.builder()
                 .category(Category.내목표)
                 .content(reqDto.getContent())
+                .deleted(false)
                 .user(user)
                 .build();
         goalsRepository.save(goals);
@@ -92,7 +93,6 @@ public class GoalsServiceImpl implements GoalsService{
         );
         if(goals.getUser() == null || !goals.getUser().getSeq().equals(user.getSeq()))
             throw new CustomException(ErrorCode.NOT_MATCH_USER);
-
-        goalsRepository.delete(goals);
+        goals.deleteCustomGoal();
     }
 }

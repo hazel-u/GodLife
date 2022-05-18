@@ -85,10 +85,15 @@ const BingoList = () => {
         </Stack>
       ) : (
         <>
+          <Stack
+            direction="row"
+            justifyContent="end"
+            margin="0 0 0 auto"
+            padding="0 8px 30px 0"
+          >
+            <BingoListSearch />
+          </Stack>
           <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <BingoListSearch />
-            </Grid>
             {bingoList.map((bingo) => (
               <Grid
                 item

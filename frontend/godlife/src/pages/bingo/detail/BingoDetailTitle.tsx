@@ -11,6 +11,7 @@ import {
 import dayjs from "dayjs";
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { selectBingo } from "../../../store/bingo";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
@@ -57,6 +58,8 @@ const BingoDetailTitle = ({
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const navigate = useNavigate();
+
   return (
     <Box
       sx={{
@@ -78,7 +81,13 @@ const BingoDetailTitle = ({
           fontSize={fullScreen ? "16px" : "24px"}
           variant="h1"
         >
-          {userName}의 갓생
+          <span
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate(`/profile/${userName}`)}
+          >
+            {userName}
+          </span>
+          의 갓생
         </Typography>
       </Stack>
 
