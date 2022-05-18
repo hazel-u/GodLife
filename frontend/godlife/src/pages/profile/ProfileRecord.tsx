@@ -56,6 +56,7 @@ class ProfileRecord extends Component {
           plugins={[ dayGridPlugin ]}
           contentHeight="auto"
           events={bingoList}
+          fixedWeekCount={false}
           eventDisplay="background"
           eventBackgroundColor="#ffffff"
           eventContent={<img
