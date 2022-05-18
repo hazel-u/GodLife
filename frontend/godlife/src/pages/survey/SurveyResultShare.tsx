@@ -1,6 +1,6 @@
 import { IconButton, Stack, SvgIcon, Typography } from "@mui/material";
 
-import React, { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import ReactGA from "react-ga4";
 
 import { ReactComponent as Link } from "../../assets/icon/link.svg";
@@ -58,7 +58,7 @@ const SurveyShareKakao = ({
     if (!window.Kakao.isInitialized())
       window.Kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
   }, []);
-  console.log(window.location.origin + imgUrl);
+  // console.log(window.location.origin + imgUrl);
 
   const shareKakao = () => {
     ReactGA.gtag("event", "share", {
@@ -110,7 +110,7 @@ const SurveyResultShare = ({
             dispatch(
               setSnackbar({
                 open: true,
-                message: "갓생 링크가 클립보드에 복사되었습니다.",
+                message: "조사 결과가 클립보드에 복사되었습니다.",
                 severity: "success",
               })
             );

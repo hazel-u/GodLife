@@ -87,6 +87,7 @@ const SurveyButton = styled(Button)({
   fontFamily: "Noto Sans KR",
   fontSize: 17,
   borderRadius: 10,
+  wordBreak: "keep-all",
   backgroundColor: "#434343",
   color: "#f3f3f3",
   "&:hover": {

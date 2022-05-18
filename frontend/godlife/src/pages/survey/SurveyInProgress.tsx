@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { SurveyButton } from "../../components/common/Button";
+import axiosWithToken from "../../utils/axios";
 
 function LinearProgressWithLabel(
   props: LinearProgressProps & { value: number; totalquestions: number }
@@ -24,6 +25,36 @@ function LinearProgressWithLabel(
     </Box>
   );
 }
+
+const changePersonalityType = (personality: string) => {
+  let type = "";
+  switch (personality) {
+    case "android":
+      type = "안드로이드형";
+      break;
+    case "worries":
+      type = "지게꾼형";
+      break;
+    case "clover":
+      type = "세잎클로버형";
+      break;
+    case "gwichanism":
+      type = "귀차니즘형";
+      break;
+    case "doer":
+      type = "즉흥형";
+      break;
+    default:
+      type = "경주마형";
+  }
+  axiosWithToken
+    .post("personality", {
+      type: type,
+    })
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
+};
+
 // 타입 6개
 // 1. 즉흥형  -> 외향성 /  우호성 / 개방성
 // 2. 귀차니즘형 ->
@@ -197,7 +228,7 @@ const SurveyInProgress = () => {
   const navigate = useNavigate();
 
   const [page, setPage] = useState(0);
-  const [lifeType, setLifeType] = useState({ N: 0, E: 0, O: 0, A: 0, C: 0 });
+  const [lifeType] = useState({ N: 0, E: 0, O: 0, A: 0, C: 0 });
   const clickNext = (big5Type: string) => {
     if (page + 1 < questions.length) {
       setPage(page + 1);
@@ -224,8 +255,14 @@ const SurveyInProgress = () => {
         }
       }
     } else {
-      console.log(chooseType(lifeType));
-      navigate(`../../survey/result#${chooseType(lifeType)}`);
+      const lifeTypeResult = chooseType(lifeType);
+      console.log(lifeTypeResult);
+
+      const isAuth = localStorage.getItem("token");
+      if (isAuth) {
+        changePersonalityType(lifeTypeResult);
+      }
+      navigate(`../../survey/result#${lifeTypeResult}`);
     }
   };
 
@@ -248,11 +285,21 @@ const SurveyInProgress = () => {
           fontSize={50}
           fontFamily={"BMEULJIRO"}
           mt={2}
-          sx={{ maxWidth: "80%" }}
+          sx={{ maxWidth: 400, textOverflow: "ellipsis" }}
         >
           Q.{page + 1}
         </Typography>
-        <Typography fontSize={25} fontFamily={"BMEULJIRO"} mt={2}>
+        <Typography
+          fontSize={25}
+          fontFamily={"BMEULJIRO"}
+          mt={2}
+          sx={{
+            wordBreak: "keep-all",
+            textAlign: "center",
+            maxWidth: 400,
+            minHeight: 150,
+          }}
+        >
           {questions[page].question}
         </Typography>
         <Typography
@@ -263,13 +310,25 @@ const SurveyInProgress = () => {
         ></Typography>
         <SurveyButton
           onClick={() => clickNext(questions[page].answers[0].type)}
-          sx={{ width: "100%", marginTop: 5, paddingY: 2 }}
+          sx={{
+            width: "100%",
+            marginTop: 5,
+            paddingY: 2,
+            paddingX: 2,
+            minHeight: 100,
+          }}
         >
           {questions[page].answers[0].text}
         </SurveyButton>
         <SurveyButton
           onClick={() => clickNext(questions[page].answers[1].type)}
-          sx={{ width: "100%", marginTop: 5, paddingY: 2 }}
+          sx={{
+            width: "100%",
+            marginTop: 5,
+            paddingY: 2,
+            paddingX: 2,
+            minHeight: 100,
+          }}
         >
           {questions[page].answers[1].text}
         </SurveyButton>

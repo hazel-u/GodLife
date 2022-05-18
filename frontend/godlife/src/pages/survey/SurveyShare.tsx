@@ -1,6 +1,6 @@
 import { IconButton, Stack, SvgIcon, Typography } from "@mui/material";
 
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import ReactGA from "react-ga4";
 
 import { ReactComponent as Link } from "../../assets/icon/link.svg";
@@ -82,7 +82,7 @@ const SurveyShare = () => {
 
   return (
     <Stack direction="column" alignItems="center" sx={{ margin: "8% 0" }}>
-      <Typography fontSize={20} fontFamily={"BMEULJIRO"} mb={1}>
+      <Typography fontSize={20} fontFamily={"BMEULJIRO"} mb={2}>
         친구들에게 공유하기
       </Typography>
       <Stack direction="row" spacing={2}>

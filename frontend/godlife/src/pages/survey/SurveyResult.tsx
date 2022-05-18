@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
 
@@ -240,13 +240,14 @@ const SurveyResult = () => {
         direction="column"
         alignItems="center"
         mt={4}
+        paddingX={1}
         sx={{ maxWidth: 500 }}
       >
-        <Typography fontSize={20} fontFamily={"BMEULJIRO"}>
+        <Typography fontSize={40} fontFamily={"BMEULJIRO"} mb={3}>
           나의 유형은?
         </Typography>
-        <img src={result.imgUrl} alt="img" />
-        <Typography fontSize={20} fontFamily={"BMEULJIRO"} mt={2}>
+        <img src={result.imgUrl} alt="img" width={300} height="auto" />
+        <Typography fontSize={20} fontFamily={"BMEULJIRO"} mt={4}>
           {result.subtitle}
         </Typography>
         <Typography fontSize={40} fontFamily={"BMEULJIRO"} mt={2}>
@@ -259,7 +260,9 @@ const SurveyResult = () => {
               <Stack key={index}>
                 <Typography
                   fontSize={20}
+                  fontWeight={600}
                   mt={5}
+                  mb={1}
                   variant="h1"
                   fontFamily="Noto Sans KR"
                   key={content.header + 1}
@@ -277,16 +280,18 @@ const SurveyResult = () => {
             );
           })}
         </Stack>
-        <SurveyResultShare
-          subtitle={result.subtitle}
-          title={result.title}
-          imgUrl={result.imgUrl}
-        />
+        <Stack sx={{ paddingY: 4 }}>
+          <SurveyResultShare
+            subtitle={result.subtitle}
+            title={result.title}
+            imgUrl={result.imgUrl}
+          />
+        </Stack>
         <SurveyButton
           onClick={() => {
             navigate("../../");
           }}
-          sx={{ width: "100%", marginTop: 1 }}
+          sx={{ width: "100%", marginTop: 1, padding: 3 }}
         >
           '갓생살기'에서 재미있게 갓생 살아보기
         </SurveyButton>
@@ -294,7 +299,7 @@ const SurveyResult = () => {
           onClick={() => {
             navigate("../");
           }}
-          sx={{ width: "100%", marginTop: 5 }}
+          sx={{ width: "100%", marginTop: 5, padding: 3 }}
         >
           테스트 다시 하기
         </SurveyButton>
