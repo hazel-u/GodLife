@@ -1,10 +1,12 @@
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { Box, Dialog, DialogContent, DialogTitle, Stack } from "@mui/material";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
-import { Korean } from "flatpickr/dist/l10n/ko.js";
 import "flatpickr/dist/themes/light.css";
 
-import React from "react";
-import { default as Flatpickr } from "react-flatpickr";
+import React, { useState } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
 import { useAppDispatch } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
@@ -47,20 +49,39 @@ const BingoFeedDateSearch = ({
       });
   };
 
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <Flatpickr
-      onChange={(newDate) => {
-        handleChange(newDate[0]);
-      }}
-      options={{
-        locale: Korean,
-        minDate: "2022-05-01",
-        maxDate: "2999-12-31",
-        disableMobile: true,
-      }}
-      className="feed-date-picker"
-      placeholder="날짜로 검색"
-    />
+    <>
+      <Dialog onClose={handleClose} open={open}>
+        <DialogTitle sx={{ fontFamily: "BMEULJIRO", fontSize: 24 }}>
+          날짜로 검색
+        </DialogTitle>
+        <DialogContent sx={{ margin: "0 20px 20px 20px", height: "330px" }}>
+          <Box width="300px">
+            <Calendar
+              onChange={(newDate: Date) => {
+                handleChange(newDate);
+                setOpen(false);
+              }}
+              calendarType="Hebrew"
+              className="feed-date-search"
+              formatDay={(locale, date) => `${date.getDate()}`}
+            />
+          </Box>
+        </DialogContent>
+      </Dialog>
+
+      <button onClick={() => setOpen(true)} className="feed-user-search">
+        <Stack direction="row" alignItems="center" justifyContent="start">
+          <CalendarMonthIcon sx={{ marginRight: "5px" }} />
+          날짜로 검색
+        </Stack>
+      </button>
+    </>
   );
 };
 

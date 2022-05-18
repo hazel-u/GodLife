@@ -182,7 +182,7 @@ const BingoFeedAllUserSearch = () => {
       <button
         style={{ width: "120px" }}
         onClick={() => setOpen(true)}
-        className="feed-user-search"
+        className="feed-user-search feed-date-search"
       >
         <Stack direction="row" alignItems="center" justifyContent="start">
           <PersonIcon sx={{ marginRight: "5px" }} />

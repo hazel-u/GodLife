@@ -88,7 +88,7 @@ code {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='fill:%23464646;'%3E%3Cpath d='M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z'%3E%3C/path%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-size: 100%;
-  background-position: top 12px left 0px;
+  background-position: top 12px left 10px;
   border-bottom: #464646 1px solid;
 }
 
@@ -152,4 +152,47 @@ code {
 
 .flatpickr-input::placeholder {
   color: #464646;
+}
+
+.flatpickr-calendar {
+  margin: 0 10px;
+}
+
+.react-calendar {
+  border: none;
+  color: #464646;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: #464646;
+}
+
+.feed-date-search * {
+  font-family: "Noto Serif KR";
+  color: #464646;
+}
+
+.react-calendar__tile
+  .react-calendar__month-view__days__day
+  .react-calendar__month-view__days__day--neighboringMonth {
+  color: red;
+}
+
+.react-calendar__tile--now {
+  background: #939393;
+  border-radius: 10px;
+}
+
+.react-calendar__tile--now abbr {
+  color: white;
+}
+
+.react-calendar button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  border-radius: 10px;
+}
+
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+  background: #939393;
 }
