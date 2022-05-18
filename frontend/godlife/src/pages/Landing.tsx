@@ -82,6 +82,7 @@ const Landing = ({
             fontSize: "40px",
             marginBottom: "30px",
             zIndex: 1,
+            wordBreak: "keep-all",
           }}
           variant="h2"
         >
