@@ -138,10 +138,15 @@ public class FollowServiceImpl implements FollowService {
     public List<FindBingoResDto> getMainFeed() {
         final int limit = 6;
         List<FindBingoResDto> response = new ArrayList<>();
-        List<Bingo> bingos = bingoRepository.findTop6ByStartDateAndActivateTrueOrderByLikeCntDesc(LocalDate.now());
+        List<Bingo> bingos = bingoRepository.findAllByStartDateAndActivateTrueOrderByLikeCntDesc(LocalDate.now());
         for (Bingo bingo : bingos) {
             response.add(new FindBingoResDto(bingo));
         }
         return response;
+    }
+
+    @Override
+    public Long getMainFeedCount() {
+        return bingoRepository.countByStartDate(LocalDate.now());
     }
 }
