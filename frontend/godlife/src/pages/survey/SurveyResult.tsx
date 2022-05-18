@@ -220,7 +220,7 @@ const getResult = () => {
     case "doer":
       resultNumber = 1;
       break;
-    case "quichanism":
+    case "gwichanism":
       resultNumber = 2;
       break;
     default:
