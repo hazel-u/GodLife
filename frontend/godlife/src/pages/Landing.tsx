@@ -7,19 +7,16 @@ import LoginBannerImage2 from "../assets/images/loginBannerImage2.webp";
 import Stamp from "../assets/images/stamp.webp";
 import { BlackButton } from "../components/common/Button";
 
-const Landing = () => {
+const Landing = ({
+  setPage,
+}: {
+  setPage: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down(1550));
 
   return (
-    <Box
-      sx={{
-        height: "100%",
-        width: "100%",
-        position: "relative",
-        overflowY: "hidden",
-      }}
-    >
+    <>
       <Box
         position="absolute"
         sx={{
@@ -103,15 +100,15 @@ const Landing = () => {
           margin={5}
           justifyContent="center"
         >
-          <BlackButton href="/main" sx={{ width: "200px" }}>
+          <BlackButton onClick={() => setPage("main")} sx={{ width: "200px" }}>
             모두의 갓생 보기
           </BlackButton>
-          <BlackButton href="/login" sx={{ width: "200px" }}>
+          <BlackButton onClick={() => setPage("login")} sx={{ width: "200px" }}>
             로그인하러 가기
           </BlackButton>
         </Stack>
       </Stack>
-    </Box>
+    </>
   );
 };
 

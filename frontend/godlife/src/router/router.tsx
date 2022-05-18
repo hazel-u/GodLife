@@ -1,7 +1,7 @@
 import { Navigate, useRoutes } from "react-router-dom";
 
+import LandingLayout from "../layouts/LandingLayout";
 import MainLayout from "../layouts/MainLayout";
-import Landing from "../pages/Landing";
 import Main from "../pages/Main";
 import NotFound from "../pages/NotFound";
 import BingoCreate from "../pages/bingo/create/BingoCreate";
@@ -35,7 +35,7 @@ export default function Router() {
     },
     {
       path: "/",
-      element: isAuth ? <Navigate to="/create" /> : <Landing />,
+      element: isAuth ? <Navigate to="/create" /> : <LandingLayout />,
     },
     {
       path: "/",

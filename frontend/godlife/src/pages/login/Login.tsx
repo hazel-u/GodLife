@@ -8,7 +8,11 @@ import { TextButton } from "../../components/common/Button";
 import LoginForm from "./LoginForm/LoginForm";
 import LoginOAuth from "./LoginOAuth";
 
-const Login = () => {
+const Login = ({
+  setPage,
+}: {
+  setPage?: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   const navigate = useNavigate();
 
   return (
@@ -33,7 +37,9 @@ const Login = () => {
                 margin: "30px",
                 cursor: "pointer",
               }}
-              onClick={() => navigate("/")}
+              onClick={() => {
+                setPage ? setPage("landing") : navigate("/");
+              }}
             />
           </Box>
 

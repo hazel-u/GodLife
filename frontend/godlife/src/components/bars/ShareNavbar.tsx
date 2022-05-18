@@ -6,7 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/logo/Godlife/logo.svg";
 import { TextButton } from "../common/Button";
 
-const ShareNavbar = () => {
+const ShareNavbar = ({
+  setPage,
+}: {
+  setPage?: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   const navigate = useNavigate();
   return (
     <Stack
@@ -30,7 +34,9 @@ const ShareNavbar = () => {
           width="85px"
           height="85px"
           style={{ cursor: "pointer" }}
-          onClick={() => navigate("/")}
+          onClick={() => {
+            setPage ? setPage("landing") : navigate("/");
+          }}
         />
       </Box>
 
