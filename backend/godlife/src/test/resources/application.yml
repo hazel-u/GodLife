@@ -1,0 +1,34 @@
+# 로컬에서 사용할 application yml 설정 파일
+# ':' 뒤에 설정값을 입력할 때는 반드시 ':' 다음에 공백이 필요
+# 설정할 값들의 레벨 주의 (ex. spring.datasource.url 을 입력할 경우, datasource: 는 spring: 보다 우측으로 한 탭 이동. url: 은 datasource: 보다 우측으로 한 탭 이동)
+
+spring:
+  profiles:
+    active: test
+  # JWT 토큰에 사용할 secret 키값 (임의의 랜덤 키값)
+  jwt:
+    secret: RktTodWkdWkdaos
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 100
+
+logging.level:
+  org.hibernate.SQL: debug
+  org.hibernate.type: trace
+
+notification:
+  mattermost:
+    enabled: true # mmSender를 사용할 지 여부, false면 알림이 오지 않는다
+    webhook-url: https://meeting.ssafy.com/hooks/awjtbmh6rirj9ywyp5x3uo989y # 위의 Webhook URL을 기입
+    channel: # 기본 설정한 채널이 아닌 다른 채널로 보내고 싶을 때 기입한다
+    pretext: # attachments의 상단에 나오게 되는 일반 텍스트 문자
+    color: # attachment에 왼쪽 사이드 컬러. default=red
+    author-name: Back-End Exception # attachment의 상단에 나오는 이름
+    author-icon: https://media.vlpt.us/images/ayoung0073/post/2db5c70c-d494-4cca-ad58-7b4eaabc3c9a/springboot.jpeg # author-icon 왼쪽에 나올 아이콘의 url링크
+    footer: # attachment에 하단에 나올 부분. default=현재 시간
+

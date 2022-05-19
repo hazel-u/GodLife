@@ -1,0 +1,180 @@
+@font-face {
+  font-family: "BMEULJIRO";
+  src: url("assets/fonts/BMEULJIRO.woff2") format("woff2"),
+    url("assets/fonts/BMEULJIRO.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: "Noto Serif KR", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: overlay;
+  background-image: url("https://www.transparenttextures.com/patterns/beige-paper.png");
+  margin: 0;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+/* total width */
+*::-webkit-scrollbar {
+  background-color: transparent;
+  width: 7px;
+}
+
+/* background of the scrollbar except button or resizer */
+*::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+*::-webkit-scrollbar-track:hover {
+  background-color: transparent;
+}
+
+/* scrollbar itself */
+*::-webkit-scrollbar-thumb {
+  background-color: #babac0;
+  border-radius: 16px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #a0a0a5;
+}
+
+/* set button(top and bottom of the scrollbar) */
+*::-webkit-scrollbar-button {
+  display: none;
+}
+
+.stamp {
+  opacity: 0.5;
+  animation-name: pulse;
+  animation-duration: 0.25s;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    transform: scale(5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+}
+
+.feed-date-picker {
+  height: 50px;
+  width: 120px;
+  border: none;
+  background-color: transparent;
+  padding: 0 0 0 40px;
+  font-family: "Noto Serif KR";
+  color: #464646;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='fill:%23464646;'%3E%3Cpath d='M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: top 12px left 10px;
+  border-bottom: #464646 1px solid;
+}
+
+.feed-user-search {
+  cursor: pointer;
+  height: 50px;
+  width: 120px;
+  border: none;
+  background-color: transparent;
+  font-family: "Noto Serif KR";
+  color: #464646;
+  border-bottom: #464646 1px solid;
+}
+
+.more-button {
+  cursor: pointer;
+  height: 50px;
+  width: 10px;
+  border: none;
+  background-color: transparent;
+  color: #464646;
+  padding-left: 0;
+}
+
+.feed-date-picker:focus-visible {
+  outline: none;
+}
+
+.feed-user-search:focus-visible {
+  outline: none;
+}
+
+.react-calendar {
+  border: none;
+  color: #464646;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: #464646;
+}
+
+.feed-date-search * {
+  font-family: "Noto Serif KR";
+  color: #464646;
+}
+
+.react-calendar__tile {
+  height: 100%;
+}
+
+.react-calendar__tile
+  .react-calendar__month-view__days__day
+  .react-calendar__month-view__days__day--neighboringMonth {
+  color: red;
+}
+
+.react-calendar__tile--now {
+  background: #939393;
+}
+
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+  background: #939393;
+}
+
+.react-calendar__tile--active,
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus,
+.react-calendar__tile--hasActive,
+.react-calendar__tile--hasActive:enabled:hover,
+.react-calendar__tile--hasActive:enabled:focus,
+.react-calendar__navigation button:disabled {
+  background: #f0f0f0;
+}
+
+.react-calendar__year-view .react-calendar__tile,
+.react-calendar__decade-view .react-calendar__tile,
+.react-calendar__century-view .react-calendar__tile {
+  padding: 1.5em 0.5em;
+}
+
+.react-calendar-profile {
+  width: 100%;
+  max-width: 550px;
+}
+
+.react-calendar__tile--active {
+  color: #464646;
+}
