@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { useLogout } from "../../hooks/useAuth";
 import { selectBingo } from "../../store/bingo";
@@ -39,6 +40,7 @@ function ProfileInfo(props: ProfileInfoProps) {
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const navigate = useNavigate();
 
   return (
     <>
@@ -85,6 +87,13 @@ function ProfileInfo(props: ProfileInfoProps) {
             }}
           >
             회원정보 수정
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              navigate("/survey");
+            }}
+          >
+            갓생러 테스트 하러 가기
           </MenuItem>
           <MenuItem onClick={logout}>로그아웃</MenuItem>
         </Menu>
