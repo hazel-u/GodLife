@@ -1,28 +1,15 @@
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Box, IconButton, Stack, styled } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 
 import React, { useState } from "react";
 
 import Footer from "../components/bars/Footer";
 import ShareNavbar from "../components/bars/ShareNavbar";
+import { StyledIconButton } from "../components/common/Button";
 import Landing from "../pages/Landing";
 import BingoFeed from "../pages/bingo/feed/BingoFeed";
 import Login from "../pages/login/Login";
-
-const StyledIconButton = styled(IconButton)({
-  position: "fixed",
-  bottom: "10px",
-  transition: "0.5s",
-  width: "50px",
-  height: "50px",
-  backgroundColor: "#434343",
-  color: "#f3f3f3",
-  "&:hover": {
-    backgroundColor: "#434343",
-    color: "#ffffff",
-  },
-});
 
 const LandingLayout = () => {
   const [page, setPage] = useState("landing");

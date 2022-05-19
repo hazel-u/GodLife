@@ -51,7 +51,7 @@ const Navbar = () => {
                 if (code && code !== "none") {
                   navigate(`/bingo/${code}`);
                 } else {
-                  navigate("create");
+                  navigate("/create");
                 }
               }}
               sx={{

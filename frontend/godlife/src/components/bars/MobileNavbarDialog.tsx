@@ -112,7 +112,7 @@ export default function SwipeableEdgeDrawer({
                   if (code && code !== "none") {
                     navigate(`/bingo/${code}`);
                   } else {
-                    navigate("create");
+                    navigate("/create");
                   }
                   setDrawerOpen(false);
                 }}
