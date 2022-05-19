@@ -65,7 +65,14 @@ const BingoFeedDateSearch = ({
           날짜로 검색
         </DialogTitle>
         <DialogContent sx={{ margin: "0 20px 20px 20px", height: "330px" }}>
-          <Box width="300px">
+          <Box
+            sx={(theme) => ({
+              width: "300px",
+              [theme.breakpoints.down(425)]: {
+                width: "255px",
+              },
+            })}
+          >
             <Calendar
               onChange={(newDate: Date) => {
                 handleChange(newDate);

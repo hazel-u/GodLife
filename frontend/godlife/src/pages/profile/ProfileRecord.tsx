@@ -1,20 +1,38 @@
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import React, { Component } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import Calendar from "react-calendar";
 import axiosWithToken from "../../utils/axios";
+import dayjs from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
 import Stamp from "../../assets/images/stamp.webp";
+import { useNavigate } from "react-router-dom";
 
+const ProfileRecord = () => {
+  dayjs.extend(isBetween);
+  const [bingoList, setBingoList] = useState<any>([]);
+  const [date, setDate] = useState(new Date());
 
-class ProfileRecord extends Component {
-  state = {
-    bingoList: [],
-    page: 0,
-    limit: 31,
+  const navigate = useNavigate();
+  const handleChange = (newValue: Date) => {
+    if (
+      !dayjs(newValue).isValid() ||
+      !dayjs(newValue).isBetween(
+        dayjs("2022-05-01"),
+        dayjs("2999-12-31"),
+        "year",
+        "[]"
+      )
+    )
+      return;
+
+    setDate(newValue);
   };
 
-  getBingoList = async () => {
+  const getBingoList = useCallback(() => {
+    const page = 0;
+    const limit = 31;
+
     axiosWithToken
-    .get(`bingo/${this.state.page}/${this.state.limit}`)
+    .get(`bingo/${page}/${limit}`)
     .then((res) => {
       const godBingoList: {
         code: string;
@@ -29,56 +47,83 @@ class ProfileRecord extends Component {
           godBingoList.push({ code: bingo.code, date: formatDate, godlife: true })
         }
       });
-      this.setState({
-        bingoList: godBingoList,
-      });
-    })
+      setBingoList(godBingoList);
+    }) 
     .catch((err) => console.log(err));
-  };
+  }, [setBingoList]);
+  
 
-  componentDidMount() {
-    this.getBingoList();
+  function leftPad(value: number) {
+    if (value >= 10) { 
+      return value; 
+    } 
+    
+    return `0${value}`; 
   }
+  
+  
+  function toStringByFormatting(date: Date, delimiter = '-') { 
+    const year = date.getFullYear(); 
+    const month = leftPad(date.getMonth() + 1); 
+    const day = leftPad(date.getDate()); 
+    
+    return [year, month, day].join(delimiter); 
+  }
+  
+  useEffect(() => {
+    getBingoList();
+  }, [getBingoList])
 
-  render() {
-    const { bingoList } = this.state
-   
-    return (
-      <>
-        <FullCalendar
-          headerToolbar={{
-            left: 'prev',
-            center: 'title',
-            right: 'next'
+  return (
+    <>
+      <Calendar
+        className="react-calendar-profile"
+        onChange={(newDate: Date) => {
+          handleChange(newDate);
+        }}
+        formatDay={(locale, date) => `${date.getDate()}`}
+        calendarType="Hebrew"
+        value={date}
+        minDetail="year"
+        minDate={new Date("2022-04-01")}
+        maxDate={new Date("2099-12-31")}
+        showNeighboringMonth={false}
+        tileContent={({ date }) => {
+          if (bingoList.find((x: { code: string; date: any; godlife: boolean; }) => 
+            x.date === toStringByFormatting(date))) {
+            return (
+              <div style={{ height: 10 }}>
+                <img
+                  className="react-calendar-profile-img"
+                  src={Stamp}
+                  alt="stamp"
+                  style={{
+                    width: "40%",
+                    opacity: "50%",
+                    marginLeft: "40%",
+                    transform: "translate(-5px, -10px)"
+                  }}
+                />
+              </div>
+            );
+          } 
+          else {
+            return (
+              <div style={{ height: 10 }}>
+              </div>
+            );
           }}
-          locale="ko"
-          initialView="dayGridMonth" 
-          plugins={[ dayGridPlugin ]}
-          contentHeight="auto"
-          events={bingoList}
-          fixedWeekCount={false}
-          eventDisplay="background"
-          eventBackgroundColor="#ffffff"
-          eventContent={<img
-            src={Stamp}
-            alt="stamp"
-            style={{
-              width: "80%",
-              opacity: "50%",
-            }}
-          />}
-          eventClick={
-            function(info) {
-              info.jsEvent.preventDefault();
-              let eventCode = info.event._def.extendedProps.code
-              window.location.href=`/bingo/${eventCode}`
-            }
-          }
-        />
-      </>
-    );
-  }
+        }
+        onClickDay={(day) => {
+          const events = bingoList.filter((x: { code: string; date: any; godlife: boolean; }) => 
+          x.date === toStringByFormatting(day))
+          events && events.map((bingo: { code: string; date: any; godlife: boolean; }) => {
+            return navigate(`/bingo/${bingo.code}`)
+          })
+        }}
+      />
+    </>
+  )
 }
 
-
-export default ProfileRecord;
+export default ProfileRecord
