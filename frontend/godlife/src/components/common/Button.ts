@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 const OutlinedButton = styled(Button)({
@@ -100,4 +100,25 @@ const SurveyButton = styled(Button)({
   },
 });
 
-export { OutlinedButton, TextButton, BlackButton, GoalButton, SurveyButton };
+const StyledIconButton = styled(IconButton)({
+  position: "fixed",
+  bottom: "10px",
+  transition: "1s",
+  width: "50px",
+  height: "50px",
+  backgroundColor: "#434343",
+  color: "#f3f3f3",
+  "&:hover": {
+    backgroundColor: "#434343",
+    color: "#ffffff",
+  },
+});
+
+export {
+  OutlinedButton,
+  TextButton,
+  BlackButton,
+  GoalButton,
+  SurveyButton,
+  StyledIconButton,
+};
