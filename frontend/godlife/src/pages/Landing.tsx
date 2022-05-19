@@ -1,11 +1,12 @@
 import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import LoginBannerImage1 from "../assets/images/loginBannerImage1.webp";
 import LoginBannerImage2 from "../assets/images/loginBannerImage2.webp";
 import Stamp from "../assets/images/stamp.webp";
-import { BlackButton } from "../components/common/Button";
+import { BlackButton, OutlinedButton } from "../components/common/Button";
 
 const Landing = ({
   setPage,
@@ -15,14 +16,22 @@ const Landing = ({
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down(1550));
 
+  const navigate = useNavigate();
+
   return (
     <>
       <Box
         position="absolute"
-        sx={{
-          top: fullScreen ? "60vh" : "-20px",
+        sx={(theme) => ({
+          top: "-20px",
+          [theme.breakpoints.down(1550)]: {
+            top: "60vh",
+          },
+          [theme.breakpoints.down("sm")]: {
+            top: "70vh",
+          },
           left: fullScreen ? "calc(50% - 164.5px)" : "50px",
-        }}
+        })}
       >
         <img src={LoginBannerImage1} alt="banner 1" />
       </Box>
@@ -50,11 +59,11 @@ const Landing = ({
             zIndex: 2,
           },
           [theme.breakpoints.down(1550)]: {
-            height: "55%",
+            height: "80%",
           },
         })}
         alignItems="center"
-        justifyContent={fullScreen ? "end" : "center"}
+        justifyContent={fullScreen ? "center" : "center"}
         padding={3}
       >
         <Box position="relative">
@@ -94,19 +103,45 @@ const Landing = ({
           친구들과 함께 도전을 이어가시오.
         </Typography>
 
-        <Stack
-          direction="row"
-          width="100%"
-          spacing={1}
-          margin={5}
-          justifyContent="center"
-        >
-          <BlackButton onClick={() => setPage("main")} sx={{ width: "200px" }}>
-            모두의 갓생 보기
-          </BlackButton>
-          <BlackButton onClick={() => setPage("login")} sx={{ width: "200px" }}>
-            로그인하러 가기
-          </BlackButton>
+        <Stack alignItems="center" width="100%" marginY={5} spacing={2}>
+          <Stack
+            direction="row"
+            width="100%"
+            spacing={1}
+            justifyContent="center"
+          >
+            <BlackButton
+              onClick={() => setPage("main")}
+              sx={{
+                maxWidth: "200px",
+                boxShadow:
+                  "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+              }}
+            >
+              모두의 갓생 보기
+            </BlackButton>
+            <BlackButton
+              onClick={() => setPage("login")}
+              sx={{
+                maxWidth: "200px",
+                boxShadow:
+                  "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+              }}
+            >
+              로그인하러 가기
+            </BlackButton>
+          </Stack>
+          <OutlinedButton
+            onClick={() => navigate("/survey")}
+            sx={{
+              maxWidth: "300px",
+              boxShadow:
+                "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+            }}
+            variant="outlined"
+          >
+            갓생러 테스트하기
+          </OutlinedButton>
         </Stack>
       </Stack>
     </>
