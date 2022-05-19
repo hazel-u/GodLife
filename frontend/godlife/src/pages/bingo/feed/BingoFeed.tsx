@@ -129,7 +129,7 @@ const BingoFeed = () => {
       {!isAuth && (
         <Box textAlign="start" width="100%">
           <Typography fontFamily="BMEULJIRO" fontSize={36}>
-            {new Date().getMonth()}월 {new Date().getDay()}일 모두의 갓생
+            {new Date().getMonth() + 1}월 {new Date().getDate()}일 모두의 갓생
           </Typography>
           <Typography fontSize={20}>오늘의 갓생러들을 확인해보세요!</Typography>
         </Box>
