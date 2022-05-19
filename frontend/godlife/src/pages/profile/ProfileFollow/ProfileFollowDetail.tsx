@@ -36,7 +36,7 @@ const ProfileFollowDetail = () => {
       .then((res) => {
         dispatch(setFollowingUser(res.data));
       })
-      .catch((err) => console.log(err));
+      .catch(() => {});
   }, [params, dispatch]);
 
   const {
@@ -62,7 +62,7 @@ const ProfileFollowDetail = () => {
         const nowFollowing = nameList.includes(name);
         setIsFollowing(nowFollowing);
       })
-      .catch((err) => console.log(err));
+      .catch(() => {});
   }, [setFollowingList, setIsFollowing, name]);
 
   useEffect(() => {
@@ -78,7 +78,7 @@ const ProfileFollowDetail = () => {
 
   const manageFollow = () => {
     const nowFollowing = followingList.includes(name);
-    console.log(followingList);
+
     let request;
     if (nowFollowing) {
       request = axiosWithToken.delete(`feed/follow/${name}`);

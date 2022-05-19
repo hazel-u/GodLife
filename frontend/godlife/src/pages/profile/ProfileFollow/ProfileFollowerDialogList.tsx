@@ -19,7 +19,7 @@ const ProfileFollowerDialogList = ({
       .then((res) => {
         setFollowerList(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch(() => {});
   };
 
   useEffect(() => {

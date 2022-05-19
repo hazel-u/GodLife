@@ -43,9 +43,7 @@ const Profile = () => {
       .then((res) => {
         dispatch(setBingo(res.data));
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(() => {});
   }, [code, dispatch]);
 
   useEffect(() => {

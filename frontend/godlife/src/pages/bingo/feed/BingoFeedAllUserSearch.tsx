@@ -32,7 +32,7 @@ const BingoFeedAllUserSearch = () => {
             })
           );
         })
-        .catch((err) => console.log(err));
+        .catch(() => {});
     }
   };
 
