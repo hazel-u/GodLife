@@ -60,9 +60,7 @@ const LoginOAuthKakao = () => {
               });
           });
       });
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   }, [code, navigate, dispatch, login]);
 
   return null;

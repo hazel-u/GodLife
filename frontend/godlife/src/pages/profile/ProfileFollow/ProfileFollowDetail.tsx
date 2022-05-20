@@ -36,7 +36,7 @@ const ProfileFollowDetail = () => {
       .then((res) => {
         dispatch(setFollowingUser(res.data));
       })
-      .catch((err) => console.log(err));
+      .catch(() => {});
   }, [params, dispatch]);
 
   const {
@@ -62,7 +62,7 @@ const ProfileFollowDetail = () => {
         const nowFollowing = nameList.includes(name);
         setIsFollowing(nowFollowing);
       })
-      .catch((err) => console.log(err));
+      .catch(() => {});
   }, [setFollowingList, setIsFollowing, name]);
 
   useEffect(() => {
@@ -78,7 +78,7 @@ const ProfileFollowDetail = () => {
 
   const manageFollow = () => {
     const nowFollowing = followingList.includes(name);
-    console.log(followingList);
+
     let request;
     if (nowFollowing) {
       request = axiosWithToken.delete(`feed/follow/${name}`);
@@ -247,14 +247,14 @@ const ProfileFollowDetail = () => {
                   height: "100%",
                   textAlign: "center",
                   width: "100%",
-                  marginTop: "20%",
+                  marginTop: "30%",
                 }}
               >
                 <Box position="relative">
                   <Typography
                     sx={{
                       fontSize: fullScreen ? 16 : 18,
-                      margin: "3% 0",
+                      margin: "7% 0",
                     }}
                   >
                     오늘의 갓생이 없습니다.
@@ -264,16 +264,18 @@ const ProfileFollowDetail = () => {
                     alt="stamp"
                     style={{
                       position: "absolute",
-                      top: "-50px",
+                      top: "-90px",
                       left: "45%",
-                      opacity: "30%",
+                      opacity: "70%",
                     }}
                   />
                 </Box>
               </Stack>
             )}
           </Box>
-          <ProfileFollowDetailRecord name={paramId} />
+          <Stack direction="column" alignItems="center" justifyContent="center">
+            <ProfileFollowDetailRecord name={paramId} />
+          </Stack>
         </Box>
       </Stack>
     </>

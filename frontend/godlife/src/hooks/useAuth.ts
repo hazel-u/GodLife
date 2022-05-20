@@ -59,6 +59,5 @@ export const useLogin = () => {
           navigate("/create");
         });
     });
-    // .catch(() => console.log("useAuth"));
   };
 };

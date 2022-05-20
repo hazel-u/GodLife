@@ -43,9 +43,7 @@ const Profile = () => {
       .then((res) => {
         dispatch(setBingo(res.data));
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(() => {});
   }, [code, dispatch]);
 
   useEffect(() => {
@@ -99,7 +97,7 @@ const Profile = () => {
             sx={{
               height: "100%",
               width: "100%",
-              margin: "5% 0 7%",
+              margin: "5% 0 5%",
             }}
           >
             {bingo.code && code && code !== "none" ? (
@@ -127,14 +125,14 @@ const Profile = () => {
                   height: "100%",
                   textAlign: "center",
                   width: "100%",
-                  marginTop: "15%",
+                  marginTop: "25%",
                 }}
               >
                 <Box position="relative">
                   <Typography
                     sx={{
                       fontSize: fullScreen ? 16 : 18,
-                      margin: "3% 0",
+                      margin: "7% 0",
                     }}
                   >
                     오늘의 갓생이 없습니다.
@@ -144,15 +142,15 @@ const Profile = () => {
                     alt="stamp"
                     style={{
                       position: "absolute",
-                      top: "-50px",
+                      top: "-90px",
                       left: "45%",
-                      opacity: "30%",
+                      opacity: "70%",
                     }}
                   />
                   <BlackButton
                     style={{
                       width: "35%",
-                      margin: "10% 0",
+                      margin: "5% 0 15%",
                     }}
                     onClick={() => navigate("/create")}
                   >
@@ -162,7 +160,9 @@ const Profile = () => {
               </Stack>
             )}
           </Box>
-          <ProfileRecord />
+          <Stack direction="column" alignItems="center" justifyContent="center">
+            <ProfileRecord />
+          </Stack>
         </Box>
       </Stack>
     </>

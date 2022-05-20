@@ -38,6 +38,7 @@ const BingoCell = ({
 
   const handleClickOpen = () => {
     if (
+      location.pathname !== "/profile" &&
       email === userEmail &&
       dayjs().format("YYYY-M-D") === startDate.join("-")
     ) {
@@ -95,10 +96,11 @@ const BingoCell = ({
         sx={{
           position: "relative",
           cursor:
-            location.pathname === "/list" ||
-            location.pathname === "/feed" ||
-            (email === userEmail &&
-              dayjs().format("YYYY-M-D") === startDate.join("-"))
+            location.pathname !== "/profile" &&
+            (location.pathname === "/list" ||
+              location.pathname === "/feed" ||
+              (email === userEmail &&
+                dayjs().format("YYYY-M-D") === startDate.join("-")))
               ? "pointer"
               : "default",
           "&::before": {

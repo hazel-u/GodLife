@@ -1,10 +1,11 @@
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { Box, Dialog, DialogContent, DialogTitle, Stack } from "@mui/material";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
-import { Korean } from "flatpickr/dist/l10n/ko.js";
-import "flatpickr/dist/themes/light.css";
 
-import React, { useRef } from "react";
-import { default as Flatpickr } from "react-flatpickr";
+import React, { useState } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
 import { useAppDispatch } from "../../../store/hooks";
 import { setSnackbar } from "../../../store/snackbar";
@@ -19,6 +20,8 @@ const BingoFeedDateSearch = ({
   dayjs.extend(isBetween);
   const dispatch = useAppDispatch();
 
+  const [date, setDate] = useState(new Date());
+
   const handleChange = (newValue: Date) => {
     if (
       !dayjs(newValue).isValid() ||
@@ -31,6 +34,7 @@ const BingoFeedDateSearch = ({
     )
       return;
 
+    setDate(newValue);
     axiosWithToken
       .get(`feed/search/date/${dayjs(newValue).format("YYYY-MM-DD")}`)
       .then((res) => {
@@ -47,22 +51,53 @@ const BingoFeedDateSearch = ({
       });
   };
 
-  const fp = useRef<any>(null);
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const [search, setSearch] = useState(false);
 
   return (
-    <Flatpickr
-      onChange={(newDate) => {
-        handleChange(newDate[0]);
-      }}
-      options={{
-        locale: Korean,
-        minDate: "2022-05-01",
-        maxDate: "2999-12-31",
-      }}
-      className="feed-date-picker"
-      placeholder="날짜로 검색"
-      ref={fp}
-    />
+    <>
+      <Dialog onClose={handleClose} open={open}>
+        <DialogTitle sx={{ fontFamily: "BMEULJIRO", fontSize: 24 }}>
+          날짜로 검색
+        </DialogTitle>
+        <DialogContent sx={{ margin: "0 20px 20px 20px", height: "330px" }}>
+          <Box
+            sx={(theme) => ({
+              width: "300px",
+              [theme.breakpoints.down(425)]: {
+                width: "255px",
+              },
+            })}
+          >
+            <Calendar
+              onChange={(newDate: Date) => {
+                handleChange(newDate);
+                setOpen(false);
+                setSearch(true);
+              }}
+              calendarType="Hebrew"
+              className="feed-date-search"
+              formatDay={(locale, date) => `${date.getDate()}`}
+              value={date}
+              minDetail="year"
+              minDate={new Date("2022-04-01")}
+              maxDate={new Date("2099-12-31")}
+            />
+          </Box>
+        </DialogContent>
+      </Dialog>
+
+      <button onClick={() => setOpen(true)} className="feed-user-search">
+        <Stack direction="row" alignItems="center" justifyContent="start">
+          <CalendarMonthIcon sx={{ marginRight: "5px" }} />
+          {search ? `${dayjs(date).format("YYYY-MM-DD")}` : "날짜로 검색"}
+        </Stack>
+      </button>
+    </>
   );
 };
 

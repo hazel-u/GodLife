@@ -35,7 +35,7 @@ const BingoCreate = () => {
       .then((res) => {
         setGoals(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch(() => {});
   };
 
   useEffect(() => {

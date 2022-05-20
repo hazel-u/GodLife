@@ -32,7 +32,7 @@ const BingoFeedAllUserSearch = () => {
             })
           );
         })
-        .catch((err) => console.log(err));
+        .catch(() => {});
     }
   };
 
@@ -182,14 +182,10 @@ const BingoFeedAllUserSearch = () => {
       <button
         style={{ width: "120px" }}
         onClick={() => setOpen(true)}
-        className="feed-user-search"
+        className="feed-user-search feed-date-search"
       >
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-around"
-        >
-          <PersonIcon />
+        <Stack direction="row" alignItems="center" justifyContent="start">
+          <PersonIcon sx={{ marginRight: "5px" }} />
           갓생러 검색
         </Stack>
       </button>

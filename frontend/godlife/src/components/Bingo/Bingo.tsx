@@ -111,7 +111,7 @@ export const Bingo = ({
           getBingo();
         }
       })
-      .catch((err) => console.log(err));
+      .catch(() => {});
   };
 
   return (

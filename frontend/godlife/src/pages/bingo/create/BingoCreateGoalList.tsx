@@ -14,6 +14,7 @@ const BingoCreateGoalList = () => {
   const [selectedCategory, setSelectedCategory] = useState("내 목표");
   const [goalList, setGoalList] = useState<GoalType[]>([]);
   const [allGoalList, setAllGoalList] = useState<GoalType[]>([]);
+  const [recommend, setRecommend] = useState<GoalType[]>([]);
   const [userFavorites, setUserFavorites] = useState<FavoriteGoalType[]>([]);
 
   const changeCategory = useCallback(() => {
@@ -27,13 +28,15 @@ const BingoCreateGoalList = () => {
       setGoalList(userFavorites);
     } else if (selectedCategory === "선택된목표") {
       setGoalList(selectedGoals);
+    } else if (selectedCategory === "추천 목표") {
+      setGoalList(recommend);
     } else if (selectedCategory !== null && selectedCategory !== "내 목표") {
       const classifiedGoalList = allGoalList.filter(
         (goal) => goal.category === selectedCategory
       );
       setGoalList(classifiedGoalList);
     }
-  }, [selectedCategory, selectedGoals, userFavorites, allGoalList]);
+  }, [selectedCategory, selectedGoals, userFavorites, allGoalList, recommend]);
 
   useEffect(() => {
     changeCategory();
@@ -43,15 +46,9 @@ const BingoCreateGoalList = () => {
     axiosWithToken
       .get("goal")
       .then((res) => {
-        // if (selectedCategory === "내 목표") {
-        //   const classifiedGoalList = res.data.goals.filter(
-        //     (goal: { category: string }) => goal.category === "내목표"
-        //   );
-        //   setGoalList(classifiedGoalList);
-        // }
         setAllGoalList(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch(() => {});
   }, []);
 
   const getFavorites = useCallback(() => {
@@ -67,25 +64,61 @@ const BingoCreateGoalList = () => {
           setGoalList(favoriteGoals);
         }
       })
-      .catch((err) => console.log(err));
+      .catch(() => {});
   }, [selectedCategory]);
+
+  const getRecommend = useCallback(() => {
+    axiosWithToken
+      .get("goal/recommend")
+      .then((res) => {
+        const recommendations: GoalType[] = [];
+        res.data.forEach(
+          (goal: { goals_seq: number; content: string; count: number }) => {
+            recommendations.push({
+              seq: goal.goals_seq,
+              content: goal.content,
+              category: "추천 목표",
+            });
+          }
+        );
+        setRecommend(recommendations);
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     getGoals();
     getFavorites();
   }, [getGoals, getFavorites]);
 
-  const category = [
-    "내 목표",
-    "선택된목표",
-    "즐겨찾기",
-    "건강한삶",
-    "미라클모닝",
-    "자기개발",
-    "삶의질",
-    "습관개선",
-    "환경",
-  ];
+  useEffect(() => {
+    getRecommend();
+  }, [getRecommend]);
+
+  const category = recommend.length
+    ? [
+        "내 목표",
+        "추천 목표",
+        "선택된목표",
+        "즐겨찾기",
+        "건강한삶",
+        "미라클모닝",
+        "자기개발",
+        "삶의질",
+        "습관개선",
+        "환경",
+      ]
+    : [
+        "내 목표",
+        "선택된목표",
+        "즐겨찾기",
+        "건강한삶",
+        "미라클모닝",
+        "자기개발",
+        "삶의질",
+        "습관개선",
+        "환경",
+      ];
 
   return (
     <Stack direction="row" spacing={2}>
