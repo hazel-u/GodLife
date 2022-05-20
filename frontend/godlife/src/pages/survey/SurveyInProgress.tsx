@@ -47,12 +47,9 @@ const changePersonalityType = (personality: string) => {
     default:
       type = "경주마형";
   }
-  axiosWithToken
-    .post("personality", {
-      type: type,
-    })
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
+  axiosWithToken.post("personality", {
+    type: type,
+  });
 };
 
 // 타입 6개
@@ -256,7 +253,6 @@ const SurveyInProgress = () => {
       }
     } else {
       const lifeTypeResult = chooseType(lifeType);
-      console.log(lifeTypeResult);
 
       const isAuth = localStorage.getItem("token");
       if (isAuth) {

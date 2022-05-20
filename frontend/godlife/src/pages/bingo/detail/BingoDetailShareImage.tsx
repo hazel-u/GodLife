@@ -30,9 +30,7 @@ const BingoDetailShareImage = () => {
             link.href = `https://s3.ap-northeast-2.amazonaws.com/today.godlife/${imageName}`;
             link.click();
           })
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch(() => {});
       });
     }
 

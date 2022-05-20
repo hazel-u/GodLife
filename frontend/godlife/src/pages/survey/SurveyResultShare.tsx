@@ -58,7 +58,6 @@ const SurveyShareKakao = ({
     if (!window.Kakao.isInitialized())
       window.Kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
   }, []);
-  // console.log(window.location.origin + imgUrl);
 
   const shareKakao = () => {
     ReactGA.gtag("event", "share", {

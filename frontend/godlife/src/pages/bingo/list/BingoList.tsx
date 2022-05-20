@@ -37,7 +37,7 @@ const BingoList = () => {
       .then((res) => {
         setBingoList(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch(() => {});
   }, [page]);
 
   useEffect(() => {
@@ -54,7 +54,7 @@ const BingoList = () => {
           getBingoList();
         }
       })
-      .catch((err) => console.log(err));
+      .catch(() => {});
   }, [getBingoList, dispatch, bingoCount, page]);
 
   useEffect(() => {

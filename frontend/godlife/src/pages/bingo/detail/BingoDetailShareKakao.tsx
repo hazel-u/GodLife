@@ -55,9 +55,7 @@ const BingoDetailShareKakao = () => {
               },
             });
           })
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch(() => {});
       });
     }
   };

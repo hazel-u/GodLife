@@ -54,7 +54,7 @@ const BingoCreateGoalItem = (props: GoalProps) => {
       .then(() => {
         props.getFavorites();
       })
-      .catch((err) => console.log(err));
+      .catch(() => {});
   };
 
   const manageSelectedGoals = () => {
