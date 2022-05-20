@@ -1,17 +1,10 @@
-<<<<<<< HEAD
-# ReadMe
 
-=======
->>>>>>> 4ddf3fd3b7943b42ea5ea366ded72437f0f0c873
 # 갓생살기
 
 > ‘갓생(God+生)’ 빙고 인증 및 공유 플랫폼
 
-<<<<<<< HEAD
+
 ![Untitled](README.assets/Untitled.png)
-=======
-![Untitled](ReadMe%200b5233aa851a46be977f025c104dd82a/Untitled.png)
->>>>>>> 4ddf3fd3b7943b42ea5ea366ded72437f0f0c873
 
 `쉽게만 살아가면 재미없어 빙고!`
 
@@ -44,19 +37,12 @@
 
 ### 아키텍쳐
 
-<<<<<<< HEAD
 ![Untitled](README.assets/Untitled 1.png)
 
 ### Wireframe
 
 ![Untitled](README.assets/Untitled 2.png)
-=======
-![Untitled](ReadMe%200b5233aa851a46be977f025c104dd82a/Untitled%201.png)
 
-### Wireframe
-
-![Untitled](ReadMe%200b5233aa851a46be977f025c104dd82a/Untitled%202.png)
->>>>>>> 4ddf3fd3b7943b42ea5ea366ded72437f0f0c873
 
 ## 3️⃣ 팀 소개
 
@@ -67,7 +53,7 @@
 |           |           |          |          |           |          |
 | 💪팀장     |           |          |          |           |          |
 | 🖼FrontEnd | 🖼FrontEnd | 🛠BackEnd | 🛠BackEnd | 🖼FrontEnd | 🛠BackEnd |
-| ⚙Infra    |           |          |          |           |          |
+|          |           |          |          |           | ⚙Infra   |
 
 ### 기술 스택
 
@@ -108,8 +94,7 @@
 |          | 컴포넌트 구조 재 설계         |
 |          | ERD 및 API 재 설계            |
 | Sprint 5 | 2차 MVP 기능 제작 및 QA 진행  |
-<<<<<<< HEAD
+
 |          | 산출물(ReadMe, 발표자료) 제작 |
-=======
+
 |          | 산출물(ReadMe, 발표자료) 제작 |
->>>>>>> 4ddf3fd3b7943b42ea5ea366ded72437f0f0c873
