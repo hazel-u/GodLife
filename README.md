@@ -1,4 +1,3 @@
-
 # 갓생살기
 
 > ‘갓생(God+生)’ 빙고 인증 및 공유 플랫폼
@@ -14,7 +13,7 @@
 
 **[ 바로가기 ]**
 
-🖥 갓생살기 | 📄 프로젝트 노션 | ⚙ 이용 가이드 
+🖥 [갓생살기](https://godlife.today) | 📄 [프로젝트 노션](https://www.notion.so/creekbros/by-OvCORS-c0de0573c344409ea32fdcd561f0b7c4) | ⚙ [이용 가이드](https://www.notion.so/creekbros/99f2563c3d104c32b2347ca35cea800b)
 
 ## 1️⃣ 기능 소개
 
@@ -50,10 +49,8 @@
 
 | 천민우    | 강수현    | 승나연   | 유혜승   | 이수민    | 이정음   |
 | --------- | --------- | -------- | -------- | --------- | -------- |
-|           |           |          |          |           |          |
-| 💪팀장     |           |          |          |           |          |
-| 🖼FrontEnd | 🖼FrontEnd | 🛠BackEnd | 🛠BackEnd | 🖼FrontEnd | 🛠BackEnd |
-|          |           |          |          |           | ⚙Infra   |
+| <img src="/uploads/d6e5a1679fd9834a583619049fe654f0/image.png" width="80%"> | <img src="/uploads/dd93ab77c5e94fcbc6e3187828582db3/image.png" width="80%"> | <img src="/uploads/2463014a4efadacab1839d68ad7d1786/image.png" width="80%"> | <img src="/uploads/b140ec721002e5494b9b04ab21c58a8b/image.png" width="80%"> | <img src="/uploads/d8651733cd14fd1a60718f800cf2cd33/image.png" width="80%"> | <img src="/uploads/7b6fa71b09603b8fc4939612d0bdcd07/image.png" width="80%"> |
+| 💪팀장, 🖼FrontEnd | 🖼FrontEnd | 🛠BackEnd | 🛠BackEnd | 🖼FrontEnd | 🛠BackEnd, ⚙Infra  |
 
 ### 기술 스택
 
@@ -94,7 +91,5 @@
 |          | 컴포넌트 구조 재 설계         |
 |          | ERD 및 API 재 설계            |
 | Sprint 5 | 2차 MVP 기능 제작 및 QA 진행  |
-
-|          | 산출물(ReadMe, 발표자료) 제작 |
-
+| Sprint 6 | 3차 MVP 기능 제작 및 QA 진행 |
 |          | 산출물(ReadMe, 발표자료) 제작 |
